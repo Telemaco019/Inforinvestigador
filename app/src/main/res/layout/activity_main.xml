@@ -10,18 +10,14 @@
 
     <include layout="@layout/top_bar"/>
 
-    <ScrollView
+
+    <FrameLayout
+            android:layout_marginTop="@dimen/marginFromTopbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/marginFromTopbar"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:id="@+id/fragment_placheholder"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/fragment_placheholder"/>
-
-    </ScrollView>
 
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation_bar"
