@@ -4,6 +4,10 @@
              android:layout_width="match_parent" android:layout_height="match_parent"
              tools:context=".fragment.HomeFragment">
 
-    <include layout="@layout/round_image_with_caption"/>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recommended_researchers_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"/>
 
 </FrameLayout>

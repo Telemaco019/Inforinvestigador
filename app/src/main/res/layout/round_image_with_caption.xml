@@ -10,7 +10,8 @@
             android:layout_width="@dimen/roundProfilePictureSize"
             android:layout_height="@dimen/roundProfilePictureSize"
             app:civ_border_color="@color/colorPrimaryDark"
-            app:civ_border_width="@dimen/roundProfilePictureBorderWidth"/>
+            app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
+            android:elevation="@dimen/recommendedResearcherProfileElevation"/>
     <TextView
             android:id="@+id/roundImageCaption"
             android:layout_width="match_parent"
