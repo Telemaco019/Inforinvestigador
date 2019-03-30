@@ -2,5 +2,6 @@
 <resources>
     <dimen name="roundProfilePictureSize">86dp</dimen>
     <dimen name="roundProfilePictureBorderWidth">1dp</dimen>
-    <dimen name="recommendedResearcherProfileElevation">4 dp</dimen>
+    <dimen name="recommendedResearcherProfileElevation">4dp</dimen>
+    <dimen name="marginFromTopbar">8dp</dimen>
 </resources>
