@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
         result.add(ResearcherSuggestion(R.drawable.test_researcher_6,"Joana de Carvalho"))
         result.add(ResearcherSuggestion(R.drawable.test_researcher_7,"Mario Relha"))
 
+        result.shuffle()
         return result
     }
 }
