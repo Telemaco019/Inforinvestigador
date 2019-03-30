@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="roundProfilePictureSize">86dp</dimen>
+    <dimen name="roundProfilePictureSize">88dp</dimen>
     <dimen name="roundProfilePictureBorderWidth">1dp</dimen>
     <dimen name="recommendedResearcherProfileElevation">4dp</dimen>
     <dimen name="marginFromTopbar">8dp</dimen>
+    <dimen name="verticalComponentsSpacing">16dp</dimen>
 </resources>
