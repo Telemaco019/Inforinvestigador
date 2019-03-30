@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Material colors for icon. Active icon = black 56% opacity, inactive icon=black 26% opacity-->
+    <color name="colorActiveNavigationIcon">#757575</color>
+    <color name="colorInactiveNavigationIcon">#BDBDBD</color>
 </resources>
