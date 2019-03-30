@@ -3,18 +3,20 @@
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp">
     <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image"
+            android:id="@+id/roundImage"
             android:layout_width="@dimen/roundProfilePictureSize"
             android:layout_height="@dimen/roundProfilePictureSize"
             app:civ_border_color="@color/colorPrimaryDark"
-            app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
-            android:src="@drawable/wallpaper"/>
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Devis Bianchini"
-              style="@style/TextAppearance.MaterialComponents.Caption"
-              android:maxLines="1"
-              android:ellipsize="end"/>
+            app:civ_border_width="@dimen/roundProfilePictureBorderWidth"/>
+    <TextView
+            android:id="@+id/roundImageCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 </LinearLayout>
