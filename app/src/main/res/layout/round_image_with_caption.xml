@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_margin="10dp">
+              android:layout_margin="@dimen/standardMaterialMargin">
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/roundImage"
             android:layout_width="@dimen/roundProfilePictureSize"

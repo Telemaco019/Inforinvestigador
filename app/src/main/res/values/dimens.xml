@@ -4,5 +4,6 @@
     <dimen name="roundProfilePictureBorderWidth">1dp</dimen>
     <dimen name="recommendedResearcherProfileElevation">4dp</dimen>
     <dimen name="marginFromTopbar">8dp</dimen>
+    <dimen name="standardMaterialMargin">8dp</dimen>
     <dimen name="verticalComponentsSpacing">16dp</dimen>
 </resources>

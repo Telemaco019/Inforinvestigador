@@ -11,6 +11,7 @@ import android.view.ViewGroup
 
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.ResearcherSuggestionAdapter
+import com.unibs.zanotti.inforinvestigador.TestAdapter
 import com.unibs.zanotti.inforinvestigador.model.ResearcherSuggestion
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +38,17 @@ class HomeFragment : Fragment() {
             adapter = ResearcherSuggestionAdapter(getDataset())
         }
 
+        view.findViewById<RecyclerView>(R.id.testRecycleView).apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = TestAdapter(getTestDataset())
+        }
+
         return view
+    }
+
+    private fun getTestDataset(): ArrayList<String> {
+        return arrayListOf("Item 1","Item 2","Item 2","Item 2","Item 2","Item 2","Item 2","Item 2","Item 2")
     }
 
     private fun getDataset(): ArrayList<ResearcherSuggestion> {

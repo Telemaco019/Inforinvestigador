@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent" android:layout_height="match_parent"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
              tools:context=".fragment.HomeFragment">
     <android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
                                                 android:layout_height="match_parent">
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,8 +29,12 @@
                     android:text="@string/recommendedPapersCaption"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:gravity="center_horizontal"/>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/testRecycleView"
+                    android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
-
     </android.support.v4.widget.NestedScrollView>
 </FrameLayout>
