@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.widget.TextView
 import com.unibs.zanotti.inforinvestigador.fragment.HomeFragment
 import com.unibs.zanotti.inforinvestigador.fragment.LibraryFragment
 import com.unibs.zanotti.inforinvestigador.fragment.ProfileFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         // Set the title of the support action bar
         supportActionBar?.setTitle(R.string.app_name)
-        supportActionBar?.setSubtitle(R.string.app_name)
+        // Set the font of the support action bar
+        val textView = toolbar.getChildAt(0) as TextView
+        textView?.typeface = resources.getFont(R.font.montserrat_light)
 
         val fragmentManager = supportFragmentManager
 
