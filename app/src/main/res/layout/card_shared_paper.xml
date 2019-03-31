@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="@dimen/cardCornerRadius"
+        card_view:cardElevation="@dimen/cardElevation"
+        android:layout_marginRight="@dimen/baseMargin"
+        android:layout_marginLeft="@dimen/baseMargin"
+        android:layout_marginBottom="@dimen/verticalComponentsSpacing">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content"
+                  android:padding="@dimen/basePadding">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/sharing_user_picture"
+                    android:layout_width="@dimen/roundProfilePictureSize"
+                    android:layout_height="@dimen/roundProfilePictureSize"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    android:src="@drawable/test_researcher_1"
+                    app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
+                    android:elevation="@dimen/recommendedResearcherProfileElevation"
+                    android:layout_marginRight="8dp"/>
+            <include layout="@layout/paper_summary"/>
+        </LinearLayout>
+
+        <TextView
+                android:layout_marginTop="@dimen/baseMargin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shared_paper_caption"
+                android:text="Comment: this is the comment of the shared paper. The comment is done by the user who has shared the paper and it will have a maximum number of characters"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                      android:text="Shared by: Mario Relha"
+                      android:id="@+id/shared_by"
+                      android:layout_alignBottom="@+id/likeIcon"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/ic_favorite_black_40dp"
+                       android:layout_alignParentEnd="true"
+                       android:tint="@color/colorPrimaryDark"
+                       android:id="@+id/likeIcon"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</android.support.design.card.MaterialCardView>
