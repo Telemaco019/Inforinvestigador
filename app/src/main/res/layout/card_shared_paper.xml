@@ -22,8 +22,8 @@
                       android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/sharing_user_picture"
-                    android:layout_width="@dimen/roundProfilePictureSize"
-                    android:layout_height="@dimen/roundProfilePictureSize"
+                    android:layout_width="@dimen/roundProfilePictureSizeSmall"
+                    android:layout_height="@dimen/roundProfilePictureSizeSmall"
                     app:civ_border_color="@color/colorPrimaryDark"
                     android:src="@drawable/test_researcher_1"
                     app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
