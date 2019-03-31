@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.TestAdapter
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +39,7 @@ class HomeFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.testRecycleView).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = TestAdapter(getTestDataset())
+            adapter = PaperSuggestionAdapter(getTestDataset())
         }
 
         return view

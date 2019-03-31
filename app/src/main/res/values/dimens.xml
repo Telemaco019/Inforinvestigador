@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="roundProfilePictureSize">88dp</dimen>
+    <dimen name="cardElevation">2dp</dimen>
+    <dimen name="cardCornerRadius">4dp</dimen>
     <dimen name="roundProfilePictureBorderWidth">1dp</dimen>
     <dimen name="recommendedResearcherProfileElevation">4dp</dimen>
     <dimen name="marginFromTopbar">8dp</dimen>
-    <dimen name="standardMaterialMargin">8dp</dimen>
     <dimen name="verticalComponentsSpacing">16dp</dimen>
+
+    <dimen name="basePadding">8dp</dimen>
+    <dimen name="baseMargin">8dp</dimen>
+    <dimen name="baseMarginPlusPadding">16dp</dimen>
 </resources>
