@@ -51,12 +51,11 @@
                       android:layout_alignBottom="@+id/likeIcon"/>
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:src="@drawable/ic_favorite_black_40dp"
+                       android:src="@drawable/ic_favorite_black_32dp"
                        android:layout_alignParentEnd="true"
                        android:tint="@color/colorPrimaryDark"
                        android:id="@+id/likeIcon"/>
 
         </RelativeLayout>
-
     </LinearLayout>
 </android.support.design.card.MaterialCardView>
