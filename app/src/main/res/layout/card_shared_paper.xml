@@ -27,7 +27,6 @@
                     app:civ_border_color="@color/colorPrimaryDark"
                     android:src="@drawable/test_researcher_1"
                     app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
-                    android:elevation="@dimen/recommendedResearcherProfileElevation"
                     android:layout_marginRight="8dp"/>
             <include layout="@layout/paper_summary"/>
         </LinearLayout>
