@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.fragment
+package com.unibs.zanotti.inforinvestigador.recommendation.list
 
 
 import android.os.Bundle
@@ -10,9 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.ResearcherSuggestionAdapter
 import com.unibs.zanotti.inforinvestigador.TestAdapter
-import com.unibs.zanotti.inforinvestigador.model.ResearcherSuggestion
+import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

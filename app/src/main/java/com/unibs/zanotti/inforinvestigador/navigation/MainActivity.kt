@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador
+package com.unibs.zanotti.inforinvestigador.navigation
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -7,9 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.widget.TextView
-import com.unibs.zanotti.inforinvestigador.fragment.HomeFragment
-import com.unibs.zanotti.inforinvestigador.fragment.LibraryFragment
-import com.unibs.zanotti.inforinvestigador.fragment.ProfileFragment
+import com.unibs.zanotti.inforinvestigador.LibraryFragment
+import com.unibs.zanotti.inforinvestigador.ProfileFragment
+import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.recommendation.list.HomeFragment
 
 
 class MainActivity : AppCompatActivity() {

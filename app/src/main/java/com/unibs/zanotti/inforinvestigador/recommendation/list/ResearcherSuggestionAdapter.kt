@@ -1,11 +1,12 @@
-package com.unibs.zanotti.inforinvestigador
+package com.unibs.zanotti.inforinvestigador.recommendation.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.unibs.zanotti.inforinvestigador.model.ResearcherSuggestion
+import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ResearcherSuggestionAdapter(private val dataset: ArrayList<ResearcherSuggestion>) :
@@ -18,7 +19,7 @@ class ResearcherSuggestionAdapter(private val dataset: ArrayList<ResearcherSugge
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResearcherSuggestionAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         // Create a new view
         val view = LayoutInflater.from(parent.context).inflate(R.layout.round_image_with_caption, parent, false)
 
@@ -30,7 +31,7 @@ class ResearcherSuggestionAdapter(private val dataset: ArrayList<ResearcherSugge
 
     override fun getItemCount() = dataset.size
 
-    override fun onBindViewHolder(holder: ResearcherSuggestionAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // Get element at this position from the dataset and replace the content of the view with that element
         // val view = holder.textView
         holder.imageView.setImageResource(dataset[position].image)
