@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,23 +34,63 @@ class HomeFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.recommended_researchers_recycler).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-            adapter = ResearcherSuggestionAdapter(getDataset())
+            adapter = ResearcherSuggestionAdapter(getResearcherSuggestionDataset())
         }
 
         view.findViewById<RecyclerView>(R.id.testRecycleView).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = PaperSuggestionAdapter(getTestDataset())
+            adapter = PaperSuggestionAdapter(getPaperSuggestionDataset())
         }
 
         return view
     }
 
-    private fun getTestDataset(): ArrayList<String> {
-        return arrayListOf("Item 1","Item 2","Item 2","Item 2","Item 2","Item 2","Item 2","Item 2","Item 2")
+    private fun getPaperSuggestionDataset(): ArrayList<PaperSuggestion> {
+        var result = arrayListOf<PaperSuggestion>()
+        var title = "This is the title of the paper"
+        var authors = "Devis Bianchini, Marina Zanella, Pietro Baroni"
+        var date = "Mar 2019 - "
+        var topics = arrayOf("Informatics" ,"Science", "Math")
+        var comment = "This is the comment made by the use user who shared the paper"
+        var sharingUser = "Mario Relha"
+        var sharingProfilePicture = R.drawable.test_researcher_7
+
+        val suggestion_1 = PaperSuggestion(title, authors, date, topics, comment, sharingUser, sharingProfilePicture)
+        result.add(suggestion_1)
+
+        title = "This is the title of the second paper"
+        authors = "Pippo Baudo, Nicola Adami, Marina Zanella"
+        date = "Dec 2018 - "
+        topics = arrayOf("Informatics" ,"Science", "Math")
+        comment = "This is the comment made by the use user who shared the paper"
+        sharingUser = "Maria Piras"
+        sharingProfilePicture = R.drawable.test_researcher_1
+        result.add(PaperSuggestion(title, authors, date, topics, comment, sharingUser, sharingProfilePicture))
+
+        title = "This is the title of the third paper"
+        authors = "Pippo Baudo, Nicola Adami, Marina Zanella"
+        date = "May 2018 - "
+        topics = arrayOf("History" ,"Science", "Informatics","Geography")
+        comment = "This is the comment made by the use user who shared the paper"
+        sharingUser = "Teresa Sardinha"
+        sharingProfilePicture = R.drawable.test_researcher_5
+        result.add(PaperSuggestion(title, authors, date, topics, comment, sharingUser, sharingProfilePicture))
+
+
+        title = "This is the title of the fourth paper"
+        authors = "Pippo Baudo, Nicola Adami, Marina Zanella"
+        date = "May 2018 - "
+        topics = arrayOf("History" ,"Science", "Informatics","Geography")
+        comment = "This is the comment made by the use user who shared the paper"
+        sharingUser = "Leonor Freitas"
+        sharingProfilePicture = R.drawable.test_researcher_2
+        result.add(PaperSuggestion(title, authors, date, topics, comment, sharingUser, sharingProfilePicture))
+
+        return result
     }
 
-    private fun getDataset(): ArrayList<ResearcherSuggestion> {
+    private fun getResearcherSuggestionDataset(): ArrayList<ResearcherSuggestion> {
         val result = arrayListOf<ResearcherSuggestion>()
 
         result.add(ResearcherSuggestion(R.drawable.test_researcher_1,"Maria Piras"))
