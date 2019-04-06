@@ -1,7 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.recommendation.list
 
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,28 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.common.Actions
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 
 class ListRecommendationsFragment : Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
-    companion object {
-        const val PAPER_SUGGESTION = "paper"
-        const val RESEARCHER_SUGGESTION = "researcher"
-    }
-
-    private var listener: OnSuggestionSelectedListener? = null
-
-    interface OnSuggestionSelectedListener {
-        /**
-         * @param suggestionClicked Type of suggestion clicked by the user (e.g. paper suggestion or researcher suggestion)
-         * @param suggestionId Id of the suggestion clicked by the user (e.g. if a user clicks a paper suggestion, then this
-         * parameter corresponds to the id of the suggested paper)
-         */
-        fun onSuggestionClick(suggestionClicked: String, suggestionId: String)
-    }
-
     override fun onPaperSuggestionClick() {
-        listener?.onSuggestionClick(PAPER_SUGGESTION,"24");
+        val intent = Intent(Actions.SHOW_PAPER)
+        intent.putExtra(PaperSuggestion.PAPER_ID_NUMBER_EXTRA,5)
+        startActivity(intent)
     }
 
     override fun onCreateView(
@@ -56,15 +43,6 @@ class ListRecommendationsFragment : Fragment(), PaperSuggestionAdapter.OnPaperSu
         }
 
         return view
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is OnSuggestionSelectedListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnSuggestionSelectedListener")
-        }
     }
 
     private fun getPaperSuggestionDataset(): ArrayList<PaperSuggestion> {

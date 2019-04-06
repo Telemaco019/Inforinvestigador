@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
@@ -12,21 +11,10 @@ import android.widget.TextView
 import com.unibs.zanotti.inforinvestigador.LibraryFragment
 import com.unibs.zanotti.inforinvestigador.ProfileFragment
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.common.PaperFragment
 import com.unibs.zanotti.inforinvestigador.recommendation.list.ListRecommendationsFragment
 
 
-class MainNavigationActivity : AppCompatActivity(), ListRecommendationsFragment.OnSuggestionSelectedListener {
-    override fun onSuggestionClick(suggestionClicked: String, suggestionId: String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        val newFragment = PaperFragment()
-        transaction.replace(R.id.fragment_placheholder,newFragment)
-        transaction.setCustomAnimations(android.R.animator.fade_in,android.R.animator.fade_out)
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
+class MainNavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,7 +54,7 @@ class MainNavigationActivity : AppCompatActivity(), ListRecommendationsFragment.
             }
 
             // Clear fragment backstack
-            fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             // Replace fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_placheholder, fragment).commit()
             return@setOnNavigationItemSelectedListener true
