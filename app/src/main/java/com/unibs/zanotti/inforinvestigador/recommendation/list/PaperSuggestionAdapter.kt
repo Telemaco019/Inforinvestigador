@@ -9,10 +9,21 @@ import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PaperSuggestionAdapter(private val dataset: ArrayList<PaperSuggestion>) :
+class PaperSuggestionAdapter(private val dataset: ArrayList<PaperSuggestion>, val listener: OnPaperSuggestionListener) :
     RecyclerView.Adapter<PaperSuggestionAdapter.MyViewHolder>() {
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(view: View, val listener: OnPaperSuggestionListener) :
+        RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            listener.onPaperSuggestionClick()
+        }
+
         var tvPaperTitle = view.findViewById<TextView>(R.id.paper_title)
         var tvPaperAuthors = view.findViewById<TextView>(R.id.paper_authors)
         var tvPaperDate = view.findViewById<TextView>(R.id.paper_date)
@@ -29,7 +40,7 @@ class PaperSuggestionAdapter(private val dataset: ArrayList<PaperSuggestion>) :
         // Set layout parameters of the view
         // ...
 
-        return MyViewHolder(view)
+        return MyViewHolder(view, listener)
     }
 
     override fun getItemCount() = dataset.size
@@ -39,10 +50,13 @@ class PaperSuggestionAdapter(private val dataset: ArrayList<PaperSuggestion>) :
         holder.tvPaperTitle.text = dataset[position].paperTitle
         holder.tvPaperAuthors.text = dataset[position].paperAuthors
         holder.tvPaperDate.text = dataset[position].paperDate
-        holder.tvPaperTopics.text = dataset[position].paperTopics.toString()
+        holder.tvPaperTopics.text = dataset[position].paperTopics.joinToString { t -> t }
         holder.tvPaperComment.text = dataset[position].paperComment
         holder.tvSharingUser.text = dataset[position].sharingUser
         holder.tvSharingUserProfilePicture.setImageResource(dataset[position].sharingUserProfilePicture)
     }
 
+    interface OnPaperSuggestionListener {
+        fun onPaperSuggestionClick()
+    }
 }

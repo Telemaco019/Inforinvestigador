@@ -8,21 +8,21 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  *
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
+    override fun onPaperSuggestionClick() {
+        // TODO: Substitute current fragment with the one corresponding to the clicked paper suggestion
+        Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,17 +37,18 @@ class HomeFragment : Fragment() {
             adapter = ResearcherSuggestionAdapter(getResearcherSuggestionDataset())
         }
 
+        val paperSuggestionAdapter = PaperSuggestionAdapter(getPaperSuggestionDataset(), this)
         view.findViewById<RecyclerView>(R.id.testRecycleView).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = PaperSuggestionAdapter(getPaperSuggestionDataset())
+            adapter = paperSuggestionAdapter
         }
 
         return view
     }
 
     private fun getPaperSuggestionDataset(): ArrayList<PaperSuggestion> {
-        var result = arrayListOf<PaperSuggestion>()
+        val result = arrayListOf<PaperSuggestion>()
         var title = "This is the title of the paper"
         var authors = "Devis Bianchini, Marina Zanella, Pietro Baroni"
         var date = "Mar 2019 - "
@@ -87,6 +88,7 @@ class HomeFragment : Fragment() {
         sharingProfilePicture = R.drawable.test_researcher_2
         result.add(PaperSuggestion(title, authors, date, topics, comment, sharingUser, sharingProfilePicture))
 
+        result.shuffle()
         return result
     }
 
