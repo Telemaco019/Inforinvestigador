@@ -21,6 +21,7 @@ class MainNavigationActivity : AppCompatActivity(), ListRecommendationsFragment.
         val transaction = supportFragmentManager.beginTransaction()
         val newFragment = PaperFragment()
         transaction.replace(R.id.fragment_placheholder,newFragment)
+        transaction.setCustomAnimations(android.R.animator.fade_in,android.R.animator.fade_out)
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         transaction.addToBackStack(null)
         transaction.commit()
