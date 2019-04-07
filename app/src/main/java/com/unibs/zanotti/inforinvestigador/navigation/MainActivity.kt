@@ -3,7 +3,6 @@ package com.unibs.zanotti.inforinvestigador.navigation
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
@@ -11,10 +10,11 @@ import android.widget.TextView
 import com.unibs.zanotti.inforinvestigador.LibraryFragment
 import com.unibs.zanotti.inforinvestigador.ProfileFragment
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.recommendation.list.ListRecommendationsFragment
+import com.unibs.zanotti.inforinvestigador.recommendation.list.HomeFragment
 
 
-class MainNavigationActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +31,7 @@ class MainNavigationActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
 
         // Navigation fragments
-        val fragmentHome = ListRecommendationsFragment()
+        val fragmentHome = HomeFragment()
         val fragmentLibrary = LibraryFragment()
         val fragmentProfile = ProfileFragment()
 
@@ -53,9 +53,6 @@ class MainNavigationActivity : AppCompatActivity() {
                 }
             }
 
-            // Clear fragment backstack
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            // Replace fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_placheholder, fragment).commit()
             return@setOnNavigationItemSelectedListener true
         }
