@@ -22,6 +22,7 @@ class ListRecommendationsFragment : Fragment(), PaperSuggestionAdapter.OnPaperSu
         startActivity(intent)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
