@@ -12,5 +12,6 @@
 
     <dimen name="basePadding">8dp</dimen>
     <dimen name="baseMargin">8dp</dimen>
-    <dimen name="baseMarginPlusPadding">16dp</dimen>
+    <dimen name="doubleBaseMargin">16dp</dimen>
+    <dimen name="doubleBasePadding">16dp</dimen>
 </resources>

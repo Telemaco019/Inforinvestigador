@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         // Put the item of the menu in the toolbar. Material Design is applied automatically
-        inflater.inflate(R.menu.menu_top_bar, menu)
+        inflater.inflate(R.menu.menu_top_bar_recommendations, menu)
 
         return true
     }
