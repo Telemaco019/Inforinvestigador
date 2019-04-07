@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.unibs.zanotti.inforinvestigador.LibraryFragment
 import com.unibs.zanotti.inforinvestigador.ProfileFragment
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.recommendation.list.HomeFragment
+import com.unibs.zanotti.inforinvestigador.recommendation.list.ListRecommendationsFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.app_name)
         // Set the font of the support action bar
         val textView = toolbar.getChildAt(0) as TextView
-        textView?.typeface = resources.getFont(R.font.montserrat_light)
+        textView.typeface = resources.getFont(R.font.montserrat_light)
 
         val fragmentManager = supportFragmentManager
 
         // Navigation fragments
-        val fragmentHome = HomeFragment()
+        val fragmentHome = ListRecommendationsFragment()
         val fragmentLibrary = LibraryFragment()
         val fragmentProfile = ProfileFragment()
 
