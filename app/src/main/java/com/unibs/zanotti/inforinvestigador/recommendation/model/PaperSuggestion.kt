@@ -8,9 +8,4 @@ class PaperSuggestion(
     val paperComment: String,
     val sharingUser: String,
     val sharingUserProfilePicture: Int
-) {
-    companion object {
-        const val PAPER_ID_NUMBER_EXTRA =
-            "com.unibs.zanotti.inforinvestigador.extra.paper_id"
-    }
-}
+)
