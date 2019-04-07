@@ -35,6 +35,7 @@ class HomeFragment : Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListene
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             adapter = ResearcherSuggestionAdapter(getResearcherSuggestionDataset())
+
         }
 
         val paperSuggestionAdapter = PaperSuggestionAdapter(getPaperSuggestionDataset(), this)
