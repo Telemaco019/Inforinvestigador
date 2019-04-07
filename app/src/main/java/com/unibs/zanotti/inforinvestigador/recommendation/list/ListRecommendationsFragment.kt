@@ -16,7 +16,7 @@ import com.unibs.zanotti.inforinvestigador.common.model.Paper
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 
-class HomeFragment : Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
+class ListRecommendationsFragment : Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
     var paperSuggestions: ArrayList<PaperSuggestion>
     var researcherSuggestions: ArrayList<ResearcherSuggestion>
 
