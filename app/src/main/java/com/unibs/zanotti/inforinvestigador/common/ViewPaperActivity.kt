@@ -12,7 +12,7 @@ class ViewPaperActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_paper)
 
-        val toolbar = findViewById<Toolbar>(R.id.collapsing_toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.top_bar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
