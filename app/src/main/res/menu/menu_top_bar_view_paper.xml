@@ -2,14 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/menu_topbar_viewpaper_back"
-          android:icon="@drawable/ic_arrow_back_black_24dp"
-          app:showAsAction="always"
-          android:title=""/>
     <item
             android:id="@+id/menu_topbar_viewpaper_add"
             android:icon="@drawable/ic_add_black_24dp"
-            app:showAsAction="always|withText"
+            app:showAsAction="ifRoom|withText"
             android:title="@string/topbar_viewpaper_menu_item_add"/>
 
 </menu>
