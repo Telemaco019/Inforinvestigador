@@ -14,6 +14,9 @@ class ViewPaperActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.top_bar)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_add_black_24dp)
+
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
