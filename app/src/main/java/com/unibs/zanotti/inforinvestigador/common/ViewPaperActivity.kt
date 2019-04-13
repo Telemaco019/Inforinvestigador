@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.unibs.zanotti.inforinvestigador.R
 
 
@@ -29,11 +30,20 @@ class ViewPaperActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item?.itemId
-        // If the home item has been clicked (e.g. the back arrow), then close this activity
-        if (id == android.R.id.home) {
-            finish()
-            return true
+        when (id) {
+            // If the home item has been clicked (e.g. the back arrow), then close this activity
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            R.id.menu_topbar_innermenu_addToLibrary -> {
+                Toast.makeText(this,R.string.msg_success_paper_added_to_library,Toast.LENGTH_SHORT).show()
+            }
+            R.id.menu_topbar_innermenu_addToPaperlist -> {
+                // TODO
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
 

@@ -12,4 +12,7 @@
     <string name="recommendedPapersCaption">Recommended papers</string>
     <string name="search_hint">Search for papers</string>
     <string name="topbar_viewpaper_menu_item_add">Add</string>
+    <string name="topbar_viewpaper_innermenu_item_addToLibrary">Add to library</string>
+    <string name="topbar_viewpaper_innermenu_item_addToPaperlist">Add to paperlist</string>
+    <string name="msg_success_paper_added_to_library">The paper has been added to your library</string>
 </resources>
