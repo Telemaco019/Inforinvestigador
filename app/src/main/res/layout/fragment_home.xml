@@ -4,8 +4,8 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".recommendation.list.ListRecommendationsFragment">
-    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
-                                                android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                           android:layout_height="match_parent">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -18,7 +18,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:text="@string/recommendedResearchersCaption"
                     android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recommended_researchers_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -31,12 +31,12 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/testRecycleView"
                     android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>
