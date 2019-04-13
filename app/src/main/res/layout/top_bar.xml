@@ -6,11 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:expanded="false"
+        app:expanded="true"
         tools:context=".navigation.MainActivity">
     <android.support.v7.widget.Toolbar
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:layout_collapseMode="pin"/>
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 </android.support.design.widget.AppBarLayout>
