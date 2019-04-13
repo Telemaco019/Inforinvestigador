@@ -7,15 +7,37 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup
+import com.unibs.zanotti.inforinvestigador.common.model.Comment
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_view_paper.*
 
 
 class ViewPaperActivity : AppCompatActivity() {
+    private val groupAdapter = GroupAdapter<ViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_paper)
         setupSupportActionBar()
+
+        commentsRV.apply {
+            layoutManager = GridLayoutManager(applicationContext, groupAdapter.spanCount).apply {
+                spanSizeLookup = groupAdapter.spanSizeLookup
+            }
+            adapter = groupAdapter
+        }
+
+        groupAdapter.add(getTestCommentsData())
+    }
+
+    private fun getTestCommentsData(): ExpandableCommentGroup {
+        return ExpandableCommentGroup(
+            Comment("This is the comment body","Author",1,"1", emptyList())
+        )
     }
 
     private fun setupSupportActionBar() {
@@ -40,7 +62,7 @@ class ViewPaperActivity : AppCompatActivity() {
                 return true
             }
             R.id.menu_topbar_innermenu_addToLibrary -> {
-                Toast.makeText(this,R.string.msg_success_paper_added_to_library,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.msg_success_paper_added_to_library, Toast.LENGTH_SHORT).show()
             }
             R.id.menu_topbar_innermenu_addToPaperlist -> {
                 // TODO
