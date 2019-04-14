@@ -21,10 +21,13 @@
             android:id="@+id/tv_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/doubleBaseMargin"
+            android:layout_marginBottom="@dimen/doubleBaseMargin"
             tools:text="/u/Username"
             app:layout_constraintTop_toTopOf="parent"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/colorAccent"
+            android:clickable="true"
             app:layout_constraintLeft_toRightOf="@id/separatorContainer" />
 
     <TextView
@@ -32,7 +35,7 @@
             android:layout_height="wrap_content"
             tools:text="* 5h"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="@dimen/doubleBaseMargin"
+            android:layout_marginBottom="@dimen/doubleBaseMargin"
             android:layout_marginStart="4dp"
             app:layout_constraintLeft_toRightOf="@id/tv_user"
             style="@style/TextAppearance.AppCompat.Small.Inverse"
