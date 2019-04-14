@@ -24,7 +24,7 @@ class ViewPaperActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_paper)
         setupSupportActionBar()
 
-        commentsRV.apply {
+        view_paper_comments_rv.apply {
             layoutManager = GridLayoutManager(applicationContext, groupAdapter.spanCount).apply {
                 spanSizeLookup = groupAdapter.spanSizeLookup
             }
@@ -35,8 +35,22 @@ class ViewPaperActivity : AppCompatActivity() {
     }
 
     private fun getTestCommentsData(): ExpandableCommentGroup {
+        val list = ArrayList<Comment>()
+        val list2 = ArrayList<Comment>()
+
+
+        //list2.add(Comment("This is the comment body","Author",1,"5", emptyList()))
+        //list2.add(Comment("This is the comment body","Author",1,"6", emptyList()))
+        list2.add(Comment("This is the comment body","Author",1,"7", emptyList()))
+
+        list.add(Comment("This is the comment body", "Author", 1, "5", emptyList()))
+        list.add(Comment("This is the comment body", "Author", 14, "2", emptyList()))
+        list.add(Comment("This is the comment body", "Author", 11, "3", emptyList()))
+        list.add(Comment("This is the comment body", "Author", 23, "4", list2))
+
+
         return ExpandableCommentGroup(
-            Comment("This is the comment body","Author",1,"1", emptyList())
+            Comment("This is the comment body", "Author", 1, "1", list)
         )
     }
 

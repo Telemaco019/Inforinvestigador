@@ -82,10 +82,9 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/commentsRV"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/view_paper_comments_rv"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
             </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>

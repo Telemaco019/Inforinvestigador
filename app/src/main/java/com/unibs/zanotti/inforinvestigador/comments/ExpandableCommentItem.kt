@@ -30,16 +30,12 @@ class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHol
 
     private fun addingDepthViews(viewHolder: ViewHolder) {
         viewHolder.itemView.separatorContainer.removeAllViews()
-        viewHolder.itemView.separatorContainer.visibility =
-            if (depth > 0) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        viewHolder.itemView.separatorContainer.visibility = if (depth > 0) View.VISIBLE else View.GONE
+
         for (i in 1..depth) {
             val v: View = LayoutInflater.from(viewHolder.itemView.context)
                 .inflate(R.layout.layout_separator_view, viewHolder.itemView.separatorContainer, false)
-            viewHolder.itemView.separatorContainer.addView(v);
+            viewHolder.itemView.separatorContainer.addView(v)
         }
         viewHolder.itemView.body.requestLayout()
     }
