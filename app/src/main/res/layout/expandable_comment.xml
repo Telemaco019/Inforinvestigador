@@ -3,7 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+            android:layout_marginBottom="@dimen/doubleBaseMargin">
 
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -66,8 +67,8 @@
                         android:id="@+id/btn_down_vote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="@dimen/baseMargin"
+                        android:layout_marginRight="@dimen/baseMargin"
                         android:background="@drawable/ic_arrow_downvote"
                         android:layout_gravity="center"/>
 
@@ -75,8 +76,8 @@
                         android:id="@+id/tv_votes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="@dimen/baseMargin"
+                        android:layout_marginRight="@dimen/baseMargin"
                         style="@style/TextAppearance.AppCompat.Small"
                         android:text="1.4k"
                         android:layout_gravity="center"/>
@@ -85,25 +86,25 @@
                         android:id="@+id/btn_upvote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="@dimen/baseMargin"
+                        android:layout_marginRight="@dimen/baseMargin"
                         android:background="@drawable/ic_arrow_upvote"
                         android:layout_gravity="center"/>
                 <View
                         android:id="@+id/separator1"
                         android:layout_width="1dp"
                         android:layout_height="16dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="@dimen/baseMargin"
+                        android:layout_marginRight="@dimen/baseMargin"
                         android:background="@color/dark_gray"
                         android:layout_gravity="center"/>
                 <TextView
                         android:id="@+id/tv_reply"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="@dimen/baseMargin"
                         android:drawableLeft="@drawable/ic_chat_bubble_outline_black_24dp"
-                        android:drawablePadding="8dp"
+                        android:drawablePadding="@dimen/basePadding"
                         android:text="Reply"
                         style="@style/TextAppearance.AppCompat.Small"
                         android:layout_gravity="center"/>
