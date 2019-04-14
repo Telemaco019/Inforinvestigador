@@ -3,114 +3,115 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-            android:layout_marginBottom="@dimen/doubleBaseMargin">
+              android:orientation="horizontal">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-        <!-- Separator -->
-        <LinearLayout
-                android:id="@+id/separatorContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/doubleBaseMargin"
-                android:layout_marginEnd="@dimen/doubleBaseMargin"
-                android:visibility="gone"
-                android:orientation="horizontal">
-        </LinearLayout>
+    <!-- Separator -->
+    <LinearLayout
+            android:id="@+id/separatorContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/doubleBaseMargin"
+            android:layout_marginEnd="@dimen/doubleBaseMargin"
+            android:orientation="horizontal">
 
-        <!-- Content -->
+        <View xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/doubleBaseMargin"
+              android:layout_marginRight="@dimen/doubleBaseMargin"
+              android:background="@color/light_gray"/>
+
+    </LinearLayout>
+
+    <!-- Content -->
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_marginBottom="@dimen/doubleBaseMargin">
+
+        <!-- Username and date/time -->
         <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
                       android:layout_height="wrap_content"
-                      android:orientation="vertical"
-                      android:layout_toEndOf="@id/separatorContainer">
-
-            <!-- Username and date/time -->
-            <LinearLayout android:layout_width="match_parent"
-                          android:orientation="horizontal"
-                          android:layout_height="wrap_content"
-                          android:layout_marginBottom="@dimen/doubleBaseMargin">
-                <TextView
-                        android:id="@+id/tv_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="/u/Username"
-                        style="@style/TextAppearance.MaterialComponents.Body1"
-                        android:background="?attr/selectableItemBackground"
-                        android:textColor="@color/colorAccent"
-                        android:clickable="true"
-                        android:layout_gravity="center"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="* 5h"
-                        android:layout_marginStart="4dp"
-                        style="@style/TextAppearance.MaterialComponents.Caption"
-                        android:id="@+id/tv_comment_date"
-                        android:layout_gravity="center"/>
-            </LinearLayout>
-            <!-- Body of the comment -->
+                      android:layout_marginBottom="@dimen/doubleBaseMargin">
             <TextView
-                    android:id="@+id/body"
+                    android:id="@+id/tv_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Body of comment"
-                    style="@style/TextAppearance.AppCompat.Body1"/>
-            <!-- Reply and votes -->
-            <LinearLayout
+                    tools:text="/u/Username"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textColor="@color/colorAccent"
+                    android:clickable="true"
+                    android:layout_gravity="center"/>
+
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="end">
-                <ImageButton
-                        android:id="@+id/btn_down_vote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/baseMargin"
-                        android:layout_marginRight="@dimen/baseMargin"
-                        android:background="@drawable/ic_arrow_downvote"
-                        android:layout_gravity="center"/>
-
-                <TextView
-                        android:id="@+id/tv_votes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/baseMargin"
-                        android:layout_marginRight="@dimen/baseMargin"
-                        style="@style/TextAppearance.AppCompat.Small"
-                        android:text="1.4k"
-                        android:layout_gravity="center"/>
-
-                <ImageButton
-                        android:id="@+id/btn_upvote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/baseMargin"
-                        android:layout_marginRight="@dimen/baseMargin"
-                        android:background="@drawable/ic_arrow_upvote"
-                        android:layout_gravity="center"/>
-                <View
-                        android:id="@+id/separator1"
-                        android:layout_width="1dp"
-                        android:layout_height="16dp"
-                        android:layout_marginLeft="@dimen/baseMargin"
-                        android:layout_marginRight="@dimen/baseMargin"
-                        android:background="@color/dark_gray"
-                        android:layout_gravity="center"/>
-                <TextView
-                        android:id="@+id/tv_reply"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/baseMargin"
-                        android:drawableLeft="@drawable/ic_chat_bubble_outline_black_24dp"
-                        android:drawablePadding="@dimen/basePadding"
-                        android:text="Reply"
-                        style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_gravity="center"/>
-            </LinearLayout>
+                    tools:text="* 5h"
+                    android:layout_marginStart="4dp"
+                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:id="@+id/tv_comment_date"
+                    android:layout_gravity="center"/>
         </LinearLayout>
-    </RelativeLayout>
+        <!-- Body of the comment -->
+        <TextView
+                android:id="@+id/body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Body of comment"
+                style="@style/TextAppearance.AppCompat.Body1"/>
+        <!-- Reply and votes -->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="end">
+            <ImageButton
+                    android:id="@+id/btn_down_vote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:layout_marginRight="@dimen/baseMargin"
+                    android:background="@drawable/ic_arrow_downvote"
+                    android:layout_gravity="center"/>
 
+            <TextView
+                    android:id="@+id/tv_votes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:layout_marginRight="@dimen/baseMargin"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:text="1.4k"
+                    android:layout_gravity="center"/>
 
+            <ImageButton
+                    android:id="@+id/btn_upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:layout_marginRight="@dimen/baseMargin"
+                    android:background="@drawable/ic_arrow_upvote"
+                    android:layout_gravity="center"/>
+            <View
+                    android:id="@+id/separator1"
+                    android:layout_width="1dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:layout_marginRight="@dimen/baseMargin"
+                    android:background="@color/dark_gray"
+                    android:layout_gravity="center"/>
+            <TextView
+                    android:id="@+id/tv_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:drawableLeft="@drawable/ic_chat_bubble_outline_black_24dp"
+                    android:drawablePadding="@dimen/basePadding"
+                    android:text="Reply"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
