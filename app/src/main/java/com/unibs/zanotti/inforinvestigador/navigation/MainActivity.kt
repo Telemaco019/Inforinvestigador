@@ -1,12 +1,11 @@
 package com.unibs.zanotti.inforinvestigador.navigation
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unibs.zanotti.inforinvestigador.LibraryFragment
 import com.unibs.zanotti.inforinvestigador.ProfileFragment
 import com.unibs.zanotti.inforinvestigador.R
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         val navigationBar = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
         navigationBar.setOnNavigationItemSelectedListener { item ->
-            val fragment: Fragment
+            val fragment: androidx.fragment.app.Fragment
             when (item.itemId) {
                 R.id.bottom_bar_action_home -> {
                     fragment = fragmentHome

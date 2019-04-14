@@ -1,10 +1,10 @@
 package com.unibs.zanotti.inforinvestigador.recommendation.list
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 import de.hdodenhof.circleimageview.CircleImageView

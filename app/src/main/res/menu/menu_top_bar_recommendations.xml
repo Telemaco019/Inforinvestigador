@@ -7,5 +7,5 @@
             android:icon="@drawable/ic_search_black_24dp"
             android:title="@string/topbar_recommendations_menu_item_search"
             app:showAsAction="always|withText"
-            app:actionViewClass="android.support.v7.widget.SearchView"/>
+            app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 </menu>

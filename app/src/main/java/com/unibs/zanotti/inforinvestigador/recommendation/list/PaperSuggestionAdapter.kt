@@ -1,10 +1,10 @@
 package com.unibs.zanotti.inforinvestigador.recommendation.list
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
@@ -28,8 +28,8 @@ class PaperSuggestionAdapter(val dataset: ArrayList<PaperSuggestion>, val listen
         var tvPaperAuthors = view.findViewById<TextView>(R.id.paper_authors)
         var tvPaperDate = view.findViewById<TextView>(R.id.paper_date)
         var tvPaperTopics = view.findViewById<TextView>(R.id.paper_topics)
-        var tvPaperComment = view.findViewById<TextView>(R.id.shared_paper_caption)
-        var tvSharingUser = view.findViewById<TextView>(R.id.shared_by_caption)
+        var tvPaperComment = view.findViewById<TextView>(R.id.tv_shared_paper)
+        var tvSharingUser = view.findViewById<TextView>(R.id.tv_shared_by)
         var tvSharingUserProfilePicture = view.findViewById<CircleImageView>(R.id.sharing_user_picture)
     }
 

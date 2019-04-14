@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.card.MaterialCardView
+<com.google.android.material.card.MaterialCardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/tools"
@@ -36,7 +36,7 @@
                 android:layout_marginTop="@dimen/baseMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/shared_paper_caption"
+                android:id="@+id/tv_shared_paper"
                 android:text="Comment: this is the comment of the shared paper. The comment is done by the user who has shared the paper and it will have a maximum number of characters"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
         <RelativeLayout
@@ -48,15 +48,15 @@
                       android:layout_height="wrap_content"
                       android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                       android:text="Shared by: Mario Relha"
-                      android:id="@+id/shared_by_caption"
-                      android:layout_alignBottom="@+id/likeIcon"/>
+                      android:id="@+id/tv_shared_by"
+                      android:layout_alignBottom="@+id/img_like_icon"/>
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:src="@drawable/ic_favorite_black_24dp"
                        android:layout_alignParentEnd="true"
                        android:tint="@color/colorPrimaryDark"
-                       android:id="@+id/likeIcon"/>
+                       android:id="@+id/img_like_icon"/>
 
         </RelativeLayout>
     </LinearLayout>
-</android.support.design.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>

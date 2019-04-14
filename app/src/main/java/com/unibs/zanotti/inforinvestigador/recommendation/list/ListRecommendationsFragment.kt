@@ -3,13 +3,11 @@ package com.unibs.zanotti.inforinvestigador.recommendation.list
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.common.Actions
 import com.unibs.zanotti.inforinvestigador.common.model.Paper
@@ -17,7 +15,7 @@ import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
 import com.unibs.zanotti.inforinvestigador.util.DataProvider
 
-class ListRecommendationsFragment : Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
+class ListRecommendationsFragment : androidx.fragment.app.Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
     var paperSuggestions: ArrayList<PaperSuggestion>
     var researcherSuggestions: ArrayList<ResearcherSuggestion>
 
@@ -42,7 +40,11 @@ class ListRecommendationsFragment : Fragment(), PaperSuggestionAdapter.OnPaperSu
 
         view.findViewById<RecyclerView>(R.id.recommended_researchers_recycler).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
             adapter = ResearcherSuggestionAdapter(researcherSuggestions)
 
         }

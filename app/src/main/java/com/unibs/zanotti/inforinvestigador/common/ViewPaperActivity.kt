@@ -1,21 +1,57 @@
 package com.unibs.zanotti.inforinvestigador.common
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
 import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup
+import com.unibs.zanotti.inforinvestigador.common.model.Comment
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_view_paper.*
 
 
 class ViewPaperActivity : AppCompatActivity() {
+    private val groupAdapter = GroupAdapter<ViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_paper)
         setupSupportActionBar()
+
+        view_paper_comments_rv.apply {
+            layoutManager = GridLayoutManager(applicationContext, groupAdapter.spanCount).apply {
+                spanSizeLookup = groupAdapter.spanSizeLookup
+            }
+            adapter = groupAdapter
+        }
+
+        groupAdapter.add(getTestCommentsData())
+    }
+
+    private fun getTestCommentsData(): ExpandableCommentGroup {
+        val list = ArrayList<Comment>()
+        val list2 = ArrayList<Comment>()
+
+
+        //list2.add(Comment("This is the comment body","Author",1,"5", emptyList()))
+        //list2.add(Comment("This is the comment body","Author",1,"6", emptyList()))
+        list2.add(Comment("This is the comment body","Author",1,"7", emptyList()))
+
+        list.add(Comment("This is the comment body", "Author", 1, "5", emptyList()))
+        list.add(Comment("This is the comment body", "Author", 14, "2", emptyList()))
+        list.add(Comment("This is the comment body", "Author", 11, "3", emptyList()))
+        list.add(Comment("This is the comment body", "Author", 23, "4", list2))
+
+
+        return ExpandableCommentGroup(
+            Comment("This is the comment body", "Author", 1, "1", list)
+        )
     }
 
     private fun setupSupportActionBar() {
@@ -40,7 +76,7 @@ class ViewPaperActivity : AppCompatActivity() {
                 return true
             }
             R.id.menu_topbar_innermenu_addToLibrary -> {
-                Toast.makeText(this,R.string.msg_success_paper_added_to_library,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.msg_success_paper_added_to_library, Toast.LENGTH_SHORT).show()
             }
             R.id.menu_topbar_innermenu_addToPaperlist -> {
                 // TODO
