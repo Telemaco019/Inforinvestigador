@@ -38,8 +38,8 @@
             android:layout_marginBottom="@dimen/doubleBaseMargin"
             android:layout_marginStart="4dp"
             app:layout_constraintLeft_toRightOf="@id/tv_user"
-            style="@style/TextAppearance.AppCompat.Small.Inverse"
-            android:id="@+id/textView" />
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:id="@+id/tv_comment_date" />
 
     <TextView
             android:id="@+id/body"

@@ -20,6 +20,7 @@ class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHol
         viewHolder.itemView.tv_user.setText(comment.author)
         viewHolder.itemView.body.setText(Html.fromHtml(comment.body))
         viewHolder.itemView.tv_votes.setText(comment.score.toString())
+        viewHolder.itemView.tv_comment_date.setText("5h")
         viewHolder.itemView.apply {
             setOnLongClickListener {
                 expandableGroup.onToggleExpanded()
