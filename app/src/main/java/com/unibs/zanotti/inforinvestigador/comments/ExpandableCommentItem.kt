@@ -43,6 +43,9 @@ class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHol
 
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
         this.expandableGroup = onToggleListener
+
+        // Expand comments (show comments expanded by default)
+        onToggleListener.onToggleExpanded()
     }
 
     override fun getLayout(): Int {
