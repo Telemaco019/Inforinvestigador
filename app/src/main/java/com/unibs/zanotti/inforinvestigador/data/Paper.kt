@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.common.model
+package com.unibs.zanotti.inforinvestigador.data
 
 class Paper {
     companion object {

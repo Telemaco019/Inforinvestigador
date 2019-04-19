@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup
-import com.unibs.zanotti.inforinvestigador.common.model.Comment
+import com.unibs.zanotti.inforinvestigador.data.Comment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_view_paper.*
@@ -41,11 +41,43 @@ class ViewPaperActivity : AppCompatActivity() {
 
         //list2.add(Comment("This is the comment body","Author",1,"5", emptyList()))
         //list2.add(Comment("This is the comment body","Author",1,"6", emptyList()))
-        list2.add(Comment("This is the comment body","Author",1,"7", emptyList()))
+        list2.add(
+            Comment(
+                "This is the comment body",
+                "Author",
+                1,
+                "7",
+                emptyList()
+            )
+        )
 
-        list.add(Comment("This is the comment body", "Author", 1, "5", emptyList()))
-        list.add(Comment("This is the comment body", "Author", 14, "2", emptyList()))
-        list.add(Comment("This is the comment body", "Author", 11, "3", emptyList()))
+        list.add(
+            Comment(
+                "This is the comment body",
+                "Author",
+                1,
+                "5",
+                emptyList()
+            )
+        )
+        list.add(
+            Comment(
+                "This is the comment body",
+                "Author",
+                14,
+                "2",
+                emptyList()
+            )
+        )
+        list.add(
+            Comment(
+                "This is the comment body",
+                "Author",
+                11,
+                "3",
+                emptyList()
+            )
+        )
         list.add(Comment("This is the comment body", "Author", 23, "4", list2))
 
 

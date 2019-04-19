@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.recommendation.model
+package com.unibs.zanotti.inforinvestigador.data
 
 class PaperSuggestion(
     val paperId: String,

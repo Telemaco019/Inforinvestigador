@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.common.model
+package com.unibs.zanotti.inforinvestigador.data
 
 data class Comment constructor(val body : String,
                                val author : String,
