@@ -13,7 +13,7 @@ import com.unibs.zanotti.inforinvestigador.common.Actions
 import com.unibs.zanotti.inforinvestigador.common.model.Paper
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
 import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
-import com.unibs.zanotti.inforinvestigador.util.DataProvider
+import com.unibs.zanotti.inforinvestigador.utils.DataProvider
 
 class ListRecommendationsFragment : androidx.fragment.app.Fragment(), PaperSuggestionAdapter.OnPaperSuggestionListener {
     var paperSuggestions: ArrayList<PaperSuggestion>

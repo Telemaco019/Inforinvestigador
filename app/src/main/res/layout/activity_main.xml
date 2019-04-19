@@ -14,8 +14,8 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_placheholder"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/main_nav_fragment_holder"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_marginBottom="?attr/actionBarSize"/>
 
 

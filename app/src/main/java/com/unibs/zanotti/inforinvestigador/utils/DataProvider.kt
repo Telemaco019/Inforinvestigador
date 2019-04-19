@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.util
+package com.unibs.zanotti.inforinvestigador.utils
 
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion

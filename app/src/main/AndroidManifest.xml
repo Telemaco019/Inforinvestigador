@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.DEFAULT"></category>
             </intent-filter>
         </activity>
-        <activity android:name=".navigation.MainActivity">
+        <activity android:name=".navigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
