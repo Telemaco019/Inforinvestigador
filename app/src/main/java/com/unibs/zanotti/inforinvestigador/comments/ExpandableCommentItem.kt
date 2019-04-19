@@ -35,7 +35,7 @@ class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHol
 
         for (i in 1..depth) {
             val v: View = LayoutInflater.from(viewHolder.itemView.context)
-                .inflate(R.layout.layout_separator_view, viewHolder.itemView.separatorContainer, false)
+                .inflate(R.layout.layout_separator_view, viewHolder.itemView.separatorContainer,false)
             viewHolder.itemView.separatorContainer.addView(v)
         }
         viewHolder.itemView.body.requestLayout()
@@ -43,6 +43,9 @@ class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHol
 
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
         this.expandableGroup = onToggleListener
+
+        // Expand comments (show comments expanded by default)
+        onToggleListener.onToggleExpanded()
     }
 
     override fun getLayout(): Int {
