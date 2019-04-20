@@ -46,7 +46,7 @@ public class HomefeedFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_homefeed, container, false);
 
         // Setup researcher recycler
         RecyclerView researchers_recycler = view.findViewById(R.id.recommended_researchers_recycler);
@@ -55,7 +55,7 @@ public class HomefeedFragment extends Fragment implements
         researchers_recycler.setAdapter(researcherSuggestionAdapter);
 
         // Setup paper recycler
-        RecyclerView papers_recycler = view.findViewById(R.id.recommended_papers_recycler);
+        RecyclerView papers_recycler = view.findViewById(R.id.paper_shares_recycler);
         papers_recycler.setHasFixedSize(true);
         papers_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         papers_recycler.setAdapter(paperShareAdapter);

@@ -34,7 +34,7 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/recommended_papers_recycler"
+                    android:id="@+id/paper_shares_recycler"
                     android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
