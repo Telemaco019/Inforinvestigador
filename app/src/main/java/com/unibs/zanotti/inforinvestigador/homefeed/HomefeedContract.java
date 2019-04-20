@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.suggestions;
+package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.BaseView;
@@ -7,7 +7,7 @@ import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 
 import java.util.List;
 
-public interface SuggesitonsContract {
+public interface HomefeedContract {
     interface Presenter extends BasePresenter {
         void loadSuggestions();
     }

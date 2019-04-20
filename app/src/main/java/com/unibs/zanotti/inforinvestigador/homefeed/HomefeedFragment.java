@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.suggestions;
+package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,27 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.suggestions.adapters.PaperSuggestionAdapter;
-import com.unibs.zanotti.inforinvestigador.suggestions.adapters.ResearcherSuggestionAdapter;
+import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperShareAdapter;
+import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuggestionsFragment extends Fragment implements
-        SuggesitonsContract.View,
-        PaperSuggestionAdapter.OnPaperSuggestionListener {
+public class HomefeedFragment extends Fragment implements
+        HomefeedContract.View,
+        PaperShareAdapter.OnPaperSuggestionListener {
 
-    private SuggesitonsContract.Presenter presenter;
-    private PaperSuggestionAdapter paperSuggestionAdapter;
+    private HomefeedContract.Presenter presenter;
+    private PaperShareAdapter paperShareAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
 
-    public SuggestionsFragment() {
-        paperSuggestionAdapter = new PaperSuggestionAdapter(new ArrayList<>(0), this);
+    public HomefeedFragment() {
+        paperShareAdapter = new PaperShareAdapter(new ArrayList<>(0), this);
         researcherSuggestionAdapter = new ResearcherSuggestionAdapter(new ArrayList<>(0));
     }
 
     @Override
-    public void setPresenter(SuggesitonsContract.Presenter presenter) {
+    public void setPresenter(HomefeedContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -58,7 +58,7 @@ public class SuggestionsFragment extends Fragment implements
         RecyclerView papers_recycler = view.findViewById(R.id.recommended_papers_recycler);
         papers_recycler.setHasFixedSize(true);
         papers_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        papers_recycler.setAdapter(paperSuggestionAdapter);
+        papers_recycler.setAdapter(paperShareAdapter);
 
         return view;
     }
@@ -70,7 +70,7 @@ public class SuggestionsFragment extends Fragment implements
 
     @Override
     public void showPapersSuggestions(List<PaperShare> suggestions) {
-        this.paperSuggestionAdapter.setDataset(suggestions);
+        this.paperShareAdapter.setDataset(suggestions);
     }
 
     @Override

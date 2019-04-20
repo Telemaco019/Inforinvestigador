@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.suggestions.adapters
+package com.unibs.zanotti.inforinvestigador.homefeed.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +9,8 @@ import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PaperSuggestionAdapter(var dataset: List<PaperShare>, val listener: OnPaperSuggestionListener) :
-    RecyclerView.Adapter<PaperSuggestionAdapter.MyViewHolder>() {
+class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperSuggestionListener) :
+    RecyclerView.Adapter<PaperShareAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View, val listener: OnPaperSuggestionListener) :
         RecyclerView.ViewHolder(view),

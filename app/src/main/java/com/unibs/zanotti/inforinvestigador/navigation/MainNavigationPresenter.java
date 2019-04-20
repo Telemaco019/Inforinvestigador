@@ -6,8 +6,8 @@ import com.unibs.zanotti.inforinvestigador.ProfileFragment;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.source.local.PaperShareLocalDatasource;
 import com.unibs.zanotti.inforinvestigador.data.source.local.ResearcherSuggestionLocalDatasource;
-import com.unibs.zanotti.inforinvestigador.suggestions.SuggestionsFragment;
-import com.unibs.zanotti.inforinvestigador.suggestions.SuggestionsPresenter;
+import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedFragment;
+import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedPresenter;
 import org.jetbrains.annotations.NotNull;
 
 public class MainNavigationPresenter implements MainNavigationContract.Presenter {
@@ -29,8 +29,8 @@ public class MainNavigationPresenter implements MainNavigationContract.Presenter
         Fragment destinationFragment;
         switch (fragmentId) {
             case R.id.bottom_bar_action_home: {
-                SuggestionsFragment fragment = new SuggestionsFragment();
-                new SuggestionsPresenter(fragment,
+                HomefeedFragment fragment = new HomefeedFragment();
+                new HomefeedPresenter(fragment,
                         PaperShareLocalDatasource.getInstance(),
                         ResearcherSuggestionLocalDatasource.getInstance());
                 destinationFragment = fragment;

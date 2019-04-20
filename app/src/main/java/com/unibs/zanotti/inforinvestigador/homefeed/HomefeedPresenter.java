@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.suggestions;
+package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
@@ -7,15 +7,15 @@ import com.unibs.zanotti.inforinvestigador.data.source.IResearcherSuggestionData
 
 import java.util.List;
 
-public class SuggestionsPresenter implements SuggesitonsContract.Presenter {
+public class HomefeedPresenter implements HomefeedContract.Presenter {
 
-    private final SuggesitonsContract.View view;
+    private final HomefeedContract.View view;
     private IPaperShareDatasource paperSharesDatasource;
     private IResearcherSuggestionDatasource researcherSuggestionDatasource;
 
-    public SuggestionsPresenter(SuggesitonsContract.View view,
-                                IPaperShareDatasource dataSource,
-                                IResearcherSuggestionDatasource researcherSuggestionDatasource) {
+    public HomefeedPresenter(HomefeedContract.View view,
+                             IPaperShareDatasource dataSource,
+                             IResearcherSuggestionDatasource researcherSuggestionDatasource) {
         this.view = view;
         this.paperSharesDatasource = dataSource;
         this.researcherSuggestionDatasource = researcherSuggestionDatasource;
@@ -34,12 +34,12 @@ public class SuggestionsPresenter implements SuggesitonsContract.Presenter {
     }
 
     private void loadResearchersSuggestions() {
-        List<PaperShare> papersSuggestions = paperSharesDatasource.getPaperShares();
-        view.showPapersSuggestions(papersSuggestions);
+        List<ResearcherSuggestion> researchersSuggestions = researcherSuggestionDatasource.getResearcherSuggestions();
+        view.showResearchersSuggestions(researchersSuggestions);
     }
 
     private void loadPaperShares() {
-        List<ResearcherSuggestion> researchersSuggestions = researcherSuggestionDatasource.getResearcherSuggestions();
-        view.showResearchersSuggestions(researchersSuggestions);
+        List<PaperShare> papersSuggestions = paperSharesDatasource.getPaperShares();
+        view.showPapersSuggestions(papersSuggestions);
     }
 }

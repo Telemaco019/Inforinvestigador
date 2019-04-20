@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.suggestions.adapters
+package com.unibs.zanotti.inforinvestigador.homefeed.adapters
 
 import android.view.LayoutInflater
 import android.view.View
