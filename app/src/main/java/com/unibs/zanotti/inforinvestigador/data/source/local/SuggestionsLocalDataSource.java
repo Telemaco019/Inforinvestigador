@@ -1,12 +1,12 @@
 package com.unibs.zanotti.inforinvestigador.data.source.local;
 
-import com.unibs.zanotti.inforinvestigador.data.PaperSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.source.SuggestionsDataSource;
+import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.source.ISuggestionsDatasource;
 
 import java.util.List;
 
-public class SuggestionsLocalDataSource implements SuggestionsDataSource {
+public class SuggestionsLocalDataSource implements ISuggestionsDatasource {
 
     private static volatile SuggestionsLocalDataSource INSTANCE;
 

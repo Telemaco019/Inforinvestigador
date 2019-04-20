@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.data.ResearcherSuggestion
+import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ResearcherSuggestionAdapter(var dataset: List<ResearcherSuggestion>) :

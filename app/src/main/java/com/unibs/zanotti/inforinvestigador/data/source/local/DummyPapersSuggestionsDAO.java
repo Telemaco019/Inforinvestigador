@@ -2,7 +2,7 @@ package com.unibs.zanotti.inforinvestigador.data.source.local;
 
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.PaperSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion;
 
 import java.util.ArrayList;
 import java.util.List;

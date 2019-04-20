@@ -1,17 +1,17 @@
 package com.unibs.zanotti.inforinvestigador.suggestions;
 
-import com.unibs.zanotti.inforinvestigador.data.PaperSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.source.SuggestionsDataSource;
+import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.source.ISuggestionsDatasource;
 
 import java.util.List;
 
 public class SuggestionsPresenter implements SuggesitonsContract.Presenter {
 
     private final SuggesitonsContract.View view;
-    private SuggestionsDataSource suggestionsDataSource;
+    private ISuggestionsDatasource suggestionsDataSource;
 
-    public SuggestionsPresenter(SuggesitonsContract.View view, SuggestionsDataSource dataSource) {
+    public SuggestionsPresenter(SuggesitonsContract.View view, ISuggestionsDatasource dataSource) {
         this.view = view;
         this.suggestionsDataSource = dataSource;
         view.setPresenter(this);

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.data.PaperSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PaperSuggestionAdapter(var dataset: List<PaperSuggestion>, val listener: OnPaperSuggestionListener) :
@@ -48,10 +47,10 @@ class PaperSuggestionAdapter(var dataset: List<PaperSuggestion>, val listener: O
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // Get element at this position from the dataset and replace the content of the view with that element
         holder.tvPaperTitle.text = dataset[position].paperTitle
-        holder.tvPaperAuthors.text = dataset[position].paperAuthors
+        holder.tvPaperAuthors.text = dataset[position].paperAuthors.joinToString(separator = ",")
         holder.tvPaperDate.text = dataset[position].paperDate
         holder.tvPaperTopics.text = dataset[position].paperTopics.joinToString { t -> t }
-        holder.tvPaperComment.text = dataset[position].paperComment
+        holder.tvPaperComment.text = dataset[position].sharingUserComment
         holder.tvSharingUser.text = dataset[position].sharingUser
         holder.tvSharingUserProfilePicture.setImageResource(dataset[position].sharingUserProfilePicture)
     }

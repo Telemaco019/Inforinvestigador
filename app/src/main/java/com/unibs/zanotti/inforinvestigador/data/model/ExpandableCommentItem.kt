@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.data
+package com.unibs.zanotti.inforinvestigador.data.model
 
 import android.text.Html
 import android.view.LayoutInflater

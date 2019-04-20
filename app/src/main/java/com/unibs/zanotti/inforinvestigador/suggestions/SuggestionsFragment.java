@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.PaperSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.ResearcherSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.suggestions.adapters.PaperSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.suggestions.adapters.ResearcherSuggestionAdapter;
 
