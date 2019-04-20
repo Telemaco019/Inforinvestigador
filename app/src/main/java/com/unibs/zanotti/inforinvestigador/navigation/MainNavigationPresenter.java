@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.ProfileFragment;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.source.local.SuggestionsLocalDataSource;
+import com.unibs.zanotti.inforinvestigador.data.source.local.PaperShareLocalDatasource;
 import com.unibs.zanotti.inforinvestigador.suggestions.SuggestionsFragment;
 import com.unibs.zanotti.inforinvestigador.suggestions.SuggestionsPresenter;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +29,7 @@ public class MainNavigationPresenter implements MainNavigationContract.Presenter
         switch (fragmentId) {
             case R.id.bottom_bar_action_home: {
                 SuggestionsFragment fragment = new SuggestionsFragment();
-                new SuggestionsPresenter(fragment, SuggestionsLocalDataSource.getInstance());
+                new SuggestionsPresenter(fragment, PaperShareLocalDatasource.getInstance());
                 destinationFragment = fragment;
                 break;
             }

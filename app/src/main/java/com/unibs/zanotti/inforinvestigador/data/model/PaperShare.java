@@ -2,23 +2,23 @@ package com.unibs.zanotti.inforinvestigador.data.model;
 
 import java.util.List;
 
-public class PaperSuggestion extends Paper {
+public class PaperShare extends Paper {
     private String sharingUserComment;
     private String sharingUser;
     private int sharingUserProfilePicture;
 
-    public PaperSuggestion() {
+    public PaperShare() {
         super();
     }
 
-    public PaperSuggestion(Long paperId,
-                           String paperTitle,
-                           List<String> paperAuthors,
-                           String paperDate,
-                           List<String> paperTopics,
-                           String sharingUserComment,
-                           String sharingUser,
-                           int sharingUserProfilePicture) {
+    public PaperShare(Long paperId,
+                      String paperTitle,
+                      List<String> paperAuthors,
+                      String paperDate,
+                      List<String> paperTopics,
+                      String sharingUserComment,
+                      String sharingUser,
+                      int sharingUserProfilePicture) {
         super(paperId, paperTitle, paperAuthors, paperDate, null, null, paperTopics, null);
         this.sharingUserComment = sharingUserComment;
         this.sharingUser = sharingUser;

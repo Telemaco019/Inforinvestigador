@@ -1,17 +1,17 @@
 package com.unibs.zanotti.inforinvestigador.suggestions;
 
-import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.source.ISuggestionsDatasource;
+import com.unibs.zanotti.inforinvestigador.data.source.IPaperShareDatasource;
 
 import java.util.List;
 
 public class SuggestionsPresenter implements SuggesitonsContract.Presenter {
 
     private final SuggesitonsContract.View view;
-    private ISuggestionsDatasource suggestionsDataSource;
+    private IPaperShareDatasource suggestionsDataSource;
 
-    public SuggestionsPresenter(SuggesitonsContract.View view, ISuggestionsDatasource dataSource) {
+    public SuggestionsPresenter(SuggesitonsContract.View view, IPaperShareDatasource dataSource) {
         this.view = view;
         this.suggestionsDataSource = dataSource;
         view.setPresenter(this);
@@ -29,7 +29,7 @@ public class SuggestionsPresenter implements SuggesitonsContract.Presenter {
     }
 
     private void loadResearchersSuggestions() {
-        List<PaperSuggestion> papersSuggestions = suggestionsDataSource.getPapersSuggestions();
+        List<PaperShare> papersSuggestions = suggestionsDataSource.getPaperShares();
         view.showPapersSuggestions(papersSuggestions);
     }
 

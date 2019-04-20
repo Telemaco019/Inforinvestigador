@@ -1,17 +1,31 @@
-package com.unibs.zanotti.inforinvestigador.data.source.local;
-
+package com.unibs.zanotti.inforinvestigador.data.source.local.dao.impl;
 
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
+import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IResearcherSuggestionLocalDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-/**
- * A dummy Data Access Object for the possible paper suggestion table
- */
-public class DummyResearchersSuggestionsDAO {
-    public List<ResearcherSuggestion> getSuggestions() {
+public class DummyResearcherSuggestionLocalDao implements IResearcherSuggestionLocalDao {
+    @Override
+    public void save(ResearcherSuggestion researcherSuggestion) {
+
+    }
+
+    @Override
+    public void update(ResearcherSuggestion researcherSuggestion, String[] params) {
+
+    }
+
+    @Override
+    public void delete(ResearcherSuggestion researcherSuggestion) {
+
+    }
+
+    @Override
+    public List<ResearcherSuggestion> getAll() {
         List<ResearcherSuggestion> result = new ArrayList<>();
 
         result.add(
@@ -58,5 +72,10 @@ public class DummyResearchersSuggestionsDAO {
         );
 
         return result;
+    }
+
+    @Override
+    public Optional<ResearcherSuggestion> get(long id) {
+        return Optional.empty();
     }
 }

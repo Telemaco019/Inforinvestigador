@@ -1,12 +1,12 @@
 package com.unibs.zanotti.inforinvestigador.data.source.remote.dao.impl;
 
 import com.unibs.zanotti.inforinvestigador.data.model.Paper;
-import com.unibs.zanotti.inforinvestigador.data.source.remote.dao.IRemotePaperDao;
+import com.unibs.zanotti.inforinvestigador.data.source.remote.dao.IPaperRemoteDao;
 
 import java.util.List;
 import java.util.Optional;
 
-public class RemotePaperDao implements IRemotePaperDao {
+public class PaperRemoteDao implements IPaperRemoteDao {
     @Override
     public void save(Paper paper) {
 

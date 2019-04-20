@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion
+import com.unibs.zanotti.inforinvestigador.data.model.PaperShare
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PaperSuggestionAdapter(var dataset: List<PaperSuggestion>, val listener: OnPaperSuggestionListener) :
+class PaperSuggestionAdapter(var dataset: List<PaperShare>, val listener: OnPaperSuggestionListener) :
     RecyclerView.Adapter<PaperSuggestionAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View, val listener: OnPaperSuggestionListener) :
