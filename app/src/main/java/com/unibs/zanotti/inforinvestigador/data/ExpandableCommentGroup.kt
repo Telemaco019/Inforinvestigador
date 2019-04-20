@@ -1,6 +1,5 @@
-package com.unibs.zanotti.inforinvestigador.comments
+package com.unibs.zanotti.inforinvestigador.data
 
-import com.unibs.zanotti.inforinvestigador.data.Comment
 import com.xwray.groupie.ExpandableGroup
 
 class ExpandableCommentGroup constructor(comment: Comment, depth: Int = 0) :

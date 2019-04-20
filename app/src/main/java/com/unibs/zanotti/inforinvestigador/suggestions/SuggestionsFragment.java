@@ -14,7 +14,6 @@ import com.unibs.zanotti.inforinvestigador.data.PaperSuggestion;
 import com.unibs.zanotti.inforinvestigador.data.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.suggestions.adapters.PaperSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.suggestions.adapters.ResearcherSuggestionAdapter;
-import com.unibs.zanotti.inforinvestigador.utils.DataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
