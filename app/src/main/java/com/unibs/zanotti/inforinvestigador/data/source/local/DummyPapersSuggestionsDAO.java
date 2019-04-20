@@ -5,6 +5,7 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperSuggestion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,11 +14,11 @@ import java.util.List;
 public class DummyPapersSuggestionsDAO {
     public List<PaperSuggestion> getSuggestions() {
         List<PaperSuggestion> result = new ArrayList<>();
-        String  paperId = "1";
+        Long paperId = 1l;
         String title = "This is the title of the paper";
-        String authors = "Devis Bianchini, Marina Zanella, Pietro Baroni";
+        List<String> authors = Arrays.asList("Devis Bianchini", "Marina Zanella", "Pietro Baroni");
         String date = "Mar 2019 - ";
-        String[] topics = new String[]{"Informatics", "Science", "Math"};
+        List<String> topics = Arrays.asList("Informatics", "Science", "Math");
         String comment = "This is the comment made by the use user who shared the paper";
         String sharingUser = "Mario Relha";
         int sharingProfilePicture = R.drawable.test_researcher_7;
@@ -35,11 +36,9 @@ public class DummyPapersSuggestionsDAO {
                 );
         result.add(suggestion_1);
 
-        paperId = "2";
+        paperId = 2l;
         title = "This is the title of the second paper";
-        authors = "Pippo Baudo, Nicola Adami, Marina Zanella";
         date = "Dec 2018 - ";
-        topics = new String[]{"Informatics", "Science", "Math"};
         comment = "This is the comment made by the use user who shared the paper";
         sharingUser = "Maria Piras";
         sharingProfilePicture = R.drawable.test_researcher_1;
@@ -56,11 +55,9 @@ public class DummyPapersSuggestionsDAO {
                 )
         );
 
-        paperId = "3";
+        paperId = 3l;
         title = "This is the title of the third paper";
-        authors = "Pippo Baudo, Nicola Adami, Marina Zanella";
         date = "May 2018 - ";
-        topics = new String[]{"History", "Science", "Informatics", "Geography"};
         comment = "This is the comment made by the use user who shared the paper";
         sharingUser = "Teresa Sardinha";
         sharingProfilePicture = R.drawable.test_researcher_5;
@@ -78,11 +75,9 @@ public class DummyPapersSuggestionsDAO {
         );
 
 
-        paperId = "4";
+        paperId = 4l;
         title = "This is the title of the fourth paper";
-        authors = "Pippo Baudo, Nicola Adami, Marina Zanella";
         date = "May 2018 - ";
-        topics = new String[]{"History", "Science", "Informatics", "Geography"};
         comment = "This is the comment made by the use user who shared the paper";
         sharingUser = "Leonor Freitas";
         sharingProfilePicture = R.drawable.test_researcher_2;

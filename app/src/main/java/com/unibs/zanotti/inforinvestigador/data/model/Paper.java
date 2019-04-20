@@ -8,7 +8,7 @@ public class Paper {
     private List<String> paperAuthors;
     private String paperDate;
     private String paperDoi;
-    private int paperCitations;
+    private Integer paperCitations;
     private List<String> paperTopics;
     private ExpandableCommentGroup paperComments;
 
@@ -21,7 +21,7 @@ public class Paper {
                  String paperTitle,
                  List<String> paperAuthors,
                  String paperDate, String paperDoi,
-                 int paperCitations,
+                 Integer paperCitations,
                  List<String> paperTopics,
                  ExpandableCommentGroup paperComments) {
         this.paperId = paperId;

@@ -15,14 +15,11 @@ public class PaperSuggestion extends Paper {
                            String paperTitle,
                            List<String> paperAuthors,
                            String paperDate,
-                           String paperDoi,
-                           int paperCitations,
                            List<String> paperTopics,
-                           ExpandableCommentGroup paperComments,
                            String sharingUserComment,
                            String sharingUser,
                            int sharingUserProfilePicture) {
-        super(paperId, paperTitle, paperAuthors, paperDate, paperDoi, paperCitations, paperTopics, paperComments);
+        super(paperId, paperTitle, paperAuthors, paperDate, null, null, paperTopics, null);
         this.sharingUserComment = sharingUserComment;
         this.sharingUser = sharingUser;
         this.sharingUserProfilePicture = sharingUserProfilePicture;
