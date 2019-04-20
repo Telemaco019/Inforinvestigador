@@ -8,14 +8,23 @@ import com.unibs.zanotti.inforinvestigador.data.source.local.dao.impl.DummyResea
 import java.util.List;
 
 public class ResearcherSuggestionLocalDatasource implements IResearcherSuggestionDatasource {
+    private static volatile ResearcherSuggestionLocalDatasource INSTANCE;
+
     private IResearcherSuggestionLocalDao researcherSuggestionDao;
 
     public ResearcherSuggestionLocalDatasource() {
         researcherSuggestionDao = new DummyResearcherSuggestionLocalDao();
     }
 
+    public static ResearcherSuggestionLocalDatasource getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ResearcherSuggestionLocalDatasource();
+        }
+        return INSTANCE;
+    }
+
     @Override
     public List<ResearcherSuggestion> getResearcherSuggestions() {
-        return null;
+        return researcherSuggestionDao.getAll();
     }
 }
