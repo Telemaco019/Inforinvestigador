@@ -1,6 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.data.source;
 
-import com.unibs.zanotti.inforinvestigador.data.model.ExpandableCommentGroup;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 
 import java.util.List;
@@ -10,6 +9,4 @@ import java.util.List;
  */
 public interface IPaperShareDatasource {
     List<PaperShare> getPaperShares();
-
-    List<ExpandableCommentGroup> getPaperShareComments(long paperShareId);
 }

@@ -1,6 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.data.source.local;
 
-import com.unibs.zanotti.inforinvestigador.data.model.ExpandableCommentGroup;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.source.IPaperShareDatasource;
 import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IPaperShareLocalDao;
@@ -29,10 +28,5 @@ public class PaperShareLocalDatasource implements IPaperShareDatasource {
     @Override
     public List<PaperShare> getPaperShares() {
         return paperSharesDao.getAll();
-    }
-
-    @Override
-    public List<ExpandableCommentGroup> getPaperShareComments(long paperShareId) {
-        return null;
     }
 }
