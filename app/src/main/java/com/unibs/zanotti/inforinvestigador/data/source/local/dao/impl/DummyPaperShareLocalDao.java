@@ -46,7 +46,8 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                         topics,
                         comment,
                         sharingUser,
-                        sharingProfilePicture
+                        sharingProfilePicture,
+                        null
                 );
         result.add(share_1);
 
@@ -65,7 +66,8 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                         topics,
                         comment,
                         sharingUser,
-                        sharingProfilePicture
+                        sharingProfilePicture,
+                        null
                 )
         );
 
@@ -84,7 +86,8 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                         topics,
                         comment,
                         sharingUser,
-                        sharingProfilePicture
+                        sharingProfilePicture,
+                        null
                 )
         );
 
@@ -104,7 +107,8 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                         topics,
                         comment,
                         sharingUser,
-                        sharingProfilePicture
+                        sharingProfilePicture,
+                        null
                 )
         );
 

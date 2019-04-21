@@ -10,7 +10,6 @@ public class Paper {
     private String paperDoi;
     private Integer paperCitations;
     private List<String> paperTopics;
-    private ExpandableCommentGroup paperComments;
 
 
     public Paper() {
@@ -22,8 +21,7 @@ public class Paper {
                  List<String> paperAuthors,
                  String paperDate, String paperDoi,
                  Integer paperCitations,
-                 List<String> paperTopics,
-                 ExpandableCommentGroup paperComments) {
+                 List<String> paperTopics) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -31,7 +29,6 @@ public class Paper {
         this.paperDoi = paperDoi;
         this.paperCitations = paperCitations;
         this.paperTopics = paperTopics;
-        this.paperComments = paperComments;
     }
 
     public Long getPaperId() {
@@ -88,13 +85,5 @@ public class Paper {
 
     public void setPaperTopics(List<String> paperTopics) {
         this.paperTopics = paperTopics;
-    }
-
-    public ExpandableCommentGroup getPaperComments() {
-        return paperComments;
-    }
-
-    public void setPaperComments(ExpandableCommentGroup paperComments) {
-        this.paperComments = paperComments;
     }
 }
