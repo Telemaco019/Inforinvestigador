@@ -1,10 +1,10 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
@@ -18,7 +18,7 @@ public class PaperDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_paper_detail);
         setupSupportActionBar();
 
-        String paperId = getIntent().getStringExtra(EXTRA_PAPER_ID);
+        long paperId = getIntent().getLongExtra(EXTRA_PAPER_ID, 0l);
 
         PaperDetailFragment paperDetailFragment = (PaperDetailFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (paperDetailFragment == null) {
@@ -35,12 +35,13 @@ public class PaperDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Show back icon
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Set the title of the support action bar
-        getSupportActionBar().setTitle(R.string.app_name);
-        // Set the font of the support action bar
-        TextView textView = (TextView) toolbar.getChildAt(0);
-        textView.setTypeface(getResources().getFont(R.font.montserrat_light));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            // Set the title of the support action bar
+            getSupportActionBar().setTitle(R.string.app_name);
+            // Set the font of the title
+            ((TextView) toolbar.getChildAt(0)).setTypeface(getResources().getFont(R.font.montserrat_light));
+        }
     }
 
     @Override

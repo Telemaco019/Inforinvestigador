@@ -22,13 +22,18 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     @Override
     public void start() {
-        loadSuggestions();
+        loadFeed();
     }
 
     @Override
-    public void loadSuggestions() {
+    public void loadFeed() {
         loadPaperShares();
         loadResearchersSuggestions();
+    }
+
+    @Override
+    public void paperShareClicked(long paperId) {
+        view.showPaperDetails(paperId);
     }
 
     private void loadResearchersSuggestions() {
@@ -95,6 +100,6 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     private void loadPaperShares() {
         List<PaperShare> papersSuggestions = paperSharesDatasource.getPaperShares();
-        view.showPapersSuggestions(papersSuggestions);
+        view.showPaperShares(papersSuggestions);
     }
 }

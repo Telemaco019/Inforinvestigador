@@ -2,13 +2,12 @@ package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
@@ -39,12 +38,12 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
     private TextView paperPublisher;
 
     public PaperDetailFragment() {
-        // Required empty public constructor
+        groupAdapter = new GroupAdapter<>();
     }
 
-    public static PaperDetailFragment newInstance(String paperId) {
+    public static PaperDetailFragment newInstance(long paperId) {
         Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_PAPER_ID, paperId);
+        arguments.putLong(ARGUMENT_PAPER_ID, paperId);
         PaperDetailFragment fragment = new PaperDetailFragment();
         fragment.setArguments(arguments);
         return fragment;

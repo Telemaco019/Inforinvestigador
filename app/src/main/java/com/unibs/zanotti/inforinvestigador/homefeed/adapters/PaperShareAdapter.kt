@@ -9,10 +9,10 @@ import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperSuggestionListener) :
+class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperShareListener) :
     RecyclerView.Adapter<PaperShareAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(view: View, val listener: OnPaperSuggestionListener) :
+    inner class MyViewHolder(view: View, val listener: OnPaperShareListener) :
         RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
@@ -21,7 +21,7 @@ class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperSugg
         }
 
         override fun onClick(v: View?) {
-            listener.onPaperSuggestionClick(adapterPosition)
+            listener.onPaperShareClick(dataset[adapterPosition].paperId)
         }
 
         var tvPaperTitle = view.findViewById<TextView>(R.id.paper_title)
@@ -56,7 +56,7 @@ class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperSugg
         holder.tvSharingUserProfilePicture.setImageResource(dataset[position].sharingUserProfilePicture)
     }
 
-    interface OnPaperSuggestionListener {
-        fun onPaperSuggestionClick(suggestionNumber: Int)
+    interface OnPaperShareListener {
+        fun onPaperShareClick(paperId: Long)
     }
 }

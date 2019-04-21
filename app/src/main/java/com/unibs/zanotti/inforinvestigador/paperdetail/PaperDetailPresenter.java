@@ -6,9 +6,9 @@ package com.unibs.zanotti.inforinvestigador.paperdetail;
  */
 public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     private final PaperDetailContract.View view;
-    private String paperId;
+    private long paperId;
 
-    public PaperDetailPresenter(String paperId, PaperDetailContract.View view) {
+    public PaperDetailPresenter(long paperId, PaperDetailContract.View view) {
         this.view = view;
         this.paperId = paperId;
 

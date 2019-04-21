@@ -1,5 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.common.Actions;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperShareAdapter;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestionAdapter;
+import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomefeedFragment extends Fragment implements
         HomefeedContract.View,
-        PaperShareAdapter.OnPaperSuggestionListener {
+        PaperShareAdapter.OnPaperShareListener {
 
     private HomefeedContract.Presenter presenter;
     private PaperShareAdapter paperShareAdapter;
@@ -64,17 +67,24 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void onPaperSuggestionClick(int suggestionNumber) {
-
+    public void onPaperShareClick(long paperId) {
+        this.presenter.paperShareClicked(paperId);
     }
 
     @Override
-    public void showPapersSuggestions(List<PaperShare> suggestions) {
+    public void showPaperShares(List<PaperShare> suggestions) {
         this.paperShareAdapter.setDataset(suggestions);
     }
 
     @Override
     public void showResearchersSuggestions(List<ResearcherSuggestion> suggestions) {
         this.researcherSuggestionAdapter.setDataset(suggestions);
+    }
+
+    @Override
+    public void showPaperDetails(long paperId) {
+        Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
+        intent.putExtra(PaperDetailActivity.EXTRA_PAPER_ID, paperId);
+        startActivity(intent);
     }
 }

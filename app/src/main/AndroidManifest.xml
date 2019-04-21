@@ -11,7 +11,7 @@
             android:theme="@style/AppTheme">
         <activity android:name=".paperdetail.PaperDetailActivity">
             <intent-filter>
-                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER"/>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

@@ -9,12 +9,16 @@ import java.util.List;
 
 public interface HomefeedContract {
     interface Presenter extends BasePresenter {
-        void loadSuggestions();
+        void loadFeed();
+
+        void paperShareClicked(long paperId);
     }
 
     interface View extends BaseView<Presenter> {
-        void showPapersSuggestions(List<PaperShare> suggestions);
+        void showPaperShares(List<PaperShare> suggestions);
 
         void showResearchersSuggestions(List<ResearcherSuggestion> suggestions);
+
+        void showPaperDetails(long paperId);
     }
 }
