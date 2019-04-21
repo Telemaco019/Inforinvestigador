@@ -13,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
+
+
 public class MainNavigationActivity extends AppCompatActivity implements MainNavigationContract.View {
     private MainNavigationContract.Presenter navigationPresenter;
 
