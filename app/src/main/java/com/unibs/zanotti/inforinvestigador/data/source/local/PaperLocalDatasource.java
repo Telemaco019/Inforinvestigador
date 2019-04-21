@@ -1,15 +1,15 @@
-package com.unibs.zanotti.inforinvestigador.data.source.remote;
+package com.unibs.zanotti.inforinvestigador.data.source.local;
 
 import com.unibs.zanotti.inforinvestigador.data.model.Paper;
 import com.unibs.zanotti.inforinvestigador.data.source.IPaperDatasource;
-import com.unibs.zanotti.inforinvestigador.data.source.remote.dao.IPaperRemoteDao;
+import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IPaperLocalDao;
 
 import java.util.Optional;
 
-public class PaperRemoteDatasource implements IPaperDatasource {
-    private IPaperRemoteDao paperDao;
+public class PaperLocalDatasource implements IPaperDatasource {
+    private final IPaperLocalDao paperDao;
 
-    public PaperRemoteDatasource(IPaperRemoteDao paperDao) {
+    public PaperLocalDatasource(IPaperLocalDao paperDao) {
         this.paperDao = paperDao;
     }
 

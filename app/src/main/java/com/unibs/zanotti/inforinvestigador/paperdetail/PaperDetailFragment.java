@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup;
+import com.unibs.zanotti.inforinvestigador.data.model.Comment;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.ViewHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PaperDetailFragment extends Fragment implements PaperDetailContract.View {
     private static final String ARGUMENT_PAPER_ID = "PAPER_ID";
@@ -36,6 +39,7 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
     private ImageView paperImage;
     private TextView paperDOI;
     private TextView paperPublisher;
+    private RecyclerView rvComments;
 
     public PaperDetailFragment() {
         groupAdapter = new GroupAdapter<>();
@@ -69,16 +73,20 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
         paperDOI = view.findViewById(R.id.paper_doi);
         paperAuthors = view.findViewById(R.id.paper_authors);
         paperTopics = view.findViewById(R.id.paper_topics);
-        paperCitations = view.findViewById(R.id.paper_citations);
+        paperCitations = view.findViewById(R.id.paper_citations_2);
         paperPublisher = view.findViewById(R.id.paper_publisher);
+        rvComments = view.findViewById(R.id.rv_paper_comments);
 
-        RecyclerView rvPaperComments = view.findViewById(R.id.rv_paper_comments);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),groupAdapter.getSpanCount());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), groupAdapter.getSpanCount());
         layoutManager.setSpanCount(groupAdapter.getSpanCount());
-        rvPaperComments.setAdapter(groupAdapter);
-        rvPaperComments.setLayoutManager(layoutManager);
+        rvComments.setAdapter(groupAdapter);
+        rvComments.setLayoutManager(layoutManager);
 
         return view;
+    }
+
+    private List<ExpandableCommentGroup> generateCommentsExpandableGroupList(List<Comment> comments) {
+        return comments.stream().map(c -> new ExpandableCommentGroup(c, 0)).collect(Collectors.toList());
     }
 
     @Override
@@ -98,7 +106,7 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
 
     @Override
     public void showPaperAuthors(List<String> authors) {
-        String authorsToString = String.join(",", authors);
+        String authorsToString = String.join(", ", authors);
         this.paperAuthors.setText(authorsToString);
     }
 
@@ -108,8 +116,14 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
     }
 
     @Override
-    public void showPaperCitations(String citations) {
-        this.paperCitations.setText(citations);
+    public void showPaperCitations(int citations) {
+        this.paperCitations.setText(String.valueOf(citations));
+    }
+
+    @Override
+    public void showPaperTopics(List<String> topics) {
+        String topicsToString = String.join(", ",topics);
+        this.paperTopics.setText(topicsToString);
     }
 
     @Override
@@ -125,5 +139,10 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
     @Override
     public void showPaperImage(int resImageId) {
         this.paperImage.setImageResource(resImageId);
+    }
+
+    @Override
+    public void showComments(List<Comment> comments) {
+        groupAdapter.addAll(generateCommentsExpandableGroupList(comments));
     }
 }

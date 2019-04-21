@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.common.Actions;
+import com.unibs.zanotti.inforinvestigador.data.model.Comment;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperShareAdapter;
@@ -82,9 +84,10 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void showPaperDetails(long paperId) {
+    public void showPaperDetails(long paperId, List<Comment> comments) {
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.EXTRA_PAPER_ID, paperId);
+        intent.putParcelableArrayListExtra(PaperDetailActivity.EXTRA_COMMENTS_LIST, (ArrayList<? extends Parcelable>) comments);
         startActivity(intent);
     }
 }

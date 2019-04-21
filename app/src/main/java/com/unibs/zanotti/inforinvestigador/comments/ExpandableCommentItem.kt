@@ -1,9 +1,10 @@
-package com.unibs.zanotti.inforinvestigador.data.model
+package com.unibs.zanotti.inforinvestigador.comments
 
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import com.unibs.zanotti.inforinvestigador.R
+import com.unibs.zanotti.inforinvestigador.data.model.Comment
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.ExpandableItem
 import com.xwray.groupie.Item
