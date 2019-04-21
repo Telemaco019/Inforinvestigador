@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.data.model.ExpandableCommentGroup;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.data.source.IPaperShareDatasource;
@@ -32,8 +33,9 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
     }
 
     @Override
-    public void paperShareClicked(long paperId) {
-        view.showPaperDetails(paperId);
+    public void paperShareClicked(long paperShareId) {
+        List<ExpandableCommentGroup> comments = paperSharesDatasource.getPaperShareComments(paperShareId);
+        view.showPaperDetails(paperShareId, comments);
     }
 
     private void loadResearchersSuggestions() {

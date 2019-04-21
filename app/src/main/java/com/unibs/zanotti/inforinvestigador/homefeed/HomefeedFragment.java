@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.common.Actions;
+import com.unibs.zanotti.inforinvestigador.data.model.ExpandableCommentGroup;
 import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperShareAdapter;
@@ -67,8 +68,8 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void onPaperShareClick(long paperId) {
-        this.presenter.paperShareClicked(paperId);
+    public void onPaperShareClick(long paperShareId) {
+        this.presenter.paperShareClicked(paperShareId);
     }
 
     @Override
@@ -82,7 +83,7 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void showPaperDetails(long paperId) {
+    public void showPaperDetails(long paperId, List<ExpandableCommentGroup> comments) {
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.EXTRA_PAPER_ID, paperId);
         startActivity(intent);

@@ -21,7 +21,7 @@ class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperShar
         }
 
         override fun onClick(v: View?) {
-            listener.onPaperShareClick(dataset[adapterPosition].paperId)
+            listener.onPaperShareClick(dataset[adapterPosition].paperShareId)
         }
 
         var tvPaperTitle = view.findViewById<TextView>(R.id.paper_title)
@@ -57,6 +57,6 @@ class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperShar
     }
 
     interface OnPaperShareListener {
-        fun onPaperShareClick(paperId: Long)
+        fun onPaperShareClick(paperShareId: Long)
     }
 }

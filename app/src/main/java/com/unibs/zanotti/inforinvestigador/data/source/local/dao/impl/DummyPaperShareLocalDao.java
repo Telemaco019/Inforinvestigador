@@ -28,6 +28,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
     @Override
     public List<PaperShare> getAll() {
         List<PaperShare> result = new ArrayList<>();
+        Long paperShareId = 1l;
         Long paperId = 1l;
         String title = "This is the title of the paper";
         List<String> authors = Arrays.asList("Devis Bianchini", "Marina Zanella", "Pietro Baroni");
@@ -39,6 +40,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
 
         PaperShare share_1 =
                 new PaperShare(
+                        paperShareId,
                         paperId,
                         title,
                         authors,
@@ -51,6 +53,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                 );
         result.add(share_1);
 
+        paperShareId = 2l;
         paperId = 2l;
         title = "This is the title of the second paper";
         date = "Dec 2018 - ";
@@ -59,6 +62,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
         sharingProfilePicture = R.drawable.test_researcher_1;
         result.add(
                 new PaperShare(
+                        paperShareId,
                         paperId,
                         title,
                         authors,
@@ -71,6 +75,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                 )
         );
 
+        paperShareId = 3l;
         paperId = 3l;
         title = "This is the title of the third paper";
         date = "May 2018 - ";
@@ -79,6 +84,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
         sharingProfilePicture = R.drawable.test_researcher_5;
         result.add(
                 new PaperShare(
+                        paperShareId,
                         paperId,
                         title,
                         authors,
@@ -92,6 +98,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
         );
 
 
+        paperShareId = 4l;
         paperId = 4l;
         title = "This is the title of the fourth paper";
         date = "May 2018 - ";
@@ -100,6 +107,7 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
         sharingProfilePicture = R.drawable.test_researcher_2;
         result.add(
                 new PaperShare(
+                        paperShareId,
                         paperId,
                         title,
                         authors,
