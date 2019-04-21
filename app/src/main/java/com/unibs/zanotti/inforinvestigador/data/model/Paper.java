@@ -8,20 +8,19 @@ public class Paper {
     private List<String> paperAuthors;
     private String paperDate;
     private String paperDoi;
-    private Integer paperCitations;
+    private int paperCitations;
     private List<String> paperTopics;
-
-
-    public Paper() {
-
-    }
+    private String paperAbstract;
+    private String paperPublisher;
 
     public Paper(Long paperId,
                  String paperTitle,
                  List<String> paperAuthors,
                  String paperDate, String paperDoi,
-                 Integer paperCitations,
-                 List<String> paperTopics) {
+                 int paperCitations,
+                 List<String> paperTopics,
+                 String paperAbstract,
+                 String paperPublisher) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -29,6 +28,8 @@ public class Paper {
         this.paperDoi = paperDoi;
         this.paperCitations = paperCitations;
         this.paperTopics = paperTopics;
+        this.paperAbstract = paperAbstract;
+        this.paperPublisher = paperPublisher;
     }
 
     public Long getPaperId() {
@@ -63,6 +64,14 @@ public class Paper {
         this.paperDate = paperDate;
     }
 
+    public String getPaperPublisher() {
+        return paperPublisher;
+    }
+
+    public void setPaperPublisher(String paperPublisher) {
+        this.paperPublisher = paperPublisher;
+    }
+
     public String getPaperDoi() {
         return paperDoi;
     }
@@ -73,6 +82,14 @@ public class Paper {
 
     public int getPaperCitations() {
         return paperCitations;
+    }
+
+    public String getPaperAbstract() {
+        return paperAbstract;
+    }
+
+    public void setPaperAbstract(String paperAbstract) {
+        this.paperAbstract = paperAbstract;
     }
 
     public void setPaperCitations(int paperCitations) {

@@ -2,11 +2,16 @@ package com.unibs.zanotti.inforinvestigador.data.model;
 
 import java.util.List;
 
-public class PaperShare extends Paper {
+public class PaperShare {
+    private String paperTitle;
+    private String paperDate;
+    private List<String> paperTopics;
+    private List<String> paperAuthors;
+    private Long paperId;
     private String sharingUserComment;
     private String sharingUser;
     private int sharingUserProfilePicture;
-    private List<ExpandableCommentGroup> comments;
+    private List<Comment> comments;
     private long paperShareId;
 
     public PaperShare() {
@@ -23,8 +28,12 @@ public class PaperShare extends Paper {
             String sharingUserComment,
             String sharingUser,
             int sharingUserProfilePicture,
-            List<ExpandableCommentGroup> comments) {
-        super(paperId, paperTitle, paperAuthors, paperDate, null, null, paperTopics);
+            List<Comment> comments) {
+        this.paperId = paperId;
+        this.paperTitle = paperTitle;
+        this.paperAuthors = paperAuthors;
+        this.paperDate = paperDate;
+        this.paperTopics = paperTopics;
         this.paperShareId = paperShareId;
         this.sharingUserComment = sharingUserComment;
         this.sharingUser = sharingUser;
@@ -56,11 +65,11 @@ public class PaperShare extends Paper {
         this.sharingUserProfilePicture = sharingUserProfilePicture;
     }
 
-    public List<ExpandableCommentGroup> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<ExpandableCommentGroup> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -70,5 +79,45 @@ public class PaperShare extends Paper {
 
     public void setPaperShareId(long paperShareId) {
         this.paperShareId = paperShareId;
+    }
+
+    public String getPaperTitle() {
+        return paperTitle;
+    }
+
+    public void setPaperTitle(String paperTitle) {
+        this.paperTitle = paperTitle;
+    }
+
+    public String getPaperDate() {
+        return paperDate;
+    }
+
+    public void setPaperDate(String paperDate) {
+        this.paperDate = paperDate;
+    }
+
+    public List<String> getPaperTopics() {
+        return paperTopics;
+    }
+
+    public void setPaperTopics(List<String> paperTopics) {
+        this.paperTopics = paperTopics;
+    }
+
+    public List<String> getPaperAuthors() {
+        return paperAuthors;
+    }
+
+    public void setPaperAuthors(List<String> paperAuthors) {
+        this.paperAuthors = paperAuthors;
+    }
+
+    public Long getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(Long paperId) {
+        this.paperId = paperId;
     }
 }
