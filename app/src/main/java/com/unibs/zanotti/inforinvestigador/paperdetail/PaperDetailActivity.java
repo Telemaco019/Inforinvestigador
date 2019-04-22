@@ -7,9 +7,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.source.local.PaperLocalService;
-import com.unibs.zanotti.inforinvestigador.data.source.local.dao.impl.DummyPaperLocalDao;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 
 public class PaperDetailActivity extends AppCompatActivity {
@@ -31,7 +30,7 @@ public class PaperDetailActivity extends AppCompatActivity {
         }
 
         new PaperDetailPresenter(paperId,
-                PaperLocalService.getInstance(new DummyPaperLocalDao()),
+                Injection.providePaperService(),
                 paperDetailFragment);
     }
 
