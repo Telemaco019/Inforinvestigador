@@ -72,7 +72,7 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void showPapers(List<FeedPaper> feedPapers) {
+    public void showPapersFeed(List<FeedPaper> feedPapers) {
         this.paperFeedAdapter.setDataset(feedPapers);
     }
 

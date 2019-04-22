@@ -114,12 +114,12 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
                     paper.getPaperTitle(),
                     paper.getSharingUserComment(),
                     optionalUser.map(User::getName).orElse(""),
-                    optionalUser.map(User::getProfilePicture).orElse(0),
+                    optionalUser.map(User::getProfilePictureUrl).orElse(""),
                     paper.getPaperDate(),
                     paper.getPaperTopics(),
                     paper.getPaperAuthors()
             ));
         }
-        view.showPapers(papersFeed);
+        view.showPapersFeed(papersFeed);
     }
 }

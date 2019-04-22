@@ -15,7 +15,7 @@ public interface HomefeedContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void showPapers(List<FeedPaper> feedPapers);
+        void showPapersFeed(List<FeedPaper> feedPapers);
 
         void showResearchersSuggestions(List<ResearcherSuggestion> suggestions);
 

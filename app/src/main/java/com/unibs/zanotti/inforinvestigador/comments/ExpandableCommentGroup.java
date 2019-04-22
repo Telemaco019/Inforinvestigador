@@ -8,8 +8,7 @@ public class ExpandableCommentGroup extends ExpandableGroup {
         super(new ExpandableCommentItem(comment, depth));
 
         for (Comment comm : comment.getChildren()) {
-            add(new ExpandableCommentGroup(comm, depth));
-            depth++;
+            add(new ExpandableCommentGroup(comm, ++depth));
         }
     }
 }

@@ -53,7 +53,7 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
         holder.tvPaperTopics.text = dataset[position].paperTopics.joinToString { t -> t }
         holder.tvPaperComment.text = dataset[position].sharingUserComment
         holder.tvSharingUser.text = dataset[position].sharingUserName
-        holder.tvSharingUserProfilePicture.setImageResource(dataset[position].sharingUserProfilePicture)
+        holder.tvSharingUserProfilePicture.setImageResource(0) // TODO
     }
 
     interface OnPaperShareListener {
