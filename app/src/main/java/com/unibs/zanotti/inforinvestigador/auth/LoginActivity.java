@@ -2,97 +2,84 @@ package com.unibs.zanotti.inforinvestigador.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.auth.api.signin.*;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
+import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = String.valueOf(LoginActivity.class);
 
 
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private TextView passwordForgotLink;
+    private SignInButton googleSignInButton;
 
+    private GoogleSignInOptions mGso;
+    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
-        if (loginFragment == null) {
-            loginFragment = LoginFragment.newInstance();
-
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), loginFragment, R.id.content_frame);
-        }
-
-        new LoginPresenter(loginFragment);
-
-
-
-
-
-    /*    emailEditText = findViewById(R.id.girisEmail);
-        passwordEditText = findViewById(R.id.girisParola);
-        loginButton = findViewById(R.id.girisButton);
-        registerButton = findViewById(R.id.uyeOlButton);
-        signInButton = findViewById(R.id.sign_in_button);
-        newPassButton = findViewById(R.id.yeniSifreButton);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        mAuth = FirebaseAuth.getInstance();
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+        // Build a GoogleSignInClient with the options specified by mGso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, mGso);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(LoginActivity.this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+        emailEditText = findViewById(R.id.login_input_email);
+        passwordEditText = findViewById(R.id.login_input_password);
+        loginButton = findViewById(R.id.btn_login);
+        passwordForgotLink = findViewById(R.id.link_password_forgot);
 
-        signInButton.setOnClickListener(v -> signIn());
-        loginButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)));
-
-        registerButton.setOnClickListener(v -> {
-            String email = emailEditText.getText().toString();
-            String parola = passwordEditText.getText().toString();
-
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(getApplicationContext(), "Please fill in the required fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (TextUtils.isEmpty(parola)) {
-                Toast.makeText(getApplicationContext(), "Please fill in the required fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (parola.length() < 6) {
-                Toast.makeText(getApplicationContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            mAuth.createUserWithEmailAndPassword(email, parola)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "E-mail or passwordEditText is wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+        loginButton.setOnClickListener(e ->
+                authWithCredentials(emailEditText.getText().toString(), passwordEditText.getText().toString())
+        );
+        passwordForgotLink.setOnClickListener(e -> {
+            ;
         });
 
 
-
-
-        if (mAuth.getCurrentUser() != null) {
-            //startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
-        }*/
-
     }
 
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent intent = new Intent(this, MainNavigationActivity.class);
+            //   startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mAuth.getCurrentUser() != null) {
+            //startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,6 +90,35 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = result.getSignInAccount();
                 authWithGoogle(account);
             }
+        }
+    }
+
+
+    private void authWithCredentials(String email, String password) {
+        if (StringUtils.isBlank(email)) {
+            emailEditText.setError(getResources().getString(R.string.msg_error_email_empty));
+        }
+
+        if (StringUtils.isBlank(password)) {
+            passwordEditText.setError(getResources().getString(R.string.msg_error_password_empty));
+        }
+
+        if (StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail: success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail: failure", task.getException());
+                            passwordEditText.setError(getResources().getString(R.string.msg_login_failed));
+                            passwordForgotLink.setVisibility(View.VISIBLE);
+                            updateUI(null);
+                        }
+                    });
         }
     }
 
@@ -119,5 +135,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });*/
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
