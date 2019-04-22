@@ -22,6 +22,6 @@ public class ActivityUtils {
     public static void replaceFragment(@NotNull FragmentManager fragmentManager,
                                        @NotNull Fragment newFragment,
                                        @NotNull int frameHolder) {
-        fragmentManager.beginTransaction().replace(frameHolder, newFragment);
+        fragmentManager.beginTransaction().replace(frameHolder, newFragment).commit();
     }
 }

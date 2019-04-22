@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.recommendation.list
+package com.unibs.zanotti.inforinvestigador.homefeed.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.recommendation.model.ResearcherSuggestion
+import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ResearcherSuggestionAdapter(private val dataset: ArrayList<ResearcherSuggestion>) :
+class ResearcherSuggestionAdapter(var dataset: List<ResearcherSuggestion>) :
     RecyclerView.Adapter<ResearcherSuggestionAdapter.MyViewHolder>() {
 
 
@@ -26,7 +26,9 @@ class ResearcherSuggestionAdapter(private val dataset: ArrayList<ResearcherSugge
         // Set layout parameters of the view
         // ...
 
-        return MyViewHolder(view)
+        return MyViewHolder(
+            view
+        )
     }
 
     override fun getItemCount() = dataset.size

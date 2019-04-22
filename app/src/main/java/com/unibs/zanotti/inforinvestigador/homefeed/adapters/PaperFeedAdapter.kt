@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.recommendation.list
+package com.unibs.zanotti.inforinvestigador.homefeed.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.recommendation.model.PaperSuggestion
+import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PaperSuggestionAdapter(val dataset: ArrayList<PaperSuggestion>, val listener: OnPaperSuggestionListener) :
-    RecyclerView.Adapter<PaperSuggestionAdapter.MyViewHolder>() {
+class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareListener) :
+    RecyclerView.Adapter<PaperFeedAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(view: View, val listener: OnPaperSuggestionListener) :
+    inner class MyViewHolder(view: View, val listener: OnPaperShareListener) :
         RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
@@ -21,7 +21,7 @@ class PaperSuggestionAdapter(val dataset: ArrayList<PaperSuggestion>, val listen
         }
 
         override fun onClick(v: View?) {
-            listener.onPaperSuggestionClick(adapterPosition)
+            listener.onPaperShareClick(dataset[adapterPosition].paperId)
         }
 
         var tvPaperTitle = view.findViewById<TextView>(R.id.paper_title)
@@ -48,15 +48,15 @@ class PaperSuggestionAdapter(val dataset: ArrayList<PaperSuggestion>, val listen
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // Get element at this position from the dataset and replace the content of the view with that element
         holder.tvPaperTitle.text = dataset[position].paperTitle
-        holder.tvPaperAuthors.text = dataset[position].paperAuthors
+        holder.tvPaperAuthors.text = dataset[position].paperAuthors.joinToString(separator = ", ")
         holder.tvPaperDate.text = dataset[position].paperDate
         holder.tvPaperTopics.text = dataset[position].paperTopics.joinToString { t -> t }
-        holder.tvPaperComment.text = dataset[position].paperComment
-        holder.tvSharingUser.text = dataset[position].sharingUser
-        holder.tvSharingUserProfilePicture.setImageResource(dataset[position].sharingUserProfilePicture)
+        holder.tvPaperComment.text = dataset[position].sharingUserComment
+        holder.tvSharingUser.text = dataset[position].sharingUserName
+        holder.tvSharingUserProfilePicture.setImageResource(0) // TODO
     }
 
-    interface OnPaperSuggestionListener {
-        fun onPaperSuggestionClick(suggestionNumber: Int)
+    interface OnPaperShareListener {
+        fun onPaperShareClick(paperShareId: Long)
     }
 }

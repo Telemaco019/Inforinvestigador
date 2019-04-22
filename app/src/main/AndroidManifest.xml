@@ -9,10 +9,11 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".common.ViewPaperActivity">
+        <activity android:name=".paperdetail.PaperDetailActivity">
             <intent-filter>
-                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".navigation.MainNavigationActivity">

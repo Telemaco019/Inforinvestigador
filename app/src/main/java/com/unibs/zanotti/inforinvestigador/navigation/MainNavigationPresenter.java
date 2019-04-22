@@ -4,7 +4,9 @@ import androidx.fragment.app.Fragment;
 import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.ProfileFragment;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.recommendation.list.ListRecommendationsFragment;
+import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedFragment;
+import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedPresenter;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import org.jetbrains.annotations.NotNull;
 
 public class MainNavigationPresenter implements MainNavigationContract.Presenter {
@@ -25,9 +27,14 @@ public class MainNavigationPresenter implements MainNavigationContract.Presenter
     public boolean navigate(int fragmentId) {
         Fragment destinationFragment;
         switch (fragmentId) {
-            case R.id.bottom_bar_action_home:
-                destinationFragment = new ListRecommendationsFragment();
+            case R.id.bottom_bar_action_home: {
+                HomefeedFragment fragment = new HomefeedFragment();
+                new HomefeedPresenter(fragment,
+                        Injection.providePaperService(),
+                        Injection.provideUserService());
+                destinationFragment = fragment;
                 break;
+            }
             case R.id.bottom_bar_action_library:
                 destinationFragment = new LibraryFragment();
                 break;

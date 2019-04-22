@@ -13,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
+
+
 public class MainNavigationActivity extends AppCompatActivity implements MainNavigationContract.View {
     private MainNavigationContract.Presenter navigationPresenter;
 
@@ -32,7 +34,7 @@ public class MainNavigationActivity extends AppCompatActivity implements MainNav
         textView.setTypeface(getResources().getFont(R.font.montserrat_light));
 
         // Set the presenter of the view
-        this.setPresenter(new MainNavigationPresenter(this));
+        new MainNavigationPresenter(this);
 
         // Add listener to bottom navigation bar
         BottomNavigationView bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
