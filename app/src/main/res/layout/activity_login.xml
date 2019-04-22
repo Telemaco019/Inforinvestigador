@@ -80,6 +80,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
+                android:id="@+id/login_google_signin_button"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/fui_ic_googleg_color_24dp"
                 android:text="Sign in with Google"/>
