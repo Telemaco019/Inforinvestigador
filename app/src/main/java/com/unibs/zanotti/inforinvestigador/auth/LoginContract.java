@@ -10,9 +10,11 @@ public interface LoginContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void showInputEmailError(String message);
+        void showErrorEmailFieldEmpty();
 
-        void showInputPasswordError(String message);
+        void showErrorPasswordFieldEmpty();
+
+        void showAuthenticationFailed();
 
         void showPasswordForgotLink();
 

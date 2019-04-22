@@ -66,13 +66,18 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void showInputEmailError(String message) {
-        emailEditText.setError(message);
+    public void showErrorEmailFieldEmpty() {
+        emailEditText.setError(getResources().getString(R.string.msg_error_email_empty));
     }
 
     @Override
-    public void showInputPasswordError(String message) {
-        passwordEditText.setError(message);
+    public void showErrorPasswordFieldEmpty() {
+        passwordEditText.setError(getResources().getString(R.string.msg_error_password_empty));
+    }
+
+    @Override
+    public void showAuthenticationFailed() {
+        passwordEditText.setError(getResources().getString(R.string.msg_login_failed));
     }
 
     @Override

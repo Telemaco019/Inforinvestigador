@@ -33,11 +33,11 @@ public class LoginPresenter implements LoginContract.Presenter, GoogleApiClient.
     @Override
     public void performLogin(String email, String password) {
         if (StringUtils.isBlank(email)) {
-            mView.showInputEmailError("Insert the email");
+            mView.showErrorEmailFieldEmpty();
         }
 
         if (StringUtils.isBlank(password)) {
-            mView.showInputPasswordError("Insert the password");
+            mView.showErrorPasswordFieldEmpty();
         }
 
         if (StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)) {
@@ -53,7 +53,7 @@ public class LoginPresenter implements LoginContract.Presenter, GoogleApiClient.
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail: failure", task.getException());
-                                mView.showInputPasswordError("Wrong username or password");
+                                mView.showAuthenticationFailed();
                                 mView.showPasswordForgotLink();
                                 mView.updateUI(null);
                             }

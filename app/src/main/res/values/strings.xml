@@ -15,4 +15,7 @@
     <string name="topbar_viewpaper_innermenu_item_addToLibrary">Add to library</string>
     <string name="topbar_viewpaper_innermenu_item_addToPaperlist">Add to paperlist</string>
     <string name="msg_success_paper_added_to_library">The paper has been added to your library</string>
+    <string name="msg_login_failed">Wrong email or password</string>
+    <string name="msg_error_email_empty">Insert the email address</string>
+    <string name="msg_error_password_empty">Insert the password</string>
 </resources>
