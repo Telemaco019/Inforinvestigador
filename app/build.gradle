@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -49,4 +51,8 @@ dependencies {
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
     implementation 'com.xwray:groupie:2.3.0'
     implementation 'com.xwray:groupie-databinding:2.3.0'
+
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+
 }

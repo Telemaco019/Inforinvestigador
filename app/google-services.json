@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060727007768",
+    "firebase_url": "https://inforinvestigador-c84e3.firebaseio.com",
+    "project_id": "inforinvestigador-c84e3",
+    "storage_bucket": "inforinvestigador-c84e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060727007768:android:08807cad7f48b420",
+        "android_client_info": {
+          "package_name": "com.unibs.zanotti.inforinvestigador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060727007768-gm8jfee2thp39tme84skrm4m97sakqg8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unibs.zanotti.inforinvestigador",
+            "certificate_hash": "6dd408fd6a4cbac5fa2e93376a0c89bee79082d6"
+          }
+        },
+        {
+          "client_id": "1060727007768-6e70lsnam9obdp1h73sd8jn41v35bbim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnqgQRsiZudXui0xW8OgKgCocHIFzYlT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060727007768-6e70lsnam9obdp1h73sd8jn41v35bbim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
