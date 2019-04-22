@@ -2,7 +2,6 @@ package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.common.Actions;
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
-import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperShareAdapter;
+import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperFeedAdapter;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 
@@ -25,14 +23,14 @@ import java.util.List;
 
 public class HomefeedFragment extends Fragment implements
         HomefeedContract.View,
-        PaperShareAdapter.OnPaperShareListener {
+        PaperFeedAdapter.OnPaperShareListener {
 
     private HomefeedContract.Presenter presenter;
-    private PaperShareAdapter paperShareAdapter;
+    private PaperFeedAdapter paperFeedAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
 
     public HomefeedFragment() {
-        paperShareAdapter = new PaperShareAdapter(new ArrayList<>(0), this);
+        paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
         researcherSuggestionAdapter = new ResearcherSuggestionAdapter(new ArrayList<>(0));
     }
 
@@ -63,7 +61,7 @@ public class HomefeedFragment extends Fragment implements
         RecyclerView papers_recycler = view.findViewById(R.id.paper_shares_recycler);
         papers_recycler.setHasFixedSize(true);
         papers_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        papers_recycler.setAdapter(paperShareAdapter);
+        papers_recycler.setAdapter(paperFeedAdapter);
 
         return view;
     }
@@ -74,8 +72,8 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void showPaperShares(List<PaperShare> suggestions) {
-        this.paperShareAdapter.setDataset(suggestions);
+    public void showPapers(List<FeedPaper> feedPapers) {
+        this.paperFeedAdapter.setDataset(feedPapers);
     }
 
     @Override
@@ -84,10 +82,9 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void showPaperDetails(long paperId, List<Comment> comments) {
+    public void showPaperDetails(long paperId) {
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.EXTRA_PAPER_ID, paperId);
-        intent.putParcelableArrayListExtra(PaperDetailActivity.EXTRA_COMMENTS_LIST, (ArrayList<? extends Parcelable>) comments);
         startActivity(intent);
     }
 }

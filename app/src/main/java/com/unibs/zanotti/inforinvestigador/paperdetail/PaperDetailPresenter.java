@@ -1,11 +1,9 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
 import com.unibs.zanotti.inforinvestigador.data.model.Paper;
-import com.unibs.zanotti.inforinvestigador.data.source.IPaperDatasource;
+import com.unibs.zanotti.inforinvestigador.data.source.IPaperService;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,22 +13,12 @@ import java.util.Optional;
 public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     private final PaperDetailContract.View mView;
     private final long paperId;
-    private final List<Comment> comments;
-    private IPaperDatasource paperDatasource;
+    private IPaperService paperService;
 
-    /**
-     * @param paperId
-     * @param mView
-     * @param comments List of comments (made by the users) associated to the paper to show. Note: the comments
-     *                 are show together with all the paper details, but they are associated to the share of the
-     *                 paper and not to the paper itself.
-     */
-    public PaperDetailPresenter(long paperId, IPaperDatasource paperDatasource, PaperDetailContract.View mView,
-                                List<Comment> comments) {
+    public PaperDetailPresenter(long paperId, IPaperService paperService, PaperDetailContract.View mView) {
         this.mView = mView;
         this.paperId = paperId;
-        this.comments = comments;
-        this.paperDatasource = paperDatasource;
+        this.paperService = paperService;
         mView.setPresenter(this);
     }
 
@@ -40,7 +28,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     }
 
     private void openPaper() {
-        Optional<Paper> optionalPaper = paperDatasource.getPaper(paperId);
+        Optional<Paper> optionalPaper = paperService.getPaper(paperId);
         if (optionalPaper.isPresent()) {
             Paper paper = optionalPaper.get();
             mView.showPaperTitle(paper.getPaperTitle());
@@ -52,7 +40,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
             mView.showPaperAuthors(paper.getPaperAuthors());
             mView.showPaperTopics(paper.getPaperTopics());
             mView.showPaperImage(R.drawable.paper_preview_test); // TODO
-            mView.showComments(comments);
+            mView.showComments(paperService.getComments(paperId));
         }
     }
 

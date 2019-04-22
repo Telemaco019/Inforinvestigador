@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.data.model.PaperShare
+import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperShareListener) :
-    RecyclerView.Adapter<PaperShareAdapter.MyViewHolder>() {
+class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareListener) :
+    RecyclerView.Adapter<PaperFeedAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View, val listener: OnPaperShareListener) :
         RecyclerView.ViewHolder(view),
@@ -21,7 +21,7 @@ class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperShar
         }
 
         override fun onClick(v: View?) {
-            listener.onPaperShareClick(dataset[adapterPosition].paperShareId)
+            listener.onPaperShareClick(dataset[adapterPosition].paperId)
         }
 
         var tvPaperTitle = view.findViewById<TextView>(R.id.paper_title)
@@ -52,7 +52,7 @@ class PaperShareAdapter(var dataset: List<PaperShare>, val listener: OnPaperShar
         holder.tvPaperDate.text = dataset[position].paperDate
         holder.tvPaperTopics.text = dataset[position].paperTopics.joinToString { t -> t }
         holder.tvPaperComment.text = dataset[position].sharingUserComment
-        holder.tvSharingUser.text = dataset[position].sharingUser
+        holder.tvSharingUser.text = dataset[position].sharingUserName
         holder.tvSharingUserProfilePicture.setImageResource(dataset[position].sharingUserProfilePicture)
     }
 

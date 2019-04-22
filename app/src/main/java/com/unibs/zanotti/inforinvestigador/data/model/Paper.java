@@ -12,6 +12,9 @@ public class Paper {
     private List<String> paperTopics;
     private String paperAbstract;
     private String paperPublisher;
+    private Long sharingUserId;
+    private List<Comment> comments;
+    private String sharingUserComment;
 
     public Paper(Long paperId,
                  String paperTitle,
@@ -20,7 +23,10 @@ public class Paper {
                  int paperCitations,
                  List<String> paperTopics,
                  String paperAbstract,
-                 String paperPublisher) {
+                 String paperPublisher,
+                 Long sharingUserId,
+                 String sharingUserComment,
+                 List<Comment> comments) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -30,6 +36,33 @@ public class Paper {
         this.paperTopics = paperTopics;
         this.paperAbstract = paperAbstract;
         this.paperPublisher = paperPublisher;
+        this.sharingUserId = sharingUserId;
+        this.sharingUserComment = sharingUserComment;
+        this.comments = comments;
+    }
+
+    public Long getSharingUserId() {
+        return sharingUserId;
+    }
+
+    public void setSharingUserId(Long sharingUserId) {
+        this.sharingUserId = sharingUserId;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getSharingUserComment() {
+        return sharingUserComment;
+    }
+
+    public void setSharingUserComment(String sharingUserComment) {
+        this.sharingUserComment = sharingUserComment;
     }
 
     public Long getPaperId() {

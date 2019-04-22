@@ -1,16 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.data.source.local.dao.impl;
 
-import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
-import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
-import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IPaperShareLocalDao;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
+public class DummyPaperShareLocalDao { //implements IDao<> {
+    /*
     @Override
     public void save(PaperShare paperShare) {
 
@@ -142,4 +133,5 @@ public class DummyPaperShareLocalDao implements IPaperShareLocalDao {
                 comments
         ));
     }
+    */
 }

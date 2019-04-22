@@ -1,23 +1,29 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
-import com.unibs.zanotti.inforinvestigador.data.model.PaperShare;
+import com.unibs.zanotti.inforinvestigador.data.model.Paper;
 import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.source.IPaperShareDatasource;
+import com.unibs.zanotti.inforinvestigador.data.model.User;
+import com.unibs.zanotti.inforinvestigador.data.source.IPaperService;
+import com.unibs.zanotti.inforinvestigador.data.source.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     private final HomefeedContract.View view;
-    private IPaperShareDatasource paperSharesDatasource;
+    private final IUserService userService;
+    private IPaperService paperService;
 
     public HomefeedPresenter(HomefeedContract.View view,
-                             IPaperShareDatasource dataSource) {
+                             IPaperService paperService,
+                             IUserService userService) {
         this.view = view;
-        this.paperSharesDatasource = dataSource;
+        this.paperService = paperService;
+        this.userService = userService;
         view.setPresenter(this);
     }
 
@@ -33,9 +39,8 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
     }
 
     @Override
-    public void paperShareClicked(long paperShareId) {
-        List<Comment> comments = paperSharesDatasource.getComments(paperShareId);
-        view.showPaperDetails(paperShareId, comments);
+    public void paperShareClicked(long paperId) {
+        view.showPaperDetails(paperId);
     }
 
     private void loadResearchersSuggestions() {
@@ -101,7 +106,20 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
     }
 
     private void loadPaperShares() {
-        List<PaperShare> papersSuggestions = paperSharesDatasource.getPaperShares();
-        view.showPaperShares(papersSuggestions);
+        List<FeedPaper> papersFeed = new ArrayList<>();
+        for (Paper paper : paperService.getPapers()) {
+            Optional<User> optionalUser = userService.getUser(paper.getSharingUserId());
+            papersFeed.add(new FeedPaper(
+                    paper.getPaperId(),
+                    paper.getPaperTitle(),
+                    paper.getSharingUserComment(),
+                    optionalUser.map(User::getName).orElse(""),
+                    optionalUser.map(User::getProfilePicture).orElse(0),
+                    paper.getPaperDate(),
+                    paper.getPaperTopics(),
+                    paper.getPaperAuthors()
+            ));
+        }
+        view.showPapers(papersFeed);
     }
 }
