@@ -2,8 +2,11 @@ package com.unibs.zanotti.inforinvestigador.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,24 +19,22 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.*;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
+import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_SIGN_IN = 9001;
+    private static final String TAG = String.valueOf(LoginActivity.class);
 
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
-    private Button registerButton;
-    private Button newPassButton;
-    private SignInButton signInButton;
+    private TextView passwordForgotLink;
+    private SignInButton googleSignInButton;
 
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -41,7 +42,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        emailEditText = findViewById(R.id.login_input_email);
+        passwordEditText = findViewById(R.id.login_input_password);
+        loginButton = findViewById(R.id.btn_login);
+        passwordForgotLink = findViewById(R.id.link_password_forgot);
+
+        loginButton.setOnClickListener(e -> performLogin());
+        passwordForgotLink.setOnClickListener(e -> {;});
 
     /*    emailEditText = findViewById(R.id.girisEmail);
         passwordEditText = findViewById(R.id.girisParola);
@@ -81,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 return;
             }
 
-            firebaseAuth.createUserWithEmailAndPassword(email, parola)
+            mAuth.createUserWithEmailAndPassword(email, parola)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
@@ -95,10 +104,60 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
 
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null) {
             //startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
         }*/
 
+    }
+
+    private void performLogin() {
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        if(StringUtils.isBlank(email)) {
+            emailEditText.setError("Insert the email");
+        }
+
+        if(StringUtils.isBlank(password)) {
+            passwordEditText.setError("Insert the password");
+        }
+
+        if(StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail: success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail: failure", task.getException());
+                                passwordEditText.setError("Wrong username or password");
+                                passwordForgotLink.setVisibility(View.VISIBLE);
+                                updateUI(null);
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check if user is already logged in
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    private void updateUI(FirebaseUser currentUser) {
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(LoginActivity.this, MainNavigationActivity.class);
+         //   startActivity(intent);
+        }
     }
 
     private void signIn() {
@@ -120,7 +179,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void authWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
