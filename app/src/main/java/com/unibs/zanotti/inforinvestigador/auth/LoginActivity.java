@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("1060727007768-gm8jfee2thp39tme84skrm4m97sakqg8.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.inforinvestigador_web_client_token_auth))
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by mGso.
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent intent = new Intent(this, MainNavigationActivity.class);
-            startActivity(intent);
+          //  startActivity(intent);
         }
     }
 
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            //startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
         }
     }
 

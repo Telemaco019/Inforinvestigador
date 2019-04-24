@@ -18,4 +18,7 @@
     <string name="msg_login_failed">Wrong email or password</string>
     <string name="msg_error_email_empty">Insert the email address</string>
     <string name="msg_error_password_empty">Insert the password</string>
+    <string name="inforinvestigador_web_client_token_auth">
+        1060727007768-7tau1qcqpnq9hdl35uce6vc4a17pc4h0.apps.googleusercontent.com
+    </string>
 </resources>

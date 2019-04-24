@@ -60,6 +60,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:padding="12dp"
+                style="@style/AppTheme"
                 android:text="Login"/>
 
         <TextView android:id="@+id/login_link_signup"
@@ -82,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/login_google_signin_button"
                 android:layout_height="wrap_content"
+                style="@style/AppTheme"
                 android:drawableLeft="@drawable/fui_ic_googleg_color_24dp"
                 android:text="Sign in with Google"/>
 
