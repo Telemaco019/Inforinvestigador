@@ -84,9 +84,16 @@
                 android:id="@+id/login_google_signin_button"
                 android:layout_height="wrap_content"
                 style="@style/AppTheme"
-                android:drawableLeft="@drawable/fui_ic_googleg_color_24dp"
+                android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
                 android:text="Sign in with Google"/>
 
+        <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_facebook_sign_inbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp" />
 
     </LinearLayout>
 </ScrollView>

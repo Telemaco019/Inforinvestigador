@@ -21,4 +21,8 @@
     <string name="inforinvestigador_web_client_token_auth">
         1060727007768-7tau1qcqpnq9hdl35uce6vc4a17pc4h0.apps.googleusercontent.com
     </string>
+
+
+    <string name="facebook_app_id">996185183912850</string>
+    <string name="fb_login_protocol_scheme">fb996185183912850</string>
 </resources>

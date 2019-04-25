@@ -7,9 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,10 +26,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.*;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
@@ -37,10 +41,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Button loginButton;
     private TextView passwordForgotLink;
     private Button googleSignInButton;
+    private LoginButton facebookSignInButton;
 
     private GoogleSignInOptions mGso;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,12 +62,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
         // Build a GoogleSignInClient with the options specified by mGso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGso);
+        // Facebook callback manager
+        callbackManager = CallbackManager.Factory.create();
 
         emailEditText = findViewById(R.id.login_input_email);
         passwordEditText = findViewById(R.id.login_input_password);
         loginButton = findViewById(R.id.btn_login);
         passwordForgotLink = findViewById(R.id.link_password_forgot);
         googleSignInButton = findViewById(R.id.login_google_signin_button);
+        facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
+        facebookSignInButton.setReadPermissions("email", "public_profile");
 
         loginButton.setOnClickListener(e ->
                 firebaseAuthWithCredentials(emailEditText.getText().toString(), passwordEditText.getText().toString())
@@ -69,7 +79,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         passwordForgotLink.setOnClickListener(e -> {
         });
         googleSignInButton.setOnClickListener(e -> googleSignIn());
+        facebookSignInButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                // ...
+            }
+        });
     }
+
 
     private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -79,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent intent = new Intent(this, MainNavigationActivity.class);
-          //  startActivity(intent);
+            startActivity(intent);
         }
     }
 
@@ -87,24 +116,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+            // startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+            // finish();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        // Pass the activity result back to the Facebook SDK
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_GOOGLE_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                if (account != null) {
+                    firebaseAuthWithGoogle(account);
+                }
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
-
             }
         }
     }
@@ -147,13 +180,34 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCredential:success");
+                        Log.d(TAG, "signInWithGoogleCredential:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Log.w(TAG, "signInWithGoogleCredential:failure", task.getException());
                         Snackbar.make(findViewById(R.id.login_google_signin_button), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
+                });
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithFacebookCredential:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithFacebookCredential:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
                 });
@@ -161,6 +215,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Snackbar.make(findViewById(R.id.login_google_signin_button), "Connection error. Cannot proceed with authentication", Snackbar.LENGTH_SHORT).show();
     }
 }
