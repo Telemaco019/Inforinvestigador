@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton googleSignInButton;
     private LoginButton facebookSignInButton;
     private TextView signupLink;
+    private TextView resendVerificationEmailLink;
 
     // Authentication
     private GoogleSignInOptions mGso;
@@ -113,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
         facebookSignInButton.setReadPermissions("email", "public_profile");
         signupLink = findViewById(R.id.login_link_signup);
+        resendVerificationEmailLink = findViewById(R.id.link_resend_verification_email);
     }
 
 
@@ -136,6 +138,8 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, MainNavigationActivity.class);
                 startActivity(intent);
                 finish();
+            } else {
+                manageEmailNotVerified();
             }
         }
     }
@@ -148,6 +152,8 @@ public class LoginActivity extends AppCompatActivity {
             if (user.isEmailVerified()) {
                 startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
                 finish();
+            } else {
+                manageEmailNotVerified();
             }
         }
     }
@@ -245,6 +251,17 @@ public class LoginActivity extends AppCompatActivity {
                         updateUI(null);
                     }
                 });
+    }
+
+    /**
+     * Manage the event that occurs when the user tries to log in with the right credentials but the
+     * used email address has not been verified yet
+     */
+    private void manageEmailNotVerified() {
+        Log.d(TAG, "attemp to login with un-verified email");
+        emailEditText.setError("This email has not been verified yet");
+        resendVerificationEmailLink.setVisibility(View.VISIBLE);
+        mAuth.signOut();
     }
 
     /**
