@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Intent intent = new Intent(this, MainNavigationActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -115,8 +116,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            // startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
-            // finish();
+             startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+             finish();
         }
     }
 
