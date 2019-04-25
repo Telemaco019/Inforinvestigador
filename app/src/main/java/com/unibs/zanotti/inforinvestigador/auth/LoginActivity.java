@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.facebook.AccessToken;
@@ -21,10 +19,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.*;
@@ -32,11 +28,11 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN = 9001;
     private static final String TAG = String.valueOf(LoginActivity.class);
 
-
+    // View fields
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
@@ -44,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private SignInButton googleSignInButton;
     private LoginButton facebookSignInButton;
 
+    // Authentication
     private GoogleSignInOptions mGso;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -96,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
-                // ...
+                authenticationFailed(facebookSignInButton, getString(R.string.facebook_login_error_message));
             }
         });
     }
@@ -140,6 +137,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+                authenticationFailed(facebookSignInButton, getString(R.string.google_login_error_message));
             }
         }
     }
@@ -167,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Log.w(TAG, "signInWithEmail: failure", task.getException());
                             passwordEditText.setError(getResources().getString(R.string.msg_login_failed));
                             passwordForgotLink.setVisibility(View.VISIBLE);
-                            Snackbar.make(findViewById(R.id.login_google_signin_button), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            authenticationFailed(loginButton, this.getString(R.string.authentication_failed_message));
                             updateUI(null);
                         }
                     });
@@ -188,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithGoogleCredential:failure", task.getException());
-                        Snackbar.make(findViewById(R.id.login_google_signin_button), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                        authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_message));
                         updateUI(null);
                     }
                 });
@@ -208,15 +206,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithFacebookCredential:failure", task.getException());
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                        authenticationFailed(facebookSignInButton, this.getString(R.string.authentication_failed_message));
                         updateUI(null);
                     }
                 });
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Snackbar.make(findViewById(R.id.login_google_signin_button), "Connection error. Cannot proceed with authentication", Snackbar.LENGTH_SHORT).show();
+    /**
+     * Show a snackbar for informing the user that the authentication process failed
+     *
+     * @param contextView
+     */
+    private void authenticationFailed(View contextView, String message) {
+        Snackbar.make(contextView, message, Snackbar.LENGTH_LONG).show();
     }
 }

@@ -25,4 +25,11 @@
 
     <string name="facebook_app_id">996185183912850</string>
     <string name="fb_login_protocol_scheme">fb996185183912850</string>
+    <string name="authentication_failed_message">Authentication Failed.</string>
+    <string name="facebook_login_error_message">Cannot proceed with Facebook authentication. Please check your
+        connection
+    </string>
+    <string name="google_login_error_message">Cannot proceed with Google authentication. Please check your
+        connection
+    </string>
 </resources>
