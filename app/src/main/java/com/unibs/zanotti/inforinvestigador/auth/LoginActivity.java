@@ -157,12 +157,12 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail: success");
+                            Log.d(TAG, "signInWithEmailPasswordCredentials: success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail: failure", task.getException());
+                            Log.w(TAG, "signInWithEmailPasswordCredentials: failure", task.getException());
                             passwordEditText.setError(getResources().getString(R.string.msg_login_failed));
                             passwordForgotLink.setVisibility(View.VISIBLE);
                             authenticationFailed(loginButton, this.getString(R.string.authentication_failed_message));
