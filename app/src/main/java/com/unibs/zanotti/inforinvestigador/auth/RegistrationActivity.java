@@ -44,7 +44,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
         initializeView();
 
-        btnSignup.setOnClickListener(v -> signup());
+        btnSignup.setOnClickListener(v -> {
+            ActivityUtils.dismissKeyboard(this);
+            signup();
+        });
         // Finish the registration and go back to the login activity
         loginLink.setOnClickListener(v -> finish());
     }

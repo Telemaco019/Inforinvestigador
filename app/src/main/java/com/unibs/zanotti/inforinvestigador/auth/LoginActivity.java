@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.*;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,9 +60,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupButtonListeners() {
-        loginButton.setOnClickListener(e ->
-                firebaseAuthWithEmailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
-        );
+        loginButton.setOnClickListener(e -> {
+            ActivityUtils.dismissKeyboard(this);
+            firebaseAuthWithEmailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
+        });
         signupLink.setOnClickListener(e -> {
             Intent intent = new Intent(this, RegistrationActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

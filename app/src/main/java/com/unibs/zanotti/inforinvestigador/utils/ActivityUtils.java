@@ -2,7 +2,10 @@ package com.unibs.zanotti.inforinvestigador.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
+import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -49,5 +52,12 @@ public class ActivityUtils {
                         view.setVisibility(toVisibility);
                     }
                 });
+    }
+
+    public static void dismissKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (null != activity.getCurrentFocus())
+            imm.hideSoftInputFromWindow(activity.getCurrentFocus()
+                    .getApplicationWindowToken(), 0);
     }
 }
