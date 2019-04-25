@@ -31,6 +31,7 @@ import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN = 9001;
+    public static final int PROGRESS_BAR_FADEIN_DURATION = 200;
     private static final String TAG = String.valueOf(LoginActivity.class);
 
     // View fields
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton facebookSignInButton;
     private TextView signupLink;
     private TextView resendVerificationEmailLink;
+    private View progressBar;
 
     // Authentication
     private GoogleSignInOptions mGso;
@@ -117,10 +119,13 @@ public class LoginActivity extends AppCompatActivity {
         facebookSignInButton.setReadPermissions("email", "public_profile");
         signupLink = findViewById(R.id.login_link_signup);
         resendVerificationEmailLink = findViewById(R.id.link_resend_verification_email);
+        progressBar = findViewById(R.id.undetermined_progress_bar);
     }
 
 
     private void googleSignIn() {
+        // Show progress bar
+        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1, PROGRESS_BAR_FADEIN_DURATION);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
@@ -134,6 +139,9 @@ public class LoginActivity extends AppCompatActivity {
      * @param user
      */
     private void updateUI(FirebaseUser user) {
+        // Hide progress bar
+        ActivityUtils.animateViewWithFade(progressBar, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+
         if (user != null) {
             if (user.isEmailVerified() || user.getProviders().get(0).equals("facebook.com")) {
                 Log.d(TAG, String.format("%s logged into Inforinvestigador", user.getEmail()));
