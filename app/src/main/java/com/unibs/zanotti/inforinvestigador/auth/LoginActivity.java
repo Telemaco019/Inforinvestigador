@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView passwordForgotLink;
     private SignInButton googleSignInButton;
     private LoginButton facebookSignInButton;
+    private TextView loginSignupLink;
 
     // Authentication
     private GoogleSignInOptions mGso;
@@ -51,27 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.inforinvestigador_web_client_token_auth))
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by mGso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, mGso);
-        // Facebook callback manager
-        callbackManager = CallbackManager.Factory.create();
+        initializeAuth();
+        initializeView();
+        setupButtonListeners();
+    }
 
-        emailEditText = findViewById(R.id.login_input_email);
-        passwordEditText = findViewById(R.id.login_input_password);
-        loginButton = findViewById(R.id.btn_login);
-        passwordForgotLink = findViewById(R.id.link_password_forgot);
-        googleSignInButton = findViewById(R.id.login_google_signin_button);
-        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
-        facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
-        facebookSignInButton.setReadPermissions("email", "public_profile");
-
+    private void setupButtonListeners() {
         loginButton.setOnClickListener(e ->
                 firebaseAuthWithCredentials(emailEditText.getText().toString(), passwordEditText.getText().toString())
         );
@@ -98,12 +84,45 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void initializeAuth() {
+        mAuth = FirebaseAuth.getInstance();
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.inforinvestigador_web_client_token_auth))
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by mGso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, mGso);
+        // Facebook callback manager
+        callbackManager = CallbackManager.Factory.create();
+    }
+
+    private void initializeView() {
+        emailEditText = findViewById(R.id.login_input_email);
+        passwordEditText = findViewById(R.id.login_input_password);
+        loginButton = findViewById(R.id.btn_login);
+        passwordForgotLink = findViewById(R.id.link_password_forgot);
+        googleSignInButton = findViewById(R.id.login_google_signin_button);
+        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+        facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
+        facebookSignInButton.setReadPermissions("email", "public_profile");
+        loginSignupLink = findViewById(R.id.login_link_signup);
+    }
+
 
     private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
 
+    /**
+     * Update the user interface according to the firebase user provided as argument: if the user is null
+     * (e.g. the login failed) then do nothing, otherwise, if the user is not null (e.g. the login was
+     * successful, then close the login activity and start the main application activity
+     *
+     * @param user
+     */
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent intent = new Intent(this, MainNavigationActivity.class);
@@ -116,8 +135,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-             startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
-             finish();
+            startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+            finish();
         }
     }
 
