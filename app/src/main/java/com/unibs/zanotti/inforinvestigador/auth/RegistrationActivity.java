@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
 import java.util.Objects;
@@ -69,7 +70,7 @@ public class RegistrationActivity extends AppCompatActivity {
         btnSignup.setEnabled(false);
 
         // Show progress bar
-        undeterminedOverlayProgressBar.setVisibility(View.VISIBLE);
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.VISIBLE, 1, 200);
 
         // Retrieve user's input
         String name = inputTxtName.getText().toString();
@@ -98,7 +99,6 @@ public class RegistrationActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 if (task.getResult().getSignInMethods().size() > 0) {
                     String errorMessage = String.format(getString(R.string.registration_duplicated_email_error), email);
-                    onSignupFailed(errorMessage);
                     inputTxtEmail.setError(errorMessage);
                 }
             } else {
@@ -137,7 +137,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onSignupSuccess() {
         btnSignup.setEnabled(true);
-        undeterminedOverlayProgressBar.setVisibility(View.INVISIBLE);
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.VISIBLE, 1, 200);
         // after email is sent just logout the user and finish this activity
         FirebaseAuth.getInstance().signOut();
         setResult(RESULT_OK, null);
@@ -145,7 +145,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed(String message) {
-        undeterminedOverlayProgressBar.setVisibility(View.INVISIBLE);
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar,View.GONE,0,200);
         Snackbar.make(btnSignup, message, Snackbar.LENGTH_LONG).show();
         btnSignup.setEnabled(true);
     }
