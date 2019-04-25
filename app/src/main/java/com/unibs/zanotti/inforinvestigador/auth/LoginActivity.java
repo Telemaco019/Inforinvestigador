@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private EditText passwordEditText;
     private Button loginButton;
     private TextView passwordForgotLink;
-    private Button googleSignInButton;
+    private SignInButton googleSignInButton;
     private LoginButton facebookSignInButton;
 
     private GoogleSignInOptions mGso;
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton = findViewById(R.id.btn_login);
         passwordForgotLink = findViewById(R.id.link_password_forgot);
         googleSignInButton = findViewById(R.id.login_google_signin_button);
+        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
         facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
         facebookSignInButton.setReadPermissions("email", "public_profile");
 

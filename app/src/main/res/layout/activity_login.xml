@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="match_parent" xmlns:facebook="http://schemas.android.com/apk/res-auto"
             android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -66,7 +66,6 @@
         <TextView android:id="@+id/login_link_signup"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginBottom="24dp"
                   android:textColor="@color/colorAccent"
                   android:text="No account yet? Create one"
                   android:gravity="center"
@@ -76,24 +75,26 @@
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:gravity="center"
+                  android:layout_marginBottom="24dp"
+                  android:layout_marginTop="24dp"
                   style="@style/Platform.MaterialComponents"
                   android:text="OR"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
+        <com.google.android.gms.common.SignInButton
                 android:id="@+id/login_google_signin_button"
-                android:layout_height="wrap_content"
-                style="@style/AppTheme"
-                android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
-                android:text="Sign in with Google"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_facebook_sign_inbutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                facebook:com_facebook_login_text="Sign-in with Facebook"/>
 
     </LinearLayout>
 </ScrollView>
