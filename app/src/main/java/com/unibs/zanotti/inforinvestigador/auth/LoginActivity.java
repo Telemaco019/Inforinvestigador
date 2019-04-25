@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView passwordForgotLink;
     private SignInButton googleSignInButton;
     private LoginButton facebookSignInButton;
-    private TextView loginSignupLink;
+    private TextView signupLink;
 
     // Authentication
     private GoogleSignInOptions mGso;
@@ -59,8 +59,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupButtonListeners() {
         loginButton.setOnClickListener(e ->
-                firebaseAuthWithCredentials(emailEditText.getText().toString(), passwordEditText.getText().toString())
+                firebaseAuthWithEmailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
         );
+        signupLink.setOnClickListener(e -> {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
         passwordForgotLink.setOnClickListener(e -> {
         });
         googleSignInButton.setOnClickListener(e -> googleSignIn());
@@ -107,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
         facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
         facebookSignInButton.setReadPermissions("email", "public_profile");
-        loginSignupLink = findViewById(R.id.login_link_signup);
+        signupLink = findViewById(R.id.login_link_signup);
     }
 
 
@@ -119,15 +124,19 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Update the user interface according to the firebase user provided as argument: if the user is null
      * (e.g. the login failed) then do nothing, otherwise, if the user is not null (e.g. the login was
-     * successful, then close the login activity and start the main application activity
+     * successful, check if the user if email-verified and in case open the main application activity, otherwise
+     * show a message for informing the user that email-verification is needed
      *
      * @param user
      */
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(this, MainNavigationActivity.class);
-            startActivity(intent);
-            finish();
+            if (user.isEmailVerified()) {
+                Log.d(TAG, String.format("%s logged into Inforinvestigador", user.getEmail()));
+                Intent intent = new Intent(this, MainNavigationActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 
@@ -163,14 +172,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void firebaseAuthWithCredentials(String email, String password) {
-        if (StringUtils.isBlank(email)) {
-            emailEditText.setError(getResources().getString(R.string.msg_error_email_empty));
-        }
-
-        if (StringUtils.isBlank(password)) {
-            passwordEditText.setError(getResources().getString(R.string.msg_error_password_empty));
-        }
+    private void firebaseAuthWithEmailPassword(String email, String password) {
+        emailEditText.setError(
+                StringUtils.isBlank(email) ?
+                        getResources().getString(R.string.msg_error_email_empty) :
+                        null
+        );
+        passwordEditText.setError(
+                StringUtils.isBlank(password) ?
+                        getResources().getString(R.string.msg_error_password_empty) :
+                        null
+        );
 
         if (StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)) {
             mAuth.signInWithEmailAndPassword(email, password)
