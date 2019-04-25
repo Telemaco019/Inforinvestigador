@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            if (user.isEmailVerified()) {
+            if (user.isEmailVerified() || user.getProviders().get(0).equals("facebook.com")) {
                 Log.d(TAG, String.format("%s logged into Inforinvestigador", user.getEmail()));
                 Intent intent = new Intent(this, MainNavigationActivity.class);
                 startActivity(intent);
@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            if (user.isEmailVerified()) {
+            if (user.isEmailVerified() || user.getProviders().get(0).equals("facebook.com")) {
                 startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
                 finish();
             } else {
@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmailPasswordCredentials: failure", task.getException());
-                            passwordEditText.setError(getResources().getString(R.string.msg_login_failed));
+                            passwordEditText.setError(getResources().getString(R.string.authentication_failed_wrong_credentials_message));
                             passwordForgotLink.setVisibility(View.VISIBLE);
                             updateUI(null);
                         }
@@ -226,9 +226,14 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
-                        // If sign in fails, display a message to the user.
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthUserCollisionException e) {
+                            authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_email_collision_message));
+                        } catch (Exception e) {
+                            authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_generic_message));
+                        }
                         Log.w(TAG, "signInWithGoogleCredential:failure", task.getException());
-                        authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_message));
                         updateUI(null);
                     }
                 });
@@ -246,9 +251,14 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
-                        // If sign in fails, display a message to the user.
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthUserCollisionException e) {
+                            authenticationFailed(facebookSignInButton, this.getString(R.string.authentication_failed_email_collision_message));
+                        } catch (Exception e) {
+                            authenticationFailed(facebookSignInButton, this.getString(R.string.authentication_failed_generic_message));
+                        }
                         Log.w(TAG, "signInWithFacebookCredential:failure", task.getException());
-                        authenticationFailed(facebookSignInButton, this.getString(R.string.authentication_failed_message));
                         updateUI(null);
                     }
                 });

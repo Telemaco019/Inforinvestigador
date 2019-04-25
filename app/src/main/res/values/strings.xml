@@ -15,7 +15,6 @@
     <string name="topbar_viewpaper_innermenu_item_addToLibrary">Add to library</string>
     <string name="topbar_viewpaper_innermenu_item_addToPaperlist">Add to paperlist</string>
     <string name="msg_success_paper_added_to_library">The paper has been added to your library</string>
-    <string name="msg_login_failed">Wrong email or password</string>
     <string name="msg_error_email_empty">Insert the email address</string>
     <string name="msg_error_password_empty">Insert the password</string>
     <string name="inforinvestigador_web_client_token_auth">
@@ -25,7 +24,8 @@
 
     <string name="facebook_app_id">996185183912850</string>
     <string name="fb_login_protocol_scheme">fb996185183912850</string>
-    <string name="authentication_failed_message">Authentication Failed.</string>
+    <string name="authentication_failed_generic_message">Authentication Failed.</string>
+    <string name="authentication_failed_wrong_credentials_message">Wrong email or password</string>
     <string name="facebook_login_error_message">Cannot proceed with Facebook authentication. Please check your
         connection
     </string>
@@ -35,4 +35,7 @@
     <string name="registration_generic_error">Error: could not proceed with registration</string>
     <string name="registration_duplicated_email_error">The address %s is alredy in use</string>
     <string name="registration_verification_email_sent_message">Verification email sent to %s</string>
+    <string name="authentication_failed_email_collision_message">Another account has already been registered with this
+        email
+    </string>
 </resources>
