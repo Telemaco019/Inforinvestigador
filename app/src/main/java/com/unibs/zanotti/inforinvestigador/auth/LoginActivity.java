@@ -143,9 +143,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
-            finish();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
+                finish();
+            }
         }
     }
 

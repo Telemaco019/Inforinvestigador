@@ -32,4 +32,7 @@
     <string name="google_login_error_message">Cannot proceed with Google authentication. Please check your
         connection
     </string>
+    <string name="registration_generic_error">Error: could not proceed with registration</string>
+    <string name="registration_duplicated_email_error">The address %s is alredy in use</string>
+    <string name="registration_verification_email_sent_message">Verification email sent to %s</string>
 </resources>
