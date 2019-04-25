@@ -100,6 +100,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (task.getResult().getSignInMethods().size() > 0) {
                     String errorMessage = String.format(getString(R.string.registration_duplicated_email_error), email);
                     inputTxtEmail.setError(errorMessage);
+                    onSignupFailed(null);
                 }
             } else {
                 onSignupFailed(getString(R.string.registration_generic_error));
@@ -145,9 +146,11 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed(String message) {
-        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar,View.GONE,0,200);
-        Snackbar.make(btnSignup, message, Snackbar.LENGTH_LONG).show();
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.GONE, 0, 200);
         btnSignup.setEnabled(true);
+        if (StringUtils.isNotBlank(message)) {
+            Snackbar.make(btnSignup, message, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     /**

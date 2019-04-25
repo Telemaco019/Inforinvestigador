@@ -206,7 +206,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmailPasswordCredentials: failure", task.getException());
                             passwordEditText.setError(getResources().getString(R.string.msg_login_failed));
                             passwordForgotLink.setVisibility(View.VISIBLE);
-                            authenticationFailed(loginButton, this.getString(R.string.authentication_failed_message));
                             updateUI(null);
                         }
                     });
