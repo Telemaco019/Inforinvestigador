@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:facebook="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
@@ -105,21 +104,19 @@
                   style="@style/Platform.MaterialComponents"
                   android:text="OR"/>
 
-        <com.google.android.gms.common.SignInButton
+        <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/login_google_signin_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        <com.facebook.login.widget.LoginButton
+                android:text="Sign in with Google"
+                style="@style/SocialsSigninButton"
+                android:drawableStart="@drawable/common_google_signin_btn_icon_light_normal"
+                android:background="@color/light_gray"/>
+        <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/login_facebook_sign_inbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/com_facebook_button_icon_white"
                 android:layout_marginBottom="30dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                facebook:com_facebook_login_text="Sign-in with Facebook"/>
+                style="@style/FacebookLoginButton"
+                android:text="Sign in with Facebook"/>
 
     </LinearLayout>
 </ScrollView>

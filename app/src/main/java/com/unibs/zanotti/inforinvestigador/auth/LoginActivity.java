@@ -13,13 +13,12 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,6 +27,8 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
+
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN = 9001;
@@ -39,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private TextView passwordForgotLink;
-    private SignInButton googleSignInButton;
-    private LoginButton facebookSignInButton;
+    private Button googleSignInButton;
+    private Button facebookSignInButton;
     private TextView signupLink;
     private TextView resendVerificationEmailLink;
     private View progressBar;
@@ -66,32 +67,41 @@ public class LoginActivity extends AppCompatActivity {
             ActivityUtils.dismissKeyboard(this);
             firebaseAuthWithEmailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
         });
+
         signupLink.setOnClickListener(e -> {
             Intent intent = new Intent(this, RegistrationActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+
         passwordForgotLink.setOnClickListener(e -> {
         });
+
         googleSignInButton.setOnClickListener(e -> googleSignIn());
-        facebookSignInButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
 
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-            }
+        facebookSignInButton.setOnClickListener(e ->
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
+        );
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError", error);
-                authenticationFailed(facebookSignInButton, getString(R.string.facebook_login_error_message));
-            }
-        });
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d(TAG, "facebook:onCancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d(TAG, "facebook:onError", error);
+                        authenticationFailed(facebookSignInButton, getString(R.string.facebook_login_error_message));
+                    }
+                });
     }
 
     private void initializeAuth() {
@@ -114,9 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.btn_login);
         passwordForgotLink = findViewById(R.id.link_password_forgot);
         googleSignInButton = findViewById(R.id.login_google_signin_button);
-        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
         facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
-        facebookSignInButton.setReadPermissions("email", "public_profile");
         signupLink = findViewById(R.id.login_link_signup);
         resendVerificationEmailLink = findViewById(R.id.link_resend_verification_email);
         progressBar = findViewById(R.id.undetermined_progress_bar);
@@ -125,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void googleSignIn() {
         // Show progress bar
-        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
