@@ -38,4 +38,5 @@
     <string name="authentication_failed_email_collision_message">Another account has already been registered with this
         email
     </string>
+    <string name="send_verification_email_generic_error">Error sending verification email. Please retry later</string>
 </resources>

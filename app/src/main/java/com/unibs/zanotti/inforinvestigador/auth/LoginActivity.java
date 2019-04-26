@@ -29,6 +29,8 @@ import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN = 9001;
     public static final int PROGRESS_BAR_FADEIN_DURATION = 200;
@@ -66,14 +68,18 @@ public class LoginActivity extends AppCompatActivity {
             ActivityUtils.dismissKeyboard(this);
             firebaseAuthWithEmailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
         });
+
         signupLink.setOnClickListener(e -> {
             Intent intent = new Intent(this, RegistrationActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+
         passwordForgotLink.setOnClickListener(e -> {
         });
+
         googleSignInButton.setOnClickListener(e -> googleSignIn());
+
         facebookSignInButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -92,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                 authenticationFailed(facebookSignInButton, getString(R.string.facebook_login_error_message));
             }
         });
+
+        resendVerificationEmailLink.setOnClickListener(e -> resendVerificationEmail());
     }
 
     private void initializeAuth() {
@@ -190,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithEmailPassword(String email, String password) {
-        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1f,PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1f, PROGRESS_BAR_FADEIN_DURATION);
 
         emailEditText.setError(
                 StringUtils.isBlank(email) ?
@@ -224,7 +232,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         // Show progress bar
-        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
 
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -283,7 +291,34 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "attemp to login with un-verified email");
         emailEditText.setError("This email has not been verified yet");
         resendVerificationEmailLink.setVisibility(View.VISIBLE);
-        mAuth.signOut();
+    }
+
+
+    /**
+     * Resend the verification email to the current logged in (and not verified) user. If there is no user logged in
+     * then do nothing.
+     */
+    private void resendVerificationEmail() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.sendEmailVerification()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, String.format("verification email sent to [%s]", currentUser.getEmail()));
+                            // Show snackbar. After it shows and dismisses navigate to login activity
+                            Snackbar.make(resendVerificationEmailLink, String.format(
+                                    getString(R.string.registration_verification_email_sent_message),
+                                    currentUser.getEmail()),
+                                    Snackbar.LENGTH_LONG)
+                                    .show();
+                        } else {
+                            Log.d(TAG, String.format("error sending verification email to [%s]\n%s",
+                                    currentUser.getEmail(),
+                                    Objects.requireNonNull(task.getException()).toString()));
+                            Snackbar.make(resendVerificationEmailLink, getString(R.string.send_verification_email_generic_error), Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 
     /**
