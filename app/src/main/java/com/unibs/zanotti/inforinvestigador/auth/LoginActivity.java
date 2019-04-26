@@ -113,6 +113,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         resendVerificationEmailLink.setOnClickListener(e -> resendVerificationEmail());
+
+        passwordForgotLink.setOnClickListener(e -> {
+            sendPasswordResetLink();
+            passwordEditText.setError(null);
+        });
     }
 
     private void initializeAuth() {
@@ -322,6 +327,26 @@ public class LoginActivity extends AppCompatActivity {
                             Snackbar.make(resendVerificationEmailLink, getString(R.string.send_verification_email_generic_error), Snackbar.LENGTH_LONG).show();
                         }
                     });
+        }
+    }
+
+
+    /**
+     * Send to the email address currently typed into {@link LoginActivity#emailEditText} a link for restoring
+     * the password of the account of the user associated to that email (if exists). If the typed email address is
+     * not valid then do nothing. After successfully sending the email with the link for resetting the password, inform
+     * the user with a snackbar.
+     */
+    private void sendPasswordResetLink() {
+        String emailAddress = emailEditText.getText().toString();
+        if (StringUtils.isNotBlank(emailAddress)) {
+            mAuth.sendPasswordResetEmail(emailAddress).addOnCompleteListener(task ->
+                    Snackbar.make(
+                            passwordForgotLink,
+                            String.format(getString(R.string.login_message_reset_pass_email_sent), emailAddress),
+                            Snackbar.LENGTH_LONG
+                    ).show()
+            );
         }
     }
 

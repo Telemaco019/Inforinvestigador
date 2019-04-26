@@ -39,4 +39,5 @@
         email
     </string>
     <string name="send_verification_email_generic_error">Error sending verification email. Please retry later</string>
+    <string name="login_message_reset_pass_email_sent">Email sent to %s</string>
 </resources>
