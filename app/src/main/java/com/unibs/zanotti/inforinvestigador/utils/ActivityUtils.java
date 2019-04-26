@@ -53,6 +53,10 @@ public class ActivityUtils {
                 });
     }
 
+    /**
+     * Hide the keyboard from the activity provided as argument
+     * @param activity
+     */
     public static void dismissKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (null != activity.getCurrentFocus())

@@ -35,8 +35,9 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN = 9001;
-    public static final int PROGRESS_BAR_FADEIN_DURATION = 200;
+    public static final int PROGRESS_BAR_FADEIN_DURATION = 300;
     private static final String TAG = String.valueOf(LoginActivity.class);
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile"};
 
     // View fields
     @BindView(R.id.login_input_email)
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initializeView() {
         googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
-        facebookSignInButton.setReadPermissions("email", "public_profile");
+        facebookSignInButton.setReadPermissions(FACEBOOK_READ_PERMISSIONS);
     }
 
 
