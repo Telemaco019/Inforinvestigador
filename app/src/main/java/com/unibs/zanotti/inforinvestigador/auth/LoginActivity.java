@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -37,15 +39,25 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = String.valueOf(LoginActivity.class);
 
     // View fields
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private Button loginButton;
-    private TextView passwordForgotLink;
-    private SignInButton googleSignInButton;
-    private LoginButton facebookSignInButton;
-    private TextView signupLink;
-    private TextView resendVerificationEmailLink;
-    private View progressBar;
+    @BindView(R.id.login_input_email)
+    EditText emailEditText;
+    @BindView(R.id.login_input_password)
+    EditText passwordEditText;
+    @BindView(R.id.login_credentials_signin_button)
+    Button loginButton;
+    @BindView(R.id.link_password_forgot)
+    TextView passwordForgotLink;
+    @BindView(R.id.login_google_signin_button)
+    SignInButton googleSignInButton;
+    @BindView(R.id.login_facebook_sign_inbutton)
+    LoginButton facebookSignInButton;
+    @BindView(R.id.login_link_signup)
+    TextView signupLink;
+    @BindView(R.id.link_resend_verification_email)
+    TextView resendVerificationEmailLink;
+    @BindView(R.id.undetermined_progress_bar)
+    @Nullable
+    View progressBar;
 
     // Authentication
     private GoogleSignInOptions mGso;
@@ -57,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        initializeAuth();
+        ButterKnife.bind(this);
         initializeView();
+        initializeAuth();
         setupButtonListeners();
     }
 
@@ -117,17 +129,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializeView() {
-        emailEditText = findViewById(R.id.login_input_email);
-        passwordEditText = findViewById(R.id.login_input_password);
-        loginButton = findViewById(R.id.btn_login);
-        passwordForgotLink = findViewById(R.id.link_password_forgot);
-        googleSignInButton = findViewById(R.id.login_google_signin_button);
         googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
-        facebookSignInButton = findViewById(R.id.login_facebook_sign_inbutton);
         facebookSignInButton.setReadPermissions("email", "public_profile");
-        signupLink = findViewById(R.id.login_link_signup);
-        resendVerificationEmailLink = findViewById(R.id.link_resend_verification_email);
-        progressBar = findViewById(R.id.undetermined_progress_bar);
     }
 
 
