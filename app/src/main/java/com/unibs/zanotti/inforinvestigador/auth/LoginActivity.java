@@ -124,8 +124,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void googleSignIn() {
-        // Show progress bar
-        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1, PROGRESS_BAR_FADEIN_DURATION);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
@@ -192,6 +190,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithEmailPassword(String email, String password) {
+        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1f,PROGRESS_BAR_FADEIN_DURATION);
+
         emailEditText.setError(
                 StringUtils.isBlank(email) ?
                         getResources().getString(R.string.msg_error_email_empty) :
@@ -223,6 +223,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        // Show progress bar
+        ActivityUtils.animateViewWithFade(progressBar,View.VISIBLE,1, PROGRESS_BAR_FADEIN_DURATION);
+
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
