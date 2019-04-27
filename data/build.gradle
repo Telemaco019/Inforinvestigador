@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion 28
 
@@ -30,6 +34,9 @@ dependencies {
     testImplementation commonLibs.junit
     androidTestImplementation commonLibs.runner
     androidTestImplementation commonLibs.espressoCore
+    implementation commonLibs.kotlin
 
     // Dependencies to other project modules
+    implementation project(":domain")
+
 }
