@@ -57,8 +57,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
-    // Facebook
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    // Custom Google Sign-in button
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
 
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'

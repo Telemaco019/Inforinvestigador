@@ -21,14 +21,8 @@
         1060727007768-7tau1qcqpnq9hdl35uce6vc4a17pc4h0.apps.googleusercontent.com
     </string>
 
-
-    <string name="facebook_app_id">996185183912850</string>
-    <string name="fb_login_protocol_scheme">fb996185183912850</string>
     <string name="authentication_failed_generic_message">Authentication Failed.</string>
     <string name="authentication_failed_wrong_credentials_message">Wrong email or password</string>
-    <string name="facebook_login_error_message">Cannot proceed with Facebook authentication. Please check your
-        connection
-    </string>
     <string name="google_login_error_message">Cannot proceed with Google authentication. Please check your
         connection
     </string>
@@ -40,4 +34,5 @@
     </string>
     <string name="send_verification_email_generic_error">Error sending verification email. Please retry later</string>
     <string name="login_message_reset_pass_email_sent">Email sent to %s</string>
+    <string name="google_signin_button_text">Continue with Google</string>
 </resources>
