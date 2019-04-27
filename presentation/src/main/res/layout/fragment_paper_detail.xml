@@ -7,92 +7,102 @@
         tools:context=".paperdetail.PaperDetailActivity">
 
     <include layout="@layout/top_bar"/>
-    <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            android:paddingStart="@dimen/doubleBasePadding"
-            android:paddingEnd="@dimen/doubleBaseMargin">
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical">
 
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/paper_title"
-                      android:text="This is the title of the paper"
-                      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="match_parent"
+                  app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/doubleBasePadding"
+                android:paddingEnd="@dimen/doubleBaseMargin">
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_marginTop="@dimen/baseMargin"
                           android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <TextView android:layout_width="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:id="@+id/paper_date"
-                          android:text="Mar 2019 - "/>
+                          android:id="@+id/paper_title"
+                          android:text="This is the title of the paper"
+                          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_marginTop="@dimen/baseMargin"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/paper_date"
+                              android:text="Mar 2019 - "/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/paper_topics"
+                              android:text="Science, Computing, AI, Informatics"/>
+                </LinearLayout>
                 <TextView android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/paper_topics"
-                          android:text="Science, Computing, AI, Informatics"/>
-            </LinearLayout>
-            <TextView android:layout_width="wrap_content"
-                      android:id="@+id/paper_doi"
-                      android:text="DOI: 10.1007/978-3-030-04324-7_54"
-                      android:layout_height="wrap_content"/>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/paper_citations_2"
-                      android:text="Citations: 87"/>
-            <TextView
-                    android:layout_marginTop="@dimen/baseMargin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/paper_authors"
-                    android:text="Devis Bianchini, Marina Zanella, Pipppo Baudo"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginTop="@dimen/doubleBaseMargin"
-                       android:layout_gravity="center"
-                       android:id="@+id/paper_image"
-                       android:src="@drawable/paper_preview_test"
-                       android:scaleType="centerCrop"/>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="@dimen/doubleBaseMargin"
-                      android:text="Abstract"
-                      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
-            <TextView android:layout_width="match_parent"
-                      android:justificationMode="inter_word"
-                      android:id="@+id/paper_abstract"
-                      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                      android:layout_height="wrap_content"
-                      android:text="As bacterial infection diseases represent a relevant threat for human health worldwide, many efforts are spent in accelerating the diagnostic process of biological specimens. The WASPLab automated platform, by COPAN Italia S.p.A., detects bacterial growth by processing the images of the Petri dishes containing a sample to analyze. This work presents a study performed on a developed system that exploits impedance measurement to monitor bacterial growth in Petri dishes in real time. It is part of an activity aiming at system integration in the WASPLab, to enhance its monitoring capabilities and flexibility. Through repeated 24-h tests executed with the system, we successfully detected S. aureus growth in Petri dishes that were inside one of the WASPLab incubators, starting from impedance measurements performed at 50–150 Hz. In particular, depending on the parameter being observed, detection time was between four and six hours, for an initial bacterial concentration in the order of 4.5 · 10⁷ CFU/ml. These preliminary results represent the first step for evaluating system integration in the WASPLab."/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/doubleBaseMargin"
-                    android:layout_height="wrap_content"
-                    android:text="Go to source"/>
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Published in: "/>
-                <TextView android:layout_width="wrap_content"
-                          android:id="@+id/paper_publisher"
-                          android:text="Topographic Organization of the Pectine Neuropils in Scorpions"
+                          android:id="@+id/paper_doi"
+                          android:text="DOI: 10.1007/978-3-030-04324-7_54"
                           android:layout_height="wrap_content"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/paper_citations_2"
+                          android:text="Citations: 87"/>
+                <TextView
+                        android:layout_marginTop="@dimen/baseMargin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/paper_authors"
+                        android:text="Devis Bianchini, Marina Zanella, Pipppo Baudo"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="@dimen/doubleBaseMargin"
+                           android:layout_gravity="center"
+                           android:id="@+id/paper_image"
+                           android:src="@drawable/paper_preview_test"
+                           android:scaleType="centerCrop"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/doubleBaseMargin"
+                          android:text="Abstract"
+                          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+                <TextView android:layout_width="match_parent"
+                          android:justificationMode="inter_word"
+                          android:id="@+id/paper_abstract"
+                          android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                          android:layout_height="wrap_content"
+                          android:text="As bacterial infection diseases represent a relevant threat for human health worldwide, many efforts are spent in accelerating the diagnostic process of biological specimens. The WASPLab automated platform, by COPAN Italia S.p.A., detects bacterial growth by processing the images of the Petri dishes containing a sample to analyze. This work presents a study performed on a developed system that exploits impedance measurement to monitor bacterial growth in Petri dishes in real time. It is part of an activity aiming at system integration in the WASPLab, to enhance its monitoring capabilities and flexibility. Through repeated 24-h tests executed with the system, we successfully detected S. aureus growth in Petri dishes that were inside one of the WASPLab incubators, starting from impedance measurements performed at 50–150 Hz. In particular, depending on the parameter being observed, detection time was between four and six hours, for an initial bacterial concentration in the order of 4.5 · 10⁷ CFU/ml. These preliminary results represent the first step for evaluating system integration in the WASPLab."/>
+                <Button android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/doubleBaseMargin"
+                        android:layout_height="wrap_content"
+                        android:text="Go to source"/>
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="Published in: "/>
+                    <TextView android:layout_width="wrap_content"
+                              android:id="@+id/paper_publisher"
+                              android:text="Topographic Organization of the Pectine Neuropils in Scorpions"
+                              android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_paper_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/paper_detail_comment_tf"
+                  android:hint="@string/write_comment_hint"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_paper_comments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
