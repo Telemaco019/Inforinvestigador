@@ -39,7 +39,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
+                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>()))));
 
         papers.add(new Paper("2",
                 "Title",
@@ -52,7 +52,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
+                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>()))));
 
         papers.add(new Paper("3",
                 "Title",
@@ -65,7 +65,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
+                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>()))));
         return papers;
     }
 
@@ -82,7 +82,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>())));
+                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>())));
         return Optional.of(paper);
     }
 }

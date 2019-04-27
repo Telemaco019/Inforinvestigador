@@ -4,13 +4,16 @@ import android.util.Log;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
+import com.unibs.zanotti.inforinvestigador.data.remote.model.CommentEntity;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
 import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PaperFirebaseService implements IPaperService {
     private static final String TAG = String.valueOf(PaperFirebaseService.class);
@@ -53,13 +56,36 @@ public class PaperFirebaseService implements IPaperService {
                 paper.getSharingUserComment()
         );
 
-        if(paper.getPaperId() == null) {
+        if (StringUtils.isBlank(paper.getPaperId())) {
             paperEntity.setPaperId(paperCollection.document().getId());
         }
+
         db.collection(Collections.PAPERS)
                 .document(paperEntity.getId())
                 .set(paperEntity)
                 .addOnSuccessListener(documentReference -> Log.d(TAG, "added document paper with id " + paperEntity.getId()))
                 .addOnFailureListener(e -> Log.d(TAG, "failed to add document paper: " + e));
+
+        List<Comment> comments = paper.getComments();
+        comments.stream().forEach(c -> this.addComment(paperEntity.getId(), c));
+    }
+
+    private void addComment(String paperId, Comment comment) {
+        CommentEntity commentEntity = new CommentEntity(
+                comment.getBody(),
+                comment.getAuthor(),
+                comment.getScore(),
+                comment.getId(),
+                comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList()));
+
+        CollectionReference collection = db.collection(Collections.PAPERS).document(paperId).collection(Collections.COMMENTS);
+        if (StringUtils.isBlank(commentEntity.getId())) {
+            commentEntity.setId(collection.document().getId());
+        }
+
+        collection.document(commentEntity.getId())
+                .set(commentEntity)
+                .addOnSuccessListener(documentReference -> Log.d(TAG, "added document comment with id " + commentEntity.getId()))
+                .addOnFailureListener(e -> Log.d(TAG, "failed to add document comment: " + e));
     }
 }

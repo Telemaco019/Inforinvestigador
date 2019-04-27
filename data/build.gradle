@@ -45,4 +45,5 @@ dependencies {
 
     // Firestore
     implementation 'com.google.firebase:firebase-firestore:18.2.0'
+
 }

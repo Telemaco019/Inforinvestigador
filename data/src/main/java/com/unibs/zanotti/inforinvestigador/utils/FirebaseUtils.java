@@ -22,7 +22,9 @@ public class FirebaseUtils {
                 "Publisher of the paper",
                 1l,
                 "Comment of the user who shared the paper",
-                Arrays.asList(new Comment("Body", "Author", 1, 1l, new ArrayList<Comment>()))
+                Arrays.asList(
+                        new Comment("Body", "Author", 1, null, new ArrayList<>()),
+                        new Comment("Body 2", "Author", 10, null, new ArrayList<>()))
         );
 
         service.addPaper(paperToWrite);

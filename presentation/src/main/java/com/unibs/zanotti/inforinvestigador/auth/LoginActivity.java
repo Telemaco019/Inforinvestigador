@@ -21,10 +21,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.*;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
-import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
 import java.util.Objects;
 

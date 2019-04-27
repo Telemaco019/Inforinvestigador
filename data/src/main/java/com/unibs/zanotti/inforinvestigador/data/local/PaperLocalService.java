@@ -43,15 +43,15 @@ public class PaperLocalService implements IPaperService {
                 "Body of the comment",
                 "Author",
                 123,
-                1l,
+                "1",
                 new ArrayList<Comment>()
         ));
         comments.add(new Comment(
                 "Body of the comment",
                 "Author 2",
                 13,
-                2l,
-                Arrays.asList(new Comment("Sub comment", "Author 1", 3, 3l, new ArrayList<Comment>()))
+                "2",
+                Arrays.asList(new Comment("Sub comment", "Author 1", 3, "3", new ArrayList<Comment>()))
         ));
 
         return comments;

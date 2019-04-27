@@ -9,10 +9,10 @@ public class Comment implements Parcelable {
     private String body;
     private String author;
     private int score;
-    private long id;
+    private String id;
     private List<Comment> children;
 
-    public Comment(String body, String author, int score, long id, List<Comment> children) {
+    public Comment(String body, String author, int score, String id, List<Comment> children) {
         this.body = body;
         this.author = author;
         this.score = score;
@@ -24,7 +24,7 @@ public class Comment implements Parcelable {
         body = in.readString();
         author = in.readString();
         score = in.readInt();
-        id = in.readLong();
+        id = in.readString();
         children = in.createTypedArrayList(Comment.CREATOR);
     }
 
@@ -50,7 +50,7 @@ public class Comment implements Parcelable {
         dest.writeString(body);
         dest.writeString(author);
         dest.writeInt(score);
-        dest.writeLong(id);
+        dest.writeString(id);
         dest.writeTypedArray(children.toArray(new Comment[0]), 0);
     }
 
@@ -78,11 +78,11 @@ public class Comment implements Parcelable {
         this.score = score;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

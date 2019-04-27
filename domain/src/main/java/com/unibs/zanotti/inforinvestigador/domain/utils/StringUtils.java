@@ -1,6 +1,6 @@
-package com.unibs.zanotti.inforinvestigador.utils;
+package com.unibs.zanotti.inforinvestigador.domain.utils;
 
-import androidx.annotation.Nullable;
+import io.reactivex.annotations.Nullable;
 
 public class StringUtils {
     public static boolean isBlank(@Nullable String str) {
