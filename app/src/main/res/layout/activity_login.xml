@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="32dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+        <include layout="@layout/app_title_header"/>
+
+        <!-- Email Label -->
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/login_input_email"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:inputType="textEmailAddress"
+                      android:hint="Email"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password Label -->
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/login_input_password"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:inputType="textPassword"
+                      android:hint="Password"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+                android:id="@+id/link_resend_verification_email"
+                android:layout_marginTop="@dimen/baseMargin"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Re-send verification email"
+                android:textColor="@color/colorAccent"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+                android:layout_marginTop="@dimen/baseMargin"
+                android:id="@+id/link_password_forgot"
+                android:textColor="@color/colorAccent"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot password?"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"/>
+
+        <Button
+                android:id="@+id/login_credentials_signin_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:padding="12dp"
+                style="@style/AppTheme"
+                android:text="Login"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="No account yet?"
+                      android:gravity="center"
+                      android:clickable="true"
+                      android:textSize="16sp"/>
+            <TextView android:id="@+id/login_link_signup"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:background="?attr/selectableItemBackground"
+                      android:textColor="@color/colorAccent"
+                      android:layout_marginStart="@dimen/baseMargin"
+                      android:text="Create one"
+                      android:gravity="center"
+                      android:clickable="true"
+                      android:textSize="16sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/undetermined_progress_bar"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:layout_marginBottom="24dp"
+                  android:layout_marginTop="24dp"
+                  style="@style/Platform.MaterialComponents"
+                  android:text="OR"/>
+
+        <com.shobhitpuri.custombuttons.GoogleSignInButton
+                android:id="@+id/login_google_signin_button"
+                android:layout_width="match_parent"
+                android:text="@string/google_signin_button_text"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
