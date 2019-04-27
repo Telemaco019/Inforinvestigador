@@ -116,7 +116,7 @@
                          android:layout_gravity="center"
                          android:background="?selectableItemBackgroundBorderless"
                          android:tint="@drawable/standard_clickable_icon_selector"
-                         android:paddingEnd="@dimen/basePadding"
+                         android:layout_marginEnd="@dimen/baseMargin"
                          android:layout_marginStart="-60dp"/>
         </LinearLayout>
 
