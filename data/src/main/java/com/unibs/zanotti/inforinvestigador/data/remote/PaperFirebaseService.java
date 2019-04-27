@@ -39,7 +39,7 @@ public class PaperFirebaseService implements IPaperService {
         return null;
     }
 
-    public void addPaper(final Paper paper) {
+    public void savePaper(final Paper paper) {
         CollectionReference paperCollection = db.collection(Collections.PAPERS);
 
         PaperEntity paperEntity = new PaperEntity(
@@ -66,11 +66,13 @@ public class PaperFirebaseService implements IPaperService {
                 .addOnSuccessListener(documentReference -> Log.d(TAG, "added document paper with id " + paperEntity.getId()))
                 .addOnFailureListener(e -> Log.d(TAG, "failed to add document paper: " + e));
 
+        // FIXME: just for testing, supposed to be removed
         List<Comment> comments = paper.getComments();
-        comments.stream().forEach(c -> this.addComment(paperEntity.getId(), c));
+        comments.stream().forEach(c -> this.saveComment(paperEntity.getId(), c));
     }
 
-    private void addComment(String paperId, Comment comment) {
+    // FIXME: supposed to become something like addComment
+    private void saveComment(String paperId, Comment comment) {
         CommentEntity commentEntity = new CommentEntity(
                 comment.getBody(),
                 comment.getAuthor(),
@@ -87,5 +89,9 @@ public class PaperFirebaseService implements IPaperService {
                 .set(commentEntity)
                 .addOnSuccessListener(documentReference -> Log.d(TAG, "added document comment with id " + commentEntity.getId()))
                 .addOnFailureListener(e -> Log.d(TAG, "failed to add document comment: " + e));
+
+        if(comment.getChildren().size() > 0) {
+            comment.getChildren().forEach(c -> this.saveComment(paperId,c));
+        }
     }
 }

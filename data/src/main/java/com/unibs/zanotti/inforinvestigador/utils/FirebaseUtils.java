@@ -27,6 +27,6 @@ public class FirebaseUtils {
                         new Comment("Body 2", "Author", 10, null, new ArrayList<>()))
         );
 
-        service.addPaper(paperToWrite);
+        service.savePaper(paperToWrite);
     }
 }
