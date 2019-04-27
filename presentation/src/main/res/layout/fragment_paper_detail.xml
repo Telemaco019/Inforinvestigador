@@ -91,6 +91,27 @@
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
 
+                <!-- Separator line -->
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/dark_gray"
+                              android:layout_marginTop="@dimen/doubleBaseMargin"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:orientation="horizontal"
+                              android:layout_height="wrap_content"
+                              android:layout_marginBottom="32dp">
+                    <TextView android:layout_width="wrap_content"
+                              android:text="Comments: "
+                              style="@style/TextAppearance.MaterialComponents.Overline"
+                              android:layout_height="wrap_content"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:text="26"
+                              android:id="@+id/paper_detail_comments_number"
+                              style="@style/TextAppearance.MaterialComponents.Overline"
+                              android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_paper_comments"
                         android:layout_width="match_parent"
@@ -108,6 +129,8 @@
                       android:layout_weight="1"
                       android:layout_height="wrap_content"
                       android:id="@+id/paper_detail_comment_tf"
+                      android:focusable="true"
+                      android:focusableInTouchMode="true"
                       android:hint="@string/write_comment_hint"
                       android:paddingEnd="60dp"/>
             <ImageButton android:layout_width="wrap_content"
@@ -119,6 +142,6 @@
                          android:layout_marginEnd="@dimen/baseMargin"
                          android:layout_marginStart="-60dp"/>
         </LinearLayout>
-
     </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".paperdetail.PaperDetailActivity">
+        <activity android:name=".paperdetail.PaperDetailActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
 
