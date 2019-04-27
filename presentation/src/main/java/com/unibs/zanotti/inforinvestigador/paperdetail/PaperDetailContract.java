@@ -2,7 +2,7 @@ package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 import com.unibs.zanotti.inforinvestigador.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.BaseView;
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 
 import java.util.List;
 

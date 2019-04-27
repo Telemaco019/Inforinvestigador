@@ -1,9 +1,9 @@
-package com.unibs.zanotti.inforinvestigador.data.source.local;
+package com.unibs.zanotti.inforinvestigador.data.local;
 
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
-import com.unibs.zanotti.inforinvestigador.data.model.Paper;
-import com.unibs.zanotti.inforinvestigador.data.source.IPaperService;
-import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IPaperLocalDao;
+import com.unibs.zanotti.inforinvestigador.data.local.dao.IPaperLocalDao;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
+import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class PaperLocalService implements IPaperService {
     }
 
     public static PaperLocalService getInstance(IPaperLocalDao paperDao) {
-        if(INSTANCE==null) {
+        if (INSTANCE == null) {
             INSTANCE = new PaperLocalService(paperDao);
         }
         return INSTANCE;
@@ -44,14 +44,14 @@ public class PaperLocalService implements IPaperService {
                 "Author",
                 123,
                 1l,
-                new ArrayList<>()
+                new ArrayList<Comment>()
         ));
         comments.add(new Comment(
                 "Body of the comment",
                 "Author 2",
                 13,
                 2l,
-                Arrays.asList(new Comment("Sub comment","Author 1",3,3l,new ArrayList<>()))
+                Arrays.asList(new Comment("Sub comment", "Author 1", 3, 3l, new ArrayList<Comment>()))
         ));
 
         return comments;

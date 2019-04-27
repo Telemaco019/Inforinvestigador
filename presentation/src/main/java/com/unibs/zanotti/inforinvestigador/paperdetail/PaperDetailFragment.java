@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup;
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.ViewHolder;
 import org.jetbrains.annotations.NotNull;

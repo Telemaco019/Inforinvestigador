@@ -1,6 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.comments;
 
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.xwray.groupie.ExpandableGroup;
 
 public class ExpandableCommentGroup extends ExpandableGroup {

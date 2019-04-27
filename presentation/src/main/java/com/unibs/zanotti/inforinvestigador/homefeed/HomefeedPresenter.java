@@ -1,12 +1,12 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.model.Paper;
-import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.data.model.User;
-import com.unibs.zanotti.inforinvestigador.data.source.IPaperService;
-import com.unibs.zanotti.inforinvestigador.data.source.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
+import com.unibs.zanotti.inforinvestigador.domain.IUserService;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

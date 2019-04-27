@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.data.source;
+package com.unibs.zanotti.inforinvestigador.data;
 
 import java.util.List;
 import java.util.Optional;

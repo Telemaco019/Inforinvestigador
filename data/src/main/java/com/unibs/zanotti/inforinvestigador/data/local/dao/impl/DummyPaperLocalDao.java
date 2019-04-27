@@ -1,8 +1,8 @@
-package com.unibs.zanotti.inforinvestigador.data.source.local.dao.impl;
+package com.unibs.zanotti.inforinvestigador.data.local.dao.impl;
 
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
-import com.unibs.zanotti.inforinvestigador.data.model.Paper;
-import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IPaperLocalDao;
+import com.unibs.zanotti.inforinvestigador.data.local.dao.IPaperLocalDao;
+import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<>()))));
+                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
 
         papers.add(new Paper(2l,
                 "Title",
@@ -52,7 +52,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<>()))));
+                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
 
         papers.add(new Paper(3l,
                 "Title",
@@ -65,7 +65,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<>()))));
+                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
         return papers;
     }
 
@@ -82,7 +82,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "IEEE",
                 1l,
                 "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<>())));
+                Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>())));
         return Optional.of(paper);
     }
 }

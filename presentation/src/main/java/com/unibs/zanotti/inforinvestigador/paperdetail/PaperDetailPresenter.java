@@ -1,8 +1,8 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.model.Paper;
-import com.unibs.zanotti.inforinvestigador.data.source.IPaperService;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
+import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
 import java.util.Optional;
 

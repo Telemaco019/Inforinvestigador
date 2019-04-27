@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.data.model;
+package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

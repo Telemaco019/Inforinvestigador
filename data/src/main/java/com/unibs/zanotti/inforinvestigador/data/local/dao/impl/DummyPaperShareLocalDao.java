@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.data.source.local.dao.impl;
+package com.unibs.zanotti.inforinvestigador.data.local.dao.impl;
 
 public class DummyPaperShareLocalDao { //implements IDao<> {
     /*

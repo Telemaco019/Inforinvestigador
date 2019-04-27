@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.common
+package com.unibs.zanotti.inforinvestigador.utils
 
 class Actions {
     companion object {

@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.data.model;
+package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import java.util.List;
 

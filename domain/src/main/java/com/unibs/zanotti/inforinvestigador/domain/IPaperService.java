@@ -1,7 +1,8 @@
-package com.unibs.zanotti.inforinvestigador.data.source;
+package com.unibs.zanotti.inforinvestigador.domain;
 
-import com.unibs.zanotti.inforinvestigador.data.model.Comment;
-import com.unibs.zanotti.inforinvestigador.data.model.Paper;
+
+import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
 import java.util.List;
 import java.util.Optional;

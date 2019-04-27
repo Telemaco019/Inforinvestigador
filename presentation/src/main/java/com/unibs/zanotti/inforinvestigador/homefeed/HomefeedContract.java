@@ -2,8 +2,8 @@ package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.BaseView;
-import com.unibs.zanotti.inforinvestigador.data.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 
 import java.util.List;
 

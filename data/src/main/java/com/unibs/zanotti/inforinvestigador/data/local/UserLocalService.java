@@ -1,8 +1,8 @@
-package com.unibs.zanotti.inforinvestigador.data.source.local;
+package com.unibs.zanotti.inforinvestigador.data.local;
 
-import com.unibs.zanotti.inforinvestigador.data.model.User;
-import com.unibs.zanotti.inforinvestigador.data.source.IUserService;
-import com.unibs.zanotti.inforinvestigador.data.source.local.dao.IUserLocalDao;
+import com.unibs.zanotti.inforinvestigador.data.local.dao.IUserLocalDao;
+import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 import java.util.Optional;
 
