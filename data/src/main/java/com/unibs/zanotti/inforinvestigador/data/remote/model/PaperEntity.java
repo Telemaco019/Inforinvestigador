@@ -1,8 +1,9 @@
-package com.unibs.zanotti.inforinvestigador.domain.model;
+package com.unibs.zanotti.inforinvestigador.data.remote.model;
 
 import java.util.List;
 
-public class Paper {
+public class PaperEntity {
+
     private String paperId;
     private String paperTitle;
     private List<String> paperAuthors;
@@ -13,20 +14,18 @@ public class Paper {
     private String paperAbstract;
     private String paperPublisher;
     private Long sharingUserId;
-    private List<Comment> comments;
     private String sharingUserComment;
 
-    public Paper(String paperId,
-                 String paperTitle,
-                 List<String> paperAuthors,
-                 String paperDate, String paperDoi,
-                 int paperCitations,
-                 List<String> paperTopics,
-                 String paperAbstract,
-                 String paperPublisher,
-                 Long sharingUserId,
-                 String sharingUserComment,
-                 List<Comment> comments) {
+    public PaperEntity(String paperId,
+                       String paperTitle,
+                       List<String> paperAuthors,
+                       String paperDate, String paperDoi,
+                       int paperCitations,
+                       List<String> paperTopics,
+                       String paperAbstract,
+                       String paperPublisher,
+                       Long sharingUserId,
+                       String sharingUserComment) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -38,7 +37,6 @@ public class Paper {
         this.paperPublisher = paperPublisher;
         this.sharingUserId = sharingUserId;
         this.sharingUserComment = sharingUserComment;
-        this.comments = comments;
     }
 
     public Long getSharingUserId() {
@@ -49,14 +47,6 @@ public class Paper {
         this.sharingUserId = sharingUserId;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
     public String getSharingUserComment() {
         return sharingUserComment;
     }
@@ -65,7 +55,7 @@ public class Paper {
         this.sharingUserComment = sharingUserComment;
     }
 
-    public String getPaperId() {
+    public String getId() {
         return paperId;
     }
 

@@ -11,7 +11,7 @@ public interface HomefeedContract {
     interface Presenter extends BasePresenter {
         void loadFeed();
 
-        void paperShareClicked(long paperShareId);
+        void paperShareClicked(String paperShareId);
     }
 
     interface View extends BaseView<Presenter> {
@@ -19,6 +19,6 @@ public interface HomefeedContract {
 
         void showResearchersSuggestions(List<ResearcherSuggestion> suggestions);
 
-        void showPaperDetails(long paperId);
+        void showPaperDetails(String paperId);
     }
 }

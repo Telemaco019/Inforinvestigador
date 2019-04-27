@@ -67,7 +67,7 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void onPaperShareClick(long paperShareId) {
+    public void onPaperShareClick(String paperShareId) {
         this.presenter.paperShareClicked(paperShareId);
     }
 
@@ -82,7 +82,7 @@ public class HomefeedFragment extends Fragment implements
     }
 
     @Override
-    public void showPaperDetails(long paperId) {
+    public void showPaperDetails(String paperId) {
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.EXTRA_PAPER_ID, paperId);
         startActivity(intent);

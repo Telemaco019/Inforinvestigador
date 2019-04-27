@@ -39,7 +39,7 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
     }
 
     @Override
-    public void paperShareClicked(long paperId) {
+    public void paperShareClicked(String paperId) {
         view.showPaperDetails(paperId);
     }
 

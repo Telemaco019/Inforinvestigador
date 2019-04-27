@@ -117,8 +117,8 @@ public class DummyPaperShareLocalDao { //implements IDao<> {
 
     @Override
     public Optional<PaperShare> get(long id) {
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("asd","sads",12,1l,new ArrayList<>()));
+        List<CommentEntity> comments = new ArrayList<>();
+        comments.add(new CommentEntity("asd","sads",12,1l,new ArrayList<>()));
 
         return Optional.of(new PaperShare(
                 1l,

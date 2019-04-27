@@ -28,7 +28,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
     @Override
     public List<Paper> getAll() {
         ArrayList<Paper> papers = new ArrayList<>();
-        papers.add(new Paper(1l,
+        papers.add(new Paper("1",
                 "Title",
                 Arrays.asList("Author 1", "Author 2"),
                 "Mar 2019",
@@ -41,7 +41,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "THis is the comment of the user who shared the paper",
                 Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
 
-        papers.add(new Paper(2l,
+        papers.add(new Paper("2",
                 "Title",
                 Arrays.asList("Author 1", "Author 2"),
                 "Mar 2019",
@@ -54,7 +54,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 "THis is the comment of the user who shared the paper",
                 Arrays.asList(new Comment("A comment", "author", 10, 1l, new ArrayList<Comment>()))));
 
-        papers.add(new Paper(3l,
+        papers.add(new Paper("3",
                 "Title",
                 Arrays.asList("Author 1", "Author 2"),
                 "Mar 2019",
@@ -71,7 +71,7 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
 
     @Override
     public Optional<Paper> get(long id) {
-        Paper paper = new Paper(1l,
+        Paper paper = new Paper("1",
                 "Title",
                 Arrays.asList("Author 1", "Author 2"),
                 "Mar 2019",

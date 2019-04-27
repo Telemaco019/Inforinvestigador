@@ -23,6 +23,7 @@ import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 import com.unibs.zanotti.inforinvestigador.utils.StringUtils;
 
 import java.util.Objects;
@@ -63,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeAuth();
         setupButtonListeners();
+
+        FirebaseUtils.populatePapersCollection();
     }
 
     private void setupButtonListeners() {

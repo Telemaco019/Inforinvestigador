@@ -57,6 +57,6 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
     }
 
     interface OnPaperShareListener {
-        fun onPaperShareClick(paperShareId: Long)
+        fun onPaperShareClick(paperShareId: String)
     }
 }
