@@ -1,8 +1,36 @@
-apply plugin: 'java-library'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 20
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-}
 
-sourceCompatibility = "8"
-targetCompatibility = "8"
+    // Common dependencies
+    androidTestImplementation commonLibs.runner
+    testImplementation commonLibs.junit
+    androidTestImplementation commonLibs.espressoCore
+    implementation commonLibs.rxJava
+    implementation commonLibs.rxAndroid
+    implementation commonLibs.kotlin
+}

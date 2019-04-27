@@ -26,10 +26,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Common dependencies
-    testImplementation commonLibs.junit
-    androidTestImplementation commonLibs.runner
-    androidTestImplementation commonLibs.espressoCore
-
-    // Dependencies to other project modules
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
