@@ -99,10 +99,26 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <EditText android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/paper_detail_comment_tf"
-                  android:hint="@string/write_comment_hint"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="wrap_content"
+                      android:paddingStart="@dimen/doubleBasePadding"
+                      android:paddingEnd="@dimen/doubleBasePadding">
+            <EditText android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/paper_detail_comment_tf"
+                      android:hint="@string/write_comment_hint"
+                      android:paddingEnd="60dp"/>
+            <ImageButton android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/ic_baseline_send_24px"
+                         android:layout_gravity="center"
+                         android:background="?selectableItemBackgroundBorderless"
+                         android:tint="@drawable/standard_clickable_icon_selector"
+                         android:paddingEnd="@dimen/basePadding"
+                         android:layout_marginStart="-60dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

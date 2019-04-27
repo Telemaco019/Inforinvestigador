@@ -24,7 +24,6 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
-import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 
 import java.util.Objects;
 
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         initializeAuth();
         setupButtonListeners();
 
-        FirebaseUtils.populatePapersCollection();
+        //FirebaseUtils.populatePapersCollection();
     }
 
     private void setupButtonListeners() {
