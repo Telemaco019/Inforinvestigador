@@ -1,7 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.data.local;
 
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IPaperLocalDao;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
@@ -10,18 +10,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class PaperLocalService implements IPaperService {
-    private static volatile PaperLocalService INSTANCE = null;
+public class PaperLocalRepository implements IPaperRepository {
+    private static volatile PaperLocalRepository INSTANCE = null;
 
     private final IPaperLocalDao paperDao;
 
-    private PaperLocalService(IPaperLocalDao paperDao) {
+    private PaperLocalRepository(IPaperLocalDao paperDao) {
         this.paperDao = paperDao;
     }
 
-    public static PaperLocalService getInstance(IPaperLocalDao paperDao) {
+    public static PaperLocalRepository getInstance(IPaperLocalDao paperDao) {
         if (INSTANCE == null) {
-            INSTANCE = new PaperLocalService(paperDao);
+            INSTANCE = new PaperLocalRepository(paperDao);
         }
         return INSTANCE;
     }

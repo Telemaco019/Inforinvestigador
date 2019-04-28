@@ -1,23 +1,23 @@
 package com.unibs.zanotti.inforinvestigador.data.local;
 
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IUserLocalDao;
-import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 import java.util.Optional;
 
-public class UserLocalService implements IUserService {
-    private static volatile UserLocalService INSTANCE = null;
+public class UserLocalRepository implements IUserRepository {
+    private static volatile UserLocalRepository INSTANCE = null;
 
     private IUserLocalDao userLocalDao;
 
-    public UserLocalService(IUserLocalDao userLocalDao) {
+    public UserLocalRepository(IUserLocalDao userLocalDao) {
         this.userLocalDao = userLocalDao;
     }
 
-    public static UserLocalService getInstance(IUserLocalDao userLocalDao) {
+    public static UserLocalRepository getInstance(IUserLocalDao userLocalDao) {
         if (INSTANCE == null) {
-            INSTANCE = new UserLocalService(userLocalDao);
+            INSTANCE = new UserLocalRepository(userLocalDao);
         }
         return INSTANCE;
     }

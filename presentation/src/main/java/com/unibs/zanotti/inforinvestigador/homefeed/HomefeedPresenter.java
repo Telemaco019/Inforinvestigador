@@ -1,8 +1,8 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
-import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
+import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
@@ -15,12 +15,12 @@ import java.util.Optional;
 public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     private final HomefeedContract.View view;
-    private final IUserService userService;
-    private IPaperService paperService;
+    private final IUserRepository userService;
+    private IPaperRepository paperService;
 
     public HomefeedPresenter(HomefeedContract.View view,
-                             IPaperService paperService,
-                             IUserService userService) {
+                             IPaperRepository paperService,
+                             IUserRepository userService) {
         this.view = view;
         this.paperService = paperService;
         this.userService = userService;

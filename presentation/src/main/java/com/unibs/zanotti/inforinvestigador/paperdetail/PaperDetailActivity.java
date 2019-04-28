@@ -30,8 +30,8 @@ public class PaperDetailActivity extends AppCompatActivity {
         }
 
         new PaperDetailPresenter(paperId,
-                Injection.providePaperService(),
-                Injection.provideUserService(),
+                Injection.providePaperRepository(),
+                Injection.provideUserRepository(),
                 paperDetailFragment);
     }
 

@@ -30,8 +30,8 @@ public class MainNavigationPresenter implements MainNavigationContract.Presenter
             case R.id.bottom_bar_action_home: {
                 HomefeedFragment fragment = new HomefeedFragment();
                 new HomefeedPresenter(fragment,
-                        Injection.providePaperService(),
-                        Injection.provideUserService());
+                        Injection.providePaperRepository(),
+                        Injection.provideUserRepository());
                 destinationFragment = fragment;
                 break;
             }

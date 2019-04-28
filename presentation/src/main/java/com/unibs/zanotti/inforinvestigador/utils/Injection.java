@@ -2,11 +2,11 @@ package com.unibs.zanotti.inforinvestigador.utils;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.unibs.zanotti.inforinvestigador.data.local.PaperLocalService;
+import com.unibs.zanotti.inforinvestigador.data.local.PaperLocalRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.impl.DummyPaperLocalDao;
-import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
-import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseRepository;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
+import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 
 /**
  * Enables injection of mock implementations at compile time. This is useful for testing, since it allows us to use
@@ -14,11 +14,11 @@ import com.unibs.zanotti.inforinvestigador.domain.IUserService;
  */
 public class Injection {
 
-    public static IPaperService providePaperService() {
-        return PaperLocalService.getInstance(new DummyPaperLocalDao());
+    public static IPaperRepository providePaperRepository() {
+        return PaperLocalRepository.getInstance(new DummyPaperLocalDao());
     }
 
-    public static IUserService provideUserService() {
-        return UserFirebaseService.getInstance(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance());
+    public static IUserRepository provideUserRepository() {
+        return UserFirebaseRepository.getInstance(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance());
     }
 }

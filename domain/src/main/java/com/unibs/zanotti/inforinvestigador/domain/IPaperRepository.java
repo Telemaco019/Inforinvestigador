@@ -7,7 +7,7 @@ import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import java.util.List;
 import java.util.Optional;
 
-public interface IPaperService {
+public interface IPaperRepository {
     Optional<Paper> getPaper(long paperId);
 
     List<Paper> getPapers();

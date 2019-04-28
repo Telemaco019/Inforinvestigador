@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     // Services
-    private IUserService userService;
+    private IUserRepository userService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         setupButtonListeners();
 
         // FIXME: use DI
-        userService = Injection.provideUserService();
+        userService = Injection.provideUserRepository();
 
         // FirebaseUtils.populatePapersCollection();
     }

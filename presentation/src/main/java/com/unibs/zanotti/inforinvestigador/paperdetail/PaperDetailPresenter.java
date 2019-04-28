@@ -1,8 +1,8 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
-import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
+import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
@@ -16,10 +16,10 @@ import java.util.Optional;
 public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     private final PaperDetailContract.View mView;
     private final long paperId;
-    private IPaperService paperService;
-    private IUserService userService;
+    private IPaperRepository paperService;
+    private IUserRepository userService;
 
-    public PaperDetailPresenter(long paperId, IPaperService paperService, IUserService userService, PaperDetailContract.View mView) {
+    public PaperDetailPresenter(long paperId, IPaperRepository paperService, IUserRepository userService, PaperDetailContract.View mView) {
         this.mView = mView;
         this.paperId = paperId;
         this.paperService = paperService;

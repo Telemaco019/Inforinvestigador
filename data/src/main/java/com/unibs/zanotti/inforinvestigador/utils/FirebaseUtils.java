@@ -1,6 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.utils;
 
-import com.unibs.zanotti.inforinvestigador.data.remote.PaperFirebaseService;
+import com.unibs.zanotti.inforinvestigador.data.remote.PaperFirebaseRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class FirebaseUtils {
     public static void populatePapersCollection() {
-        PaperFirebaseService service = new PaperFirebaseService();
+        PaperFirebaseRepository service = new PaperFirebaseRepository();
         Paper paperToWrite = new Paper(
                 null,
                 "Title of the paper 1",

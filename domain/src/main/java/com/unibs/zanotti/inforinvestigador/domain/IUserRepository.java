@@ -5,7 +5,7 @@ import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 import java.util.Optional;
 
-public interface IUserService {
+public interface IUserRepository {
 
     Optional<User> getUser(Long userId);
 

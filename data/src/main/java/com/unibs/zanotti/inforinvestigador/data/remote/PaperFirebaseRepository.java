@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.CommentEntity;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
+import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class PaperFirebaseService implements IPaperService {
-    private static final String TAG = String.valueOf(PaperFirebaseService.class);
+public class PaperFirebaseRepository implements IPaperRepository {
+    private static final String TAG = String.valueOf(PaperFirebaseRepository.class);
 
     private FirebaseFirestore db;
 
-    public PaperFirebaseService() {
+    public PaperFirebaseRepository() {
         db = FirebaseFirestore.getInstance();
     }
 
