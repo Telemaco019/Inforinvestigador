@@ -29,7 +29,6 @@ import com.unibs.zanotti.inforinvestigador.domain.IUserService;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
-import com.unibs.zanotti.inforinvestigador.utils.AuthenticationUtils;
 
 import java.util.Objects;
 
@@ -221,13 +220,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // If the user is new, then create a new user and store it in the DB
-                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
-                            // TODO: manage the case in which saveUser fails
-                            userService.saveUser(
-                                    AuthenticationUtils.fromFirebaseToInforinvestigador(task.getResult().getUser())
-                            );
-                        }
                         // Update UI with the signed-in user's information
                         Log.d(TAG, "signInWithGoogleCredential:success");
                         FirebaseUser user = mAuth.getCurrentUser();

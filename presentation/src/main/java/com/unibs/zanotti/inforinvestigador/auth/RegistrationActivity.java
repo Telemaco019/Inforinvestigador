@@ -16,8 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
 import com.unibs.zanotti.inforinvestigador.domain.IUserService;
-import com.unibs.zanotti.inforinvestigador.domain.model.User;
-import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
@@ -101,13 +99,6 @@ public class RegistrationActivity extends AppCompatActivity {
                         checkEmailAlreadyRegistered(email);
                     } else {
                         Log.d(TAG, String.format("created firebase user [name: %s | surname: %s | email: %s]", name, surname, email));
-                        // TODO: manage the case in which saveUser fails
-                        userService.saveUser(new User(
-                                task.getResult().getUser().getUid(),
-                                email,
-                                String.format("%s %s", name, surname),
-                                null,
-                                DateUtils.fromInstantTimestamp(task.getResult().getUser().getMetadata().getCreationTimestamp())));
                         sendVerificationEmail(Objects.requireNonNull(mAuth.getCurrentUser()));
                     }
                 });

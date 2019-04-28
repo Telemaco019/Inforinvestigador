@@ -1,9 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.data.remote;
 
-import android.util.Log;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
-import com.unibs.zanotti.inforinvestigador.data.remote.model.UserEntity;
 import com.unibs.zanotti.inforinvestigador.domain.IUserService;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
@@ -24,20 +21,7 @@ public class UserFirebaseService implements IUserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        UserEntity userEntity = new UserEntity(
-                user.getId(),
-                user.getEmail(),
-                user.getName(),
-                user.getProfilePictureUri() == null ? null : user.getProfilePictureUri().toString(),
-                user.getCreationDateTime(),
-                user.isVerified()
-        );
+    public void updateUser(User user) {
 
-        db.collection(Collections.USERS)
-                .document(userEntity.getId())
-                .set(userEntity)
-                .addOnSuccessListener(documentReference -> Log.d(TAG, "added document user with id " + user.getId()))
-                .addOnFailureListener(e -> Log.d(TAG, "failed to add document user: " + e));
     }
 }

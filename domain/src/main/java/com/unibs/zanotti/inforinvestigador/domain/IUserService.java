@@ -9,5 +9,5 @@ public interface IUserService {
 
     Optional<User> getUser(Long userId);
 
-    void saveUser(User user);
+    void updateUser(User user);
 }

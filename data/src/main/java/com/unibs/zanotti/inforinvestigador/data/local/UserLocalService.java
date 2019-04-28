@@ -28,7 +28,7 @@ public class UserLocalService implements IUserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void updateUser(User user) {
 
     }
 }
