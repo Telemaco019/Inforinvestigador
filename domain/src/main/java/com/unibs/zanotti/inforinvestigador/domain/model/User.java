@@ -1,21 +1,29 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
-public class User {
-    private Long id;
-    private String name;
-    private String profilePictureUrl;
+import android.net.Uri;
 
-    public User(Long id, String name, String profilePictureUrl) {
+import java.time.LocalDateTime;
+
+public class User {
+    private String id;
+    private String email;
+    private String name;
+    private Uri profilePictureUri;
+    LocalDateTime creationDateTime;
+
+    public User(String id,String email, String name, Uri profilePictureUri, LocalDateTime creationDateTime) {
         this.id = id;
+        this.email = email;
         this.name = name;
-        this.profilePictureUrl = profilePictureUrl;
+        this.profilePictureUri = profilePictureUri;
+        this.creationDateTime = creationDateTime;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -27,11 +35,27 @@ public class User {
         this.name = name;
     }
 
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
+    public Uri getProfilePictureUri() {
+        return profilePictureUri;
     }
 
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(LocalDateTime creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
+    public void setProfilePictureUri(Uri profilePictureUri) {
+        this.profilePictureUri = profilePictureUri;
     }
 }

@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface IUserService {
 
     Optional<User> getUser(Long userId);
+
+    void saveUser(User user);
 }

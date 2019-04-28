@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.auth;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,13 +19,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.*;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
+import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -56,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
 
+    // Services
+    private IUserService userService;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeAuth();
         setupButtonListeners();
+
+        // FIXME: use DI
+        userService = new UserFirebaseService();
 
         // FirebaseUtils.populatePapersCollection();
     }
@@ -136,15 +151,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            if (user.isEmailVerified()) {
-                startActivity(new Intent(getApplicationContext(), MainNavigationActivity.class));
-                finish();
-            } else {
-                manageEmailNotVerified();
-            }
-        }
+        // Reload for getting the update user from Firebase
+        mAuth.getCurrentUser()
+                .reload()
+                .addOnSuccessListener(aVoid -> updateUI(mAuth.getCurrentUser()))
+                .addOnFailureListener(aVoid -> updateUI(mAuth.getCurrentUser()));
     }
 
     @Override
@@ -211,22 +222,45 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
+                        // If the user is new, then create a new user and store it in the DB
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                            createNewInforinvestigadorUser(task.getResult().getUser());
+                        }
+                        // Update UI with the signed-in user's information
                         Log.d(TAG, "signInWithGoogleCredential:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
-                        try {
-                            throw task.getException();
-                        } catch (FirebaseAuthUserCollisionException e) {
-                            authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_email_collision_message));
-                        } catch (Exception e) {
-                            authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_generic_message));
-                        }
+                        authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_generic_message));
                         Log.w(TAG, "signInWithGoogleCredential:failure", task.getException());
                         updateUI(null);
                     }
                 });
+    }
+
+    /**
+     * Create a new Inforinvestigador user (to be stored in the Inforinvestigador database) from the Firebase user
+     * provided as argument
+     *
+     * @param firebaseUser
+     */
+    // TODO: manage the case in which userService.saveUser fails
+    private void createNewInforinvestigadorUser(FirebaseUser firebaseUser) {
+        String userEmail = firebaseUser.getEmail();
+        String userId = firebaseUser.getUid();
+        String userName = firebaseUser.getDisplayName();
+        Uri userProfilePicUri = firebaseUser.getPhotoUrl();
+        LocalDateTime creationDateTime = DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp());
+
+        User inforinvestigadorUser = new User(
+                userId,
+                userEmail,
+                userName,
+                userProfilePicUri,
+                creationDateTime
+        );
+
+        userService.saveUser(inforinvestigadorUser);
     }
 
     /**
