@@ -114,7 +114,7 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
                     paper.getPaperTitle(),
                     paper.getSharingUserComment(),
                     optionalUser.map(User::getName).orElse(""),
-                    optionalUser.map(User::getProfilePictureUrl).orElse(""),
+                    optionalUser.map(u -> u.getProfilePictureUri().toString()).orElse(""), // FIXME
                     paper.getPaperDate(),
                     paper.getPaperTopics(),
                     paper.getPaperAuthors()

@@ -3,6 +3,8 @@ package com.unibs.zanotti.inforinvestigador.domain.utils;
 import io.reactivex.annotations.Nullable;
 
 public class StringUtils {
+    public static final String BLANK = "";
+
     public static boolean isBlank(@Nullable String str) {
         int strLen;
         if (str != null && (strLen = str.length()) != 0) {

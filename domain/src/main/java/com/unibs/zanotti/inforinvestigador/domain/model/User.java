@@ -9,14 +9,27 @@ public class User {
     private String email;
     private String name;
     private Uri profilePictureUri;
-    LocalDateTime creationDateTime;
+    private LocalDateTime creationDateTime;
+    /**
+     * If true, then the user has been verified (e.g. through email verification). False by default.
+     */
+    private boolean verified;
 
-    public User(String id,String email, String name, Uri profilePictureUri, LocalDateTime creationDateTime) {
+    public User(String id, String email, String name, Uri profilePictureUri, LocalDateTime creationDateTime) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.profilePictureUri = profilePictureUri;
         this.creationDateTime = creationDateTime;
+        this.verified = false;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public String getId() {

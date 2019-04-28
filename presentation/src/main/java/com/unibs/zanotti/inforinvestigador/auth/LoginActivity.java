@@ -1,7 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.auth;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,13 +26,11 @@ import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
 import com.unibs.zanotti.inforinvestigador.domain.IUserService;
-import com.unibs.zanotti.inforinvestigador.domain.model.User;
-import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.AuthenticationUtils;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -152,10 +149,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Reload for getting the update user from Firebase
-        mAuth.getCurrentUser()
-                .reload()
-                .addOnSuccessListener(aVoid -> updateUI(mAuth.getCurrentUser()))
-                .addOnFailureListener(aVoid -> updateUI(mAuth.getCurrentUser()));
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.reload()
+                    .addOnSuccessListener(aVoid -> updateUI(mAuth.getCurrentUser()))
+                    .addOnFailureListener(aVoid -> updateUI(mAuth.getCurrentUser()));
+        }
     }
 
     @Override
@@ -224,7 +223,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // If the user is new, then create a new user and store it in the DB
                         if (task.getResult().getAdditionalUserInfo().isNewUser()) {
-                            createNewInforinvestigadorUser(task.getResult().getUser());
+                            // TODO: manage the case in which saveUser fails
+                            userService.saveUser(
+                                    AuthenticationUtils.fromFirebaseToInforinvestigador(task.getResult().getUser())
+                            );
                         }
                         // Update UI with the signed-in user's information
                         Log.d(TAG, "signInWithGoogleCredential:success");
@@ -238,30 +240,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Create a new Inforinvestigador user (to be stored in the Inforinvestigador database) from the Firebase user
-     * provided as argument
-     *
-     * @param firebaseUser
-     */
-    // TODO: manage the case in which userService.saveUser fails
-    private void createNewInforinvestigadorUser(FirebaseUser firebaseUser) {
-        String userEmail = firebaseUser.getEmail();
-        String userId = firebaseUser.getUid();
-        String userName = firebaseUser.getDisplayName();
-        Uri userProfilePicUri = firebaseUser.getPhotoUrl();
-        LocalDateTime creationDateTime = DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp());
-
-        User inforinvestigadorUser = new User(
-                userId,
-                userEmail,
-                userName,
-                userProfilePicUri,
-                creationDateTime
-        );
-
-        userService.saveUser(inforinvestigadorUser);
-    }
 
     /**
      * Manage the event that occurs when the user tries to log in with the right credentials but the

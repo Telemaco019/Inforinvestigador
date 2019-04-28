@@ -16,6 +16,10 @@ public class PaperEntity {
     private Long sharingUserId;
     private String sharingUserComment;
 
+    public PaperEntity() {
+        // Required by Firestone
+    }
+
     public PaperEntity(String paperId,
                        String paperTitle,
                        List<String> paperAuthors,

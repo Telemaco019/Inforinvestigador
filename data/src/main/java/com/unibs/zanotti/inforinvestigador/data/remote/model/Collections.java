@@ -6,4 +6,5 @@ package com.unibs.zanotti.inforinvestigador.data.remote.model;
 public abstract class Collections {
     public static final String PAPERS = "papers";
     public static final String COMMENTS = "comments";
+    public static final String USERS = "users";
 }

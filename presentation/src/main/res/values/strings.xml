@@ -29,9 +29,6 @@
     <string name="registration_generic_error">Error: could not proceed with registration</string>
     <string name="registration_duplicated_email_error">The address %s is alredy in use</string>
     <string name="registration_verification_email_sent_message">Verification email sent to %s</string>
-    <string name="authentication_failed_email_collision_message">Another account has already been registered with this
-        email
-    </string>
     <string name="send_verification_email_generic_error">Error sending verification email. Please retry later</string>
     <string name="login_message_reset_pass_email_sent">Email sent to %s</string>
     <string name="google_signin_button_text">Continue with Google</string>

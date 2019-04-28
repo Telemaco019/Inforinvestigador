@@ -6,11 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
+import com.unibs.zanotti.inforinvestigador.domain.IUserService;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
@@ -22,19 +29,33 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private EditText inputTxtName;
-    private EditText inputTxtSurname;
-    private EditText inputTxtEmail;
-    private EditText inputTxtPassword;
-    private View undeterminedOverlayProgressBar;
-    private Button btnSignup;
-    private TextView loginLink;
+    @BindView(R.id.registration_input_name)
+    EditText inputTxtName;
+    @BindView(R.id.registration_input_surname)
+    EditText inputTxtSurname;
+    @BindView(R.id.registration_input_email)
+    EditText inputTxtEmail;
+    @BindView(R.id.registration_input_password)
+    EditText inputTxtPassword;
+    @BindView(R.id.undetermined_progress_bar)
+    @Nullable
+    View undeterminedOverlayProgressBar;
+    @BindView(R.id.registration_btn_signup)
+    Button btnSignup;
+    @BindView(R.id.registration_link_login)
+    TextView loginLink;
+
+    // Services
+    private IUserService userService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
+        ButterKnife.bind(this);
+        // FIXME: use DI
+        userService = new UserFirebaseService();
 
         // This activity is supposed to be viewd only by non-authenticated users
         if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().isEmailVerified()) {
@@ -42,24 +63,12 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        initializeView();
-
         btnSignup.setOnClickListener(v -> {
             ActivityUtils.dismissKeyboard(this);
             signup();
         });
         // Finish the registration and go back to the login activity
         loginLink.setOnClickListener(v -> finish());
-    }
-
-    private void initializeView() {
-        inputTxtEmail = findViewById(R.id.registration_input_email);
-        inputTxtName = findViewById(R.id.registration_input_name);
-        inputTxtSurname = findViewById(R.id.registration_input_surname);
-        inputTxtPassword = findViewById(R.id.registration_input_password);
-        btnSignup = findViewById(R.id.registration_btn_signup);
-        loginLink = findViewById(R.id.registration_link_login);
-        undeterminedOverlayProgressBar = findViewById(R.id.undetermined_progress_bar);
     }
 
     public void signup() {
@@ -83,7 +92,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    Log.d(TAG, String.format("creating new user with email [%s]", email));
+                    Log.d(TAG, String.format("creating new firebase user with email [%s]", email));
                     // If sign in fails, display a message to the user. If sign in succeeds
                     // the auth state listener will be notified and logic to handle the
                     // signed in user can be handled in the listener.
@@ -91,7 +100,14 @@ public class RegistrationActivity extends AppCompatActivity {
                         Log.d(TAG, String.format("could not create user [%s]\n\t%s", email, task.getException()));
                         checkEmailAlreadyRegistered(email);
                     } else {
-                        Log.d(TAG, String.format("created user [name: %s | surname: %s | email: %s]", name, surname, email));
+                        Log.d(TAG, String.format("created firebase user [name: %s | surname: %s | email: %s]", name, surname, email));
+                        // TODO: manage the case in which saveUser fails
+                        userService.saveUser(new User(
+                                task.getResult().getUser().getUid(),
+                                email,
+                                String.format("%s %s", name, surname),
+                                null,
+                                DateUtils.fromInstantTimestamp(task.getResult().getUser().getMetadata().getCreationTimestamp())));
                         sendVerificationEmail(Objects.requireNonNull(mAuth.getCurrentUser()));
                     }
                 });

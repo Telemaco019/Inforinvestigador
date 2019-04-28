@@ -26,4 +26,9 @@ public class UserLocalService implements IUserService {
     public Optional<User> getUser(Long userId) {
         return userLocalDao.get(userId);
     }
+
+    @Override
+    public void saveUser(User user) {
+
+    }
 }
