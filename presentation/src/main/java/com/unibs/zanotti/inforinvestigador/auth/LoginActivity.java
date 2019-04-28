@@ -24,11 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
-import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.Objects;
 
@@ -61,9 +59,6 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
 
-    // Services
-    private IUserRepository userService;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeAuth();
         setupButtonListeners();
-
-        // FIXME: use DI
-        userService = Injection.provideUserRepository();
 
         // FirebaseUtils.populatePapersCollection();
     }

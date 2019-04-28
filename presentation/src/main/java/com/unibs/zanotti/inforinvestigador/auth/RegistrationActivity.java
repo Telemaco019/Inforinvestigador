@@ -14,10 +14,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
-import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.Objects;
 
@@ -43,17 +41,12 @@ public class RegistrationActivity extends AppCompatActivity {
     @BindView(R.id.registration_link_login)
     TextView loginLink;
 
-    // Services
-    private IUserRepository userService;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
-        // FIXME: use DI
-        userService = Injection.provideUserRepository();
 
         // This activity is supposed to be viewd only by non-authenticated users
         if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().isEmailVerified()) {

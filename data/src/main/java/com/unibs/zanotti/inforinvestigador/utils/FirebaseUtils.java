@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class FirebaseUtils {
     public static void populatePapersCollection() {
-        PaperFirebaseRepository service = new PaperFirebaseRepository();
+        PaperFirebaseRepository paperFirebaseRepository = new PaperFirebaseRepository();
         Paper paperToWrite = new Paper(
                 null,
                 "Title of the paper 1",
@@ -27,6 +27,6 @@ public class FirebaseUtils {
                         new Comment("Body 2", "Author", 10, null, new ArrayList<>()))
         );
 
-        service.savePaper(paperToWrite);
+        paperFirebaseRepository.savePaper(paperToWrite);
     }
 }

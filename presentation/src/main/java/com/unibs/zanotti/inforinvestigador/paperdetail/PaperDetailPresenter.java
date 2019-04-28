@@ -16,14 +16,17 @@ import java.util.Optional;
 public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     private final PaperDetailContract.View mView;
     private final long paperId;
-    private IPaperRepository paperService;
-    private IUserRepository userService;
+    private IPaperRepository paperRepository;
+    private IUserRepository userRepository;
 
-    public PaperDetailPresenter(long paperId, IPaperRepository paperService, IUserRepository userService, PaperDetailContract.View mView) {
+    public PaperDetailPresenter(long paperId,
+                                IPaperRepository paperRepository,
+                                IUserRepository userRepository,
+                                PaperDetailContract.View mView) {
         this.mView = mView;
         this.paperId = paperId;
-        this.paperService = paperService;
-        this.userService = userService;
+        this.paperRepository = paperRepository;
+        this.userRepository = userRepository;
         mView.setPresenter(this);
     }
 
@@ -33,7 +36,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     }
 
     private void openPaper() {
-        Optional<Paper> optionalPaper = paperService.getPaper(paperId);
+        Optional<Paper> optionalPaper = paperRepository.getPaper(paperId);
         if (optionalPaper.isPresent()) {
             Paper paper = optionalPaper.get();
             mView.showPaperTitle(paper.getPaperTitle());
@@ -45,7 +48,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
             mView.showPaperAuthors(paper.getPaperAuthors());
             mView.showPaperTopics(paper.getPaperTopics());
             mView.showPaperImage(R.drawable.paper_preview_test); // TODO
-            mView.showComments(paperService.getComments(paperId));
+            mView.showComments(paperRepository.getComments(paperId));
         }
     }
 
@@ -57,7 +60,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     @Override
     public void addComment(String comment) {
         String author = ";";
-        Comment newComment = new Comment(comment,author,0,null,new ArrayList<>());
+        Comment newComment = new Comment(comment, author, 0, null, new ArrayList<>());
         // TODO: save comment to db
 
         mView.showNewComment(newComment);

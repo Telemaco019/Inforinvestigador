@@ -15,15 +15,15 @@ import java.util.Optional;
 public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     private final HomefeedContract.View view;
-    private final IUserRepository userService;
-    private IPaperRepository paperService;
+    private final IUserRepository userRepository;
+    private IPaperRepository paperRepository;
 
     public HomefeedPresenter(HomefeedContract.View view,
-                             IPaperRepository paperService,
-                             IUserRepository userService) {
+                             IPaperRepository paperRepository,
+                             IUserRepository userRepository) {
         this.view = view;
-        this.paperService = paperService;
-        this.userService = userService;
+        this.paperRepository = paperRepository;
+        this.userRepository = userRepository;
         view.setPresenter(this);
     }
 
@@ -107,8 +107,8 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     private void loadPaperShares() {
         List<FeedPaper> papersFeed = new ArrayList<>();
-        for (Paper paper : paperService.getPapers()) {
-            Optional<User> optionalUser = userService.getUser(paper.getSharingUserId());
+        for (Paper paper : paperRepository.getPapers()) {
+            Optional<User> optionalUser = userRepository.getUser(paper.getSharingUserId());
             papersFeed.add(new FeedPaper(
                     paper.getPaperId(),
                     paper.getPaperTitle(),
