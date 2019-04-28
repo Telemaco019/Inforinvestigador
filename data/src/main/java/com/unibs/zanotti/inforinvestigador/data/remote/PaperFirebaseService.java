@@ -69,6 +69,7 @@ public class PaperFirebaseService implements IPaperService {
         // FIXME: just for testing, supposed to be removed
         List<Comment> comments = paper.getComments();
         comments.stream().forEach(c -> this.saveComment(paperEntity.getId(), c));
+
     }
 
     // FIXME: supposed to become something like addComment

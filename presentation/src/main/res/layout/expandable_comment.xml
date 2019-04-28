@@ -24,16 +24,19 @@
     </LinearLayout>
 
     <!-- Content -->
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_marginBottom="@dimen/doubleBaseMargin">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/doubleBaseMargin">
 
         <!-- Username and date/time -->
-        <LinearLayout android:layout_width="match_parent"
-                      android:orientation="horizontal"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="@dimen/doubleBaseMargin">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/doubleBaseMargin">
+
             <TextView
                     android:id="@+id/tv_user"
                     android:layout_width="wrap_content"
@@ -67,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="end">
+
             <ImageButton
                     android:id="@+id/btn_down_vote"
                     android:layout_width="wrap_content"
@@ -94,6 +98,7 @@
                     android:layout_marginRight="@dimen/baseMargin"
                     android:background="@drawable/ic_arrow_upvote"
                     android:layout_gravity="center"/>
+
             <View
                     android:id="@+id/separator1"
                     android:layout_width="1dp"
@@ -102,14 +107,17 @@
                     android:layout_marginRight="@dimen/baseMargin"
                     android:background="@color/dark_gray"
                     android:layout_gravity="center"/>
+
             <TextView
-                    android:id="@+id/tv_reply"
+                    android:id="@+id/reply_to_comment_clickable_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/baseMargin"
                     android:drawableLeft="@drawable/ic_chat_bubble_outline_black_24dp"
                     android:drawablePadding="@dimen/basePadding"
-                    android:text="Reply"
+                    android:clickable="true"
+                    android:background="?selectableItemBackground"
+                    android:text="@string/button_reply_caption"
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_gravity="center"/>
         </LinearLayout>

@@ -9,6 +9,9 @@ import java.util.List;
 public interface PaperDetailContract {
     interface Presenter extends BasePresenter {
 
+        void viewClicked(int viewId);
+
+        void addComment(String comment);
     }
 
     interface View extends BaseView<Presenter> {
@@ -31,5 +34,9 @@ public interface PaperDetailContract {
         void showPaperImage(int resImageId);
 
         void showComments(List<Comment> comments);
+
+        void showNewComment(Comment newComment);
+
+        void clearCommentInputField();
     }
 }

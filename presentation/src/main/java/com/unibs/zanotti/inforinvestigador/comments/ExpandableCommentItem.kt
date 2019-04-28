@@ -1,6 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.comments
 
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import com.unibs.zanotti.inforinvestigador.R
@@ -11,21 +10,38 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.expandable_comment.view.*
 
-class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHolder>(), ExpandableItem {
+class ExpandableCommentItem(
+    val comment: Comment,
+    val depth: Int,
+    val replyListener: OnReplyClickedListener
+) : Item<ViewHolder>(), ExpandableItem {
+
     private lateinit var expandableGroup: ExpandableGroup
+
+    interface OnReplyClickedListener {
+        fun onReplyClicked(item: Item<ViewHolder>, comment: Comment)
+    }
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         addingDepthViews(viewHolder)
 
         viewHolder.itemView.tv_user.setText(comment.author)
-        viewHolder.itemView.body.setText(Html.fromHtml(comment.body))
+        viewHolder.itemView.body.setText(comment.body)
         viewHolder.itemView.tv_votes.setText(comment.score.toString())
         viewHolder.itemView.tv_comment_date.setText("5h")
+
         viewHolder.itemView.apply {
             setOnLongClickListener {
                 expandableGroup.onToggleExpanded()
                 true
             }
+        }
+
+        viewHolder.itemView.reply_to_comment_clickable_tv.setOnClickListener {
+            replyListener.onReplyClicked(
+                this,
+                comment
+            )
         }
     }
 
@@ -35,7 +51,7 @@ class ExpandableCommentItem(val comment: Comment, val depth: Int) : Item<ViewHol
 
         for (i in 1..depth) {
             val v: View = LayoutInflater.from(viewHolder.itemView.context)
-                .inflate(R.layout.layout_separator_view, viewHolder.itemView.separatorContainer,false)
+                .inflate(R.layout.layout_separator_view, viewHolder.itemView.separatorContainer, false)
             viewHolder.itemView.separatorContainer.addView(v)
         }
         viewHolder.itemView.body.requestLayout()

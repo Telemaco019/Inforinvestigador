@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         initializeAuth();
         setupButtonListeners();
 
-        //FirebaseUtils.populatePapersCollection();
+        // FirebaseUtils.populatePapersCollection();
     }
 
     private void setupButtonListeners() {

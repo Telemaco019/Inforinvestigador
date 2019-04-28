@@ -5,22 +5,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup;
+import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentItem;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.xwray.groupie.GroupAdapter;
+import com.xwray.groupie.Item;
 import com.xwray.groupie.ViewHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PaperDetailFragment extends Fragment implements PaperDetailContract.View {
+public class
+PaperDetailFragment extends Fragment implements PaperDetailContract.View, ExpandableCommentItem.OnReplyClickedListener {
     private static final String ARGUMENT_PAPER_ID = "PAPER_ID";
 
     private PaperDetailContract.Presenter presenter;
@@ -30,16 +40,28 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
     private GroupAdapter<ViewHolder> groupAdapter;
 
     // View elements
-    private TextView paperTitle;
-    private TextView paperAbstract;
-    private TextView paperDate;
-    private TextView paperAuthors;
-    private TextView paperTopics;
-    private TextView paperCitations;
-    private ImageView paperImage;
-    private TextView paperDOI;
-    private TextView paperPublisher;
-    private RecyclerView rvComments;
+    @BindView(R.id.paper_title)
+    TextView paperTitle;
+    @BindView(R.id.paper_abstract)
+    TextView paperAbstract;
+    @BindView(R.id.paper_date)
+    TextView paperDate;
+    @BindView(R.id.paper_authors)
+    TextView paperAuthors;
+    @BindView(R.id.paper_topics)
+    TextView paperTopics;
+    @BindView(R.id.paper_citations)
+    TextView paperCitations;
+    @BindView(R.id.paper_image)
+    ImageView paperImage;
+    @BindView(R.id.paper_doi)
+    TextView paperDOI;
+    @BindView(R.id.paper_publisher)
+    TextView paperPublisher;
+    @BindView(R.id.rv_paper_comments)
+    RecyclerView rvComments;
+    @BindView(R.id.paper_detail_comment_tf)
+    EditText commentTf;
 
     public PaperDetailFragment() {
         groupAdapter = new GroupAdapter<>();
@@ -61,22 +83,12 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_paper_detail, container, false);
+        ButterKnife.bind(this, view);
 
-        paperAbstract = view.findViewById(R.id.paper_abstract);
-        paperTitle = view.findViewById(R.id.paper_title);
-        paperDate = view.findViewById(R.id.paper_date);
-        paperImage = view.findViewById(R.id.paper_image);
-        paperDOI = view.findViewById(R.id.paper_doi);
-        paperAuthors = view.findViewById(R.id.paper_authors);
-        paperTopics = view.findViewById(R.id.paper_topics);
-        paperCitations = view.findViewById(R.id.paper_citations_2);
-        paperPublisher = view.findViewById(R.id.paper_publisher);
-        rvComments = view.findViewById(R.id.rv_paper_comments);
-
+        // Setup recycler view
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), groupAdapter.getSpanCount());
         layoutManager.setSpanCount(groupAdapter.getSpanCount());
         rvComments.setAdapter(groupAdapter);
@@ -85,9 +97,6 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
         return view;
     }
 
-    private List<ExpandableCommentGroup> generateCommentsExpandableGroupList(List<Comment> comments) {
-        return comments.stream().map(c -> new ExpandableCommentGroup(c, 0)).collect(Collectors.toList());
-    }
 
     @Override
     public void setPresenter(PaperDetailContract.Presenter presenter) {
@@ -122,7 +131,7 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
 
     @Override
     public void showPaperTopics(List<String> topics) {
-        String topicsToString = String.join(", ",topics);
+        String topicsToString = String.join(", ", topics);
         this.paperTopics.setText(topicsToString);
     }
 
@@ -143,6 +152,48 @@ public class PaperDetailFragment extends Fragment implements PaperDetailContract
 
     @Override
     public void showComments(List<Comment> comments) {
-        groupAdapter.addAll(generateCommentsExpandableGroupList(comments));
+        groupAdapter.addAll(generateExpandableCommentGroupList(comments));
+    }
+
+    @Override
+    public void showNewComment(Comment newComment) {
+        groupAdapter.add(this.generateExpandableCommentGroup(newComment));
+    }
+
+    /**
+     * Dismiss the keyboard and clear the text of the input text field used for typing comments
+     */
+    @Override
+    public void clearCommentInputField() {
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            ActivityUtils.dismissKeyboard(activity);
+            commentTf.setText(null);
+        }
+    }
+
+    @Override
+    public void onReplyClicked(@NotNull Item<ViewHolder> item, @NotNull Comment comment) {
+        // comment.setBody("AAAAAAAAAAAAAAAAAAAAAA");
+        // item.notifyChanged();
+        // groupAdapter.notifyItemChanged(groupAdapter.getAdapterPosition(item));
+
+
+    }
+
+    @OnClick(R.id.button_send_commment)
+    public void onSendCommentClicked() {
+        String comment = commentTf.getText().toString().trim();
+        if (StringUtils.isNotBlank(comment)) {
+            presenter.addComment(comment);
+        }
+    }
+
+    private List<ExpandableCommentGroup> generateExpandableCommentGroupList(List<Comment> comments) {
+        return comments.stream().map(this::generateExpandableCommentGroup).collect(Collectors.toList());
+    }
+
+    private ExpandableCommentGroup generateExpandableCommentGroup(Comment comment) {
+        return new ExpandableCommentGroup(comment, 0, this);
     }
 }
