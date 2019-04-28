@@ -2,10 +2,13 @@ package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -62,6 +65,8 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
     RecyclerView rvComments;
     @BindView(R.id.paper_detail_comment_tf)
     EditText commentTf;
+    @BindView(R.id.button_send_commment)
+    ImageButton btnSendComment;
 
     public PaperDetailFragment() {
         groupAdapter = new GroupAdapter<>();
@@ -93,6 +98,27 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
         layoutManager.setSpanCount(groupAdapter.getSpanCount());
         rvComments.setAdapter(groupAdapter);
         rvComments.setLayoutManager(layoutManager);
+
+        // Disable send comment button by default
+        btnSendComment.setEnabled(false);
+
+        // TODO: replace with RxAndroid
+        commentTf.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                btnSendComment.setEnabled(StringUtils.isNotBlank(s.toString()));
+            }
+        });
 
         return view;
     }
@@ -177,8 +203,6 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
         // comment.setBody("AAAAAAAAAAAAAAAAAAAAAA");
         // item.notifyChanged();
         // groupAdapter.notifyItemChanged(groupAdapter.getAdapterPosition(item));
-
-
     }
 
     @OnClick(R.id.button_send_commment)
