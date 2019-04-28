@@ -33,7 +33,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     @Override
-    public User getCurrentUser(User user) {
+    public User getCurrentUser() {
         return null;
     }
 }

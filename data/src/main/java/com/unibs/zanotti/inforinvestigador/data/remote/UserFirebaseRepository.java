@@ -39,7 +39,7 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public User getCurrentUser(User user) {
+    public User getCurrentUser() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         if (firebaseUser != null) {
             return new User(

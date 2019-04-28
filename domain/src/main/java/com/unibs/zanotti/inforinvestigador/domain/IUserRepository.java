@@ -13,7 +13,6 @@ public interface IUserRepository {
 
     /**
      * Return the user currently logged in Invorinvestigador
-     * @param user
      */
-    User getCurrentUser(User user);
+    User getCurrentUser();
 }
