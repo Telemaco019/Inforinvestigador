@@ -39,11 +39,9 @@ dependencies {
     androidTestImplementation commonLibs.runner
     androidTestImplementation commonLibs.espressoCore
     implementation commonLibs.kotlin
+    implementation commonLibs.firebaseAuth
+    implementation commonLibs.firestore
 
     // Dependencies to other project modules
     implementation project(":domain")
-
-    // Firestore
-    implementation 'com.google.firebase:firebase-firestore:18.2.0'
-
 }

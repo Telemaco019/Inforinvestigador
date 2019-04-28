@@ -14,10 +14,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
 import com.unibs.zanotti.inforinvestigador.domain.IUserService;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.Objects;
 
@@ -53,7 +53,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
         // FIXME: use DI
-        userService = new UserFirebaseService();
+        userService = Injection.provideUserService();
 
         // This activity is supposed to be viewd only by non-authenticated users
         if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().isEmailVerified()) {

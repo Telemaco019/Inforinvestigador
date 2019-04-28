@@ -24,11 +24,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
 import com.unibs.zanotti.inforinvestigador.domain.IUserService;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.Objects;
 
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         setupButtonListeners();
 
         // FIXME: use DI
-        userService = new UserFirebaseService();
+        userService = Injection.provideUserService();
 
         // FirebaseUtils.populatePapersCollection();
     }

@@ -31,4 +31,9 @@ public class UserLocalService implements IUserService {
     public void updateUser(User user) {
 
     }
+
+    @Override
+    public User getCurrentUser(User user) {
+        return null;
+    }
 }

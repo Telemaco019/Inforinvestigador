@@ -10,4 +10,10 @@ public interface IUserService {
     Optional<User> getUser(Long userId);
 
     void updateUser(User user);
+
+    /**
+     * Return the user currently logged in Invorinvestigador
+     * @param user
+     */
+    User getCurrentUser(User user);
 }

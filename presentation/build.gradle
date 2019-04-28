@@ -46,6 +46,8 @@ dependencies {
     implementation commonLibs.rxJava
     implementation commonLibs.rxAndroid
     implementation commonLibs.kotlin
+    implementation commonLibs.firebaseAuth
+    implementation commonLibs.firestore
 
     // Dependencies to other project modules
     implementation project(":domain")
@@ -59,7 +61,6 @@ dependencies {
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
     // Custom Google Sign-in button

@@ -1,9 +1,10 @@
 package com.unibs.zanotti.inforinvestigador.utils;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.local.PaperLocalService;
-import com.unibs.zanotti.inforinvestigador.data.local.UserLocalService;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.impl.DummyPaperLocalDao;
-import com.unibs.zanotti.inforinvestigador.data.local.dao.impl.DummyUserLocalDao;
+import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseService;
 import com.unibs.zanotti.inforinvestigador.domain.IPaperService;
 import com.unibs.zanotti.inforinvestigador.domain.IUserService;
 
@@ -18,6 +19,6 @@ public class Injection {
     }
 
     public static IUserService provideUserService() {
-        return UserLocalService.getInstance(new DummyUserLocalDao());
+        return UserFirebaseService.getInstance(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance());
     }
 }
