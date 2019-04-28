@@ -13,7 +13,7 @@ public class PaperEntity {
     private List<String> paperTopics;
     private String paperAbstract;
     private String paperPublisher;
-    private Long sharingUserId;
+    private String sharingUserId;
     private String sharingUserComment;
 
     public PaperEntity() {
@@ -28,7 +28,7 @@ public class PaperEntity {
                        List<String> paperTopics,
                        String paperAbstract,
                        String paperPublisher,
-                       Long sharingUserId,
+                       String sharingUserId,
                        String sharingUserComment) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
@@ -43,11 +43,11 @@ public class PaperEntity {
         this.sharingUserComment = sharingUserComment;
     }
 
-    public Long getSharingUserId() {
+    public String getSharingUserId() {
         return sharingUserId;
     }
 
-    public void setSharingUserId(Long sharingUserId) {
+    public void setSharingUserId(String sharingUserId) {
         this.sharingUserId = sharingUserId;
     }
 

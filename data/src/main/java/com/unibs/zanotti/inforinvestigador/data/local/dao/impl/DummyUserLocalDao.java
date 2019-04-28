@@ -28,7 +28,7 @@ public class DummyUserLocalDao implements IUserLocalDao {
     }
 
     @Override
-    public Optional<User> get(long id) {
+    public Optional<User> get(String id) {
         return Optional.empty();
     }
 }

@@ -23,7 +23,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> getUser(Long userId) {
+    public Optional<User> getUser(String userId) {
         return userLocalDao.get(userId);
     }
 

@@ -1,7 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.data.local.dao.impl;
 
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IPaperLocalDao;
-import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 
 import java.util.ArrayList;
@@ -37,9 +36,8 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 Arrays.asList("Topic 1", "Topic 2"),
                 "This is the long long long abstract",
                 "IEEE",
-                1l,
-                "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>()))));
+                "1l",
+                "THis is the comment of the user who shared the paper"));
 
         papers.add(new Paper("2",
                 "Title",
@@ -50,9 +48,8 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 Arrays.asList("Topic 1", "Topic 2"),
                 "This is the long long long abstract",
                 "IEEE",
-                1l,
-                "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>()))));
+                "1l",
+                "THis is the comment of the user who shared the paper"));
 
         papers.add(new Paper("3",
                 "Title",
@@ -63,14 +60,13 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 Arrays.asList("Topic 1", "Topic 2"),
                 "This is the long long long abstract",
                 "IEEE",
-                1l,
-                "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>()))));
+                "1l",
+                "THis is the comment of the user who shared the paper"));
         return papers;
     }
 
     @Override
-    public Optional<Paper> get(long id) {
+    public Optional<Paper> get(String id) {
         Paper paper = new Paper("1",
                 "Title",
                 Arrays.asList("Author 1", "Author 2"),
@@ -80,9 +76,8 @@ public class DummyPaperLocalDao implements IPaperLocalDao {
                 Arrays.asList("Topic 1", "Topic 2"),
                 "This is the long long long abstract",
                 "IEEE",
-                1l,
-                "THis is the comment of the user who shared the paper",
-                Arrays.asList(new Comment("A comment", "author", 10, "1", new ArrayList<Comment>())));
+                "1l",
+                "THis is the comment of the user who shared the paper");
         return Optional.of(paper);
     }
 }

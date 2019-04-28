@@ -72,9 +72,9 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
         groupAdapter = new GroupAdapter<>();
     }
 
-    public static PaperDetailFragment newInstance(long paperId) {
+    public static PaperDetailFragment newInstance(String paperId) {
         Bundle arguments = new Bundle();
-        arguments.putLong(ARGUMENT_PAPER_ID, paperId);
+        arguments.putString(ARGUMENT_PAPER_ID, paperId);
         PaperDetailFragment fragment = new PaperDetailFragment();
         fragment.setArguments(arguments);
         return fragment;

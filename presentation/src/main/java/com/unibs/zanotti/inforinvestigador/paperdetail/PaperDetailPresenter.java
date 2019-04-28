@@ -5,6 +5,7 @@ import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -15,18 +16,19 @@ import java.util.Optional;
  */
 public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     private final PaperDetailContract.View mView;
-    private final long paperId;
     private IPaperRepository paperRepository;
     private IUserRepository userRepository;
+    private String paperId;
 
-    public PaperDetailPresenter(long paperId,
+    public PaperDetailPresenter(String paperId,
                                 IPaperRepository paperRepository,
                                 IUserRepository userRepository,
                                 PaperDetailContract.View mView) {
         this.mView = mView;
-        this.paperId = paperId;
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
+        this.paperId = paperId;
+
         mView.setPresenter(this);
     }
 
@@ -48,8 +50,9 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
             mView.showPaperAuthors(paper.getPaperAuthors());
             mView.showPaperTopics(paper.getPaperTopics());
             mView.showPaperImage(R.drawable.paper_preview_test); // TODO
-            mView.showComments(paperRepository.getComments(paperId));
+            mView.showComments(paper.getComments());
         }
+        // TODO: manage case in which the paeper is null (e.g. data not available: show empty activity with message)
     }
 
     @Override
@@ -59,9 +62,10 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
 
     @Override
     public void addComment(String comment) {
-        String author = ";";
-        Comment newComment = new Comment(comment, author, 0, null, new ArrayList<>());
-        // TODO: save comment to db
+        User currentUser = userRepository.getCurrentUser();
+        Comment newComment = new Comment(comment, currentUser.getName(), 0, null, new ArrayList<>());
+
+        paperRepository.addComment(paperId,newComment);
 
         mView.showNewComment(newComment);
         mView.clearCommentInputField();

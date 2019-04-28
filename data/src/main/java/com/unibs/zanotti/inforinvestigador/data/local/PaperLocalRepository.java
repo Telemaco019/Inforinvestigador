@@ -27,7 +27,7 @@ public class PaperLocalRepository implements IPaperRepository {
     }
 
     @Override
-    public Optional<Paper> getPaper(long paperId) {
+    public Optional<Paper> getPaper(String paperId) {
         return paperDao.get(paperId);
     }
 
@@ -62,5 +62,15 @@ public class PaperLocalRepository implements IPaperRepository {
         ));
 
         return comments;
+    }
+
+    @Override
+    public void addComment(String paperId, Comment comment) {
+
+    }
+
+    @Override
+    public void savePaper(Paper paper) {
+
     }
 }

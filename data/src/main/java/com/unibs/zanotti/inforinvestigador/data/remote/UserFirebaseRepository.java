@@ -29,7 +29,7 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> getUser(Long userId) {
+    public Optional<User> getUser(String userId) {
         return Optional.empty();
     }
 

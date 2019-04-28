@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IUserRepository {
 
-    Optional<User> getUser(Long userId);
+    Optional<User> getUser(String userId);
 
     void updateUser(User user);
 

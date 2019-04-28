@@ -20,7 +20,7 @@ public class PaperDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_paper_detail);
         setupSupportActionBar();
 
-        long paperId = getIntent().getLongExtra(EXTRA_PAPER_ID, 0l);
+        String paperId = getIntent().getStringExtra(EXTRA_PAPER_ID);
 
         PaperDetailFragment paperDetailFragment = (PaperDetailFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (paperDetailFragment == null) {
