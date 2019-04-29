@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -67,6 +68,8 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
     EditText commentTf;
     @BindView(R.id.button_send_commment)
     ImageButton btnSendComment;
+    @BindView(R.id.paper_detail_nested_scrollview)
+    NestedScrollView scrollView;
 
     public PaperDetailFragment() {
         groupAdapter = new GroupAdapter<>();
@@ -202,6 +205,11 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
             ActivityUtils.dismissKeyboard(activity);
             commentTf.setText(null);
         }
+    }
+
+    @Override
+    public void scrollViewToBottom() {
+        scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
     @Override

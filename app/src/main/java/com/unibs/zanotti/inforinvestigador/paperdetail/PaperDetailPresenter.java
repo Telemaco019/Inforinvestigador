@@ -68,6 +68,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
                     public void onSuccess(Comment comment) {
                         mView.showNewComment(comment);
                         mView.clearCommentInputField();
+                        mView.scrollViewToBottom();
                     }
 
                     @Override
