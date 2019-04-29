@@ -2,10 +2,10 @@ package com.unibs.zanotti.inforinvestigador.utils;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
+import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.PaperFirebaseRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseRepository;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
-import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 
 /**
  * Enables injection of mock implementations at compile time. This is useful for testing, since it allows us to use

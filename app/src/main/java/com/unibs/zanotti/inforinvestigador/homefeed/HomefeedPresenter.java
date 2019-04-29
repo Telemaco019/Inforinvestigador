@@ -1,8 +1,8 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.IPaperRepository;
-import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
+import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;

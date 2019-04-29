@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.domain;
+package com.unibs.zanotti.inforinvestigador.data;
 
 
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
@@ -27,7 +27,8 @@ public interface IPaperRepository {
      * Write that comments are not saved
      * Save in the data layer the {@link Paper paper model object} provided as argument. Please note that the possible
      * comments present into the Paper object are not persisted in the data layer by calling this method (they are
-     * supposed to be persisted individually by calling the {@link IPaperRepository#addComment(long, Comment) proper method})
+     * supposed to be persisted individually by calling the {@link IPaperRepository#addComment(String, Comment)}
+     * proper method})
      *
      * @param paper Paper domain object to persist
      */

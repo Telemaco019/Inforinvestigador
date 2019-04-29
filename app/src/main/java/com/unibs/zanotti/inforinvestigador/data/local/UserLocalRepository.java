@@ -1,7 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.data.local;
 
+import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IUserLocalDao;
-import com.unibs.zanotti.inforinvestigador.domain.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 import java.util.Optional;

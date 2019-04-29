@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.domain;
+package com.unibs.zanotti.inforinvestigador.data;
 
 
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
