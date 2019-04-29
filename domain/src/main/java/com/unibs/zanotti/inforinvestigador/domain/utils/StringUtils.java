@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.domain.utils;
 
-import io.reactivex.annotations.Nullable;
+
+import org.jetbrains.annotations.Nullable;
 
 public class StringUtils {
     public static final String BLANK = "";

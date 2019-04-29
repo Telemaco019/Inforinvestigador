@@ -16,27 +16,6 @@ buildscript {
 
         classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
     }
-
-    // Common dependencies used in more modules
-    ext {
-        junitVersion = "4.12"
-        runnerVersion = "1.1.1"
-        espressoCoreVersion = "3.1.1"
-        rxJavaVersion = "2.1.6"
-        rxAndroidVersion = "2.0.1"
-        firebaseAuthVersion = "16.2.1"
-        firestoreVersion = '18.2.0'
-        commonLibs = [
-                rxJava      : ('io.reactivex.rxjava2:rxjava:' + rxJavaVersion),
-                rxAndroid   : ('io.reactivex.rxjava2:rxandroid:' + rxAndroidVersion),
-                junit       : ('junit:junit:' + junitVersion),
-                runner      : ('androidx.test:runner:' + runnerVersion),
-                espressoCore: ('androidx.test.espresso:espresso-core:' + espressoCoreVersion),
-                kotlin      : ('org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + kotlinVersion),
-                firebaseAuth: ('com.google.firebase:firebase-auth:' + firebaseAuthVersion),
-                firestore: ('com.google.firebase:firebase-firestore:' + firestoreVersion),
-        ]
-    }
 }
 
 allprojects {

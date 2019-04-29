@@ -34,12 +34,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.jetbrains:annotations:15.0'
 
-    // Common dependencies
-    androidTestImplementation commonLibs.runner
-    testImplementation commonLibs.junit
-    androidTestImplementation commonLibs.espressoCore
-    implementation commonLibs.rxJava
-    implementation commonLibs.rxAndroid
-    implementation commonLibs.kotlin
 }
