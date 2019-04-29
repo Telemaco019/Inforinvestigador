@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.data;
 
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import io.reactivex.Single;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +21,9 @@ public interface IPaperRepository {
      *
      * @param paperId
      * @param comment
+     * @return
      */
-    void addComment(String paperId, Comment comment);
+    Single<Comment> addComment(String paperId, Comment comment);
 
     /**
      * Write that comments are not saved

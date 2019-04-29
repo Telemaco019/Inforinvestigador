@@ -4,6 +4,7 @@ import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IPaperLocalDao;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import io.reactivex.Single;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,8 +66,8 @@ public class PaperLocalRepository implements IPaperRepository {
     }
 
     @Override
-    public void addComment(String paperId, Comment comment) {
-
+    public Single<Comment> addComment(String paperId, Comment comment) {
+        return null;
     }
 
     @Override

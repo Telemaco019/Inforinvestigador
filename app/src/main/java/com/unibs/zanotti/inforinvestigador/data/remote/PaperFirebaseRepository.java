@@ -10,6 +10,7 @@ import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import io.reactivex.Single;
 
 import java.util.Arrays;
 import java.util.List;
@@ -91,7 +92,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public void addComment(String paperId, Comment comment) {
+    public Single<Comment> addComment(String paperId, Comment comment) {
         CommentEntity commentEntity = new CommentEntity(
                 comment.getBody(),
                 comment.getAuthor(),
@@ -104,14 +105,18 @@ public class PaperFirebaseRepository implements IPaperRepository {
             commentEntity.setId(collection.document().getId());
         }
 
-        collection.document(commentEntity.getId())
-                .set(commentEntity)
-                .addOnSuccessListener(documentReference -> Log.d(TAG, "added document comment with id " + commentEntity.getId()))
-                .addOnFailureListener(e -> Log.d(TAG, "failed to add document comment: " + e));
+        return Single.fromCallable(() -> {
+            collection.document(commentEntity.getId())
+                    .set(commentEntity)
+                    .addOnSuccessListener(documentReference -> Log.d(TAG, "added document comment with id " + commentEntity.getId()))
+                    .addOnFailureListener(e -> Log.d(TAG, "failed to add document comment: " + e));
 
-        // Persist children comments
-        if (comment.getChildren().size() > 0) {
-            comment.getChildren().forEach(c -> this.addComment(paperId, c));
-        }
+            // Persist children comments
+            if (comment.getChildren().size() > 0) {
+                comment.getChildren().forEach(c -> this.addComment(paperId, c));
+            }
+
+            return comment;
+        });
     }
 }

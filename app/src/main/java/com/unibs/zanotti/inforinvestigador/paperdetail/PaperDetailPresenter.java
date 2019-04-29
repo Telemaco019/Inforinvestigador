@@ -6,6 +6,8 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -76,27 +78,35 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
         disposables.add(userRepository.getCurrentUser()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableSingleObserver<Optional<User>>() {
+                .flatMap(optionalUser -> createNewComment(comment, optionalUser))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Comment>() {
                     @Override
-                    public void onSuccess(Optional<User> user) {
-                        if (user.isPresent()) {
-                            Comment newComment = new Comment(
-                                    comment,
-                                    user.get().getName(),
-                                    0,
-                                    null,
-                                    new ArrayList<>()
-                            );
-                            paperRepository.addComment(paperId, newComment);
-                            mView.showNewComment(newComment);
-                            mView.clearCommentInputField();
-                        }
+                    public void onSuccess(Comment comment) {
+                        mView.showNewComment(comment);
+                        mView.clearCommentInputField();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        // TODO
+
                     }
-                }));
+                })
+        );
+    }
+
+    private SingleSource<? extends Comment> createNewComment(String comment, Optional<User> optionalUser) {
+        if (optionalUser.isPresent()) {
+            Comment newComment = new Comment(
+                    comment,
+                    optionalUser.get().getName(),
+                    0,
+                    null,
+                    new ArrayList<>()
+            );
+            return paperRepository.addComment(paperId, newComment);
+        }
+        return Single.error(new Exception());
     }
 }
