@@ -50,24 +50,6 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
         disposables.dispose();
     }
 
-    private void openPaper() {
-        Optional<Paper> optionalPaper = paperRepository.getPaper(paperId);
-        if (optionalPaper.isPresent()) {
-            Paper paper = optionalPaper.get();
-            mView.showPaperTitle(paper.getPaperTitle());
-            mView.showPaperCitations(paper.getPaperCitations());
-            mView.showPaperAbstract(paper.getPaperAbstract());
-            mView.showPaperDOI(paper.getPaperDoi());
-            mView.showPaperPublisher(paper.getPaperPublisher());
-            mView.showPaperDate(paper.getPaperDate());
-            mView.showPaperAuthors(paper.getPaperAuthors());
-            mView.showPaperTopics(paper.getPaperTopics());
-            mView.showPaperImage(R.drawable.paper_preview_test); // TODO
-            mView.showComments(paper.getComments());
-        }
-        // TODO: manage case in which the paeper is null (e.g. data not available: show empty activity with message)
-    }
-
     @Override
     public void viewClicked(int viewId) {
 
@@ -90,7 +72,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        // TODO: update view properly
                     }
                 })
         );
@@ -108,5 +90,23 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
             return paperRepository.addComment(paperId, newComment);
         }
         return Single.error(new Exception());
+    }
+
+    private void openPaper() {
+        Optional<Paper> optionalPaper = paperRepository.getPaper(paperId);
+        if (optionalPaper.isPresent()) {
+            Paper paper = optionalPaper.get();
+            mView.showPaperTitle(paper.getPaperTitle());
+            mView.showPaperCitations(paper.getPaperCitations());
+            mView.showPaperAbstract(paper.getPaperAbstract());
+            mView.showPaperDOI(paper.getPaperDoi());
+            mView.showPaperPublisher(paper.getPaperPublisher());
+            mView.showPaperDate(paper.getPaperDate());
+            mView.showPaperAuthors(paper.getPaperAuthors());
+            mView.showPaperTopics(paper.getPaperTopics());
+            mView.showPaperImage(R.drawable.paper_preview_test); // TODO
+            mView.showComments(paper.getComments());
+        }
+        // TODO: manage case in which the paeper is null (e.g. data not available: show empty activity with message)
     }
 }

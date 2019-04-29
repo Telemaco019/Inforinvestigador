@@ -21,7 +21,8 @@ public interface IPaperRepository {
      *
      * @param paperId
      * @param comment
-     * @return
+     * @return A Single on which an Observer can subscribe in order to get the comment that has been added (or an error
+     * if something goes wrong during the adding operation)
      */
     Single<Comment> addComment(String paperId, Comment comment);
 
