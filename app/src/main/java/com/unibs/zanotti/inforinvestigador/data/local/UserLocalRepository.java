@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.data.local;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IUserLocalDao;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import io.reactivex.Single;
 
 import java.util.Optional;
 
@@ -23,8 +24,8 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> getUser(String userId) {
-        return userLocalDao.get(userId);
+    public Single<Optional<User>> getUser(String userId) {
+        return null;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     @Override
-    public User getCurrentUser() {
+    public Single<Optional<User>> getCurrentUser() {
         return null;
     }
 }

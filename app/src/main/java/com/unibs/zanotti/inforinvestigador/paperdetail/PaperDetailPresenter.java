@@ -6,6 +6,10 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -19,6 +23,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     private IPaperRepository paperRepository;
     private IUserRepository userRepository;
     private String paperId;
+    private CompositeDisposable disposables;
 
     public PaperDetailPresenter(String paperId,
                                 IPaperRepository paperRepository,
@@ -28,6 +33,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
         this.paperId = paperId;
+        disposables = new CompositeDisposable();
 
         mView.setPresenter(this);
     }
@@ -35,6 +41,11 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     @Override
     public void start() {
         openPaper();
+    }
+
+    @Override
+    public void stop() {
+        disposables.dispose();
     }
 
     private void openPaper() {
@@ -62,12 +73,30 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
 
     @Override
     public void addComment(String comment) {
-        User currentUser = userRepository.getCurrentUser();
-        Comment newComment = new Comment(comment, currentUser.getName(), 0, null, new ArrayList<>());
+        disposables.add(userRepository.getCurrentUser()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableSingleObserver<Optional<User>>() {
+                    @Override
+                    public void onSuccess(Optional<User> user) {
+                        if (user.isPresent()) {
+                            Comment newComment = new Comment(
+                                    comment,
+                                    user.get().getName(),
+                                    0,
+                                    null,
+                                    new ArrayList<>()
+                            );
+                            paperRepository.addComment(paperId, newComment);
+                            mView.showNewComment(newComment);
+                            mView.clearCommentInputField();
+                        }
+                    }
 
-        paperRepository.addComment(paperId,newComment);
-
-        mView.showNewComment(newComment);
-        mView.clearCommentInputField();
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO
+                    }
+                }));
     }
 }

@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
+import io.reactivex.Single;
 
 import java.util.Optional;
 
@@ -29,8 +30,8 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> getUser(String userId) {
-        return Optional.empty();
+    public Single<Optional<User>> getUser(String userId) {
+        return Single.just(Optional.empty());
     }
 
     @Override
@@ -39,16 +40,17 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public User getCurrentUser() {
+    public Single<Optional<User>> getCurrentUser() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        Optional<User> optionalUser = Optional.empty();
         if (firebaseUser != null) {
-            return new User(
+            optionalUser = Optional.of(new User(
                     firebaseUser.getUid(),
                     firebaseUser.getEmail(),
                     firebaseUser.getDisplayName(),
                     firebaseUser.getPhotoUrl(),
-                    DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp()));
+                    DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp())));
         }
-        return null;
+        return Single.just(optionalUser);
     }
 }

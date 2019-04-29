@@ -2,17 +2,18 @@ package com.unibs.zanotti.inforinvestigador.data;
 
 
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import io.reactivex.Single;
 
 import java.util.Optional;
 
 public interface IUserRepository {
 
-    Optional<User> getUser(String userId);
+    Single<Optional<User>> getUser(String userId);
 
     void updateUser(User user);
 
     /**
      * Return the user currently logged in Invorinvestigador
      */
-    User getCurrentUser();
+    Single<Optional<User>> getCurrentUser();
 }
