@@ -13,15 +13,18 @@
             android:theme="@style/AppTheme">
         <activity android:name=".auth.RegistrationActivity">
         </activity>
-        <activity android:name=".auth.LoginActivity">
+        <activity
+                android:name=".auth.LoginActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".paperdetail.PaperDetailActivity"
-                  android:windowSoftInputMode="stateAlwaysHidden" >
+        <activity
+                android:name=".paperdetail.PaperDetailActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
 
