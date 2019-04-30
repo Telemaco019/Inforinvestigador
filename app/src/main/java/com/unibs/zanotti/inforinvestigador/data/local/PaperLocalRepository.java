@@ -71,7 +71,7 @@ public class PaperLocalRepository implements IPaperRepository {
     }
 
     @Override
-    public void savePaper(Paper paper) {
-
+    public Single<Paper> savePaper(Paper paper) {
+        return null;
     }
 }

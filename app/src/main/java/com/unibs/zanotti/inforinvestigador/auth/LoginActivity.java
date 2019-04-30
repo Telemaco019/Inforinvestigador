@@ -137,18 +137,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        // Reload for getting the update user from Firebase
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            currentUser.reload()
-                    .addOnSuccessListener(aVoid -> updateUI(mAuth.getCurrentUser()))
-                    .addOnFailureListener(aVoid -> updateUI(mAuth.getCurrentUser()));
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 

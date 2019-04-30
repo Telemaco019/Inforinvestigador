@@ -11,17 +11,18 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
         <activity android:name=".auth.RegistrationActivity">
         </activity>
+
         <activity
                 android:name=".auth.LoginActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity
                 android:name=".paperdetail.PaperDetailActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
@@ -31,11 +32,19 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".navigation.MainNavigationActivity">
             <intent-filter>
-                <action android:name="android.intent.action.asd"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".auth.SplashActivity" android:theme="@style/SplashActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

@@ -12,4 +12,7 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <style name="SplashActivityTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 </resources>
