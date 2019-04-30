@@ -60,7 +60,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
         disposables.add(userRepository.getCurrentUser()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .flatMap(optionalUser -> createNewComment(comment, optionalUser))
+                .flatMap(optionalUser -> createAndSaveComment(comment, optionalUser))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Comment>() {
@@ -79,7 +79,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
         );
     }
 
-    private SingleSource<? extends Comment> createNewComment(String comment, Optional<User> optionalUser) {
+    private SingleSource<? extends Comment> createAndSaveComment(String comment, Optional<User> optionalUser) {
         if (optionalUser.isPresent()) {
             Comment newComment = new Comment(
                     comment,

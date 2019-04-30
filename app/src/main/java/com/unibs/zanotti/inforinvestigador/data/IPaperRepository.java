@@ -34,6 +34,8 @@ public interface IPaperRepository {
      * proper method})
      *
      * @param paper Paper domain object to persist
+     * @return A Single on which an Observer can subscribe in order to get the paper that has been added (or an error
+     * if something goes wrong during the adding operation)
      */
-    void savePaper(Paper paper);
+    Single<Paper> savePaper(Paper paper);
 }

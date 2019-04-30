@@ -63,7 +63,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public void savePaper(final Paper paper) {
+    public Single<Paper> savePaper(final Paper paper) {
         CollectionReference paperCollection = firestoreDb.collection(Collections.PAPERS);
 
         PaperEntity paperEntity = new PaperEntity(
@@ -84,11 +84,14 @@ public class PaperFirebaseRepository implements IPaperRepository {
             paperEntity.setPaperId(paperCollection.document().getId());
         }
 
-        firestoreDb.collection(Collections.PAPERS)
-                .document(paperEntity.getId())
-                .set(paperEntity)
-                .addOnSuccessListener(documentReference -> Log.d(TAG, "added document paper with id " + paperEntity.getId()))
-                .addOnFailureListener(e -> Log.d(TAG, "failed to add document paper: " + e));
+        return Single.fromCallable(() -> {
+            firestoreDb.collection(Collections.PAPERS)
+                    .document(paperEntity.getId())
+                    .set(paperEntity)
+                    .addOnSuccessListener(documentReference -> Log.d(TAG, "added document paper with id " + paperEntity.getId()))
+                    .addOnFailureListener(e -> Log.d(TAG, "failed to add document paper: " + e));
+            return paper;
+        });
     }
 
     @Override
@@ -108,8 +111,8 @@ public class PaperFirebaseRepository implements IPaperRepository {
         return Single.fromCallable(() -> {
             collection.document(commentEntity.getId())
                     .set(commentEntity)
-                    .addOnSuccessListener(documentReference -> Log.d(TAG, "added document comment with id " + commentEntity.getId()))
-                    .addOnFailureListener(e -> Log.d(TAG, "failed to add document comment: " + e));
+                    .addOnSuccessListener(documentReference -> Log.d(TAG, "added to Firestore Comment with id " + commentEntity.getId()))
+                    .addOnFailureListener(e -> Log.e(TAG, "failed to add Comment to Firestore: " + e));
 
             // Persist children comments
             if (comment.getChildren().size() > 0) {
