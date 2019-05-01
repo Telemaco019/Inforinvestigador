@@ -3,13 +3,10 @@ package com.unibs.zanotti.inforinvestigador.data;
 
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
-
-import java.util.Optional;
 
 public interface IUserRepository {
 
-    Single<Optional<User>> getUser(String userId);
+    Maybe<User> getUser(String userId);
 
     void updateUser(User user);
 

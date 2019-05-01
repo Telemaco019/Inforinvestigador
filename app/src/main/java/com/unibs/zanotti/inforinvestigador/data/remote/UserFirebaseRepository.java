@@ -1,5 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.data.remote;
 
+import android.net.Uri;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -7,9 +8,8 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 public class UserFirebaseRepository implements IUserRepository {
     private static final String TAG = String.valueOf(UserFirebaseRepository.class);
@@ -31,8 +31,11 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public Single<Optional<User>> getUser(String userId) {
-        return Single.just(Optional.empty());
+    public Maybe<User> getUser(String userId) {
+        return Maybe.create(emitter -> {
+            // TODO
+            emitter.onSuccess(new User("id", "asds@gmail.com", "pippo baudo", Uri.EMPTY, LocalDateTime.now()));
+        });
     }
 
     @Override

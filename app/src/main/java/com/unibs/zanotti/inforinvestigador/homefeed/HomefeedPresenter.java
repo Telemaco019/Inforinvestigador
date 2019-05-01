@@ -8,6 +8,7 @@ import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableMaybeObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,18 +110,32 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
         List<FeedPaper> papersFeed = new ArrayList<>();
         for (Paper paper : paperRepository.getPapers()) {
             // TODO: dispose disposable on activity stop
-            Disposable disposable = userRepository.getUser(paper.getSharingUserId()).subscribe(optionalUser -> {
-                papersFeed.add(new FeedPaper(
-                        paper.getPaperId(),
-                        paper.getPaperTitle(),
-                        paper.getSharingUserComment(),
-                        optionalUser.map(User::getName).orElse(""),
-                        optionalUser.map(u -> u.getProfilePictureUri().toString()).orElse(""), // FIXME
-                        paper.getPaperDate(),
-                        paper.getPaperTopics(),
-                        paper.getPaperAuthors()
-                ));
-            });
+            Disposable disposable = userRepository.getUser(paper.getSharingUserId())
+                    .subscribeWith(new DisposableMaybeObserver<User>() {
+                        @Override
+                        public void onSuccess(User user) {
+                            papersFeed.add(new FeedPaper(
+                                    paper.getPaperId(),
+                                    paper.getPaperTitle(),
+                                    paper.getSharingUserComment(),
+                                    user.getName(),
+                                    user.getProfilePictureUri().toString(), // FIXME
+                                    paper.getPaperDate(),
+                                    paper.getPaperTopics(),
+                                    paper.getPaperAuthors())
+                            );
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
         }
         view.showPapersFeed(papersFeed);
     }
