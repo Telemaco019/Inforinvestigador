@@ -10,6 +10,7 @@ import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -44,8 +45,14 @@ public class PaperFirebaseRepository implements IPaperRepository {
                 .addOnSuccessListener(documentSnapshot -> emitter.onSuccess(
                         fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))))
                 )
-                .addOnFailureListener(emitter::onError)
-                .addOnCompleteListener(task -> emitter.onComplete())
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
+                    emitter.onError(e);
+                })
+                .addOnCompleteListener(task -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
+                    emitter.onComplete();
+                })
         );
     }
 
@@ -58,48 +65,56 @@ public class PaperFirebaseRepository implements IPaperRepository {
                         .map(d -> d.toObject(PaperEntity.class))
                         .filter(Objects::nonNull)
                         .map(this::fromEntity)
-                        .forEach(emitter::onNext))
-                .addOnFailureListener(emitter::onError)
-                .addOnCompleteListener(task -> emitter.onComplete())
+                        .forEach(paper -> {
+                            Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paper.getPaperId()));
+                            emitter.onNext(paper);
+                        }))
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, String.format(TAG, FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
+                    emitter.onError(e);
+                })
+                .addOnCompleteListener(task -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "papers"));
+                    emitter.onComplete();
+                })
         );
     }
 
     @Override
     public Single<Paper> savePaper(final Paper paper) {
         return Single.create(emitter -> {
-                    CollectionReference paperCollection = firestoreDb.collection(Collections.PAPERS);
+            CollectionReference paperCollection = firestoreDb.collection(Collections.PAPERS);
 
-                    PaperEntity paperEntity = new PaperEntity(
-                            paper.getPaperId(),
-                            paper.getPaperTitle(),
-                            paper.getPaperAuthors(),
-                            paper.getPaperDate(),
-                            paper.getPaperDoi(),
-                            paper.getPaperCitations(),
-                            paper.getPaperTopics(),
-                            paper.getPaperAbstract(),
-                            paper.getPaperPublisher(),
-                            paper.getSharingUserId(),
-                            paper.getSharingUserComment()
-                    );
+            PaperEntity paperEntity = new PaperEntity(
+                    paper.getPaperId(),
+                    paper.getPaperTitle(),
+                    paper.getPaperAuthors(),
+                    paper.getPaperDate(),
+                    paper.getPaperDoi(),
+                    paper.getPaperCitations(),
+                    paper.getPaperTopics(),
+                    paper.getPaperAbstract(),
+                    paper.getPaperPublisher(),
+                    paper.getSharingUserId(),
+                    paper.getSharingUserComment()
+            );
 
-                    if (StringUtils.isBlank(paper.getPaperId())) {
-                        paperEntity.setId(paperCollection.document().getId());
-                    }
+            if (StringUtils.isBlank(paper.getPaperId())) {
+                paperEntity.setId(paperCollection.document().getId());
+            }
 
-                    firestoreDb.collection(Collections.PAPERS)
-                            .document(paperEntity.getId())
-                            .set(paperEntity)
-                            .addOnSuccessListener(documentReference -> {
-                                Log.d(TAG, "added document paper with id " + paperEntity.getId());
-                                emitter.onSuccess(paper);
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.d(TAG, "failed to add document paper: " + e);
-                                emitter.onError(e);
-                            });
-                }
-        );
+            firestoreDb.collection(Collections.PAPERS)
+                    .document(paperEntity.getId())
+                    .set(paperEntity)
+                    .addOnSuccessListener(documentReference -> {
+                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_WRITE_SUCCESS, "paper", paperEntity.getId()));
+                        emitter.onSuccess(paper);
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "paper", paper.getPaperId(), e.toString()));
+                        emitter.onError(e);
+                    });
+        });
     }
 
     @Override
@@ -121,41 +136,48 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
             collection.document(commentEntity.getId())
                     .set(commentEntity)
-                    .addOnSuccessListener(documentReference -> Log.d(TAG, "added to Firestore Comment with id " + commentEntity.getId()))
+                    .addOnSuccessListener(documentReference -> Log.d(TAG, String.format("comment with id %s saved in Firestore", commentEntity.getId())))
                     .addOnFailureListener(e -> {
-                        Log.e(TAG, "failed to add Comment to Firestore: " + e);
+                        Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "comment", comment.getId(), e));
                         emitter.onError(e);
                     });
 
             emitter.onSuccess(comment);
+            Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_WRITE_SUCCESS, "comment", comment.getId()));
         });
     }
 
     @Override
     public Single<List<Comment>> getComments(String paperId) {
-        return Single.create(emitter -> {
-            firestoreDb.collection(String.format("%s/%s/%s",
-                    Collections.PAPERS,
-                    paperId,
-                    Collections.COMMENTS))
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        List<Comment> comments = new ArrayList<>();
-                        queryDocumentSnapshots.getDocuments()
-                                .stream()
-                                .map(d -> d.toObject(CommentEntity.class))
-                                .map(commentEntity -> new Comment(
-                                        commentEntity.getBody(),
-                                        commentEntity.getAuthor(),
-                                        commentEntity.getScore(),
-                                        commentEntity.getId(),
-                                        new ArrayList<>()))
-                                // buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
-                                .forEach(comments::add);
-                        emitter.onSuccess(comments);
-                    })
-                    .addOnFailureListener(emitter::onError);
-        });
+        return Single.create(emitter -> firestoreDb.collection(String.format("%s/%s/%s",
+                Collections.PAPERS,
+                paperId,
+                Collections.COMMENTS))
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Comment> comments = new ArrayList<>();
+                    queryDocumentSnapshots.getDocuments()
+                            .stream()
+                            .map(d -> d.toObject(CommentEntity.class))
+                            .map(commentEntity -> new Comment(
+                                    commentEntity.getBody(),
+                                    commentEntity.getAuthor(),
+                                    commentEntity.getScore(),
+                                    commentEntity.getId(),
+                                    new ArrayList<>()))
+                            // buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
+                            .forEach(comment -> {
+                                Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "comment", comment.getId()));
+                                comments.add(comment);
+                            });
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "comments"));
+                    emitter.onSuccess(comments);
+                })
+                .addOnFailureListener(e -> {
+                    emitter.onError(e);
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "comment", e.toString()));
+                })
+        );
     }
 
     private List<Comment> buildChildrenCommentsTree(String paperId, List<String> childrenCommentIDs) {
