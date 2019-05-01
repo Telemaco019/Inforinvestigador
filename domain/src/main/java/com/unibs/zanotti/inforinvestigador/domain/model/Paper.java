@@ -1,6 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Paper {
@@ -14,7 +13,6 @@ public class Paper {
     private String paperAbstract;
     private String paperPublisher;
     private String sharingUserId;
-    private List<Comment> comments;
     private String sharingUserComment;
 
     public Paper(String paperId,
@@ -38,8 +36,6 @@ public class Paper {
         this.paperPublisher = paperPublisher;
         this.sharingUserId = sharingUserId;
         this.sharingUserComment = sharingUserComment;
-
-        this.comments = new ArrayList<>();
     }
 
     public String getSharingUserId() {
@@ -48,10 +44,6 @@ public class Paper {
 
     public void setSharingUserId(String sharingUserId) {
         this.sharingUserId = sharingUserId;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
     }
 
     public String getSharingUserComment() {

@@ -1,14 +1,13 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
+import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
-import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.domain.model.User;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,7 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
     private final HomefeedContract.View view;
     private final IUserRepository userRepository;
     private IPaperRepository paperRepository;
+    private CompositeDisposable disposables;
 
     public HomefeedPresenter(HomefeedContract.View view,
                              IPaperRepository paperRepository,
@@ -25,12 +25,18 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
         this.view = view;
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
+        disposables = new CompositeDisposable();
         view.setPresenter(this);
     }
 
     @Override
     public void start() {
         loadFeed();
+    }
+
+    @Override
+    public void stop() {
+        disposables.dispose();
     }
 
     @Override
@@ -108,35 +114,36 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     private void loadPaperShares() {
         List<FeedPaper> papersFeed = new ArrayList<>();
-        for (Paper paper : paperRepository.getPapers()) {
-            // TODO: dispose disposable on activity stop
-            Disposable disposable = userRepository.getUser(paper.getSharingUserId())
-                    .subscribeWith(new DisposableMaybeObserver<User>() {
-                        @Override
-                        public void onSuccess(User user) {
-                            papersFeed.add(new FeedPaper(
-                                    paper.getPaperId(),
-                                    paper.getPaperTitle(),
-                                    paper.getSharingUserComment(),
-                                    user.getName(),
-                                    user.getProfilePictureUri().toString(), // FIXME
-                                    paper.getPaperDate(),
-                                    paper.getPaperTopics(),
-                                    paper.getPaperAuthors())
-                            );
-                        }
 
-                        @Override
-                        public void onError(Throwable e) {
+        disposables.add(paperRepository.getPapers()
+                .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
+                        (paper, user) -> new FeedPaper(paper.getPaperId(),
+                                paper.getPaperTitle(),
+                                paper.getSharingUserComment(),
+                                user.getName(),
+                                user.getProfilePictureUri(), // FIXME
+                                paper.getPaperDate(),
+                                paper.getPaperTopics(),
+                                paper.getPaperAuthors()))
+                .subscribeWith(new DisposableObserver<FeedPaper>() {
+                    @Override
+                    public void onNext(FeedPaper feedPaper) {
+                        Log.e("***","On next");
+                        papersFeed.add(feedPaper);
+                    }
 
-                        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("***","On error" + e);
 
-                        @Override
-                        public void onComplete() {
+                    }
 
-                        }
-                    });
-        }
-        view.showPapersFeed(papersFeed);
+                    @Override
+                    public void onComplete() {
+                        Log.e("***","On complete");
+                        view.showPapersFeed(papersFeed);
+                    }
+                })
+        );
     }
 }

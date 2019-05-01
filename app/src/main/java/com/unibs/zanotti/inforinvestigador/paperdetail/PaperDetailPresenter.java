@@ -6,13 +6,12 @@ import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
-import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Listens to user action from the UI (e.g. {@link PaperDetailFragment}), retrieves the data and updates the UI as
@@ -77,20 +76,31 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     }
 
     private void openPaper() {
-        Optional<Paper> optionalPaper = paperRepository.getPaper(paperId);
-        if (optionalPaper.isPresent()) {
-            Paper paper = optionalPaper.get();
-            mView.showPaperTitle(paper.getPaperTitle());
-            mView.showPaperCitations(paper.getPaperCitations());
-            mView.showPaperAbstract(paper.getPaperAbstract());
-            mView.showPaperDOI(paper.getPaperDoi());
-            mView.showPaperPublisher(paper.getPaperPublisher());
-            mView.showPaperDate(paper.getPaperDate());
-            mView.showPaperAuthors(paper.getPaperAuthors());
-            mView.showPaperTopics(paper.getPaperTopics());
-            mView.showPaperImage(R.drawable.paper_preview_test); // TODO
-            mView.showComments(paper.getComments());
-        }
-        // TODO: manage case in which the paeper is null (e.g. data not available: show empty activity with message)
+        disposables.add(paperRepository.getPaper(paperId)
+                .flatMapSingle(paper -> {
+                    mView.showPaperTitle(paper.getPaperTitle());
+                    mView.showPaperCitations(paper.getPaperCitations());
+                    mView.showPaperAbstract(paper.getPaperAbstract());
+                    mView.showPaperDOI(paper.getPaperDoi());
+                    mView.showPaperPublisher(paper.getPaperPublisher());
+                    mView.showPaperDate(paper.getPaperDate());
+                    mView.showPaperAuthors(paper.getPaperAuthors());
+                    mView.showPaperTopics(paper.getPaperTopics());
+                    mView.showPaperImage(R.drawable.paper_preview_test);
+                    return paperRepository.getComments(paperId);
+                })
+                .subscribeWith(new DisposableSingleObserver<List<Comment>>() {
+                    @Override
+                    public void onSuccess(List<Comment> comments) {
+                        mView.showComments(comments);
+                        mView.showCommentsNumber(comments.size());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("***", "On error");
+                    }
+                })
+        );
     }
 }

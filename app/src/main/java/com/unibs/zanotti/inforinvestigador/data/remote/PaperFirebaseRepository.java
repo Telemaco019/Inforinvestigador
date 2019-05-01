@@ -10,11 +10,14 @@ import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PaperFirebaseRepository implements IPaperRepository {
@@ -35,63 +38,68 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public Optional<Paper> getPaper(String paperId) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Paper> getPapers() {
-        // TODO
-        return Arrays.asList(new Paper(
-                "abc123",
-                "Title of the paper 1",
-                Arrays.asList("Author 1", "Author 2", "Author 3"),
-                "Mar 2019",
-                "DOI",
-                100,
-                Arrays.asList("Topic 1", "Topic 2", "Topic 3"),
-                "This is the abstract of the paper",
-                "Publisher of the paper",
-                "1l",
-                "Comment of the user who shared the paper")
+    public Maybe<Paper> getPaper(String paperId) {
+        return Maybe.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPERS, paperId))
+                .get()
+                .addOnSuccessListener(documentSnapshot -> emitter.onSuccess(
+                        fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))))
+                )
+                .addOnFailureListener(emitter::onError)
+                .addOnCompleteListener(task -> emitter.onComplete())
         );
     }
 
     @Override
-    public List<Comment> getComments(long paperId) {
-        return null;
+    public Observable<Paper> getPapers() {
+        return Observable.create(emitter -> firestoreDb.collection(Collections.PAPERS)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> queryDocumentSnapshots.getDocuments()
+                        .stream()
+                        .map(d -> d.toObject(PaperEntity.class))
+                        .filter(Objects::nonNull)
+                        .map(this::fromEntity)
+                        .forEach(emitter::onNext))
+                .addOnFailureListener(emitter::onError)
+                .addOnCompleteListener(task -> emitter.onComplete())
+        );
     }
 
     @Override
     public Single<Paper> savePaper(final Paper paper) {
-        CollectionReference paperCollection = firestoreDb.collection(Collections.PAPERS);
+        return Single.create(emitter -> {
+                    CollectionReference paperCollection = firestoreDb.collection(Collections.PAPERS);
 
-        PaperEntity paperEntity = new PaperEntity(
-                paper.getPaperId(),
-                paper.getPaperTitle(),
-                paper.getPaperAuthors(),
-                paper.getPaperDate(),
-                paper.getPaperDoi(),
-                paper.getPaperCitations(),
-                paper.getPaperTopics(),
-                paper.getPaperAbstract(),
-                paper.getPaperPublisher(),
-                paper.getSharingUserId(),
-                paper.getSharingUserComment()
+                    PaperEntity paperEntity = new PaperEntity(
+                            paper.getPaperId(),
+                            paper.getPaperTitle(),
+                            paper.getPaperAuthors(),
+                            paper.getPaperDate(),
+                            paper.getPaperDoi(),
+                            paper.getPaperCitations(),
+                            paper.getPaperTopics(),
+                            paper.getPaperAbstract(),
+                            paper.getPaperPublisher(),
+                            paper.getSharingUserId(),
+                            paper.getSharingUserComment()
+                    );
+
+                    if (StringUtils.isBlank(paper.getPaperId())) {
+                        paperEntity.setId(paperCollection.document().getId());
+                    }
+
+                    firestoreDb.collection(Collections.PAPERS)
+                            .document(paperEntity.getId())
+                            .set(paperEntity)
+                            .addOnSuccessListener(documentReference -> {
+                                Log.d(TAG, "added document paper with id " + paperEntity.getId());
+                                emitter.onSuccess(paper);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.d(TAG, "failed to add document paper: " + e);
+                                emitter.onError(e);
+                            });
+                }
         );
-
-        if (StringUtils.isBlank(paper.getPaperId())) {
-            paperEntity.setPaperId(paperCollection.document().getId());
-        }
-
-        return Single.fromCallable(() -> {
-            firestoreDb.collection(Collections.PAPERS)
-                    .document(paperEntity.getId())
-                    .set(paperEntity)
-                    .addOnSuccessListener(documentReference -> Log.d(TAG, "added document paper with id " + paperEntity.getId()))
-                    .addOnFailureListener(e -> Log.d(TAG, "failed to add document paper: " + e));
-            return paper;
-        });
     }
 
     @Override
@@ -102,7 +110,8 @@ public class PaperFirebaseRepository implements IPaperRepository {
                     comment.getAuthor(),
                     comment.getScore(),
                     comment.getId(),
-                    comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList()));
+                    comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList())
+            );
 
             CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(paperId).collection(Collections.COMMENTS);
 
@@ -120,5 +129,73 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
             emitter.onSuccess(comment);
         });
+    }
+
+    @Override
+    public Single<List<Comment>> getComments(String paperId) {
+        return Single.create(emitter -> {
+            firestoreDb.collection(String.format("%s/%s/%s",
+                    Collections.PAPERS,
+                    paperId,
+                    Collections.COMMENTS))
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<Comment> comments = new ArrayList<>();
+                        queryDocumentSnapshots.getDocuments()
+                                .stream()
+                                .map(d -> d.toObject(CommentEntity.class))
+                                .map(commentEntity -> new Comment(
+                                        commentEntity.getBody(),
+                                        commentEntity.getAuthor(),
+                                        commentEntity.getScore(),
+                                        commentEntity.getId(),
+                                        new ArrayList<>()))
+                                // buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
+                                .forEach(comments::add);
+                        emitter.onSuccess(comments);
+                    })
+                    .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    private List<Comment> buildChildrenCommentsTree(String paperId, List<String> childrenCommentIDs) {
+        List<Comment> childrenComments = new ArrayList<>();
+        for (String id : childrenCommentIDs) {
+            firestoreDb.document(String.format("%s/%s/%s/%s",
+                    Collections.PAPERS,
+                    paperId,
+                    Collections.COMMENTS,
+                    id))
+                    .get()
+                    .addOnSuccessListener(doc -> {
+                        CommentEntity childCommentEntity = doc.toObject(CommentEntity.class);
+                        childrenComments.add(new Comment(
+                                childCommentEntity.getBody(),
+                                childCommentEntity.getAuthor(),
+                                childCommentEntity.getScore(),
+                                childCommentEntity.getId(),
+                                this.buildChildrenCommentsTree(paperId, childCommentEntity.getChildrenCommentIDs())
+                        ));
+                    });
+        }
+        return childrenComments;
+    }
+
+
+    @NotNull
+    private Paper fromEntity(PaperEntity paperEntity) {
+        return new Paper(
+                paperEntity.getId(),
+                paperEntity.getPaperTitle(),
+                paperEntity.getPaperAuthors(),
+                paperEntity.getPaperDate(),
+                paperEntity.getPaperDoi(),
+                paperEntity.getPaperCitations() == null ? 0 : paperEntity.getPaperCitations(),
+                paperEntity.getPaperTopics(),
+                paperEntity.getPaperAbstract(),
+                paperEntity.getPaperPublisher(),
+                paperEntity.getSharingUserId(),
+                paperEntity.getSharingUserComment()
+        );
     }
 }

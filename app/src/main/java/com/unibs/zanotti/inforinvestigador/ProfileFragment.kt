@@ -10,6 +10,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.unibs.zanotti.inforinvestigador.auth.LoginActivity
+import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils
 
 
 /**
@@ -29,6 +30,11 @@ class ProfileFragment : androidx.fragment.app.Fragment() {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(context, LoginActivity::class.java))
             activity?.finish()
+        }
+
+        val createPaperButton = view.findViewById<Button>(R.id.create_paper_button)
+        createPaperButton.setOnClickListener {
+            FirebaseUtils.populatePapersCollection()
         }
 
         return view

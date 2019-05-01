@@ -1,5 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.data.local;
-
+/*
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IUserLocalDao;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
@@ -36,3 +36,4 @@ public class UserLocalRepository implements IUserRepository {
         return null;
     }
 }
+*/

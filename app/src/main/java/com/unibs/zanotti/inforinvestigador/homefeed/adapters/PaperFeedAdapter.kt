@@ -47,12 +47,19 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // Get element at this position from the dataset and replace the content of the view with that element
-        holder.tvPaperTitle.text = dataset[position].paperTitle
-        holder.tvPaperAuthors.text = dataset[position].paperAuthors.joinToString(separator = ", ")
-        holder.tvPaperDate.text = dataset[position].paperDate
-        holder.tvPaperTopics.text = dataset[position].paperTopics.joinToString { t -> t }
-        holder.tvPaperComment.text = dataset[position].sharingUserComment
-        holder.tvSharingUser.text = dataset[position].sharingUserName
+        val paperTitle = dataset[position].paperTitle
+        val authors = dataset[position].paperAuthors?.joinToString(separator = ", ")
+        val paperDate = dataset[position].paperDate
+        val topics = dataset[position].paperTopics?.joinToString { t -> t }
+        val sharingUserComment = dataset[position].sharingUserComment
+        val sharingUserName = dataset[position].sharingUserName
+
+        holder.tvPaperTitle.text = paperTitle ?: ""
+        holder.tvPaperAuthors.text = authors ?: ""
+        holder.tvPaperDate.text = paperDate ?: ""
+        holder.tvPaperTopics.text = topics ?: ""
+        holder.tvPaperComment.text = sharingUserComment ?: ""
+        holder.tvSharingUser.text = sharingUserName ?: ""
         holder.tvSharingUserProfilePicture.setImageResource(0) // TODO
     }
 

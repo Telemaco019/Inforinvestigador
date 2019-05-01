@@ -10,7 +10,7 @@ public class FirebaseUtils {
     public static void populatePapersCollection() {
         PaperFirebaseRepository paperFirebaseRepository = PaperFirebaseRepository.getInstance(FirebaseFirestore.getInstance());
         Paper paperToWrite = new Paper(
-                null,
+                "tcgwxDNtfKOwegm5auUJ",
                 "Title of the paper 1",
                 Arrays.asList("Author 1", "Author 2", "Author 3"),
                 "Mar 2019",
@@ -19,8 +19,8 @@ public class FirebaseUtils {
                 Arrays.asList("Topic 1", "Topic 2", "Topic 3"),
                 "This is the abstract of the paper",
                 "Publisher of the paper",
-                "1l",
+                "AuREy18SlNOt9VBG8beLkwN2WNi2",
                 "Comment of the user who shared the paper");
-        paperFirebaseRepository.savePaper(paperToWrite);
+        paperFirebaseRepository.savePaper(paperToWrite).subscribe();
     }
 }

@@ -3,17 +3,16 @@ package com.unibs.zanotti.inforinvestigador.data;
 
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IPaperRepository {
-    Optional<Paper> getPaper(String paperId);
+    Maybe<Paper> getPaper(String paperId);
 
-    List<Paper> getPapers();
-
-    List<Comment> getComments(long paperId);
+    Observable<Paper> getPapers();
 
     /**
      * Add the {@code comment} provided as argument to the {@link Paper paper} corresponding to the
@@ -38,4 +37,6 @@ public interface IPaperRepository {
      * if something goes wrong during the adding operation)
      */
     Single<Paper> savePaper(Paper paper);
+
+    Single<List<Comment>> getComments(String paperId);
 }

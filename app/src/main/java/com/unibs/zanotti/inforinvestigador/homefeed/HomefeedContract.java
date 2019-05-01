@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface HomefeedContract {
     interface Presenter extends BasePresenter {
+        void stop();
+
         void loadFeed();
 
         void paperShareClicked(String paperShareId);

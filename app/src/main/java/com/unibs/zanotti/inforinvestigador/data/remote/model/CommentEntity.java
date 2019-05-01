@@ -9,6 +9,10 @@ public class CommentEntity {
     private String id;
     private List<String> childrenCommentIDs;
 
+    public CommentEntity() {
+        // Required by Firestore
+    }
+
     public CommentEntity(String body, String author, int score, String id, List<String> childrenCommentIDs) {
         this.body = body;
         this.author = author;

@@ -70,6 +70,8 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
     ImageButton btnSendComment;
     @BindView(R.id.paper_detail_nested_scrollview)
     NestedScrollView scrollView;
+    @BindView(R.id.paper_detail_comments_number)
+    TextView commentsNumber;
 
     public PaperDetailFragment() {
         groupAdapter = new GroupAdapter<>();
@@ -210,6 +212,11 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
     @Override
     public void scrollViewToBottom() {
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    @Override
+    public void showCommentsNumber(int number) {
+        commentsNumber.setText(String.valueOf(number));
     }
 
     @Override

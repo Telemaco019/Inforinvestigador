@@ -74,6 +74,7 @@ public class HomefeedFragment extends Fragment implements
     @Override
     public void showPapersFeed(List<FeedPaper> feedPapers) {
         this.paperFeedAdapter.setDataset(feedPapers);
+        this.paperFeedAdapter.notifyDataSetChanged();
     }
 
     @Override

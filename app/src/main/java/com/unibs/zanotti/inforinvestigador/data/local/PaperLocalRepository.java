@@ -1,5 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.data.local;
-
+/*
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IPaperLocalDao;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
@@ -75,3 +75,4 @@ public class PaperLocalRepository implements IPaperRepository {
         return null;
     }
 }
+*/

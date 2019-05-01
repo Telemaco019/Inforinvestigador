@@ -66,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeAuth();
         setupButtonListeners();
-
-        // FirebaseUtils.populatePapersCollection();
     }
 
     private void setupButtonListeners() {

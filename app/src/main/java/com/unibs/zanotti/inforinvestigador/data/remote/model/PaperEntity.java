@@ -4,12 +4,12 @@ import java.util.List;
 
 public class PaperEntity {
 
-    private String paperId;
+    private String id;
     private String paperTitle;
     private List<String> paperAuthors;
     private String paperDate;
     private String paperDoi;
-    private int paperCitations;
+    private Integer paperCitations;
     private List<String> paperTopics;
     private String paperAbstract;
     private String paperPublisher;
@@ -20,7 +20,7 @@ public class PaperEntity {
         // Required by Firestone
     }
 
-    public PaperEntity(String paperId,
+    public PaperEntity(String id,
                        String paperTitle,
                        List<String> paperAuthors,
                        String paperDate, String paperDoi,
@@ -30,7 +30,7 @@ public class PaperEntity {
                        String paperPublisher,
                        String sharingUserId,
                        String sharingUserComment) {
-        this.paperId = paperId;
+        this.id = id;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
         this.paperDate = paperDate;
@@ -60,11 +60,11 @@ public class PaperEntity {
     }
 
     public String getId() {
-        return paperId;
+        return id;
     }
 
-    public void setPaperId(String paperId) {
-        this.paperId = paperId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPaperTitle() {
@@ -107,9 +107,6 @@ public class PaperEntity {
         this.paperDoi = paperDoi;
     }
 
-    public int getPaperCitations() {
-        return paperCitations;
-    }
 
     public String getPaperAbstract() {
         return paperAbstract;
@@ -119,7 +116,11 @@ public class PaperEntity {
         this.paperAbstract = paperAbstract;
     }
 
-    public void setPaperCitations(int paperCitations) {
+    public Integer getPaperCitations() {
+        return paperCitations;
+    }
+
+    public void setPaperCitations(Integer paperCitations) {
         this.paperCitations = paperCitations;
     }
 
