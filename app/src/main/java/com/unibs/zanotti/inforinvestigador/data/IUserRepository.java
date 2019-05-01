@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.data;
 
 
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 import java.util.Optional;
@@ -15,5 +16,5 @@ public interface IUserRepository {
     /**
      * Return the user currently logged in Invorinvestigador
      */
-    Single<Optional<User>> getCurrentUser();
+    Maybe<User> getCurrentUser();
 }

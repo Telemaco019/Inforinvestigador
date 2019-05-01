@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 import java.util.Optional;
@@ -40,17 +41,18 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public Single<Optional<User>> getCurrentUser() {
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        Optional<User> optionalUser = Optional.empty();
-        if (firebaseUser != null) {
-            optionalUser = Optional.of(new User(
-                    firebaseUser.getUid(),
-                    firebaseUser.getEmail(),
-                    firebaseUser.getDisplayName(),
-                    firebaseUser.getPhotoUrl(),
-                    DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp())));
-        }
-        return Single.just(optionalUser);
+    public Maybe<User> getCurrentUser() {
+        return Maybe.create(emitter -> {
+            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+            if (firebaseUser != null) {
+                emitter.onSuccess(new User(
+                        firebaseUser.getUid(),
+                        firebaseUser.getEmail(),
+                        firebaseUser.getDisplayName(),
+                        firebaseUser.getPhotoUrl(),
+                        DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp())));
+            }
+            emitter.onComplete();
+        });
     }
 }

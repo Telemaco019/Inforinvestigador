@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.data.local;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.local.dao.IUserLocalDao;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     @Override
-    public Single<Optional<User>> getCurrentUser() {
+    public Maybe<User> getCurrentUser() {
         return null;
     }
 }

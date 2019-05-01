@@ -1,19 +1,17 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
+import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
-import com.unibs.zanotti.inforinvestigador.domain.model.User;
-import io.reactivex.Single;
-import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -58,9 +56,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     @Override
     public void addComment(String comment) {
         disposables.add(userRepository.getCurrentUser()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .flatMap(optionalUser -> createAndSaveComment(comment, optionalUser))
+                .flatMapSingle(user -> paperRepository.addComment(paperId, ModelFactory.createComment(comment, user.getName())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Comment>() {
@@ -74,23 +70,10 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         // TODO: update view properly
+                        Log.e("**********************", "");
                     }
                 })
         );
-    }
-
-    private SingleSource<? extends Comment> createAndSaveComment(String comment, Optional<User> optionalUser) {
-        if (optionalUser.isPresent()) {
-            Comment newComment = new Comment(
-                    comment,
-                    optionalUser.get().getName(),
-                    0,
-                    null,
-                    new ArrayList<>()
-            );
-            return paperRepository.addComment(paperId, newComment);
-        }
-        return Single.error(new Exception());
     }
 
     private void openPaper() {

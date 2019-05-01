@@ -96,30 +96,29 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
     @Override
     public Single<Comment> addComment(String paperId, Comment comment) {
-        CommentEntity commentEntity = new CommentEntity(
-                comment.getBody(),
-                comment.getAuthor(),
-                comment.getScore(),
-                comment.getId(),
-                comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList()));
+        return Single.create(emitter -> {
+            CommentEntity commentEntity = new CommentEntity(
+                    comment.getBody(),
+                    comment.getAuthor(),
+                    comment.getScore(),
+                    comment.getId(),
+                    comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList()));
 
-        CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(paperId).collection(Collections.COMMENTS);
-        if (StringUtils.isBlank(commentEntity.getId())) {
-            commentEntity.setId(collection.document().getId());
-        }
+            CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(paperId).collection(Collections.COMMENTS);
 
-        return Single.fromCallable(() -> {
+            if (StringUtils.isBlank(commentEntity.getId())) {
+                commentEntity.setId(collection.document().getId());
+            }
+
             collection.document(commentEntity.getId())
                     .set(commentEntity)
                     .addOnSuccessListener(documentReference -> Log.d(TAG, "added to Firestore Comment with id " + commentEntity.getId()))
-                    .addOnFailureListener(e -> Log.e(TAG, "failed to add Comment to Firestore: " + e));
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "failed to add Comment to Firestore: " + e);
+                        emitter.onError(e);
+                    });
 
-            // Persist children comments
-            if (comment.getChildren().size() > 0) {
-                comment.getChildren().forEach(c -> this.addComment(paperId, c));
-            }
-
-            return comment;
+            emitter.onSuccess(comment);
         });
     }
 }
