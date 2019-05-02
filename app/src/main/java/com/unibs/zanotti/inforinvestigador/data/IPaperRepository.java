@@ -7,8 +7,6 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-import java.util.List;
-
 public interface IPaperRepository {
     Maybe<Paper> getPaper(String paperId);
 
@@ -38,5 +36,5 @@ public interface IPaperRepository {
      */
     Single<Paper> savePaper(Paper paper);
 
-    Single<List<Comment>> getComments(String paperId);
+    Observable<Comment> getComments(String paperId);
 }

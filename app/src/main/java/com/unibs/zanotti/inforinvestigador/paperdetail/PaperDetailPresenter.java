@@ -8,9 +8,11 @@ import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,8 +78,9 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     }
 
     private void openPaper() {
+        List<Comment> comments = new ArrayList<>();
         disposables.add(paperRepository.getPaper(paperId)
-                .flatMapSingle(paper -> {
+                .flatMapObservable(paper -> {
                     mView.showPaperTitle(paper.getPaperTitle());
                     mView.showPaperCitations(paper.getPaperCitations());
                     mView.showPaperAbstract(paper.getPaperAbstract());
@@ -89,18 +92,21 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
                     mView.showPaperImage(R.drawable.paper_preview_test);
                     return paperRepository.getComments(paperId);
                 })
-                .subscribeWith(new DisposableSingleObserver<List<Comment>>() {
+                .subscribeWith(new DisposableObserver<Comment>() {
                     @Override
-                    public void onSuccess(List<Comment> comments) {
-                        mView.showComments(comments);
-                        mView.showCommentsNumber(comments.size());
+                    public void onNext(Comment comment) {
+                        comments.add(comment);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("***", "On error");
+
                     }
-                })
-        );
+
+                    @Override
+                    public void onComplete() {
+                        mView.showComments(comments);
+                    }
+                }));
     }
 }

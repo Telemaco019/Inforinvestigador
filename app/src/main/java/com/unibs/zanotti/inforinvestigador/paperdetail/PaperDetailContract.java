@@ -42,7 +42,5 @@ public interface PaperDetailContract {
         void clearCommentInputField();
 
         void scrollViewToBottom();
-
-        void showCommentsNumber(int number);
     }
 }

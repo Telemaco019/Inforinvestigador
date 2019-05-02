@@ -148,14 +148,13 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public Single<List<Comment>> getComments(String paperId) {
-        return Single.create(emitter -> firestoreDb.collection(String.format("%s/%s/%s",
+    public Observable<Comment> getComments(String paperId) {
+        return Observable.create(emitter -> firestoreDb.collection(String.format("%s/%s/%s",
                 Collections.PAPERS,
                 paperId,
                 Collections.COMMENTS))
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<Comment> comments = new ArrayList<>();
                     queryDocumentSnapshots.getDocuments()
                             .stream()
                             .map(d -> d.toObject(CommentEntity.class))
@@ -168,10 +167,10 @@ public class PaperFirebaseRepository implements IPaperRepository {
                             // buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
                             .forEach(comment -> {
                                 Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "comment", comment.getId()));
-                                comments.add(comment);
+                                emitter.onNext(comment);
                             });
                     Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "comments"));
-                    emitter.onSuccess(comments);
+                    emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
                     emitter.onError(e);
