@@ -53,7 +53,7 @@ public class UserFirebaseRepository implements IUserRepository {
                         firebaseUser.getEmail(),
                         firebaseUser.getDisplayName(),
                         firebaseUser.getPhotoUrl(),
-                        DateUtils.fromInstantTimestamp(firebaseUser.getMetadata().getCreationTimestamp())));
+                        DateUtils.fromEpochTimestampSec(firebaseUser.getMetadata().getCreationTimestamp())));
             }
             emitter.onComplete();
         });

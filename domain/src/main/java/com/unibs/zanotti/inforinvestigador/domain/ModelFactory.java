@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.domain;
 
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ModelFactory {
@@ -14,6 +15,6 @@ public class ModelFactory {
      * @return
      */
     public static Comment createComment(String body, String authorName) {
-        return new Comment(body, authorName, 0, null, new ArrayList<>());
+        return new Comment(body, authorName, 0, null, LocalDateTime.now(), new ArrayList<>());
     }
 }

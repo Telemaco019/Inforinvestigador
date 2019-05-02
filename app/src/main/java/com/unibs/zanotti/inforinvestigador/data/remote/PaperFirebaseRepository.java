@@ -3,12 +3,14 @@ package com.unibs.zanotti.inforinvestigador.data.remote;
 import android.util.Log;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.CommentEntity;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 import io.reactivex.Maybe;
@@ -125,6 +127,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                     comment.getAuthor(),
                     comment.getScore(),
                     comment.getId(),
+                    DateUtils.fromLocalDateTimeToEpochMills(comment.getDateTime()),
                     comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList())
             );
 
@@ -153,6 +156,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                 Collections.PAPERS,
                 paperId,
                 Collections.COMMENTS))
+                .orderBy("epochTimestampMillis", Query.Direction.ASCENDING) // TODO: order also by rating
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     queryDocumentSnapshots.getDocuments()
@@ -163,6 +167,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                                     commentEntity.getAuthor(),
                                     commentEntity.getScore(),
                                     commentEntity.getId(),
+                                    DateUtils.fromEpochTimestampMillis(commentEntity.getEpochTimestampMillis()),
                                     new ArrayList<>()))
                             // buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
                             .forEach(comment -> {
@@ -195,6 +200,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                                 childCommentEntity.getAuthor(),
                                 childCommentEntity.getScore(),
                                 childCommentEntity.getId(),
+                                DateUtils.fromEpochTimestampMillis(childCommentEntity.getEpochTimestampMillis()),
                                 this.buildChildrenCommentsTree(paperId, childCommentEntity.getChildrenCommentIDs())
                         ));
                     });

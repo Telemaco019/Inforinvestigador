@@ -8,17 +8,32 @@ public class CommentEntity {
     private int score;
     private String id;
     private List<String> childrenCommentIDs;
+    private long epochTimestampMillis;
 
     public CommentEntity() {
         // Required by Firestore
     }
 
-    public CommentEntity(String body, String author, int score, String id, List<String> childrenCommentIDs) {
+    public CommentEntity(String body,
+                         String author,
+                         int score,
+                         String id,
+                         long epochTimestampMillis,
+                         List<String> childrenCommentIDs) {
         this.body = body;
         this.author = author;
         this.score = score;
         this.id = id;
         this.childrenCommentIDs = childrenCommentIDs;
+        this.epochTimestampMillis = epochTimestampMillis;
+    }
+
+    public long getEpochTimestampMillis() {
+        return epochTimestampMillis;
+    }
+
+    public void setEpochTimestampMillis(long epochTimestampMillis) {
+        this.epochTimestampMillis = epochTimestampMillis;
     }
 
     public String getBody() {

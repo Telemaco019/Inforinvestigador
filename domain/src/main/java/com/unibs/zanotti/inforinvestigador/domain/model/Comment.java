@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.domain.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Comment implements Parcelable {
@@ -11,12 +12,14 @@ public class Comment implements Parcelable {
     private int score;
     private String id;
     private List<Comment> children;
+    private LocalDateTime dateTime;
 
-    public Comment(String body, String author, int score, String id, List<Comment> children) {
+    public Comment(String body, String author, int score, String id, LocalDateTime dateTime, List<Comment> children) {
         this.body = body;
         this.author = author;
         this.score = score;
         this.id = id;
+        this.dateTime = dateTime;
         this.children = children;
     }
 
@@ -92,5 +95,13 @@ public class Comment implements Parcelable {
 
     public void setChildren(List<Comment> children) {
         this.children = children;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }
