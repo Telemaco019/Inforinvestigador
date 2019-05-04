@@ -154,8 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-                authenticationFailed(googleSignInButton, getString(R.string.google_login_error_message));
+                Log.d(TAG, "Google sign in failed", e);
             }
         }
     }
@@ -209,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
-                        authenticationFailed(googleSignInButton, this.getString(R.string.authentication_failed_generic_message));
+                        authenticationFailed(googleSignInButton, this.getString(R.string.google_login_error_message));
                         Log.w(TAG, "signInWithGoogleCredential:failure", task.getException());
                         updateUI(null);
                     }
