@@ -85,7 +85,7 @@ public class HomefeedFragment extends Fragment implements
     @Override
     public void showPaperDetails(String paperId) {
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
-        intent.putExtra(PaperDetailActivity.EXTRA_PAPER_ID, paperId);
+        intent.putExtra(PaperDetailActivity.STRING_EXTRA_PAPER_ID, paperId);
         startActivity(intent);
     }
 }

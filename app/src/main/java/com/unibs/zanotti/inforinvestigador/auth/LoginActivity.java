@@ -31,8 +31,10 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String BOOLEAN_EXTRA_DO_LOGOUT = "DO_LOGOUT";
+
     private static final int RC_GOOGLE_SIGN_IN = 9001;
-    public static final int PROGRESS_BAR_FADEIN_DURATION = 300;
+    private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
     private static final String TAG = String.valueOf(LoginActivity.class);
 
     // View fields
@@ -66,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeAuth();
         setupButtonListeners();
+
+        if (getIntent().getBooleanExtra(BOOLEAN_EXTRA_DO_LOGOUT, false)) {
+            this.logout();
+        }
     }
 
     private void setupButtonListeners() {
@@ -276,5 +282,13 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void authenticationFailed(View contextView, String message) {
         Snackbar.make(contextView, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void logout() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));
     }
 }

@@ -12,7 +12,7 @@ import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 
 public class PaperDetailActivity extends AppCompatActivity {
-    public static final String EXTRA_PAPER_ID = "PAPER_ID";
+    public static final String STRING_EXTRA_PAPER_ID = "PAPER_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class PaperDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_paper_detail);
         setupSupportActionBar();
 
-        String paperId = getIntent().getStringExtra(EXTRA_PAPER_ID);
+        String paperId = getIntent().getStringExtra(STRING_EXTRA_PAPER_ID);
 
         PaperDetailFragment paperDetailFragment = (PaperDetailFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (paperDetailFragment == null) {

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
 import com.unibs.zanotti.inforinvestigador.auth.LoginActivity
 import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils
 
@@ -27,8 +26,9 @@ class ProfileFragment : androidx.fragment.app.Fragment() {
 
         val logoutButton = view.findViewById<Button>(R.id.logout_button)
         logoutButton.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(context, LoginActivity::class.java))
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.putExtra(LoginActivity.BOOLEAN_EXTRA_DO_LOGOUT, true)
+            startActivity(intent)
             activity?.finish()
         }
 
