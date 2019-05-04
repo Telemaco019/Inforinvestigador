@@ -1,9 +1,12 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +25,10 @@ import butterknife.OnClick;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup;
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentItem;
+import com.unibs.zanotti.inforinvestigador.comments.ReplyCommentActivity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.Item;
@@ -33,9 +38,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class
-PaperDetailFragment extends Fragment implements PaperDetailContract.View, ExpandableCommentItem.OnReplyClickedListener {
-    private static final String ARGUMENT_PAPER_ID = "PAPER_ID";
+public class PaperDetailFragment
+        extends Fragment
+        implements PaperDetailContract.View, ExpandableCommentItem.OnReplyClickedListener {
+
+    private static final String TAG = String.valueOf(PaperDetailFragment.class);
+    private static final String FRAGMENT_STRING_ARGUMENT_PAPER_ID = "PaperDetailFragment.argument.PAPER_ID";
+    public static final String STRING_EXTRA_COMMENT_REPLY = "PaperDatailActivity.COMMENT_REPLY";
+    private static final int RC_REPLY_TO_COMMENT = 1;
 
     private PaperDetailContract.Presenter presenter;
     /**
@@ -77,7 +87,7 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
 
     public static PaperDetailFragment newInstance(String paperId) {
         Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_PAPER_ID, paperId);
+        arguments.putString(FRAGMENT_STRING_ARGUMENT_PAPER_ID, paperId);
         PaperDetailFragment fragment = new PaperDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -111,7 +121,6 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
         // Disable send comment button by default
         btnSendComment.setEnabled(false);
 
-        // TODO: replace with RxAndroid
         commentTf.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -214,6 +223,11 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
 
     @Override
     public void onReplyClicked(@NotNull Item<ViewHolder> item, @NotNull Comment comment) {
+        Intent intent = new Intent(Actions.REPLY_TO_COMMENT);
+        intent.putExtra(ReplyCommentActivity.STRING_EXTRA_REPLIED_COMMENT_BODY, comment.getBody());
+        intent.putExtra(ReplyCommentActivity.STRING_EXTRA_REPLIED_COMMENT_AUTHOR, comment.getAuthor());
+        startActivityForResult(intent, RC_REPLY_TO_COMMENT);
+
         // comment.setBody("AAAAAAAAAAAAAAAAAAAAAA");
         // item.notifyChanged();
         // groupAdapter.notifyItemChanged(groupAdapter.getAdapterPosition(item));
@@ -224,6 +238,16 @@ PaperDetailFragment extends Fragment implements PaperDetailContract.View, Expand
         String comment = commentTf.getText().toString().trim();
         if (StringUtils.isNotBlank(comment)) {
             presenter.addComment(comment);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_REPLY_TO_COMMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d(TAG, data.getStringExtra(STRING_EXTRA_COMMENT_REPLY));
+            }
         }
     }
 

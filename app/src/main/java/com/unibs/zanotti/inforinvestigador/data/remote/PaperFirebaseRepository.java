@@ -168,8 +168,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                                     commentEntity.getScore(),
                                     commentEntity.getId(),
                                     DateUtils.fromEpochTimestampMillis(commentEntity.getEpochTimestampMillis()),
-                                    new ArrayList<>()))
-                            // buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
+                                    buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
                             .forEach(comment -> {
                                 Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "comment", comment.getId()));
                                 emitter.onNext(comment);

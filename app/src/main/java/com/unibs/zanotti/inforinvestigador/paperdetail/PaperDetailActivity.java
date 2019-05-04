@@ -39,8 +39,8 @@ public class PaperDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.top_bar);
         setSupportActionBar(toolbar);
 
-        // Show back icon
         if (getSupportActionBar() != null) {
+            // Show back icon
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             // Set the title of the support action bar
             getSupportActionBar().setTitle(R.string.app_name);
@@ -53,6 +53,7 @@ public class PaperDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top_bar_view_paper, menu);
+
         return true;
     }
 }

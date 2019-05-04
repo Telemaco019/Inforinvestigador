@@ -11,11 +11,17 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".comments.ReplyCommentActivity">
+            <intent-filter>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.REPLY_TO_COMMENT"/>
 
-        <activity android:name=".auth.RegistrationActivity"
-                  android:windowSoftInputMode="stateAlwaysHidden">
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
-
+        <activity
+                android:name=".auth.RegistrationActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
         <activity
                 android:name=".auth.LoginActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
@@ -23,7 +29,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
         <activity
                 android:name=".paperdetail.PaperDetailActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
@@ -33,15 +38,14 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".navigation.MainNavigationActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
         <activity
-                android:name=".auth.SplashActivity" android:theme="@style/SplashActivityTheme">
+                android:name=".auth.SplashActivity"
+                android:theme="@style/SplashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
