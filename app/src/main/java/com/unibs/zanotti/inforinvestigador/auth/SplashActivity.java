@@ -15,6 +15,13 @@ import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 
+/**
+ * Meant to check the authentication state of the user. If the user is already authenticated (through firebase), then
+ * update the respective entity in the DB and start the main app activity, otherwise redirect the user to the login
+ * activity.
+ * <p>While the authentication checking process (and DB writing) is performed, the user sees the screen corresponding
+ * to the theme defined for this activity </p>
+ */
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = String.valueOf(SplashActivity.class);
     private FirebaseAuth mAuth;
@@ -34,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null)
             currentUser.reload().addOnCompleteListener(aVoid -> {
-                // Update the user db
+                // Update the user in the db
                 disposables.add(Injection.provideUserRepository()
                         .saveUpdateUser(new User(currentUser.getUid(),
                                 currentUser.getEmail(),
@@ -55,8 +62,9 @@ public class SplashActivity extends AppCompatActivity {
                             }
                         }));
             });
-        else
+        else {
             startLoginActivity();
+        }
     }
 
     @Override
