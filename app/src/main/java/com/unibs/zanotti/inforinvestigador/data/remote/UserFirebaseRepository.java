@@ -15,7 +15,7 @@ import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class UserFirebaseRepository implements IUserRepository {
     private static final String TAG = String.valueOf(UserFirebaseRepository.class);
@@ -38,10 +38,16 @@ public class UserFirebaseRepository implements IUserRepository {
 
     @Override
     public Maybe<User> getUser(String userId) {
-        return Maybe.create(emitter -> {
-            // TODO
-            emitter.onSuccess(new User("id", "asds@gmail.com", "pippo baudo", Uri.EMPTY, LocalDateTime.now()));
-        });
+        return Maybe.create(emitter -> db.document(String.format("%s/%s", Collections.USERS, userId))
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
+                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "user", e.toString()));
+                })
+                .addOnCompleteListener(e -> emitter.onComplete()));
     }
 
     @Override
@@ -70,5 +76,13 @@ public class UserFirebaseRepository implements IUserRepository {
                 user.getName(),
                 user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
                 DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()));
+    }
+
+    private User fromEntity(UserEntity userEntity) {
+        return new User(userEntity.getId(),
+                userEntity.getEmail(),
+                userEntity.getName(),
+                Uri.parse(userEntity.getProfilePictureUri()),
+                DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()));
     }
 }

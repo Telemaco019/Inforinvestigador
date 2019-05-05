@@ -45,17 +45,15 @@ public class PaperFirebaseRepository implements IPaperRepository {
     public Maybe<Paper> getPaper(String paperId) {
         return Maybe.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPERS, paperId))
                 .get()
-                .addOnSuccessListener(documentSnapshot -> emitter.onSuccess(
-                        fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))))
-                )
+                .addOnSuccessListener(documentSnapshot -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
+                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))));
+                })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
                     emitter.onError(e);
                 })
-                .addOnCompleteListener(task -> {
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
-                    emitter.onComplete();
-                })
+                .addOnCompleteListener(task -> emitter.onComplete())
         );
     }
 
