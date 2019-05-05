@@ -26,12 +26,12 @@
                         android:layout_height="350dp"
                         android:orientation="vertical">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_marginTop="45dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_width="150dp"
                             android:layout_height="150dp"
-                            android:src="@drawable/test_researcher_1"/>
+                            android:src="@drawable/test_researcher_2"/>
 
                     <TextView
                             android:layout_marginTop="10dp"
@@ -48,6 +48,8 @@
                         android:layout_width="400dp"
                         android:layout_height="120dp"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/doubleBaseMargin"
+                        android:layout_marginEnd="@dimen/doubleBaseMargin"
                         android:layout_marginTop="275dp">
 
                     <LinearLayout
