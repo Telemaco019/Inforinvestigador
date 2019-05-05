@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity">
 
-    <LinearLayout
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
         <include layout="@layout/top_bar"/>
 
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:id="@+id/main_nav_fragment_holder"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:menu="@menu/menu_bottom_navigation"
-                app:itemTextColor="@color/bottom_navigation_color"
-                android:layout_gravity="bottom"
-                app:itemIconTint="@color/bottom_navigation_color"
-                app:labelVisibilityMode="unlabeled"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_bottom_navigation"
+            app:itemTextColor="@color/bottom_navigation_color"
+            android:layout_gravity="bottom"
+            app:itemIconTint="@color/bottom_navigation_color"
+            app:labelVisibilityMode="unlabeled"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
