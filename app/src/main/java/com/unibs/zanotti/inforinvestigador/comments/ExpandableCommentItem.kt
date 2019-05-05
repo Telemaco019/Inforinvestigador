@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment
+import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.ExpandableItem
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.expandable_comment.view.*
+import java.time.LocalDateTime
 
 class ExpandableCommentItem(
     val comment: Comment,
@@ -25,10 +27,10 @@ class ExpandableCommentItem(
     override fun bind(viewHolder: ViewHolder, position: Int) {
         addingDepthViews(viewHolder)
 
-        viewHolder.itemView.tv_user.setText(comment.author)
-        viewHolder.itemView.body.setText(comment.body)
-        viewHolder.itemView.tv_votes.setText(comment.score.toString())
-        viewHolder.itemView.tv_comment_date.setText("5h")
+        viewHolder.itemView.tv_user.text = comment.author
+        viewHolder.itemView.body.text = comment.body
+        viewHolder.itemView.tv_votes.text = comment.score.toString()
+        viewHolder.itemView.tv_comment_date.text = DateUtils.elapsedTime(comment.dateTime, LocalDateTime.now(), "now")
 
         viewHolder.itemView.apply {
             setOnLongClickListener {
