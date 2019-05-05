@@ -5,16 +5,15 @@
              android:layout_height="match_parent"
              tools:context=".ProfileFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      xmlns:tools="http://schemas.android.com/tools"
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      tools:context="com.demotxt.droidsrce.profileui.MainActivity"
-                      android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context="com.demotxt.droidsrce.profileui.MainActivity"
+                android:orientation="vertical">
 
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -25,6 +24,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
                         android:orientation="vertical">
+
+                    <!-- TODO: made it visible only if it's personal profile -->
+                    <ImageView
+                            android:id="@+id/profile_settings_icon"
+                            android:layout_marginStart="@dimen/doubleBaseMargin"
+                            android:layout_marginTop="@dimen/doubleBaseMargin"
+                            android:tint="@color/colorPrimaryDark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_settings_black_24dp"/>
 
                     <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/profile_round_profile_picture"
@@ -154,6 +163,29 @@
                     <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
+                            android:src="@drawable/ic_home_black_24dp"
+                            android:tint="@color/colorSecondary"/>
+
+                    <TextView
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:id="@+id/profile_home_tv"
+                            android:text="Università degli studi di Brescia"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_marginTop="25dp"
+                        android:paddingLeft="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_email_black_24dp"
                             android:tint="@color/colorSecondary"/>
 
@@ -204,5 +236,5 @@
                     android:text="@string/profile_follow_btn_caption"
                     android:layout_marginBottom="@dimen/doubleBaseMargin"/>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>
