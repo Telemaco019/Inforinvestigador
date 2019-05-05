@@ -83,6 +83,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     public void showProfilePicture(Uri profilePictureUri) {
         Picasso.get()
                 .load(profilePictureUri)
+                .noPlaceholder()
                 .error(R.drawable.user_profle_pic_placeholder)
                 .fit()
                 .into(ciProfilePicture);
