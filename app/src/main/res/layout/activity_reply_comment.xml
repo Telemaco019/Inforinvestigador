@@ -1,46 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_height="match_parent"
-              android:layout_width="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <include layout="@layout/top_bar"/>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/doubleBasePadding"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-    <TextView
-                android:id="@+id/reply_to_comment_author_name"
-                android:layout_width="match_parent"
-                android:text="Author"
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_height="wrap_content"/>
-
-        <TextView
-                android:id="@+id/reply_to_comment_replied_comment_body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_blank_fragment"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_marginBottom="@dimen/doubleBaseMargin"/>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray"
-                android:layout_marginBottom="@dimen/doubleBaseMargin"
-                android:layout_marginTop="@dimen/doubleBaseMargin"/>
-
-        <EditText
-                android:id="@+id/reply_to_comment_edit_text"
-                android:layout_marginTop="@dimen/doubleBaseMargin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reply_comment_hint"
-                android:background="@null"/>
-    </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/content_frame">
+</FrameLayout>

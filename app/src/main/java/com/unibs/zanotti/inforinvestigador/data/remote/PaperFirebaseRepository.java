@@ -19,6 +19,7 @@ import io.reactivex.Single;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -83,7 +84,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public Single<Paper> savePaper(final Paper paper) {
+    public Single<Paper> saveUpdatePaper(final Paper paper) {
         return Single.create(emitter -> {
             CollectionReference paperCollection = firestoreDb.collection(Collections.PAPERS);
 
@@ -120,7 +121,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public Single<Comment> addComment(String paperId, Comment comment) {
+    public Single<Comment> saveUpdateComment(Comment comment) {
         return Single.create(emitter -> {
             CommentEntity commentEntity = new CommentEntity(
                     comment.getBody(),
@@ -131,10 +132,11 @@ public class PaperFirebaseRepository implements IPaperRepository {
                     comment.getChildren().stream().map(Comment::getId).collect(Collectors.toList())
             );
 
-            CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(paperId).collection(Collections.COMMENTS);
+            CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(comment.getPaperId()).collection(Collections.COMMENTS);
 
             if (StringUtils.isBlank(commentEntity.getId())) {
                 commentEntity.setId(collection.document().getId());
+                comment.setId(commentEntity.getId());
             }
 
             collection.document(commentEntity.getId())
@@ -152,61 +154,31 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
     @Override
     public Observable<Comment> getComments(String paperId) {
-        return Observable.create(emitter -> firestoreDb.collection(String.format("%s/%s/%s",
-                Collections.PAPERS,
-                paperId,
-                Collections.COMMENTS))
-                .orderBy("epochTimestampMillis", Query.Direction.ASCENDING) // TODO: order also by rating
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    queryDocumentSnapshots.getDocuments()
-                            .stream()
-                            .map(d -> d.toObject(CommentEntity.class))
-                            .map(commentEntity -> new Comment(
-                                    commentEntity.getBody(),
-                                    commentEntity.getAuthor(),
-                                    commentEntity.getScore(),
-                                    commentEntity.getId(),
-                                    DateUtils.fromEpochTimestampMillis(commentEntity.getEpochTimestampMillis()),
-                                    buildChildrenCommentsTree(paperId, commentEntity.getChildrenCommentIDs())))
-                            .forEach(comment -> {
-                                Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "comment", comment.getId()));
-                                emitter.onNext(comment);
-                            });
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "comments"));
-                    emitter.onComplete();
-                })
-                .addOnFailureListener(e -> {
-                    emitter.onError(e);
-                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "comment", e.toString()));
-                })
+        return Observable.create(emitter ->
+                firestoreDb.collection(String.format("%s/%s/%s",
+                        Collections.PAPERS,
+                        paperId,
+                        Collections.COMMENTS))
+                        .orderBy("epochTimestampMillis", Query.Direction.ASCENDING) // TODO: order also by rating
+                        .get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            List<CommentEntity> commentEntities = queryDocumentSnapshots.getDocuments()
+                                    .stream()
+                                    .map(d -> d.toObject(CommentEntity.class))
+                                    .collect(Collectors.toList());
+
+                            List<Comment> comments = fromEntities(commentEntities, paperId);
+                            comments.forEach(emitter::onNext);
+
+                            Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "comments"));
+                            emitter.onComplete();
+                        })
+                        .addOnFailureListener(e -> {
+                            emitter.onError(e);
+                            Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "comment", e.toString()));
+                        })
         );
     }
-
-    private List<Comment> buildChildrenCommentsTree(String paperId, List<String> childrenCommentIDs) {
-        List<Comment> childrenComments = new ArrayList<>();
-        for (String id : childrenCommentIDs) {
-            firestoreDb.document(String.format("%s/%s/%s/%s",
-                    Collections.PAPERS,
-                    paperId,
-                    Collections.COMMENTS,
-                    id))
-                    .get()
-                    .addOnSuccessListener(doc -> {
-                        CommentEntity childCommentEntity = doc.toObject(CommentEntity.class);
-                        childrenComments.add(new Comment(
-                                childCommentEntity.getBody(),
-                                childCommentEntity.getAuthor(),
-                                childCommentEntity.getScore(),
-                                childCommentEntity.getId(),
-                                DateUtils.fromEpochTimestampMillis(childCommentEntity.getEpochTimestampMillis()),
-                                this.buildChildrenCommentsTree(paperId, childCommentEntity.getChildrenCommentIDs())
-                        ));
-                    });
-        }
-        return childrenComments;
-    }
-
 
     @NotNull
     private Paper fromEntity(PaperEntity paperEntity) {
@@ -223,5 +195,76 @@ public class PaperFirebaseRepository implements IPaperRepository {
                 paperEntity.getSharingUserId(),
                 paperEntity.getSharingUserComment()
         );
+    }
+
+    /**
+     * Given as input a list of comment entities, return the corresponding list of {@link Comment comments},
+     * each of which contains the respective nested tree structure of comment replies
+     *
+     * @param commentEntities
+     * @param paperId         Id of the paper associated to the {@link Comment comments} that will be created
+     * @return
+     */
+    private List<Comment> fromEntities(List<CommentEntity> commentEntities, String paperId) {
+        List<Comment> result = new ArrayList<>();
+        Iterator<CommentEntity> iterator = commentEntities.iterator();
+        List<CommentEntity> addedChildren = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+            CommentEntity entity = iterator.next();
+            if (!addedChildren.contains(entity)) {
+
+                List<CommentEntity> childrenCommentEntities = getChildrenCommentEntities(entity, commentEntities);
+                addedChildren.addAll(childrenCommentEntities);
+                Comment comment = new Comment(entity.getBody(),
+                        entity.getAuthor(),
+                        entity.getScore(),
+                        entity.getId(),
+                        DateUtils.fromEpochTimestampMillis(entity.getEpochTimestampMillis()),
+                        paperId,
+                        buildChildrenTree(paperId, childrenCommentEntities, commentEntities, addedChildren)
+                );
+
+                result.add(comment);
+            }
+        }
+        return result;
+    }
+
+    private List<Comment> buildChildrenTree(String paperId, List<CommentEntity> children, List<CommentEntity> set, List<CommentEntity> addedChildren) {
+        List<Comment> result = new ArrayList<>();
+
+        for (CommentEntity child : children) {
+            List<CommentEntity> childrenCommentEntities = getChildrenCommentEntities(child, set);
+            addedChildren.addAll(childrenCommentEntities);
+            result.add(new Comment(
+                    child.getBody(),
+                    child.getAuthor(),
+                    child.getScore(),
+                    child.getId(),
+                    DateUtils.fromEpochTimestampMillis(child.getEpochTimestampMillis()),
+                    paperId,
+                    buildChildrenTree(paperId, childrenCommentEntities, set, addedChildren))
+            );
+        }
+
+        return result;
+    }
+
+
+    /**
+     * Given a comment entity and a list of comment entities, return the comment entities included in the list provided
+     * as second argument that are children of the entity provided as first argument
+     *
+     * @param entity
+     * @param commentEntities
+     * @return
+     */
+    private List<CommentEntity> getChildrenCommentEntities(CommentEntity entity, List<CommentEntity> commentEntities) {
+        List<CommentEntity> result = new ArrayList<>();
+        for (String id : entity.getChildrenCommentIDs()) {
+            commentEntities.stream().filter(e -> e.getId().equals(id)).forEach(result::add);
+        }
+        return result;
     }
 }

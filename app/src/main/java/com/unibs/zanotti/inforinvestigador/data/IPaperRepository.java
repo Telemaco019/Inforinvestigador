@@ -7,6 +7,12 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+/**
+ * Interface for saving/retrieving/updating paper-related model entities to/from the data layer.
+ * <p> Please note that the model entities are supposed to have ID generated within the data layer. For this reason,
+ * it is assumed that a model entity has ID null until it is persisted to the data layer, where an id is assigned to
+ * it according to the specific implementation of the repository. </p>
+ */
 public interface IPaperRepository {
     Maybe<Paper> getPaper(String paperId);
 
@@ -14,27 +20,24 @@ public interface IPaperRepository {
 
     /**
      * Add the {@code comment} provided as argument to the {@link Paper paper} corresponding to the
-     * {@code paperId} provided as argument
+     * {@code comment} provided as argument. If a comment with the same ID as the one provided as argument
+     * already exists for the specified paper, then the method updates that comment
      *
-     * @param paperId
      * @param comment
      * @return A Single on which an Observer can subscribe in order to get the comment that has been added (or an error
      * if something goes wrong during the adding operation)
      */
-    Single<Comment> addComment(String paperId, Comment comment);
+    Single<Comment> saveUpdateComment(Comment comment);
 
     /**
-     * Write that comments are not saved
-     * Save in the data layer the {@link Paper paper model object} provided as argument. Please note that the possible
-     * comments present into the Paper object are not persisted in the data layer by calling this method (they are
-     * supposed to be persisted individually by calling the {@link IPaperRepository#addComment(String, Comment)}
-     * proper method})
+     * Save (or update, if the paper already exists in the data layer)
+     * in the data layer the {@link Paper paper model object} provided as argument.
      *
      * @param paper Paper domain object to persist
      * @return A Single on which an Observer can subscribe in order to get the paper that has been added (or an error
      * if something goes wrong during the adding operation)
      */
-    Single<Paper> savePaper(Paper paper);
+    Single<Paper> saveUpdatePaper(Paper paper);
 
     Observable<Comment> getComments(String paperId);
 }

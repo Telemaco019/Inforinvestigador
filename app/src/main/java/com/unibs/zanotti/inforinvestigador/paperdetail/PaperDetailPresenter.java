@@ -57,7 +57,7 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
     @Override
     public void addComment(String comment) {
         disposables.add(userRepository.getCurrentUser()
-                .flatMapSingle(user -> paperRepository.addComment(paperId, ModelFactory.createComment(comment, user.getName())))
+                .flatMapSingle(user -> paperRepository.saveUpdateComment(ModelFactory.createComment(paperId, comment, user.getName())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Comment>() {

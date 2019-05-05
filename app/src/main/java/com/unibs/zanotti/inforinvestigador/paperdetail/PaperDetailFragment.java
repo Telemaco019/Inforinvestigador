@@ -1,12 +1,10 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +42,6 @@ public class PaperDetailFragment
 
     private static final String TAG = String.valueOf(PaperDetailFragment.class);
     private static final String FRAGMENT_STRING_ARGUMENT_PAPER_ID = "PaperDetailFragment.argument.PAPER_ID";
-    public static final String STRING_EXTRA_COMMENT_REPLY = "PaperDatailActivity.COMMENT_REPLY";
     private static final int RC_REPLY_TO_COMMENT = 1;
 
     private PaperDetailContract.Presenter presenter;
@@ -224,8 +221,7 @@ public class PaperDetailFragment
     @Override
     public void onReplyClicked(@NotNull Item<ViewHolder> item, @NotNull Comment comment) {
         Intent intent = new Intent(Actions.REPLY_TO_COMMENT);
-        intent.putExtra(ReplyCommentActivity.STRING_EXTRA_REPLIED_COMMENT_BODY, comment.getBody());
-        intent.putExtra(ReplyCommentActivity.STRING_EXTRA_REPLIED_COMMENT_AUTHOR, comment.getAuthor());
+        intent.putExtra(ReplyCommentActivity.PARCELABLE_EXTRA_PARENT_COMMENT, comment);
         startActivityForResult(intent, RC_REPLY_TO_COMMENT);
 
         // comment.setBody("AAAAAAAAAAAAAAAAAAAAAA");
@@ -238,16 +234,6 @@ public class PaperDetailFragment
         String comment = commentTf.getText().toString().trim();
         if (StringUtils.isNotBlank(comment)) {
             presenter.addComment(comment);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_REPLY_TO_COMMENT) {
-            if (resultCode == Activity.RESULT_OK) {
-                Log.d(TAG, data.getStringExtra(STRING_EXTRA_COMMENT_REPLY));
-            }
         }
     }
 

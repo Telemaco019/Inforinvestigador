@@ -13,13 +13,21 @@ public class Comment implements Parcelable {
     private String id;
     private List<Comment> children;
     private LocalDateTime dateTime;
+    private String paperId;
 
-    public Comment(String body, String author, int score, String id, LocalDateTime dateTime, List<Comment> children) {
+    public Comment(String body,
+                   String author,
+                   int score,
+                   String id,
+                   LocalDateTime dateTime,
+                   String paperId,
+                   List<Comment> children) {
         this.body = body;
         this.author = author;
         this.score = score;
         this.id = id;
         this.dateTime = dateTime;
+        this.paperId = paperId;
         this.children = children;
     }
 
@@ -28,6 +36,8 @@ public class Comment implements Parcelable {
         author = in.readString();
         score = in.readInt();
         id = in.readString();
+        dateTime = LocalDateTime.parse(in.readString());
+        paperId = in.readString();
         children = in.createTypedArrayList(Comment.CREATOR);
     }
 
@@ -54,7 +64,21 @@ public class Comment implements Parcelable {
         dest.writeString(author);
         dest.writeInt(score);
         dest.writeString(id);
+        dest.writeString(dateTime.toString());
+        dest.writeString(paperId);
         dest.writeTypedArray(children.toArray(new Comment[0]), 0);
+    }
+
+    public void addChildren(Comment comment) {
+        children.add(comment);
+    }
+
+    public String getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(String paperId) {
+        this.paperId = paperId;
     }
 
     public String getBody() {

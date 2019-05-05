@@ -27,6 +27,6 @@ public class FirebaseUtils {
                 "Publisher of the paper",
                 "AuREy18SlNOt9VBG8beLkwN2WNi2",
                 "Comment of the user who shared the paper");
-        paperFirebaseRepository.savePaper(paperToWrite).subscribe();
+        paperFirebaseRepository.saveUpdatePaper(paperToWrite).subscribe();
     }
 }
