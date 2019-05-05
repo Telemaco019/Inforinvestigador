@@ -24,9 +24,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 import java.util.Objects;
 
@@ -56,10 +63,13 @@ public class LoginActivity extends AppCompatActivity {
     @Nullable
     View progressBar;
 
+    private CompositeDisposable disposables;
+
     // Authentication
     private GoogleSignInOptions mGso;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private IUserRepository userRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initializeAuth();
         setupButtonListeners();
+        disposables = new CompositeDisposable();
 
         if (getIntent().getBooleanExtra(BOOLEAN_EXTRA_DO_LOGOUT, false)) {
             this.logout();
@@ -100,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializeAuth() {
+        userRepository = Injection.provideUserRepository();
         mAuth = FirebaseAuth.getInstance();
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -138,6 +150,12 @@ public class LoginActivity extends AppCompatActivity {
                 manageEmailNotVerified();
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        disposables.dispose();
     }
 
     @Override
@@ -205,8 +223,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Update UI with the signed-in user's information
                         Log.d(TAG, "signInWithGoogleCredential:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        manageSuccessfulLogin(mAuth.getCurrentUser());
                     } else {
                         authenticationFailed(googleSignInButton, this.getString(R.string.google_login_error_message));
                         Log.w(TAG, "signInWithGoogleCredential:failure", task.getException());
@@ -215,6 +232,31 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Manage the success of the login operation: update (or create if it does not exist yet) the user entity in the
+     * database of the data layer and update the UI properly
+     *
+     * @param user
+     */
+    private void manageSuccessfulLogin(FirebaseUser user) {
+        userRepository.saveUpdateUser(fromFirebase(user)).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                updateUI(user);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, e.getMessage());
+                updateUI(null);
+            }
+        });
+    }
 
     /**
      * Manage the event that occurs when the user tries to log in with the right credentials but the
@@ -289,5 +331,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Google sign out
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));
+    }
+
+    private User fromFirebase(FirebaseUser firebaseUser) {
+        return new User(firebaseUser.getUid(),
+                firebaseUser.getEmail(),
+                firebaseUser.getEmail(),
+                firebaseUser.getPhotoUrl(),
+                DateUtils.fromEpochTimestampMillis(firebaseUser.getMetadata().getCreationTimestamp()));
     }
 }

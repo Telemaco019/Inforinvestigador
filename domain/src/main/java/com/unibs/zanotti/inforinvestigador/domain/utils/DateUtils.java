@@ -11,14 +11,6 @@ import java.time.temporal.ChronoUnit;
 
 public abstract class DateUtils {
     /**
-     * @param epochTimestamp expressed in seconds
-     * @return
-     */
-    public static LocalDateTime fromEpochTimestampSec(long epochTimestamp) {
-        return Instant.ofEpochSecond(epochTimestamp).atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
-
-    /**
      * @param epochTimestamp expressed in milliseconds
      * @return
      */
