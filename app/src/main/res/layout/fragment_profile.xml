@@ -27,6 +27,7 @@
                         android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_round_profile_picture"
                             android:layout_marginTop="45dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_width="150dp"
@@ -34,6 +35,7 @@
                             android:src="@drawable/test_researcher_2"/>
 
                     <TextView
+                            android:id="@+id/profile_name_tv"
                             android:layout_marginTop="10dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_width="wrap_content"
@@ -68,10 +70,11 @@
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Photos"
+                                    android:text="@string/profile_shared_papers_caption"
                                     android:textSize="20sp"/>
 
                             <TextView
+                                    android:id="@+id/profile_shared_paper_number_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="125"
@@ -92,10 +95,11 @@
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Followers"
+                                    android:text="@string/profile_followers_caption"
                                     android:textSize="20sp"/>
 
                             <TextView
+                                    android:id="@+id/profile_followers_number_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1205"
@@ -116,10 +120,11 @@
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Following"
+                                    android:text="@string/profile_following_caption"
                                     android:textSize="20sp"/>
 
                             <TextView
+                                    android:id="@+id/profile_following_number_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="360"
@@ -158,6 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
+                            android:id="@+id/profile_email_tv"
                             android:text="Wiliam@gmail.com"/>
                 </LinearLayout>
 
@@ -175,8 +181,8 @@
                             android:tint="@color/colorSecondary"/>
 
                     <TextView
+                            android:id="@+id/profile_phone_number_tv"
                             android:textStyle="bold"
-
                             android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -188,13 +194,14 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/profile_btn_follow"
                     android:textColor="#fff"
                     android:background="@drawable/follow_me_button_style"
                     android:layout_marginTop="35dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Follow Me"
+                    android:text="@string/profile_follow_btn_caption"
                     android:layout_marginBottom="@dimen/doubleBaseMargin"/>
         </LinearLayout>
     </ScrollView>
