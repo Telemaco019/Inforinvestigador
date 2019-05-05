@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                 disposables.add(Injection.provideUserRepository()
                         .saveUpdateUser(new User(currentUser.getUid(),
                                 currentUser.getEmail(),
-                                currentUser.getEmail(),
+                                currentUser.getDisplayName(),
                                 currentUser.getPhotoUrl(),
                                 DateUtils.fromEpochTimestampMillis(currentUser.getMetadata().getCreationTimestamp())))
                         .subscribeWith(new DisposableCompletableObserver() {
