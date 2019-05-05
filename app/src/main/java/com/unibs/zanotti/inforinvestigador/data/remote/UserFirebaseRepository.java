@@ -6,7 +6,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
-import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import io.reactivex.Maybe;
 
 import java.time.LocalDateTime;
@@ -43,6 +42,7 @@ public class UserFirebaseRepository implements IUserRepository {
 
     }
 
+    /*
     @Override
     public Maybe<User> getCurrentUser() {
         return Maybe.create(emitter -> {
@@ -58,6 +58,7 @@ public class UserFirebaseRepository implements IUserRepository {
             emitter.onComplete();
         });
     }
+    */
 
     @Override
     public String getCurrentUserId() {

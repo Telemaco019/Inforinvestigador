@@ -35,7 +35,8 @@ public class ReplyCommentPresenter implements ReplyCommentContract.Presenter {
 
     @Override
     public void addReply(Comment parentComment, String replyBody) {
-        disposables.add(userRepository.getCurrentUser()
+        String currentUserId = userRepository.getCurrentUserId();
+        disposables.add(userRepository.getUser(currentUserId)
                 .flatMapSingle(user -> {
                     Comment replyComment = ModelFactory.createComment(parentComment.getPaperId(), replyBody, user.getName());
                     return paperRepository.saveUpdateComment(replyComment);

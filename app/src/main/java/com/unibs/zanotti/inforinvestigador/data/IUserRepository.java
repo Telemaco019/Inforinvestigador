@@ -11,9 +11,7 @@ public interface IUserRepository {
     void updateUser(User user);
 
     /**
-     * Return the user currently logged in Invorinvestigador
+     * Return the id of the user currently logged in Invorinvestigador
      */
-    Maybe<User> getCurrentUser();
-
     String getCurrentUserId();
 }
