@@ -1,18 +1,23 @@
 package com.unibs.zanotti.inforinvestigador.profile;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.squareup.picasso.Picasso;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.auth.LoginActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment implements ProfileContract.View {
@@ -37,6 +42,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     CircleImageView ciProfilePicture;
     @BindView(R.id.profile_name_tv)
     TextView tvName;
+    @BindView(R.id.profile_settings_icon)
+    ImageView profileSettingIcon;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -76,6 +83,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     public void showProfilePicture(Uri profilePictureUri) {
         Picasso.get()
                 .load(profilePictureUri)
+                .error(R.drawable.user_profle_pic_placeholder)
                 .fit()
                 .into(ciProfilePicture);
     }
@@ -88,5 +96,17 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public void showUserEmail(String email) {
         tvEmail.setText(email);
+    }
+
+    // TODO: to be removed/updated
+    @OnClick(R.id.profile_settings_icon)
+    public void logout() {
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra(LoginActivity.BOOLEAN_EXTRA_DO_LOGOUT,true);
+        startActivity(intent);
+        FragmentActivity activity = getActivity();
+        if(activity != null) {
+            activity.finish();
+        }
     }
 }
