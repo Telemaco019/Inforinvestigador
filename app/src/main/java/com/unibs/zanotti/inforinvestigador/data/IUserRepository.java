@@ -14,4 +14,6 @@ public interface IUserRepository {
      * Return the user currently logged in Invorinvestigador
      */
     Maybe<User> getCurrentUser();
+
+    String getCurrentUserId();
 }

@@ -58,4 +58,10 @@ public class UserFirebaseRepository implements IUserRepository {
             emitter.onComplete();
         });
     }
+
+    @Override
+    public String getCurrentUserId() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser == null ? null : currentUser.getUid();
+    }
 }
