@@ -7,27 +7,31 @@
         android:layout_height="match_parent"
         tools:context="com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity">
 
-
-    <include layout="@layout/top_bar"/>
-
-
-    <FrameLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/main_nav_fragment_holder"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            android:layout_marginBottom="?attr/actionBarSize"/>
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+        <include layout="@layout/top_bar"/>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/main_nav_fragment_holder"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/menu_bottom_navigation"
+                app:itemTextColor="@color/bottom_navigation_color"
+                android:layout_gravity="bottom"
+                app:itemIconTint="@color/bottom_navigation_color"
+                app:labelVisibilityMode="unlabeled"/>
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/menu_bottom_navigation"
-            app:itemTextColor="@color/bottom_navigation_color"
-            android:layout_gravity="bottom"
-            app:itemIconTint="@color/bottom_navigation_color"
-            app:labelVisibilityMode="unlabeled"/>
-
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
