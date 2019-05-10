@@ -93,6 +93,8 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
                     mView.showPaperImage(R.drawable.paper_preview_test);
                     return paperRepository.getComments(paperId);
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Comment>() {
                     @Override
                     public void onNext(Comment comment) {

@@ -6,8 +6,10 @@ import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +127,8 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
                                 paper.getPaperDate(),
                                 paper.getPaperTopics(),
                                 paper.getPaperAuthors()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<FeedPaper>() {
                     @Override
                     public void onNext(FeedPaper feedPaper) {
