@@ -34,6 +34,10 @@ public class HomefeedFragment extends Fragment implements
         researcherSuggestionAdapter = new ResearcherSuggestionAdapter(new ArrayList<>(0));
     }
 
+    public static Fragment newInstance() {
+        return new HomefeedFragment();
+    }
+
     @Override
     public void setPresenter(HomefeedContract.Presenter presenter) {
         this.presenter = presenter;

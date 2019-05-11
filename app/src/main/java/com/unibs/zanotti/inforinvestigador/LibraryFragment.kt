@@ -26,5 +26,12 @@ class LibraryFragment : androidx.fragment.app.Fragment() {
         return inflater.inflate(R.layout.fragment_library, container, false)
     }
 
+    companion object {
+        @JvmStatic
+        fun newInstance(): Fragment {
+            return LibraryFragment()
+        }
+    }
+
 
 }
