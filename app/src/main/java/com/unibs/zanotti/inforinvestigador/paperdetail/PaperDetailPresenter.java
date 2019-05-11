@@ -56,7 +56,8 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
 
     @Override
     public void addComment(String comment) {
-        disposables.add(userRepository.getCurrentUser()
+        String currentUserId = userRepository.getCurrentUserId();
+        disposables.add(userRepository.getUser(currentUserId)
                 .flatMapSingle(user -> paperRepository.saveUpdateComment(ModelFactory.createComment(paperId, comment, user.getName())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,6 +93,8 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
                     mView.showPaperImage(R.drawable.paper_preview_test);
                     return paperRepository.getComments(paperId);
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Comment>() {
                     @Override
                     public void onNext(Comment comment) {

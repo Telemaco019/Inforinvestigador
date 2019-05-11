@@ -69,6 +69,12 @@ public class ReplyCommentFragment extends Fragment implements ReplyCommentContra
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {

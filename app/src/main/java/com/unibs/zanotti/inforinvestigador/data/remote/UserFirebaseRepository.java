@@ -1,15 +1,21 @@
 package com.unibs.zanotti.inforinvestigador.data.remote;
 
 import android.net.Uri;
+import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
+import com.unibs.zanotti.inforinvestigador.data.remote.model.UserEntity;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class UserFirebaseRepository implements IUserRepository {
     private static final String TAG = String.valueOf(UserFirebaseRepository.class);
@@ -32,30 +38,51 @@ public class UserFirebaseRepository implements IUserRepository {
 
     @Override
     public Maybe<User> getUser(String userId) {
-        return Maybe.create(emitter -> {
-            // TODO
-            emitter.onSuccess(new User("id", "asds@gmail.com", "pippo baudo", Uri.EMPTY, LocalDateTime.now()));
-        });
+        return Maybe.create(emitter -> db.document(String.format("%s/%s", Collections.USERS, userId))
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
+                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "user", e.toString()));
+                })
+                .addOnCompleteListener(e -> emitter.onComplete()));
     }
 
     @Override
-    public void updateUser(User user) {
-
+    public Completable saveUpdateUser(User user) {
+        return Completable.create(emitter -> db.document(String.format("%s/%s", Collections.USERS, user.getId()))
+                .set(fromUser(user))
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_WRITE_SUCCESS, "user", user.getId()));
+                    emitter.onComplete();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId(), e));
+                    emitter.onError(e);
+                }));
     }
 
     @Override
-    public Maybe<User> getCurrentUser() {
-        return Maybe.create(emitter -> {
-            FirebaseUser firebaseUser = mAuth.getCurrentUser();
-            if (firebaseUser != null) {
-                emitter.onSuccess(new User(
-                        firebaseUser.getUid(),
-                        firebaseUser.getEmail(),
-                        firebaseUser.getDisplayName(),
-                        firebaseUser.getPhotoUrl(),
-                        DateUtils.fromEpochTimestampSec(firebaseUser.getMetadata().getCreationTimestamp())));
-            }
-            emitter.onComplete();
-        });
+    public String getCurrentUserId() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser == null ? null : currentUser.getUid();
+    }
+
+    private UserEntity fromUser(User user) {
+        return new UserEntity(user.getId(),
+                user.getEmail(),
+                user.getName(),
+                user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
+                DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()));
+    }
+
+    private User fromEntity(UserEntity userEntity) {
+        return new User(userEntity.getId(),
+                userEntity.getEmail(),
+                userEntity.getName(),
+                Uri.parse(userEntity.getProfilePictureUri()),
+                DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()));
     }
 }

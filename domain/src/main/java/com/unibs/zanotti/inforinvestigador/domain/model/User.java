@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import android.net.Uri;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 
@@ -48,6 +49,7 @@ public class User {
         this.name = name;
     }
 
+    @Nullable
     public Uri getProfilePictureUri() {
         return profilePictureUri;
     }
