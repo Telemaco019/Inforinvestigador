@@ -10,6 +10,8 @@ public interface MainNavigationContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void displayFragment(Fragment fragment);
+        void displayFragment(int fragmentNumber);
+
+        void addFragmentToAdapter(Fragment fragment, String title);
     }
 }
