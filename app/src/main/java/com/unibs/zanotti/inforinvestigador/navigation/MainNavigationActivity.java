@@ -39,7 +39,7 @@ public class MainNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_navigation);
 
         // Initialize map
         fragmentIdToItemId.put(R.id.fragment_homefeed, R.id.bottom_bar_action_home);

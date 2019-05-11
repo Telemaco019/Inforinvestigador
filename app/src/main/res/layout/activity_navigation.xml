@@ -16,16 +16,11 @@
 
         <include layout="@layout/top_bar"/>
 
-        <com.unibs.zanotti.inforinvestigador.utils.CustomViewPager
-                android:id="@+id/main_nav_view_pager"
+        <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/main_nav_fragment_holder"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
-        <!--  <FrameLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:id="@+id/main_nav_fragment_holder"
-                  app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/> -->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
