@@ -23,12 +23,10 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private IPaperRepository paperRepository;
     private List<FeedPaper> papersFeed;
     private List<ResearcherSuggestion> researchersFeed;
-    private Bundle viewStateBundle;
 
     public HomefeedPresenter(IPaperRepository paperRepository, IUserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
-        viewStateBundle = getStateBundle();
     }
 
     @Override
