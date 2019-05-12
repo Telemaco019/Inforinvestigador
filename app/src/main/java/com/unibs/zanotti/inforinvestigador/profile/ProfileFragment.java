@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,9 +17,13 @@ import butterknife.OnClick;
 import com.squareup.picasso.Picasso;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.auth.LoginActivity;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
+import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileFragment extends Fragment implements ProfileContract.View {
+public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileContract.Presenter>
+        implements ProfileContract.View {
 
     private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ProfileFragment.argument.USER_ID";
 
@@ -69,17 +72,6 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
-    public void setPresenter(ProfileContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
-
-    @Override
     public void showProfilePicture(Uri profilePictureUri) {
         Picasso.get()
                 .load(profilePictureUri)
@@ -103,11 +95,17 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @OnClick(R.id.profile_settings_icon)
     public void logout() {
         Intent intent = new Intent(getContext(), LoginActivity.class);
-        intent.putExtra(LoginActivity.BOOLEAN_EXTRA_DO_LOGOUT,true);
+        intent.putExtra(LoginActivity.BOOLEAN_EXTRA_DO_LOGOUT, true);
         startActivity(intent);
         FragmentActivity activity = getActivity();
-        if(activity != null) {
+        if (activity != null) {
             activity.finish();
         }
+    }
+
+    @Override
+    protected ProfileContract.Presenter createPresenter() {
+        IUserRepository userRepository = Injection.provideUserRepository();
+        return new ProfilePresenter(userRepository, userRepository.getCurrentUserId());
     }
 }

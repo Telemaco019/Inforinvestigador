@@ -1,22 +1,18 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
-import com.unibs.zanotti.inforinvestigador.BasePresenter;
-import com.unibs.zanotti.inforinvestigador.BaseView;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 
 import java.util.List;
 
 public interface PaperDetailContract {
-    interface Presenter extends BasePresenter {
-
-        void stop();
-
+    interface Presenter extends BaseContract.Presenter<View> {
         void viewClicked(int viewId);
 
         void addComment(String comment);
     }
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseContract.View {
         void showPaperTitle(String paperTitle);
 
         void showPaperAbstract(String paperAbstract);

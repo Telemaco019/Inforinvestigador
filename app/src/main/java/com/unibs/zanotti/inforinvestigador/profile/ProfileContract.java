@@ -1,15 +1,14 @@
 package com.unibs.zanotti.inforinvestigador.profile;
 
 import android.net.Uri;
-import com.unibs.zanotti.inforinvestigador.BasePresenter;
-import com.unibs.zanotti.inforinvestigador.BaseView;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
 
 public interface ProfileContract {
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BaseContract.Presenter<View> {
 
     }
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseContract.View {
 
         void showProfilePicture(Uri profilePictureUri);
 

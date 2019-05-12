@@ -11,21 +11,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperFeedAdapter;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomefeedFragment extends Fragment implements
-        HomefeedContract.View,
-        PaperFeedAdapter.OnPaperShareListener {
+public class HomefeedFragment extends BaseFragment<HomefeedContract.View, HomefeedContract.Presenter>
+        implements HomefeedContract.View, PaperFeedAdapter.OnPaperShareListener {
 
-    private HomefeedContract.Presenter presenter;
     private PaperFeedAdapter paperFeedAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
 
@@ -36,17 +36,6 @@ public class HomefeedFragment extends Fragment implements
 
     public static Fragment newInstance() {
         return new HomefeedFragment();
-    }
-
-    @Override
-    public void setPresenter(HomefeedContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
     }
 
     @Nullable
@@ -91,5 +80,10 @@ public class HomefeedFragment extends Fragment implements
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.STRING_EXTRA_PAPER_ID, paperId);
         startActivity(intent);
+    }
+
+    @Override
+    protected HomefeedContract.Presenter createPresenter() {
+        return new HomefeedPresenter(Injection.providePaperRepository(), Injection.provideUserRepository());
     }
 }

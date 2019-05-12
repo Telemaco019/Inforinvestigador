@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
-import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 public class ReplyCommentActivity extends AppCompatActivity {
     public static final String STRING_EXTRA_REPLIED_COMMENT_BODY = "ReplyCommentActivity.extra.REPLIED_COMMENT_BODY";
@@ -28,7 +27,5 @@ public class ReplyCommentActivity extends AppCompatActivity {
             fragment = ReplyCommentFragment.newInstance(parentComment);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.content_frame);
         }
-
-        new ReplyCommentPresenter(fragment, Injection.providePaperRepository(),Injection.provideUserRepository());
     }
 }

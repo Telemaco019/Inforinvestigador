@@ -1,38 +1,23 @@
 package com.unibs.zanotti.inforinvestigador.comments;
 
+import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ReplyCommentPresenter implements ReplyCommentContract.Presenter {
+public class ReplyCommentPresenter extends BasePresenter<ReplyCommentContract.View>
+        implements ReplyCommentContract.Presenter {
+
     private final IUserRepository userRepository;
     private final IPaperRepository paperRepository;
-    private ReplyCommentContract.View mView;
-    private CompositeDisposable disposables;
 
-    public ReplyCommentPresenter(ReplyCommentContract.View mView,
-                                 IPaperRepository paperRepository,
-                                 IUserRepository userRepository) {
+    public ReplyCommentPresenter(IPaperRepository paperRepository, IUserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
-        this.mView = mView;
-        this.mView.setPresenter(this);
-        disposables = new CompositeDisposable();
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-        disposables.dispose();
     }
 
     @Override
@@ -61,5 +46,10 @@ public class ReplyCommentPresenter implements ReplyCommentContract.Presenter {
                     }
                 })
         );
+    }
+
+    @Override
+    public void onPresenterCreated() {
+        // NO OP
     }
 }

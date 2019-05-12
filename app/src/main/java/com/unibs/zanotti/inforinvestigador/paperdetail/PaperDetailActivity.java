@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
-import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 
 public class PaperDetailActivity extends AppCompatActivity {
@@ -28,11 +27,6 @@ public class PaperDetailActivity extends AppCompatActivity {
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), paperDetailFragment, R.id.content_frame);
         }
-
-        new PaperDetailPresenter(paperId,
-                Injection.providePaperRepository(),
-                Injection.provideUserRepository(),
-                paperDetailFragment);
     }
 
     private void setupSupportActionBar() {

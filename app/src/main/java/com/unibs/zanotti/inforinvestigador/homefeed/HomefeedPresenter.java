@@ -2,43 +2,25 @@ package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomefeedPresenter implements HomefeedContract.Presenter {
-
-    private final HomefeedContract.View view;
+public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> implements HomefeedContract.Presenter {
     private final IUserRepository userRepository;
     private IPaperRepository paperRepository;
-    private CompositeDisposable disposables;
 
-    public HomefeedPresenter(HomefeedContract.View view,
-                             IPaperRepository paperRepository,
-                             IUserRepository userRepository) {
-        this.view = view;
+    public HomefeedPresenter(IPaperRepository paperRepository, IUserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
-        disposables = new CompositeDisposable();
-        view.setPresenter(this);
-    }
-
-    @Override
-    public void start() {
-        loadFeed();
-    }
-
-    @Override
-    public void stop() {
-        disposables.dispose();
     }
 
     @Override
@@ -49,12 +31,12 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
 
     @Override
     public void paperShareClicked(String paperId) {
-        view.showPaperDetails(paperId);
+        getView().showPaperDetails(paperId);
     }
 
     private void loadResearchersSuggestions() {
         List<ResearcherSuggestion> researchersSuggestions = computeResearcherSuggestions(1);
-        view.showResearchersSuggestions(researchersSuggestions);
+        getView().showResearchersSuggestions(researchersSuggestions);
     }
 
     /**
@@ -132,22 +114,27 @@ public class HomefeedPresenter implements HomefeedContract.Presenter {
                 .subscribeWith(new DisposableObserver<FeedPaper>() {
                     @Override
                     public void onNext(FeedPaper feedPaper) {
-                        Log.e("***","On next");
+                        Log.e("***", "On next");
                         papersFeed.add(feedPaper);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("***","On error" + e);
+                        Log.e("***", "On error" + e);
 
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("***","On complete");
-                        view.showPapersFeed(papersFeed);
+                        Log.e("***", "On complete");
+                        getView().showPapersFeed(papersFeed);
                     }
                 })
         );
+    }
+
+    @Override
+    public void onPresenterCreated() {
+        this.loadFeed();
     }
 }

@@ -15,12 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedContract;
 import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedFragment;
-import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedPresenter;
-import com.unibs.zanotti.inforinvestigador.profile.ProfileContract;
 import com.unibs.zanotti.inforinvestigador.profile.ProfileFragment;
-import com.unibs.zanotti.inforinvestigador.profile.ProfilePresenter;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
@@ -79,31 +75,25 @@ public class MainNavigationActivity extends AppCompatActivity {
                 destinationFragment = supportFragmentManager.findFragmentById(R.id.fragment_homefeed);
                 if (destinationFragment == null) {
                     destinationFragment = HomefeedFragment.newInstance();
-                    destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_homefeed));
+              //      destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_homefeed));
                 }
                 saveCurrentSelectedFragmentState(R.id.fragment_homefeed);
-                new HomefeedPresenter((HomefeedContract.View) destinationFragment,
-                        Injection.providePaperRepository(),
-                        Injection.provideUserRepository());
                 break;
             }
             case R.id.bottom_bar_action_profile: {
                 destinationFragment = supportFragmentManager.findFragmentById(R.id.fragment_profile);
                 if (destinationFragment == null) {
                     destinationFragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
-                    destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_profile));
+                //    destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_profile));
                 }
                 saveCurrentSelectedFragmentState(R.id.fragment_profile);
-                new ProfilePresenter((ProfileContract.View) destinationFragment,
-                        Injection.provideUserRepository(),
-                        Injection.provideUserRepository().getCurrentUserId());
                 break;
             }
             case R.id.bottom_bar_action_library: {
                 destinationFragment = supportFragmentManager.findFragmentById(R.id.fragment_library);
                 if (destinationFragment == null) {
                     destinationFragment = LibraryFragment.newInstance();
-                    destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_library));
+                  //  destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_library));
                 }
                 saveCurrentSelectedFragmentState(R.id.fragment_library);
                 break;

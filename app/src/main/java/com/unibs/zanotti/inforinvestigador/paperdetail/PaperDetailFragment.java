@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup;
 import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentItem;
 import com.unibs.zanotti.inforinvestigador.comments.ReplyCommentActivity;
@@ -28,6 +28,7 @@ import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.Item;
 import com.xwray.groupie.ViewHolder;
@@ -37,14 +38,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PaperDetailFragment
-        extends Fragment
+        extends BaseFragment<PaperDetailContract.View, PaperDetailContract.Presenter>
         implements PaperDetailContract.View, ExpandableCommentItem.OnReplyClickedListener {
 
     private static final String TAG = String.valueOf(PaperDetailFragment.class);
     private static final String FRAGMENT_STRING_ARGUMENT_PAPER_ID = "PaperDetailFragment.argument.PAPER_ID";
     private static final int RC_REPLY_TO_COMMENT = 1;
 
-    private PaperDetailContract.Presenter presenter;
     /**
      * Group adapter for showing nested comments
      */
@@ -90,19 +90,6 @@ public class PaperDetailFragment
         return fragment;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        presenter.stop();
-    }
-
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -136,12 +123,6 @@ public class PaperDetailFragment
         });
 
         return view;
-    }
-
-
-    @Override
-    public void setPresenter(PaperDetailContract.Presenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override
@@ -243,5 +224,13 @@ public class PaperDetailFragment
 
     private ExpandableCommentGroup generateExpandableCommentGroup(Comment comment) {
         return new ExpandableCommentGroup(comment, 0, this);
+    }
+
+    @Override
+    protected PaperDetailContract.Presenter createPresenter() {
+        String string = getArguments().getString(FRAGMENT_STRING_ARGUMENT_PAPER_ID);
+        return new PaperDetailPresenter(string,
+                Injection.providePaperRepository(),
+                Injection.provideUserRepository());
     }
 }

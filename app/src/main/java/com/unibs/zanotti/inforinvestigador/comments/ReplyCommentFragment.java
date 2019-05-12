@@ -12,14 +12,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
-public class ReplyCommentFragment extends Fragment implements ReplyCommentContract.View {
+public class ReplyCommentFragment extends BaseFragment<ReplyCommentContract.View,ReplyCommentContract.Presenter>
+        implements ReplyCommentContract.View {
     private static final String FRAGMENT_PARCELABLE_ARGUMENT_PARENT_COMMENT = "ReplyCommentFragment.argument.PARENT_COMMENT";
 
     @BindView(R.id.reply_to_comment_author_name)
@@ -57,21 +59,14 @@ public class ReplyCommentFragment extends Fragment implements ReplyCommentContra
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        mPresenter.stop();
+    protected ReplyCommentContract.Presenter createPresenter() {
+        return new ReplyCommentPresenter(Injection.providePaperRepository(),Injection.provideUserRepository());
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override
@@ -120,11 +115,6 @@ public class ReplyCommentFragment extends Fragment implements ReplyCommentContra
                 toolbarSendBtn.setEnabled(StringUtils.isNotBlank(s.toString()));
             }
         });
-    }
-
-    @Override
-    public void setPresenter(ReplyCommentContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 
     private void setupSupportActionBar(View view) {

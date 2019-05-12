@@ -2,12 +2,12 @@ package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -19,34 +19,17 @@ import java.util.List;
  * Listens to user action from the UI (e.g. {@link PaperDetailFragment}), retrieves the data and updates the UI as
  * required.
  */
-public class PaperDetailPresenter implements PaperDetailContract.Presenter {
-    private final PaperDetailContract.View mView;
+public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View> implements PaperDetailContract.Presenter {
     private IPaperRepository paperRepository;
     private IUserRepository userRepository;
     private String paperId;
-    private CompositeDisposable disposables;
 
     public PaperDetailPresenter(String paperId,
                                 IPaperRepository paperRepository,
-                                IUserRepository userRepository,
-                                PaperDetailContract.View mView) {
-        this.mView = mView;
+                                IUserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
         this.paperId = paperId;
-        disposables = new CompositeDisposable();
-
-        mView.setPresenter(this);
-    }
-
-    @Override
-    public void start() {
-        openPaper();
-    }
-
-    @Override
-    public void stop() {
-        disposables.dispose();
     }
 
     @Override
@@ -64,9 +47,9 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
                 .subscribeWith(new DisposableSingleObserver<Comment>() {
                     @Override
                     public void onSuccess(Comment comment) {
-                        mView.showNewComment(comment);
-                        mView.clearCommentInputField();
-                        mView.scrollViewToBottom();
+                        getView().showNewComment(comment);
+                        getView().clearCommentInputField();
+                        getView().scrollViewToBottom();
                     }
 
                     @Override
@@ -82,15 +65,15 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
         List<Comment> comments = new ArrayList<>();
         disposables.add(paperRepository.getPaper(paperId)
                 .flatMapObservable(paper -> {
-                    mView.showPaperTitle(paper.getPaperTitle());
-                    mView.showPaperCitations(paper.getPaperCitations());
-                    mView.showPaperAbstract(paper.getPaperAbstract());
-                    mView.showPaperDOI(paper.getPaperDoi());
-                    mView.showPaperPublisher(paper.getPaperPublisher());
-                    mView.showPaperDate(paper.getPaperDate());
-                    mView.showPaperAuthors(paper.getPaperAuthors());
-                    mView.showPaperTopics(paper.getPaperTopics());
-                    mView.showPaperImage(R.drawable.paper_preview_test);
+                    getView().showPaperTitle(paper.getPaperTitle());
+                    getView().showPaperCitations(paper.getPaperCitations());
+                    getView().showPaperAbstract(paper.getPaperAbstract());
+                    getView().showPaperDOI(paper.getPaperDoi());
+                    getView().showPaperPublisher(paper.getPaperPublisher());
+                    getView().showPaperDate(paper.getPaperDate());
+                    getView().showPaperAuthors(paper.getPaperAuthors());
+                    getView().showPaperTopics(paper.getPaperTopics());
+                    getView().showPaperImage(R.drawable.paper_preview_test);
                     return paperRepository.getComments(paperId);
                 })
                 .subscribeOn(Schedulers.io())
@@ -108,8 +91,13 @@ public class PaperDetailPresenter implements PaperDetailContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        mView.showComments(comments);
+                        getView().showComments(comments);
                     }
                 }));
+    }
+
+    @Override
+    public void onPresenterCreated() {
+        this.openPaper();
     }
 }
