@@ -86,4 +86,10 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     protected HomefeedContract.Presenter createPresenter() {
         return new HomefeedPresenter(Injection.providePaperRepository(), Injection.provideUserRepository());
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
 }

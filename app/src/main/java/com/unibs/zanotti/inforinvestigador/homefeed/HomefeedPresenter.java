@@ -17,6 +17,8 @@ import java.util.List;
 public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> implements HomefeedContract.Presenter {
     private final IUserRepository userRepository;
     private IPaperRepository paperRepository;
+    private List<FeedPaper> papersFeed;
+    private List<ResearcherSuggestion> researchersFeed;
 
     public HomefeedPresenter(IPaperRepository paperRepository, IUserRepository userRepository) {
         this.paperRepository = paperRepository;
@@ -35,8 +37,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     }
 
     private void loadResearchersSuggestions() {
-        List<ResearcherSuggestion> researchersSuggestions = computeResearcherSuggestions(1);
-        getView().showResearchersSuggestions(researchersSuggestions);
+        researchersFeed = computeResearcherSuggestions(1);
+        showResearchersFeed();
     }
 
     /**
@@ -97,7 +99,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     }
 
     private void loadPaperShares() {
-        List<FeedPaper> papersFeed = new ArrayList<>();
+        papersFeed = new ArrayList<>();
 
         disposables.add(paperRepository.getPapers()
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
@@ -127,7 +129,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                     @Override
                     public void onComplete() {
                         Log.e("***", "On complete");
-                        getView().showPapersFeed(papersFeed);
+                        showPapersFeed();
                     }
                 })
         );
@@ -140,6 +142,15 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     @Override
     public void onStart() {
+        this.showPapersFeed();
+        this.showResearchersFeed();
+    }
 
+    private void showPapersFeed() {
+        getView().showPapersFeed(papersFeed);
+    }
+
+    private void showResearchersFeed() {
+        getView().showResearchersSuggestions(researchersFeed);
     }
 }

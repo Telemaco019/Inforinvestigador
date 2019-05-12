@@ -11,7 +11,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.R;
@@ -22,8 +21,7 @@ import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 
 public class MainNavigationActivity extends AppCompatActivity {
-    private static final String SAVED_STATE_CONTAINER_KEY = "ContainerKey";
-    private static final String SAVED_STATE_CURRENT_TAB_KEY = "CurrentTabKey";
+    private static final String SAVED_STATE_CURRENT_FRAGMENT_KEY = "CurrentTabKey";
 
     /**
      * Map the ids fragments to the ids of the respective bottom nav items
@@ -55,10 +53,10 @@ public class MainNavigationActivity extends AppCompatActivity {
         // Add listener to bottom navigation bar
         BottomNavigationView bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setOnNavigationItemSelectedListener(e -> navigate(e.getItemId()));
+        bottomNavigationBar.setOnNavigationItemReselectedListener(e -> {});
 
         if (savedInstanceState != null) {
-            savedStateSparseArray = savedInstanceState.getSparseParcelableArray(SAVED_STATE_CONTAINER_KEY);
-            currentFragmentKey = savedInstanceState.getInt(SAVED_STATE_CURRENT_TAB_KEY);
+            currentFragmentKey = savedInstanceState.getInt(SAVED_STATE_CURRENT_FRAGMENT_KEY);
             bottomNavigationBar.setSelectedItemId(fragmentIdToItemId.get(currentFragmentKey));
         } else {
             // Set default selected tab
@@ -67,35 +65,25 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     private boolean navigate(int itemId) {
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
         Fragment destinationFragment = null;
 
         switch (itemId) {
             case R.id.bottom_bar_action_home: {
-                destinationFragment = supportFragmentManager.findFragmentById(R.id.fragment_homefeed);
-                if (destinationFragment == null) {
-                    destinationFragment = HomefeedFragment.newInstance();
-              //      destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_homefeed));
-                }
-                saveCurrentSelectedFragmentState(R.id.fragment_homefeed);
+                destinationFragment = HomefeedFragment.newInstance();
+                destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_homefeed));
+                currentFragmentKey = R.id.fragment_homefeed;
                 break;
             }
             case R.id.bottom_bar_action_profile: {
-                destinationFragment = supportFragmentManager.findFragmentById(R.id.fragment_profile);
-                if (destinationFragment == null) {
-                    destinationFragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
-                //    destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_profile));
-                }
-                saveCurrentSelectedFragmentState(R.id.fragment_profile);
+                destinationFragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
+                destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_profile));
+                currentFragmentKey = R.id.fragment_profile;
                 break;
             }
             case R.id.bottom_bar_action_library: {
-                destinationFragment = supportFragmentManager.findFragmentById(R.id.fragment_library);
-                if (destinationFragment == null) {
-                    destinationFragment = LibraryFragment.newInstance();
-                  //  destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_library));
-                }
-                saveCurrentSelectedFragmentState(R.id.fragment_library);
+                destinationFragment = LibraryFragment.newInstance();
+                destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_library));
+                currentFragmentKey = R.id.fragment_library;
                 break;
             }
         }
@@ -120,17 +108,7 @@ public class MainNavigationActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSparseParcelableArray(SAVED_STATE_CONTAINER_KEY, savedStateSparseArray);
-        outState.putInt(SAVED_STATE_CURRENT_TAB_KEY, currentFragmentKey);
+        outState.putInt(SAVED_STATE_CURRENT_FRAGMENT_KEY, currentFragmentKey);
     }
 
-    private void saveCurrentSelectedFragmentState(int newFragmentId) {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_nav_fragment_holder);
-        if (currentFragment != null) {
-            savedStateSparseArray.put(currentFragmentKey,
-                    getSupportFragmentManager().saveFragmentInstanceState(currentFragment)
-            );
-        }
-        currentFragmentKey = newFragmentId;
-    }
 }
