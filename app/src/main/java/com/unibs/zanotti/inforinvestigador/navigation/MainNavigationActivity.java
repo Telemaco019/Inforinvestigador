@@ -1,7 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.navigation;
 
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,18 +15,19 @@ import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedFragment;
 import com.unibs.zanotti.inforinvestigador.profile.ProfileFragment;
-import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 
 public class MainNavigationActivity extends AppCompatActivity {
     private static final String SAVED_STATE_CURRENT_FRAGMENT_KEY = "CurrentTabKey";
+    private static final String TAG_FRAGMENT_HOMEFEED = "fragment_homefeed";
+    private static final String TAG_FRAGMENT_PROFILE = "fragment_profile";
+    private static final String TAG_FRAGMENT_LIBRARY = "fragment_library";
 
     /**
      * Map the ids fragments to the ids of the respective bottom nav items
      */
     private SparseIntArray fragmentIdToItemId = new SparseIntArray();
-    private SparseArray<Fragment.SavedState> savedStateSparseArray = new SparseArray<>();
     private int currentFragmentKey;
 
     @Override
@@ -54,7 +54,7 @@ public class MainNavigationActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setOnNavigationItemSelectedListener(e -> navigate(e.getItemId()));
         bottomNavigationBar.setOnNavigationItemReselectedListener(e -> {
-           // TODO: scroll to top
+            // TODO: scroll to top
         });
 
         // Initialize bottom nav by deselecting all the menu items
@@ -72,32 +72,43 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     private boolean navigate(int itemId) {
-        Fragment destinationFragment = null;
-
         switch (itemId) {
             case R.id.bottom_bar_action_home: {
-                destinationFragment = HomefeedFragment.newInstance();
                 currentFragmentKey = R.id.fragment_homefeed;
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_HOMEFEED);
+                if (fragment == null) {
+                    fragment = HomefeedFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_nav_fragment_holder, fragment, TAG_FRAGMENT_HOMEFEED)
+                            .commit();
+                }
                 break;
             }
             case R.id.bottom_bar_action_profile: {
-                destinationFragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
                 currentFragmentKey = R.id.fragment_profile;
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_PROFILE);
+                if (fragment == null) {
+                    fragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_nav_fragment_holder, fragment, TAG_FRAGMENT_PROFILE)
+                            .commit();
+                }
                 break;
             }
             case R.id.bottom_bar_action_library: {
-                destinationFragment = LibraryFragment.newInstance();
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_LIBRARY);
+                if (fragment == null) {
+                    fragment = LibraryFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_nav_fragment_holder, fragment, TAG_FRAGMENT_LIBRARY)
+                            .commit();
+                }
                 currentFragmentKey = R.id.fragment_library;
                 break;
             }
         }
 
-        if (destinationFragment != null) {
-            ActivityUtils.replaceFragment(getSupportFragmentManager(), destinationFragment, R.id.main_nav_fragment_holder);
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     @Override

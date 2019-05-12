@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import org.jetbrains.annotations.NotNull;
 
 public class ActivityUtils {
     /**
@@ -22,12 +21,6 @@ public class ActivityUtils {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(frameId, fragment);
         transaction.commit();
-    }
-
-    public static void replaceFragment(@NotNull FragmentManager fragmentManager,
-                                       @NotNull Fragment newFragment,
-                                       @NotNull int frameHolder) {
-        fragmentManager.beginTransaction().replace(frameHolder, newFragment).commit();
     }
 
     /**
