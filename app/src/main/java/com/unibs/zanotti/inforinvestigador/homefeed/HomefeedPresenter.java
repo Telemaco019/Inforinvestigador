@@ -137,4 +137,9 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     public void onPresenterCreated() {
         this.loadFeed();
     }
+
+    @Override
+    public void onStart() {
+
+    }
 }

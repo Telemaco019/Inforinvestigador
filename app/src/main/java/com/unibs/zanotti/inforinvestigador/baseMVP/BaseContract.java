@@ -30,10 +30,22 @@ public interface BaseContract {
 
         boolean isViewAttached();
 
+        /**
+         * Called when a new instance of the presenter is created
+         */
         void onPresenterCreated();
 
         void onPresenterDestroy();
 
+        /**
+         * Supposed to be called when the activity associated to the presenter is stopped
+         */
         void onStop();
+
+        /**
+         * Supposed to be called when the activity associated to the presenter is started. Use this method for showing
+         * in the view the data previously retrieved by the presenter
+         */
+        void onStart();
     }
 }

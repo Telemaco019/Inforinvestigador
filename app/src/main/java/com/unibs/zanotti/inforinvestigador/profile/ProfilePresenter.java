@@ -46,4 +46,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void onPresenterCreated() {
         this.showUserProfile();
     }
+
+    @Override
+    public void onStart() {
+
+    }
 }

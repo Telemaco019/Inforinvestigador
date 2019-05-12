@@ -52,4 +52,9 @@ public class ReplyCommentPresenter extends BasePresenter<ReplyCommentContract.Vi
     public void onPresenterCreated() {
         // NO OP
     }
+
+    @Override
+    public void onStart() {
+
+    }
 }

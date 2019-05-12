@@ -100,4 +100,9 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     public void onPresenterCreated() {
         this.openPaper();
     }
+
+    @Override
+    public void onStart() {
+
+    }
 }
