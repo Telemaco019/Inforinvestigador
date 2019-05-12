@@ -27,8 +27,6 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
 
     private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ProfileFragment.argument.USER_ID";
 
-    private ProfileContract.Presenter mPresenter;
-
     @BindView(R.id.profile_btn_follow)
     AppCompatButton btnFollow;
     @BindView(R.id.profile_email_tv)

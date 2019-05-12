@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.CallSuper;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BasePresenter<V extends BaseContract.View> implements LifecycleObserver, BaseContract.Presenter<V> {
@@ -59,8 +60,15 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Life
         }
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     @Override
     public void onStop() {
         disposables.dispose();
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    @Override
+    public void onStart() {
+
     }
 }

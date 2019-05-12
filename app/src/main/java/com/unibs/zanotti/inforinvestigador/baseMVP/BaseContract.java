@@ -38,7 +38,7 @@ public interface BaseContract {
         void onPresenterDestroy();
 
         /**
-         * Supposed to be called when the activity associated to the presenter is stopped
+         * Called when the activity associated to the presenter is stopped
          */
         void onStop();
 

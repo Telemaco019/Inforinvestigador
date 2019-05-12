@@ -153,4 +153,6 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private void showResearchersFeed() {
         getView().showResearchersSuggestions(researchersFeed);
     }
+
+
 }
