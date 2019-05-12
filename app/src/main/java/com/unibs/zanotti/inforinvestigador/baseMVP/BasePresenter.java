@@ -62,12 +62,14 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Life
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     @Override
+    @CallSuper
     public void onStop() {
         disposables.dispose();
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     @Override
+    @CallSuper
     public void onStart() {
 
     }

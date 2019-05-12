@@ -19,5 +19,13 @@ public interface HomefeedContract {
         void showResearchersSuggestions(List<ResearcherSuggestion> suggestions);
 
         void showPaperDetails(String paperId);
+
+        int getScrollPositionResearchersList();
+
+        int getScrollPositionPapersList();
+
+        void setScrollPositionResearchersList(int position);
+
+        void setScrollPositionPapersList(int position);
     }
 }

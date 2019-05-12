@@ -26,16 +26,10 @@ import java.util.List;
 public class HomefeedFragment extends BaseFragment<HomefeedContract.View, HomefeedContract.Presenter>
         implements HomefeedContract.View, PaperFeedAdapter.OnPaperShareListener {
 
-    private static final String KEY_RESEARCHERS_LIST_SAVED_POSITION = "HomefeedFragment.RESEARCHERS_LIST_POSITION";
-    private static final String KEY_PAPERS_LIST_SAVED_POSITION = "HomefeedFragment.PAPERS_LIST_POSITION";
-
     private PaperFeedAdapter paperFeedAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
     private RecyclerView papersRecyclerView;
     private RecyclerView researchersRecyclerView;
-
-    private int savedScrollPositionResearchers;
-    private int savedScrollPositionPapers;
 
     public HomefeedFragment() {
         paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
@@ -64,42 +58,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         papersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         papersRecyclerView.setAdapter(paperFeedAdapter);
 
-        if (savedInstanceState != null) {
-            savedScrollPositionResearchers = savedInstanceState.getInt(KEY_RESEARCHERS_LIST_SAVED_POSITION);
-            savedScrollPositionPapers = savedInstanceState.getInt(KEY_PAPERS_LIST_SAVED_POSITION);
-        }
-
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        RecyclerView.LayoutManager researchersListLM = researchersRecyclerView.getLayoutManager();
-        if(researchersListLM != null) {
-            researchersListLM.scrollToPosition(savedScrollPositionResearchers);
-        }
-
-        RecyclerView.LayoutManager papersListLM = papersRecyclerView.getLayoutManager();
-        if(papersListLM != null) {
-            papersListLM.scrollToPosition(savedScrollPositionPapers);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        LinearLayoutManager researchersListLM = (LinearLayoutManager) researchersRecyclerView.getLayoutManager();
-        if (researchersListLM != null) {
-            outState.putInt(KEY_RESEARCHERS_LIST_SAVED_POSITION, researchersListLM.findLastCompletelyVisibleItemPosition());
-        }
-
-        LinearLayoutManager papersListLM = (LinearLayoutManager) papersRecyclerView.getLayoutManager();
-        if (papersListLM != null) {
-            outState.putInt(KEY_PAPERS_LIST_SAVED_POSITION, papersListLM.findLastCompletelyVisibleItemPosition());
-        }
     }
 
     @Override
@@ -123,6 +82,34 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.STRING_EXTRA_PAPER_ID, paperId);
         startActivity(intent);
+    }
+
+    @Override
+    public int getScrollPositionResearchersList() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) researchersRecyclerView.getLayoutManager();
+        return layoutManager != null ? layoutManager.findLastCompletelyVisibleItemPosition() : 0;
+    }
+
+    @Override
+    public int getScrollPositionPapersList() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) papersRecyclerView.getLayoutManager();
+        return layoutManager != null ? layoutManager.findLastCompletelyVisibleItemPosition() : 0;
+    }
+
+    @Override
+    public void setScrollPositionResearchersList(int position) {
+        RecyclerView.LayoutManager layoutManager = researchersRecyclerView.getLayoutManager();
+        if (layoutManager != null) {
+            layoutManager.scrollToPosition(position);
+        }
+    }
+
+    @Override
+    public void setScrollPositionPapersList(int position) {
+        RecyclerView.LayoutManager layoutManager = papersRecyclerView.getLayoutManager();
+        if (layoutManager != null) {
+            layoutManager.scrollToPosition(position);
+        }
     }
 
     @Override
