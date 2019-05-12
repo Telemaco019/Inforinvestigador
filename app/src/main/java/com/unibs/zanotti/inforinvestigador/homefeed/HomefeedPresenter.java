@@ -153,6 +153,12 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
         restoreScrollPositions();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveScrollPositions();
+    }
+
     private void showData() {
         this.showPapersFeed();
         this.showResearchersFeed();
@@ -165,9 +171,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
         view.setScrollPositionResearchersList(stateBundle.getInt(KEY_RESEARCHERS_LIST_SAVED_POSITION));
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
+    private void saveScrollPositions() {
         Bundle stateBundle = getStateBundle();
         HomefeedContract.View view = getView();
         stateBundle.putInt(KEY_PAPERS_LIST_SAVED_POSITION,view.getScrollPositionPapersList());
