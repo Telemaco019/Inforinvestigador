@@ -53,7 +53,14 @@ public class MainNavigationActivity extends AppCompatActivity {
         // Add listener to bottom navigation bar
         BottomNavigationView bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setOnNavigationItemSelectedListener(e -> navigate(e.getItemId()));
-        bottomNavigationBar.setOnNavigationItemReselectedListener(e -> {});
+        bottomNavigationBar.setOnNavigationItemReselectedListener(e -> {
+           // TODO: scroll to top
+        });
+
+        // Initialize bottom nav by deselecting all the menu items
+        for (int i = 0; i < bottomNavigationBar.getMenu().size(); i++) {
+            bottomNavigationBar.getMenu().getItem(i).setChecked(false);
+        }
 
         if (savedInstanceState != null) {
             currentFragmentKey = savedInstanceState.getInt(SAVED_STATE_CURRENT_FRAGMENT_KEY);
@@ -70,19 +77,16 @@ public class MainNavigationActivity extends AppCompatActivity {
         switch (itemId) {
             case R.id.bottom_bar_action_home: {
                 destinationFragment = HomefeedFragment.newInstance();
-                destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_homefeed));
                 currentFragmentKey = R.id.fragment_homefeed;
                 break;
             }
             case R.id.bottom_bar_action_profile: {
                 destinationFragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
-                destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_profile));
                 currentFragmentKey = R.id.fragment_profile;
                 break;
             }
             case R.id.bottom_bar_action_library: {
                 destinationFragment = LibraryFragment.newInstance();
-                destinationFragment.setInitialSavedState(savedStateSparseArray.get(R.id.fragment_library));
                 currentFragmentKey = R.id.fragment_library;
                 break;
             }
@@ -110,5 +114,4 @@ public class MainNavigationActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(SAVED_STATE_CURRENT_FRAGMENT_KEY, currentFragmentKey);
     }
-
 }
