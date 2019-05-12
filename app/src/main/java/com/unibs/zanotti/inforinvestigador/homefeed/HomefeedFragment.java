@@ -26,8 +26,16 @@ import java.util.List;
 public class HomefeedFragment extends BaseFragment<HomefeedContract.View, HomefeedContract.Presenter>
         implements HomefeedContract.View, PaperFeedAdapter.OnPaperShareListener {
 
+    private static final String KEY_RESEARCHERS_LIST_SAVED_POSITION = "HomefeedFragment.RESEARCHERS_LIST_POSITION";
+    private static final String KEY_PAPERS_LIST_SAVED_POSITION = "HomefeedFragment.PAPERS_LIST_POSITION";
+
     private PaperFeedAdapter paperFeedAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
+    private RecyclerView papersRecyclerView;
+    private RecyclerView researchersRecyclerView;
+
+    private int savedScrollPositionResearchers;
+    private int savedScrollPositionPapers;
 
     public HomefeedFragment() {
         paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
@@ -45,19 +53,53 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         View view = inflater.inflate(R.layout.fragment_homefeed, container, false);
 
         // Setup researcher recycler
-        RecyclerView researchers_recycler = view.findViewById(R.id.recommended_researchers_recycler);
-        researchers_recycler.setHasFixedSize(true);
-        researchers_recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        researchers_recycler.setAdapter(researcherSuggestionAdapter);
+        researchersRecyclerView = view.findViewById(R.id.recommended_researchers_recycler);
+        researchersRecyclerView.setHasFixedSize(true);
+        researchersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        researchersRecyclerView.setAdapter(researcherSuggestionAdapter);
 
         // Setup paper recycler
-        RecyclerView papers_recycler = view.findViewById(R.id.paper_shares_recycler);
-        papers_recycler.setHasFixedSize(true);
-        papers_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        papers_recycler.setAdapter(paperFeedAdapter);
+        papersRecyclerView = view.findViewById(R.id.paper_shares_recycler);
+        papersRecyclerView.setHasFixedSize(true);
+        papersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        papersRecyclerView.setAdapter(paperFeedAdapter);
 
+        if (savedInstanceState != null) {
+            savedScrollPositionResearchers = savedInstanceState.getInt(KEY_RESEARCHERS_LIST_SAVED_POSITION);
+            savedScrollPositionPapers = savedInstanceState.getInt(KEY_PAPERS_LIST_SAVED_POSITION);
+        }
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        RecyclerView.LayoutManager researchersListLM = researchersRecyclerView.getLayoutManager();
+        if(researchersListLM != null) {
+            researchersListLM.scrollToPosition(savedScrollPositionResearchers);
+        }
+
+        RecyclerView.LayoutManager papersListLM = papersRecyclerView.getLayoutManager();
+        if(papersListLM != null) {
+            papersListLM.scrollToPosition(savedScrollPositionPapers);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        LinearLayoutManager researchersListLM = (LinearLayoutManager) researchersRecyclerView.getLayoutManager();
+        if (researchersListLM != null) {
+            outState.putInt(KEY_RESEARCHERS_LIST_SAVED_POSITION, researchersListLM.findLastCompletelyVisibleItemPosition());
+        }
+
+        LinearLayoutManager papersListLM = (LinearLayoutManager) papersRecyclerView.getLayoutManager();
+        if (papersListLM != null) {
+            outState.putInt(KEY_PAPERS_LIST_SAVED_POSITION, papersListLM.findLastCompletelyVisibleItemPosition());
+        }
     }
 
     @Override

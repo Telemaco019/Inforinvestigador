@@ -1,5 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.homefeed;
 
+import android.os.Bundle;
 import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
@@ -19,10 +20,12 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private IPaperRepository paperRepository;
     private List<FeedPaper> papersFeed;
     private List<ResearcherSuggestion> researchersFeed;
+    private Bundle viewStateBundle;
 
     public HomefeedPresenter(IPaperRepository paperRepository, IUserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
+        viewStateBundle = getStateBundle();
     }
 
     @Override
@@ -153,6 +156,4 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private void showResearchersFeed() {
         getView().showResearchersSuggestions(researchersFeed);
     }
-
-
 }
