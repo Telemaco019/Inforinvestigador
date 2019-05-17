@@ -30,12 +30,6 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     }
 
     @Override
-    public void loadFeed() {
-        loadPaperShares();
-        loadResearchersSuggestions();
-    }
-
-    @Override
     public void paperShareClicked(String paperId) {
         getView().showPaperDetails(paperId);
     }
@@ -182,5 +176,10 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     private void showResearchersFeed() {
         getView().showResearchersSuggestions(researchersFeed);
+    }
+
+    private void loadFeed() {
+        loadPaperShares();
+        loadResearchersSuggestions();
     }
 }

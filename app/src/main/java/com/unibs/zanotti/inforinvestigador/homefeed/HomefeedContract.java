@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface HomefeedContract {
     interface Presenter extends BaseContract.Presenter<View> {
-        void loadFeed();
-
         void paperShareClicked(String paperShareId);
     }
 

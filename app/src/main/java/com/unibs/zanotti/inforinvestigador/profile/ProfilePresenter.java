@@ -11,6 +11,10 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     private final IUserRepository userRepository;
     private String userId;
+    /**
+     * User of which show the profile
+     */
+    private User modelUser;
 
     public ProfilePresenter(IUserRepository userRepository, String userId) {
         this.userId = userId;
@@ -18,16 +22,25 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     }
 
     private void showUserProfile() {
+        if(modelUser != null) {
+            getView().showProfilePicture(modelUser.getProfilePictureUri());
+            getView().showUserEmail(modelUser.getEmail());
+            getView().showUserName(modelUser.getName());
+        }
+    }
+
+    /**
+     * Load into {@link ProfilePresenter#modelUser} the user profile of the user currently signed into inforinfestigador
+     */
+    private void loadCurrentUser() {
         disposables.add(userRepository.getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableMaybeObserver<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        getView().showProfilePicture(user.getProfilePictureUri());
-                        getView().showUserEmail(user.getEmail());
-                        getView().showUserName(user.getName());
-                        // mView.showUserPhoneNumber(user.get)
+                        modelUser = user;
+                        showUserProfile();
                     }
 
                     @Override
@@ -43,12 +56,13 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     }
 
     @Override
-    public void onPresenterCreated() {
-        this.showUserProfile();
+    public void onStart() {
+        super.onStart();
+        showUserProfile();
     }
 
     @Override
-    public void onStart() {
-
+    public void onPresenterCreated() {
+        loadCurrentUser();
     }
 }

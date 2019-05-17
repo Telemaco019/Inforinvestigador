@@ -1,47 +1,49 @@
 package com.unibs.zanotti.inforinvestigador.navigation;
 
 import android.os.Bundle;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedFragment;
-import com.unibs.zanotti.inforinvestigador.profile.ProfileFragment;
-import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import com.unibs.zanotti.inforinvestigador.baseMVP.BaseActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class MainNavigationActivity extends AppCompatActivity {
-    private static final String SAVED_STATE_CURRENT_FRAGMENT_KEY = "CurrentTabKey";
-    private static final String TAG_FRAGMENT_HOMEFEED = "fragment_homefeed";
-    private static final String TAG_FRAGMENT_PROFILE = "fragment_profile";
-    private static final String TAG_FRAGMENT_LIBRARY = "fragment_library";
+public class MainNavigationActivity extends BaseActivity<NavigationContract.View, NavigationContract.Presenter>
+        implements NavigationContract.View {
+
+    public static final String TAG_FRAGMENT_HOMEFEED = "homefeed";
+    public static final String TAG_FRAGMENT_PROFILE = "profile";
+    public static final String TAG_FRAGMENT_LIBRARY = "library";
 
     /**
-     * Map the ids fragments to the ids of the respective bottom nav items
+     * Map the tag fragments to the ids of the respective bottom nav items
      */
-    private SparseIntArray fragmentIdToItemId = new SparseIntArray();
-    private int currentFragmentKey;
+    private Map<String, Integer> fragmentTagToItemId = new HashMap<>();
+
+    private BottomNavigationView bottomNavigationBar;
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
         // Initialize map
-        fragmentIdToItemId.put(R.id.fragment_homefeed, R.id.bottom_bar_action_home);
-        fragmentIdToItemId.put(R.id.fragment_profile, R.id.bottom_bar_action_profile);
-        fragmentIdToItemId.put(R.id.fragment_library, R.id.bottom_bar_action_library);
+        fragmentTagToItemId.put(TAG_FRAGMENT_HOMEFEED, R.id.bottom_bar_action_home);
+        fragmentTagToItemId.put(TAG_FRAGMENT_PROFILE, R.id.bottom_bar_action_profile);
+        fragmentTagToItemId.put(TAG_FRAGMENT_LIBRARY, R.id.bottom_bar_action_library);
 
         // Set the toolbar layout as toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.top_bar);
+        Toolbar toolbar = findViewById(R.id.top_bar);
         setSupportActionBar(toolbar);
         // Set the title of the support action bar
         ActionBar supportActionBar = getSupportActionBar();
@@ -51,64 +53,57 @@ public class MainNavigationActivity extends AppCompatActivity {
         textView.setTypeface(getResources().getFont(R.font.montserrat_light));
 
         // Add listener to bottom navigation bar
-        BottomNavigationView bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
-        bottomNavigationBar.setOnNavigationItemSelectedListener(e -> navigate(e.getItemId()));
-        bottomNavigationBar.setOnNavigationItemReselectedListener(e -> {
+        bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar.setOnNavigationItemSelectedListener(e -> presenter.onBottomNavItemSelected(e.getItemId()));
+        /*bottomNavigationBar.setOnNavigationItemReselectedListener(e -> {
             // TODO: scroll to top
-        });
+        });*/
 
         // Initialize bottom nav by deselecting all the menu items
         for (int i = 0; i < bottomNavigationBar.getMenu().size(); i++) {
             bottomNavigationBar.getMenu().getItem(i).setChecked(false);
         }
-
-        if (savedInstanceState != null) {
-            currentFragmentKey = savedInstanceState.getInt(SAVED_STATE_CURRENT_FRAGMENT_KEY);
-            bottomNavigationBar.setSelectedItemId(fragmentIdToItemId.get(currentFragmentKey));
-        } else {
-            // Set default selected tab
-            bottomNavigationBar.setSelectedItemId(R.id.bottom_bar_action_home);
-        }
     }
 
-    private boolean navigate(int itemId) {
-        switch (itemId) {
-            case R.id.bottom_bar_action_home: {
-                currentFragmentKey = R.id.fragment_homefeed;
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_HOMEFEED);
-                if (fragment == null) {
-                    fragment = HomefeedFragment.newInstance();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_nav_fragment_holder, fragment, TAG_FRAGMENT_HOMEFEED)
-                            .commit();
-                }
-                break;
-            }
-            case R.id.bottom_bar_action_profile: {
-                currentFragmentKey = R.id.fragment_profile;
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_PROFILE);
-                if (fragment == null) {
-                    fragment = ProfileFragment.newInstance(Injection.provideUserRepository().getCurrentUserId());
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_nav_fragment_holder, fragment, TAG_FRAGMENT_PROFILE)
-                            .commit();
-                }
-                break;
-            }
-            case R.id.bottom_bar_action_library: {
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_LIBRARY);
-                if (fragment == null) {
-                    fragment = LibraryFragment.newInstance();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_nav_fragment_holder, fragment, TAG_FRAGMENT_LIBRARY)
-                            .commit();
-                }
-                currentFragmentKey = R.id.fragment_library;
-                break;
-            }
-        }
+    @Override
+    protected NavigationContract.Presenter createPresenter() {
+        return new NavigationPresenter();
+    }
 
-        return true;
+
+    @Override
+    public void selectBottomNavigationItem(String fragmentTag) {
+        bottomNavigationBar.setSelectedItemId(fragmentTagToItemId.get(fragmentTag));
+    }
+
+    @Override
+    public void hideFragment(String fragmentTag) {
+        getSupportFragmentManager().executePendingTransactions();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .hide(getSupportFragmentManager().findFragmentByTag(fragmentTag))
+                .commit();
+    }
+
+    @Override
+    public void showAddedFragment(String fragmentTag) {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.executePendingTransactions();
+        supportFragmentManager
+                .beginTransaction()
+                .show(supportFragmentManager.findFragmentByTag(fragmentTag))
+                .commit();
+    }
+
+    @Override
+    public void attachFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager().executePendingTransactions();
+        if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.main_nav_fragment_holder, fragment, tag)
+                    .commit();
+        }
     }
 
     @Override
@@ -118,11 +113,5 @@ public class MainNavigationActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_top_bar_recommendations, menu);
 
         return true;
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SAVED_STATE_CURRENT_FRAGMENT_KEY, currentFragmentKey);
     }
 }
