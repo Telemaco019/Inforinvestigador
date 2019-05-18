@@ -11,13 +11,6 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".comments.ReplyCommentActivity">
-            <intent-filter>
-                <action android:name="com.unibs.zanotti.inforinvestigador.action.REPLY_TO_COMMENT"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
         <activity
                 android:name=".auth.RegistrationActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">

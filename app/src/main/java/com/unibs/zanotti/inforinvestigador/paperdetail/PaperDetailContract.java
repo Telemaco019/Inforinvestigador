@@ -31,12 +31,15 @@ public interface PaperDetailContract {
 
         void showPaperImage(int resImageId);
 
-        void showComments(List<Comment> comments);
-
-        void showNewComment(Comment newComment);
-
         void clearCommentInputField();
 
         void scrollViewToBottom();
+
+        /**
+         * Show the comment provided as argument. If the view is already showing a comment with the same id as the
+         * one provided as argument, then update that comment with the new one.
+         * @param comment
+         */
+        void showComment(Comment comment);
     }
 }

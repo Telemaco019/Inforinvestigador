@@ -38,7 +38,7 @@ public class PaperLocalRepository implements IPaperRepository {
     }
 
     @Override
-    public List<Comment> getComments(long paperId) {
+    public List<Comment> getCommentsRealTime(long paperId) {
         List<Comment> comments = new ArrayList<>();
         comments.add(new Comment(
                 "Body of the comment",

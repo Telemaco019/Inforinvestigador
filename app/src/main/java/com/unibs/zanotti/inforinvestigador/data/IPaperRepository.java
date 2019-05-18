@@ -39,5 +39,5 @@ public interface IPaperRepository {
      */
     Single<Paper> saveUpdatePaper(Paper paper);
 
-    Observable<Comment> getComments(String paperId);
+    Observable<Comment> getCommentsRealTime(String paperId);
 }

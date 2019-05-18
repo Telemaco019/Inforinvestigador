@@ -1,7 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,41 +13,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
-import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentGroup;
-import com.unibs.zanotti.inforinvestigador.comments.ExpandableCommentItem;
-import com.unibs.zanotti.inforinvestigador.comments.ReplyCommentActivity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
-import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
-import com.xwray.groupie.GroupAdapter;
-import com.xwray.groupie.Item;
-import com.xwray.groupie.ViewHolder;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PaperDetailFragment
         extends BaseFragment<PaperDetailContract.View, PaperDetailContract.Presenter>
-        implements PaperDetailContract.View, ExpandableCommentItem.OnReplyClickedListener {
+        implements PaperDetailContract.View {
 
-    private static final String TAG = String.valueOf(PaperDetailFragment.class);
     private static final String FRAGMENT_STRING_ARGUMENT_PAPER_ID = "PaperDetailFragment.argument.PAPER_ID";
-    private static final int RC_REPLY_TO_COMMENT = 1;
 
-    /**
-     * Group adapter for showing nested comments
-     */
-    private GroupAdapter<ViewHolder> groupAdapter;
+    private CommentsAdapter commentsAdapter;
 
     // View elements
     @BindView(R.id.paper_title)
@@ -79,7 +66,7 @@ public class PaperDetailFragment
     NestedScrollView scrollView;
 
     public PaperDetailFragment() {
-        groupAdapter = new GroupAdapter<>();
+        commentsAdapter = new CommentsAdapter(new ArrayList<>());
     }
 
     public static PaperDetailFragment newInstance(String paperId) {
@@ -97,9 +84,8 @@ public class PaperDetailFragment
         ButterKnife.bind(this, view);
 
         // Setup recycler view
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), groupAdapter.getSpanCount());
-        layoutManager.setSpanCount(groupAdapter.getSpanCount());
-        rvComments.setAdapter(groupAdapter);
+        rvComments.setAdapter(commentsAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvComments.setLayoutManager(layoutManager);
 
         // Disable send comment button by default
@@ -172,16 +158,6 @@ public class PaperDetailFragment
         this.paperImage.setImageResource(resImageId);
     }
 
-    @Override
-    public void showComments(List<Comment> comments) {
-        groupAdapter.addAll(generateExpandableCommentGroupList(comments));
-    }
-
-    @Override
-    public void showNewComment(Comment newComment) {
-        groupAdapter.add(this.generateExpandableCommentGroup(newComment));
-    }
-
     /**
      * Dismiss the keyboard and clear the text of the input text field used for typing comments
      */
@@ -200,14 +176,8 @@ public class PaperDetailFragment
     }
 
     @Override
-    public void onReplyClicked(@NotNull Item<ViewHolder> item, @NotNull Comment comment) {
-        Intent intent = new Intent(Actions.REPLY_TO_COMMENT);
-        intent.putExtra(ReplyCommentActivity.PARCELABLE_EXTRA_PARENT_COMMENT, comment);
-        startActivityForResult(intent, RC_REPLY_TO_COMMENT);
-
-        // comment.setBody("AAAAAAAAAAAAAAAAAAAAAA");
-        // item.notifyChanged();
-        // groupAdapter.notifyItemChanged(groupAdapter.getAdapterPosition(item));
+    public void showComment(Comment comment) {
+        commentsAdapter.updateDataset(comment);
     }
 
     @OnClick(R.id.button_send_commment)
@@ -216,14 +186,6 @@ public class PaperDetailFragment
         if (StringUtils.isNotBlank(comment)) {
             presenter.addComment(comment);
         }
-    }
-
-    private List<ExpandableCommentGroup> generateExpandableCommentGroupList(List<Comment> comments) {
-        return comments.stream().map(this::generateExpandableCommentGroup).collect(Collectors.toList());
-    }
-
-    private ExpandableCommentGroup generateExpandableCommentGroup(Comment comment) {
-        return new ExpandableCommentGroup(comment, 0, this);
     }
 
     @Override

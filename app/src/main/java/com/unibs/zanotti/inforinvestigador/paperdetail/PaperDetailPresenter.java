@@ -7,13 +7,12 @@ import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
+import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Listens to user action from the UI (e.g. {@link PaperDetailFragment}), retrieves the data and updates the UI as
@@ -47,7 +46,6 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                 .subscribeWith(new DisposableSingleObserver<Comment>() {
                     @Override
                     public void onSuccess(Comment comment) {
-                        getView().showNewComment(comment);
                         getView().clearCommentInputField();
                         getView().scrollViewToBottom();
                     }
@@ -61,43 +59,58 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
         );
     }
 
-    private void openPaper() {
-        List<Comment> comments = new ArrayList<>();
-        disposables.add(paperRepository.getPaper(paperId)
-                .flatMapObservable(paper -> {
-                    getView().showPaperTitle(paper.getPaperTitle());
-                    getView().showPaperCitations(paper.getPaperCitations());
-                    getView().showPaperAbstract(paper.getPaperAbstract());
-                    getView().showPaperDOI(paper.getPaperDoi());
-                    getView().showPaperPublisher(paper.getPaperPublisher());
-                    getView().showPaperDate(paper.getPaperDate());
-                    getView().showPaperAuthors(paper.getPaperAuthors());
-                    getView().showPaperTopics(paper.getPaperTopics());
-                    getView().showPaperImage(R.drawable.paper_preview_test);
-                    return paperRepository.getComments(paperId);
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Comment>() {
-                    @Override
-                    public void onNext(Comment comment) {
-                        comments.add(comment);
-                    }
+    private void loadPaper() {
+        loadPaperInfo();
+        loadPaperCommentsInRealTime();
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
+    private void loadPaperCommentsInRealTime() {
+        disposables.add(paperRepository.getCommentsRealTime(paperId).subscribeWith(new DisposableObserver<Comment>() {
+            @Override
+            public void onNext(Comment comment) {
+                getView().showComment(comment);
+            }
 
-                    }
+            @Override
+            public void onError(Throwable e) {
 
-                    @Override
-                    public void onComplete() {
-                        getView().showComments(comments);
-                    }
-                }));
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        }));
+    }
+
+    private void loadPaperInfo() {
+        disposables.add(paperRepository.getPaper(paperId).subscribeWith(new DisposableMaybeObserver<Paper>() {
+            @Override
+            public void onSuccess(Paper paper) {
+                getView().showPaperTitle(paper.getPaperTitle());
+                getView().showPaperCitations(paper.getPaperCitations());
+                getView().showPaperAbstract(paper.getPaperAbstract());
+                getView().showPaperDOI(paper.getPaperDoi());
+                getView().showPaperPublisher(paper.getPaperPublisher());
+                getView().showPaperDate(paper.getPaperDate());
+                getView().showPaperAuthors(paper.getPaperAuthors());
+                getView().showPaperTopics(paper.getPaperTopics());
+                getView().showPaperImage(R.drawable.paper_preview_test);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }));
     }
 
     @Override
     public void onPresenterCreated() {
-        this.openPaper();
+        this.loadPaper();
     }
 }

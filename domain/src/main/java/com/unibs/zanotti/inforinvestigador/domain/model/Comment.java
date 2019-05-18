@@ -4,14 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Comment implements Parcelable {
     private String body;
     private String author;
     private int score;
     private String id;
-    private List<Comment> children;
     private LocalDateTime dateTime;
     private String paperId;
 
@@ -20,15 +18,13 @@ public class Comment implements Parcelable {
                    int score,
                    String id,
                    LocalDateTime dateTime,
-                   String paperId,
-                   List<Comment> children) {
+                   String paperId) {
         this.body = body;
         this.author = author;
         this.score = score;
         this.id = id;
         this.dateTime = dateTime;
         this.paperId = paperId;
-        this.children = children;
     }
 
     protected Comment(Parcel in) {
@@ -38,7 +34,6 @@ public class Comment implements Parcelable {
         id = in.readString();
         dateTime = LocalDateTime.parse(in.readString());
         paperId = in.readString();
-        children = in.createTypedArrayList(Comment.CREATOR);
     }
 
     public static final Creator<Comment> CREATOR = new Creator<Comment>() {
@@ -66,11 +61,6 @@ public class Comment implements Parcelable {
         dest.writeString(id);
         dest.writeString(dateTime.toString());
         dest.writeString(paperId);
-        dest.writeTypedArray(children.toArray(new Comment[0]), 0);
-    }
-
-    public void addChildren(Comment comment) {
-        children.add(comment);
     }
 
     public String getPaperId() {
@@ -111,14 +101,6 @@ public class Comment implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public List<Comment> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Comment> children) {
-        this.children = children;
     }
 
     public LocalDateTime getDateTime() {

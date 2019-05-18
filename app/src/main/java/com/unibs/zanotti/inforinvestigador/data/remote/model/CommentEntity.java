@@ -1,13 +1,10 @@
 package com.unibs.zanotti.inforinvestigador.data.remote.model;
 
-import java.util.List;
-
 public class CommentEntity {
     private String body;
     private String author;
     private int score;
     private String id;
-    private List<String> childrenCommentIDs;
     private long epochTimestampMillis;
 
     public CommentEntity() {
@@ -18,13 +15,11 @@ public class CommentEntity {
                          String author,
                          int score,
                          String id,
-                         long epochTimestampMillis,
-                         List<String> childrenCommentIDs) {
+                         long epochTimestampMillis) {
         this.body = body;
         this.author = author;
         this.score = score;
         this.id = id;
-        this.childrenCommentIDs = childrenCommentIDs;
         this.epochTimestampMillis = epochTimestampMillis;
     }
 
@@ -66,13 +61,5 @@ public class CommentEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public List<String> getChildrenCommentIDs() {
-        return childrenCommentIDs;
-    }
-
-    public void setChildrenCommentIDs(List<String> childrenCommentIDs) {
-        this.childrenCommentIDs = childrenCommentIDs;
     }
 }

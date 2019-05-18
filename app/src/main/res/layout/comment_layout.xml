@@ -4,25 +4,6 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
-
-    <!-- Separator -->
-    <LinearLayout
-            android:id="@+id/separatorContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/doubleBaseMargin"
-            android:layout_marginEnd="@dimen/doubleBaseMargin"
-            android:orientation="horizontal">
-
-        <View xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="1dp"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="@dimen/doubleBaseMargin"
-              android:layout_marginRight="@dimen/doubleBaseMargin"
-              android:background="@color/light_gray"/>
-
-    </LinearLayout>
-
     <!-- Content -->
     <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +19,7 @@
                 android:layout_marginBottom="@dimen/doubleBaseMargin">
 
             <TextView
-                    android:id="@+id/tv_user"
+                    android:id="@+id/tv_comment_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="/u/Username"
@@ -59,7 +40,7 @@
         </LinearLayout>
         <!-- Body of the comment -->
         <TextView
-                android:id="@+id/body"
+                android:id="@+id/tv_comment_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Body of comment"
@@ -81,7 +62,7 @@
                     android:layout_gravity="center"/>
 
             <TextView
-                    android:id="@+id/tv_votes"
+                    android:id="@+id/tv_comment_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Small"
@@ -97,6 +78,7 @@
                     android:background="@drawable/ic_arrow_upvote"
                     android:layout_gravity="center"/>
 
+            <!--
             <View
                     android:id="@+id/separator1"
                     android:layout_width="1dp"
@@ -126,6 +108,7 @@
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/baseMargin"/>
+                    -->
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
