@@ -73,26 +73,35 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
 
     @Override
     public void selectBottomNavigationItem(String fragmentTag) {
-        bottomNavigationBar.setSelectedItemId(fragmentTagToItemId.get(fragmentTag));
+        Integer itemId = fragmentTagToItemId.get(fragmentTag);
+        if(itemId != null) {
+            bottomNavigationBar.setSelectedItemId(itemId);
+        }
     }
 
     @Override
     public void hideFragment(String fragmentTag) {
         getSupportFragmentManager().executePendingTransactions();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .hide(getSupportFragmentManager().findFragmentByTag(fragmentTag))
-                .commit();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
+        if(fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(fragment)
+                    .commit();
+        }
     }
 
     @Override
     public void showAddedFragment(String fragmentTag) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.executePendingTransactions();
-        supportFragmentManager
-                .beginTransaction()
-                .show(supportFragmentManager.findFragmentByTag(fragmentTag))
-                .commit();
+        Fragment fragment = supportFragmentManager.findFragmentByTag(fragmentTag);
+        if(fragment != null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .show(fragment)
+                    .commit();
+        }
     }
 
     @Override
