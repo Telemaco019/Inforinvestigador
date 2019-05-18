@@ -33,7 +33,7 @@ public interface PaperDetailContract {
 
         void clearCommentInputField();
 
-        void scrollViewToBottom();
+        void scrollViewToFirstComment();
 
         /**
          * Show the comment provided as argument. If the view is already showing a comment with the same id as the

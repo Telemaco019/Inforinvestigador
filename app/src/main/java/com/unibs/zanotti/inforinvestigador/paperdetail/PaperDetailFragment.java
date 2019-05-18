@@ -171,8 +171,9 @@ public class PaperDetailFragment
     }
 
     @Override
-    public void scrollViewToBottom() {
-        scrollView.fullScroll(View.FOCUS_DOWN);
+    public void scrollViewToFirstComment() {
+        float y = rvComments.getY() + rvComments.getChildAt(0).getY() - 250; // -250px for having some offset
+        scrollView.smoothScrollTo(0, (int) y);
     }
 
     @Override

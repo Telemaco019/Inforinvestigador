@@ -151,6 +151,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                     Collections.PAPERS,
                     paperId,
                     Collections.COMMENTS))
+                    .orderBy("score", Query.Direction.ASCENDING)
                     .orderBy("epochTimestampMillis", Query.Direction.ASCENDING) // TODO: order also by rating
                     .addSnapshotListener((snapshot, e) -> {
                         if (e != null) {

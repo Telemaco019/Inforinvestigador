@@ -47,7 +47,7 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                     @Override
                     public void onSuccess(Comment comment) {
                         getView().clearCommentInputField();
-                        getView().scrollViewToBottom();
+                        getView().scrollViewToFirstComment();
                     }
 
                     @Override
