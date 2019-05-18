@@ -84,8 +84,6 @@
                     android:id="@+id/tv_votes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/baseMargin"
-                    android:layout_marginRight="@dimen/baseMargin"
                     style="@style/TextAppearance.AppCompat.Small"
                     android:text="1.4k"
                     android:layout_gravity="center"/>
@@ -112,14 +110,22 @@
                     android:id="@+id/reply_to_comment_clickable_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/baseMargin"
-                    android:drawableLeft="@drawable/ic_chat_bubble_outline_black_24dp"
+                    android:layout_marginStart="@dimen/baseMargin"
+                    android:drawableStart="@drawable/ic_chat_bubble_outline_black_24dp"
                     android:drawablePadding="@dimen/basePadding"
                     android:clickable="true"
                     android:background="?selectableItemBackground"
                     android:text="@string/button_reply_caption"
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_gravity="center"/>
+
+            <TextView
+                    android:id="@+id/comment_replies_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/baseMargin"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -31,6 +31,7 @@ class ExpandableCommentItem(
         viewHolder.itemView.body.text = comment.body
         viewHolder.itemView.tv_votes.text = comment.score.toString()
         viewHolder.itemView.tv_comment_date.text = DateUtils.elapsedTime(comment.dateTime, LocalDateTime.now(), "now")
+        viewHolder.itemView.comment_replies_number.text = String.format("(%d)", comment.children.size)
 
         viewHolder.itemView.apply {
             setOnLongClickListener {
