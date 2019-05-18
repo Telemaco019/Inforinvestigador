@@ -31,8 +31,6 @@ public class ReplyCommentFragment extends BaseFragment<ReplyCommentContract.View
     @BindView(R.id.reply_to_comment_edit_text)
     EditText editText;
 
-    private ReplyCommentContract.Presenter mPresenter;
-
     public ReplyCommentFragment() {
         // Required empty public constructor
     }
@@ -80,7 +78,7 @@ public class ReplyCommentFragment extends BaseFragment<ReplyCommentContract.View
             case R.id.topbar_reply_comment_send_btn: {
                 getActivity().setResult(Activity.RESULT_OK);
                 Comment parentComment = getArguments().getParcelable(FRAGMENT_PARCELABLE_ARGUMENT_PARENT_COMMENT);
-                mPresenter.addReply(parentComment, editText.getText().toString());
+                presenter.addReply(parentComment, editText.getText().toString());
                 getActivity().finish();
                 break;
             }
