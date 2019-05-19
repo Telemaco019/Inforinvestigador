@@ -145,17 +145,22 @@ public class PaperFirebaseRepository implements IPaperRepository {
     @Override
     public Completable likeComment(String paperId, String commentId, String userId) {
         return Completable.create(emitter -> {
-            String commentDoc = String.format("%s/%s/%s/%s",
+            String commentDocPath = String.format("%s/%s/%s/%s",
                     Collections.PAPERS,
                     paperId,
                     Collections.COMMENTS,
                     commentId);
 
-            firestoreDb.document(commentDoc)
-                    .update(String.format("likes.%s", userId), Boolean.TRUE)
+            DocumentReference commentDoc = firestoreDb.document(commentDocPath);
+
+            WriteBatch writeBatch = firestoreDb.batch();
+            writeBatch.update(commentDoc, String.format("likes.%s", userId), Boolean.TRUE);
+            writeBatch.update(commentDoc, "likesCount", FieldValue.increment(1L));
+
+            writeBatch.commit()
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(e -> {
-                        Log.e(TAG, "Error liking comment", e);
+                        Log.e(TAG, "error liking comment", e);
                         emitter.onError(e);
                     });
         });

@@ -35,20 +35,22 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     @Override
     public void commentLikeClicked(Comment comment) {
         String currentUserId = userRepository.getCurrentUserId();
-        comment.likedByCurrentUser();
-        getView().showComment(comment);
-        disposables.add(paperRepository.likeComment(paperId, comment.getId(), currentUserId)
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        // NO OP (Comment likes number gets automatically updated through real time data + cloud function)
-                    }
+        if(!comment.isLikedByCurrentUser()) {
+            comment.likedByCurrentUser();
+            getView().showComment(comment);
+            disposables.add(paperRepository.likeComment(paperId, comment.getId(), currentUserId)
+                    .subscribeWith(new DisposableCompletableObserver() {
+                        @Override
+                        public void onComplete() {
+                            // NO OP (Comment likes number gets automatically updated through real time data + cloud function)
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        // NO OP
-                    }
-                }));
+                        @Override
+                        public void onError(Throwable e) {
+                            // NO OP
+                        }
+                    }));
+        }
 
 //        disposables.add(paperRepository.isCommentUpVoted(paperId, comment.getId(), currentUserId)
 //                .zipWith(paperRepository.isCommentDownVoted(paperId, comment.getId(), currentUserId), Pair::create)
