@@ -200,7 +200,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                     paperId,
                     Collections.COMMENTS))
                     .orderBy("likesCount", Query.Direction.ASCENDING)
-                    .orderBy("epochTimestampMillis", Query.Direction.ASCENDING) // TODO: order also by rating
+                    .orderBy("epochTimestampMillis", Query.Direction.ASCENDING)
                     .addSnapshotListener((snapshot, e) -> {
                         if (e != null) {
                             Log.e(TAG, "listen:error", e);
