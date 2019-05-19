@@ -25,5 +25,9 @@ public interface HomefeedContract {
         void setScrollPositionResearchersList(int position);
 
         void setScrollPositionPapersList(int position);
+
+        void showLoadingProgressBar();
+
+        void hideLoadingProgressBar();
     }
 }

@@ -97,8 +97,9 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     }
 
     private void loadPaperShares() {
-        papersFeed = new ArrayList<>();
+        getView().showLoadingProgressBar();
 
+        papersFeed = new ArrayList<>();
         disposables.add(paperRepository.getPapers()
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
                         (paper, user) -> new FeedPaper(paper.getPaperId(),
@@ -128,6 +129,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                     public void onComplete() {
                         Log.e("***", "On complete");
                         showPapersFeed();
+                        getView().hideLoadingProgressBar();
                     }
                 })
         );
@@ -141,7 +143,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     @Override
     public void onStart() {
         super.onStart();
-        showData();
+        showResearchersFeed();
+        showPapersFeed();
         restoreScrollPositions();
     }
 
@@ -149,11 +152,6 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     public void onStop() {
         super.onStop();
         saveScrollPositions();
-    }
-
-    private void showData() {
-        this.showPapersFeed();
-        this.showResearchersFeed();
     }
 
     private void restoreScrollPositions() {

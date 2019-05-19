@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
@@ -18,6 +20,7 @@ import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperFeedAdapter;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.ArrayList;
@@ -26,10 +29,14 @@ import java.util.List;
 public class HomefeedFragment extends BaseFragment<HomefeedContract.View, HomefeedContract.Presenter>
         implements HomefeedContract.View, PaperFeedAdapter.OnPaperShareListener {
 
+    private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
+
     private PaperFeedAdapter paperFeedAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
     private RecyclerView papersRecyclerView;
     private RecyclerView researchersRecyclerView;
+    @BindView(R.id.undetermined_progress_bar)
+    View loadingProgressBar;
 
     public HomefeedFragment() {
         paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
@@ -45,6 +52,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_homefeed, container, false);
+        ButterKnife.bind(this, view);
 
         // Setup researcher recycler
         researchersRecyclerView = view.findViewById(R.id.recommended_researchers_recycler);
@@ -110,6 +118,16 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         if (layoutManager != null) {
             layoutManager.scrollToPosition(position);
         }
+    }
+
+    @Override
+    public void showLoadingProgressBar() {
+        ActivityUtils.animateViewWithFade(loadingProgressBar, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
+    }
+
+    @Override
+    public void hideLoadingProgressBar() {
+        ActivityUtils.animateViewWithFade(loadingProgressBar, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
     }
 
     @Override

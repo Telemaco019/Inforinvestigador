@@ -14,6 +14,7 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.functions.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -214,7 +215,12 @@ public class PaperFirebaseRepository implements IPaperRepository {
                             }
                         }
                     });
-            emitter.setCancellable(registration::remove);
+            emitter.setCancellable(new Cancellable() {
+                @Override
+                public void cancel() throws Exception {
+                    registration.remove();
+                }
+            });
         });
     }
 
