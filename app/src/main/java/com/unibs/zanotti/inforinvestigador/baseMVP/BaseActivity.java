@@ -37,11 +37,5 @@ public abstract class BaseActivity<V extends BaseContract.View, P extends BaseCo
         presenter.detachView();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        presenter.onStop();
-    }
-
     protected abstract P createPresenter();
 }
