@@ -23,6 +23,10 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     private IPaperRepository paperRepository;
     private IUserRepository userRepository;
     private String paperId;
+    /**
+     * Paper loaded from the db and currently being displayed in the view
+     */
+    private Paper loadedPaper;
 
     public PaperDetailPresenter(String paperId,
                                 IPaperRepository paperRepository,
@@ -39,6 +43,8 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
             comment.setLikedByCurrentUser(true);
             getView().showComment(comment);
             disposables.add(paperRepository.likeComment(paperId, comment.getId(), currentUserId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableCompletableObserver() {
                         @Override
                         public void onComplete() {
@@ -54,6 +60,8 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
             comment.setLikedByCurrentUser(false);
             getView().showComment(comment);
             disposables.add(paperRepository.unlikeComment(paperId, comment.getId(), currentUserId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableCompletableObserver() {
                         @Override
                         public void onComplete() {
@@ -91,43 +99,59 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
         );
     }
 
-    private void loadPaper() {
-        loadPaperInfo();
+    @Override
+    public void onStart() {
+        super.onStart();
+        showLoadedPaper();
         loadPaperCommentsInRealTime();
+    }
+
+    /**
+     * Display in the view, if not null (e.g if is has already been loaded), the
+     * {@link PaperDetailPresenter#loadedPaper loaded paper}
+     */
+    private void showLoadedPaper() {
+        if (loadedPaper != null) {
+            getView().showPaperTitle(loadedPaper.getPaperTitle());
+            getView().showPaperCitations(loadedPaper.getPaperCitations());
+            getView().showPaperAbstract(loadedPaper.getPaperAbstract());
+            getView().showPaperDOI(loadedPaper.getPaperDoi());
+            getView().showPaperPublisher(loadedPaper.getPaperPublisher());
+            getView().showPaperDate(loadedPaper.getPaperDate());
+            getView().showPaperAuthors(loadedPaper.getPaperAuthors());
+            getView().showPaperTopics(loadedPaper.getPaperTopics());
+            getView().showPaperImage(R.drawable.paper_preview_test);
+        }
     }
 
     private void loadPaperCommentsInRealTime() {
         String currentUserId = userRepository.getCurrentUserId();
-        disposables.add(paperRepository.getCommentsRealTime(paperId, currentUserId).subscribeWith(new DisposableObserver<Comment>() {
-            @Override
-            public void onNext(Comment comment) {
-                getView().showComment(comment);
-            }
+        disposables.add(paperRepository.getCommentsRealTime(paperId, currentUserId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Comment>() {
+                    @Override
+                    public void onNext(Comment comment) {
+                        getView().showComment(comment);
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-            }
-        }));
+                    @Override
+                    public void onComplete() {
+                    }
+                }));
     }
 
-    private void loadPaperInfo() {
+    private void loadPaper() {
         disposables.add(paperRepository.getPaper(paperId).subscribeWith(new DisposableMaybeObserver<Paper>() {
             @Override
             public void onSuccess(Paper paper) {
-                getView().showPaperTitle(paper.getPaperTitle());
-                getView().showPaperCitations(paper.getPaperCitations());
-                getView().showPaperAbstract(paper.getPaperAbstract());
-                getView().showPaperDOI(paper.getPaperDoi());
-                getView().showPaperPublisher(paper.getPaperPublisher());
-                getView().showPaperDate(paper.getPaperDate());
-                getView().showPaperAuthors(paper.getPaperAuthors());
-                getView().showPaperTopics(paper.getPaperTopics());
-                getView().showPaperImage(R.drawable.paper_preview_test);
+                loadedPaper = paper;
+                showLoadedPaper();
             }
 
             @Override
