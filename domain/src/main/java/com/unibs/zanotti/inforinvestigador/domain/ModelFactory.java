@@ -18,6 +18,11 @@ public class ModelFactory {
      * @return
      */
     public static Comment createComment(String paperId, String body, String authorName) {
-        return new Comment(body, authorName, 0, null, LocalDateTime.now(), paperId);
+        return new Comment(body,
+                authorName,
+                0,
+                null,
+                LocalDateTime.now(),
+                paperId);
     }
 }

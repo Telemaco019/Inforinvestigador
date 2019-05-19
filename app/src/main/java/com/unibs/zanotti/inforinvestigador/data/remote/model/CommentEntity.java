@@ -1,26 +1,32 @@
 package com.unibs.zanotti.inforinvestigador.data.remote.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CommentEntity {
     private String body;
     private String author;
-    private int score;
+    private int likesCount;
     private String id;
     private long epochTimestampMillis;
+    private Map<String,Boolean> likes;
 
     public CommentEntity() {
         // Required by Firestore
     }
 
+
     public CommentEntity(String body,
                          String author,
-                         int score,
+                         int likesCount,
                          String id,
                          long epochTimestampMillis) {
         this.body = body;
         this.author = author;
-        this.score = score;
+        this.likesCount = likesCount;
         this.id = id;
         this.epochTimestampMillis = epochTimestampMillis;
+        this.likes = new HashMap<>();
     }
 
     public long getEpochTimestampMillis() {
@@ -47,12 +53,20 @@ public class CommentEntity {
         this.author = author;
     }
 
-    public int getScore() {
-        return score;
+    public int getLikesCount() {
+        return likesCount;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public Map<String, Boolean> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Map<String, Boolean> likes) {
+        this.likes = likes;
     }
 
     public String getId() {
@@ -62,4 +76,6 @@ public class CommentEntity {
     public void setId(String id) {
         this.id = id;
     }
+
+
 }

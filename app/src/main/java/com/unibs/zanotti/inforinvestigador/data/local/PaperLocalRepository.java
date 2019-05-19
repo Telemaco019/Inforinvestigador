@@ -66,12 +66,12 @@ public class PaperLocalRepository implements IPaperRepository {
     }
 
     @Override
-    public Single<Comment> saveUpdateComment(String paperId, Comment comment) {
+    public Single<Comment> saveComment(String paperId, Comment comment) {
         return null;
     }
 
     @Override
-    public Single<Paper> saveUpdatePaper(Paper paper) {
+    public Single<Paper> savePaper(Paper paper) {
         return null;
     }
 }

@@ -8,29 +8,35 @@ import java.time.LocalDateTime;
 public class Comment implements Parcelable {
     private String body;
     private String author;
-    private int score;
+    private int likesCount;
     private String id;
     private LocalDateTime dateTime;
     private String paperId;
+    /**
+     * Flag that indicates if the user currently logged into Inforinvestigador has liked the comment
+     */
+    private boolean likedByCurrentUser;
 
     public Comment(String body,
                    String author,
-                   int score,
+                   int likesCount,
                    String id,
                    LocalDateTime dateTime,
                    String paperId) {
         this.body = body;
         this.author = author;
-        this.score = score;
+        this.likesCount = likesCount;
         this.id = id;
         this.dateTime = dateTime;
         this.paperId = paperId;
+
+        this.likedByCurrentUser = false;
     }
 
     protected Comment(Parcel in) {
         body = in.readString();
         author = in.readString();
-        score = in.readInt();
+        likesCount = in.readInt();
         id = in.readString();
         dateTime = LocalDateTime.parse(in.readString());
         paperId = in.readString();
@@ -57,7 +63,7 @@ public class Comment implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(body);
         dest.writeString(author);
-        dest.writeInt(score);
+        dest.writeInt(likesCount);
         dest.writeString(id);
         dest.writeString(dateTime.toString());
         dest.writeString(paperId);
@@ -87,12 +93,12 @@ public class Comment implements Parcelable {
         this.author = author;
     }
 
-    public int getScore() {
-        return score;
+    public int getLikesCount() {
+        return likesCount;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
     }
 
     public String getId() {
@@ -109,5 +115,13 @@ public class Comment implements Parcelable {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public boolean isLikedByCurrentUser() {
+        return likedByCurrentUser;
+    }
+
+    public void likedByCurrentUser() {
+        likedByCurrentUser = true;
     }
 }

@@ -52,15 +52,6 @@
                 android:orientation="horizontal"
                 android:layout_gravity="end">
 
-            <ImageButton
-                    android:id="@+id/btn_down_vote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/baseMargin"
-                    android:layout_marginRight="@dimen/baseMargin"
-                    android:background="@drawable/ic_arrow_downvote"
-                    android:layout_gravity="center"/>
-
             <TextView
                     android:id="@+id/tv_comment_score"
                     android:layout_width="wrap_content"
@@ -70,13 +61,14 @@
                     android:layout_gravity="center"/>
 
             <ImageButton
-                    android:id="@+id/btn_upvote"
+                    android:id="@+id/ib_comment_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/baseMargin"
                     android:layout_marginRight="@dimen/baseMargin"
-                    android:background="@drawable/ic_arrow_upvote"
-                    android:layout_gravity="center"/>
+                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:tint="@drawable/standard_clickable_icon_selector"/>
 
             <!--
             <View

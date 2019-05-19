@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PaperDetailContract {
     interface Presenter extends BaseContract.Presenter<View> {
-        void viewClicked(int viewId);
+        void commentLikeClicked(Comment comment);
 
         void addComment(String comment);
     }

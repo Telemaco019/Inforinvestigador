@@ -31,7 +31,7 @@ import java.util.List;
 
 public class PaperDetailFragment
         extends BaseFragment<PaperDetailContract.View, PaperDetailContract.Presenter>
-        implements PaperDetailContract.View {
+        implements PaperDetailContract.View, CommentsAdapter.CommentLikeListener {
 
     private static final String FRAGMENT_STRING_ARGUMENT_PAPER_ID = "PaperDetailFragment.argument.PAPER_ID";
 
@@ -66,7 +66,7 @@ public class PaperDetailFragment
     NestedScrollView scrollView;
 
     public PaperDetailFragment() {
-        commentsAdapter = new CommentsAdapter(new ArrayList<>());
+        commentsAdapter = new CommentsAdapter(new ArrayList<>(), this);
     }
 
     public static PaperDetailFragment newInstance(String paperId) {
@@ -172,8 +172,10 @@ public class PaperDetailFragment
 
     @Override
     public void scrollViewToFirstComment() {
-        float y = rvComments.getY() + rvComments.getChildAt(0).getY() - 250; // -250px for having some offset
-        scrollView.smoothScrollTo(0, (int) y);
+        if (rvComments.getAdapter() != null && rvComments.getAdapter().getItemCount() > 0) {
+            float y = rvComments.getY() + rvComments.getChildAt(0).getY() - 250; // -250px for having some offset
+            scrollView.smoothScrollTo(0, (int) y);
+        }
     }
 
     @Override
@@ -195,5 +197,10 @@ public class PaperDetailFragment
         return new PaperDetailPresenter(string,
                 Injection.providePaperRepository(),
                 Injection.provideUserRepository());
+    }
+
+    @Override
+    public void onLikeClicked(Comment comment) {
+        presenter.commentLikeClicked(comment);
     }
 }

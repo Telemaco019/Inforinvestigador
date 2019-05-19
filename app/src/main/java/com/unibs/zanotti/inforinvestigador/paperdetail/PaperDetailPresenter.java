@@ -9,6 +9,7 @@ import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -32,15 +33,44 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     }
 
     @Override
-    public void viewClicked(int viewId) {
+    public void commentLikeClicked(Comment comment) {
+        String currentUserId = userRepository.getCurrentUserId();
+        comment.likedByCurrentUser();
+        getView().showComment(comment);
+        disposables.add(paperRepository.likeComment(paperId, comment.getId(), currentUserId)
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        // NO OP (Comment likes number gets automatically updated through real time data + cloud function)
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        // NO OP
+                    }
+                }));
+
+//        disposables.add(paperRepository.isCommentUpVoted(paperId, comment.getId(), currentUserId)
+//                .zipWith(paperRepository.isCommentDownVoted(paperId, comment.getId(), currentUserId), Pair::create)
+//                .subscribe(pair -> {
+//                    boolean upVotedByCurrentUser = pair.first;
+//                    boolean downVotedByCurrentUser = pair.second;
+//                    if (!upVotedByCurrentUser) {
+//                        comment.upVotedByCurrentUser();
+//                        //TODO: add upvote in the db
+//                        if (downVotedByCurrentUser) {
+//                            // TODO: remove downvote in the db
+//                        }
+//                        getView().showComment(comment);
+//                    }
+//                }));
     }
 
     @Override
     public void addComment(String comment) {
         String currentUserId = userRepository.getCurrentUserId();
         disposables.add(userRepository.getUser(currentUserId)
-                .flatMapSingle(user -> paperRepository.saveUpdateComment(ModelFactory.createComment(paperId, comment, user.getName())))
+                .flatMapSingle(user -> paperRepository.saveComment(ModelFactory.createComment(paperId, comment, user.getName())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Comment>() {
@@ -65,7 +95,8 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     }
 
     private void loadPaperCommentsInRealTime() {
-        disposables.add(paperRepository.getCommentsRealTime(paperId).subscribeWith(new DisposableObserver<Comment>() {
+        String currentUserId = userRepository.getCurrentUserId();
+        disposables.add(paperRepository.getCommentsRealTime(paperId,currentUserId).subscribeWith(new DisposableObserver<Comment>() {
             @Override
             public void onNext(Comment comment) {
                 getView().showComment(comment);

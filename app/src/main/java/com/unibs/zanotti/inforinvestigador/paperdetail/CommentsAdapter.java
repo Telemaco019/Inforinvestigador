@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.paperdetail;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
+    private CommentLikeListener commentLikeListener;
     private List<Comment> dataset;
 
     class CommentViewHolder extends RecyclerView.ViewHolder {
@@ -22,6 +24,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
         private TextView tv_comment_body;
         private TextView tv_comment_score;
         private TextView tv_comment_date;
+        private ImageView ib_like;
 
         CommentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -29,6 +32,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
             tv_comment_body = itemView.findViewById(R.id.tv_comment_body);
             tv_comment_score = itemView.findViewById(R.id.tv_comment_score);
             tv_comment_date = itemView.findViewById(R.id.tv_comment_date);
+            ib_like = itemView.findViewById(R.id.ib_comment_like);
         }
 
         TextView getTv_comment_author() {
@@ -47,16 +51,24 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
             return tv_comment_date;
         }
 
+        public ImageView getIb_like() {
+            return ib_like;
+        }
+
+        public void setIb_like(ImageView ib_like) {
+            this.ib_like = ib_like;
+        }
     }
 
-    public CommentsAdapter(List<Comment> dataset) {
+    public CommentsAdapter(List<Comment> dataset, CommentLikeListener commentLikeListener) {
         this.dataset = dataset;
+        this.commentLikeListener = commentLikeListener;
     }
 
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_layout, parent, false);
         return new CommentViewHolder(view);
     }
 
@@ -65,8 +77,11 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
         Comment comment = dataset.get(position);
         holder.getTv_comment_author().setText(comment.getAuthor());
         holder.getTv_comment_body().setText(comment.getBody());
-        holder.getTv_comment_score().setText(String.valueOf(comment.getScore()));
+        holder.getTv_comment_score().setText(String.valueOf(comment.getLikesCount()));
         holder.getTv_comment_date().setText(DateUtils.elapsedTime(comment.getDateTime(), LocalDateTime.now(), "now"));
+
+        holder.getIb_like().setActivated(comment.isLikedByCurrentUser());
+        holder.getIb_like().setOnClickListener(e -> commentLikeListener.onLikeClicked(comment));
     }
 
     @Override
@@ -75,7 +90,8 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
     }
 
     /**
-     * Update the dataset of the adapter with the comment provided as argument.
+     * Update the dataset of the adapter with the comment provided as argument. After updating the dataset, update the
+     * view accordingly as well.
      * <p>
      * If the dataset already contains a comment with the same id of the comment provided as argument, then update
      * the former comment with the new one, otherwise add the new comment to the dataset.
@@ -84,13 +100,18 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
      * @param comment
      */
     public void updateDataset(Comment comment) {
-        for(Comment comm: dataset) {
-            if(comm.getId().equals(comment.getId())) {
-                // TODO
-                break;
+        for (int i = 0; i < dataset.size(); i++) {
+            if (dataset.get(i).getId().equals(comment.getId())) {
+                dataset.set(i, comment);
+                this.notifyItemChanged(i);
+                return;
             }
         }
-        dataset.add(0,comment);
+        dataset.add(0, comment);
         this.notifyItemInserted(0);
+    }
+
+    interface CommentLikeListener {
+        void onLikeClicked(Comment comment);
     }
 }
