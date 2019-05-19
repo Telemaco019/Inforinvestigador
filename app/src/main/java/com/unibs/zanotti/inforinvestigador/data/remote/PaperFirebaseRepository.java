@@ -155,12 +155,38 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
             WriteBatch writeBatch = firestoreDb.batch();
             writeBatch.update(commentDoc, String.format("likes.%s", userId), Boolean.TRUE);
+            // In future use a cloud function for updating the counter (more robust)
             writeBatch.update(commentDoc, "likesCount", FieldValue.increment(1L));
 
             writeBatch.commit()
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(e -> {
                         Log.e(TAG, "error liking comment", e);
+                        emitter.onError(e);
+                    });
+        });
+    }
+
+    @Override
+    public Completable unlikeComment(String paperId, String commentId, String userId) {
+        return Completable.create(emitter -> {
+            String commentDocPath = String.format("%s/%s/%s/%s",
+                    Collections.PAPERS,
+                    paperId,
+                    Collections.COMMENTS,
+                    commentId);
+
+            DocumentReference commentDoc = firestoreDb.document(commentDocPath);
+
+            WriteBatch writeBatch = firestoreDb.batch();
+            writeBatch.update(commentDoc, String.format("likes.%s", userId), Boolean.FALSE);
+            // In future use a cloud function for updating the counter (more robust)
+            writeBatch.update(commentDoc, "likesCount", FieldValue.increment(-1L));
+
+            writeBatch.commit()
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "error unliking comment", e);
                         emitter.onError(e);
                     });
         });
@@ -216,10 +242,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
                 commentEntity.getId(),
                 DateUtils.fromEpochTimestampMillis(commentEntity.getEpochTimestampMillis()),
                 paperId);
-        if (commentEntity.getLikes().getOrDefault(currentUserId, false)) {
-            result.likedByCurrentUser();
-        }
-
+        result.setLikedByCurrentUser(commentEntity.getLikes().getOrDefault(currentUserId, false));
         return result;
     }
 }

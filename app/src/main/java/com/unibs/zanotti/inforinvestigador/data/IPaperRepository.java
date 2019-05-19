@@ -40,6 +40,8 @@ public interface IPaperRepository {
 
     Completable likeComment(String paperId, String commentId, String userId);
 
+    Completable unlikeComment(String paperId, String commentId, String userId);
+
     /**
      *
      * @param paperId

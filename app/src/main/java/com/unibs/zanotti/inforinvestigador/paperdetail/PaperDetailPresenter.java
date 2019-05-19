@@ -35,14 +35,29 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     @Override
     public void commentLikeClicked(Comment comment) {
         String currentUserId = userRepository.getCurrentUserId();
-        if(!comment.isLikedByCurrentUser()) {
-            comment.likedByCurrentUser();
+        if (!comment.isLikedByCurrentUser()) {
+            comment.setLikedByCurrentUser(true);
             getView().showComment(comment);
             disposables.add(paperRepository.likeComment(paperId, comment.getId(), currentUserId)
                     .subscribeWith(new DisposableCompletableObserver() {
                         @Override
                         public void onComplete() {
-                            // NO OP (Comment likes number gets automatically updated through real time data + cloud function)
+                            // NO OP (Comment likes number gets automatically updated through real time data)
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            // NO OP
+                        }
+                    }));
+        } else {
+            comment.setLikedByCurrentUser(false);
+            getView().showComment(comment);
+            disposables.add(paperRepository.unlikeComment(paperId, comment.getId(), currentUserId)
+                    .subscribeWith(new DisposableCompletableObserver() {
+                        @Override
+                        public void onComplete() {
+                            // NO OP
                         }
 
                         @Override
@@ -51,21 +66,6 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                         }
                     }));
         }
-
-//        disposables.add(paperRepository.isCommentUpVoted(paperId, comment.getId(), currentUserId)
-//                .zipWith(paperRepository.isCommentDownVoted(paperId, comment.getId(), currentUserId), Pair::create)
-//                .subscribe(pair -> {
-//                    boolean upVotedByCurrentUser = pair.first;
-//                    boolean downVotedByCurrentUser = pair.second;
-//                    if (!upVotedByCurrentUser) {
-//                        comment.upVotedByCurrentUser();
-//                        //TODO: add upvote in the db
-//                        if (downVotedByCurrentUser) {
-//                            // TODO: remove downvote in the db
-//                        }
-//                        getView().showComment(comment);
-//                    }
-//                }));
     }
 
     @Override
@@ -98,7 +98,7 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
 
     private void loadPaperCommentsInRealTime() {
         String currentUserId = userRepository.getCurrentUserId();
-        disposables.add(paperRepository.getCommentsRealTime(paperId,currentUserId).subscribeWith(new DisposableObserver<Comment>() {
+        disposables.add(paperRepository.getCommentsRealTime(paperId, currentUserId).subscribeWith(new DisposableObserver<Comment>() {
             @Override
             public void onNext(Comment comment) {
                 getView().showComment(comment);

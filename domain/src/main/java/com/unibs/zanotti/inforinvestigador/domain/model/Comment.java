@@ -121,7 +121,7 @@ public class Comment implements Parcelable {
         return likedByCurrentUser;
     }
 
-    public void likedByCurrentUser() {
-        likedByCurrentUser = true;
+    public void setLikedByCurrentUser(boolean likedByCurrentUser) {
+        this.likedByCurrentUser = likedByCurrentUser;
     }
 }
