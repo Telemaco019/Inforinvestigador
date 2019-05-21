@@ -11,7 +11,7 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
 
 public class PaperDetailActivity extends AppCompatActivity {
-    public static final String STRING_EXTRA_PAPER_ID = "PAPER_ID";
+    public static final String STRING_EXTRA_PAPER_ID = "PaperDetailActivity.Extra.String.PAPER_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
