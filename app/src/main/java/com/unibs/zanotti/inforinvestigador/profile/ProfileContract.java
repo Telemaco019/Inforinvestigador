@@ -15,5 +15,11 @@ public interface ProfileContract {
         void showUserName(String name);
 
         void showUserEmail(String email);
+
+        void showSettingsIcon();
+
+        void showEditProfileButton();
+
+        void showFollowButton();
     }
 }

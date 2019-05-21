@@ -22,10 +22,17 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     }
 
     private void showUserProfile() {
-        if(modelUser != null) {
+        if (modelUser != null) {
             getView().showProfilePicture(modelUser.getProfilePictureUri());
             getView().showUserEmail(modelUser.getEmail());
             getView().showUserName(modelUser.getName());
+
+            if (userId.equals(userRepository.getCurrentUserId())) {
+                getView().showEditProfileButton();
+                getView().showSettingsIcon();
+            } else {
+                getView().showFollowButton();
+            }
         }
     }
 

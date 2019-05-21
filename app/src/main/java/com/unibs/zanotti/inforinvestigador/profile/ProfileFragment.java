@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.auth.LoginActivity;
@@ -45,6 +46,8 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     TextView tvName;
     @BindView(R.id.profile_settings_icon)
     ImageView profileSettingIcon;
+    @BindView(R.id.profile_btn_editProfile)
+    MaterialButton btnEditProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -64,7 +67,6 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-
 
         return view;
     }
@@ -87,6 +89,21 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     @Override
     public void showUserEmail(String email) {
         tvEmail.setText(email);
+    }
+
+    @Override
+    public void showSettingsIcon() {
+        profileSettingIcon.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showEditProfileButton() {
+        btnEditProfile.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showFollowButton() {
+        btnFollow.setVisibility(View.VISIBLE);
     }
 
     // TODO: to be removed/updated

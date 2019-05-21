@@ -41,4 +41,5 @@
     <string name="profile_shared_papers_caption">Shares</string>
     <string name="profile_followers_caption">Followers</string>
     <string name="profile_following_caption">Following</string>
+    <string name="profile_edit_profile_btn_caption">Edit profile</string>
 </resources>
