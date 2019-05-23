@@ -12,6 +12,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".profile.editprofile.EditProfileActivity">
+            <intent-filter>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.EDIT_PROFILE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".auth.RegistrationActivity"

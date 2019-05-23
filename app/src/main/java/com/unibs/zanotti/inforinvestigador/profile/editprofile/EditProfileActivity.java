@@ -7,7 +7,7 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private static final String STRING_EXTRA_USER_ID = "EditProfileActivity.Extra.String.USER_ID";
+    public static final String STRING_EXTRA_USER_ID = "EditProfileActivity.Extra.String.USER_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,6 +20,8 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.auth.LoginActivity;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.profile.editprofile.EditProfileActivity;
+import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -106,6 +108,13 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         btnFollow.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void startEditProfileActivity(String userId) {
+        Intent intent = new Intent(Actions.EDIT_PROFILE);
+        intent.putExtra(EditProfileActivity.STRING_EXTRA_USER_ID, userId);
+        startActivity(intent);
+    }
+
     // TODO: to be removed/updated
     @OnClick(R.id.profile_settings_icon)
     public void logout() {
@@ -116,6 +125,11 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         if (activity != null) {
             activity.finish();
         }
+    }
+
+    @OnClick(R.id.profile_btn_editProfile)
+    public void editProfileClicked() {
+        presenter.editProfile();
     }
 
     @Override

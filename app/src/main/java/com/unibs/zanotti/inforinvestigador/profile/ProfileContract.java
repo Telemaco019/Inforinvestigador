@@ -6,6 +6,7 @@ import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
 public interface ProfileContract {
     interface Presenter extends BaseContract.Presenter<View> {
 
+        void editProfile();
     }
 
     interface View extends BaseContract.View {
@@ -21,5 +22,7 @@ public interface ProfileContract {
         void showEditProfileButton();
 
         void showFollowButton();
+
+        void startEditProfileActivity(String userId);
     }
 }

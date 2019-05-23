@@ -72,4 +72,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void onPresenterCreated() {
         loadCurrentUser();
     }
+
+    @Override
+    public void editProfile() {
+        getView().startEditProfileActivity(userId);
+    }
 }
