@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".profile.editprofile.EditProfileFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="@dimen/doubleBasePadding"
+              tools:context=".profile.editprofile.EditProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/edit_profile_iv_profile_picture"
+                android:layout_width="@dimen/roundProfilePictureSizeBig"
+                android:layout_height="@dimen/roundProfilePictureSizeBig"
+                android:clickable="true"
+                android:src="@color/colorSecondary"/>
+        <ImageView
+                android:id="@+id/edit_profile_edit_profile_picture_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:tint="@drawable/standard_clickable_icon_selector"
+                android:layout_gravity="end|bottom"/>
+        <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_profile_progress_bar_profile_picture"
+                android:indeterminate="false"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
+    </FrameLayout>
 
-</FrameLayout>
+</LinearLayout>

@@ -15,7 +15,6 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         String userId = getIntent().getStringExtra(STRING_EXTRA_USER_ID);
-
         EditProfileFragment editProfileFragment = (EditProfileFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (editProfileFragment == null) {
             editProfileFragment = EditProfileFragment.newInstance(userId);

@@ -7,8 +7,8 @@
               android:layout_marginLeft="@dimen/doubleBaseMargin">
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/roundImage"
-            android:layout_width="@dimen/roundProfilePictureSizeBig"
-            android:layout_height="@dimen/roundProfilePictureSizeBig"
+            android:layout_width="@dimen/roundProfilePictureSizeSmall"
+            android:layout_height="@dimen/roundProfilePictureSizeSmall"
             app:civ_border_color="@color/colorPrimaryDark"
             app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
             android:elevation="@dimen/recommendedResearcherProfileElevation"/>

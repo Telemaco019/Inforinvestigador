@@ -7,11 +7,18 @@ import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import java.util.Arrays;
 
 public class FirebaseUtils {
+
     public static final String LOG_MSG_STANDARD_SAVE_ERROR = "failed to save in Firestore %s with id %s:\n%s";
     public static final String LOG_MSG_STANDARD_READ_ERROR = "failed to read %s from Firestore:\n%s";
     public static final String LOG_MSG_STANDARD_SINGLE_READ_SUCCESS = "%s with id %s read from Firestore";
     public static final String LOG_MSG_STANDARD_READ_SUCCESS = "reading of %s from Firestore successfully completed";
     public static final String LOG_MSG_STANDARD_WRITE_SUCCESS = "%s with id %s saved in Firestore";
+
+    public static final String PROFILE_PICTURES_EXTENSION = ".jpg";
+
+    public static final String FIRESTORE_DOCUMENT_USER_FIELD_PROFILE_PICTURE_URI = "profilePictureUri";
+
+    public static final String STORAGE_REFERENCE_PATH_PROFILE_PICTURES = "profile_pictures";
 
     public static void populatePapersCollection() {
         PaperFirebaseRepository paperFirebaseRepository = PaperFirebaseRepository.getInstance(FirebaseFirestore.getInstance());

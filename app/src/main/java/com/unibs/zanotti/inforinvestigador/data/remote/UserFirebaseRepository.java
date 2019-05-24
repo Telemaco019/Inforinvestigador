@@ -5,6 +5,9 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.UserEntity;
@@ -14,6 +17,7 @@ import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 import java.util.Objects;
 
@@ -21,24 +25,26 @@ public class UserFirebaseRepository implements IUserRepository {
     private static final String TAG = String.valueOf(UserFirebaseRepository.class);
     private static UserFirebaseRepository INSTANCE = null;
 
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseStorage firebaseStorage;
 
-    private UserFirebaseRepository(FirebaseFirestore firestoreDb, FirebaseAuth firebaseAuth) {
-        this.db = firestoreDb;
-        this.mAuth = firebaseAuth;
+    private UserFirebaseRepository(FirebaseFirestore firestoreDb, FirebaseAuth firebaseAuth, FirebaseStorage firebaseStorage) {
+        this.firebaseFirestore = firestoreDb;
+        this.firebaseAuth = firebaseAuth;
+        this.firebaseStorage = firebaseStorage;
     }
 
-    public static UserFirebaseRepository getInstance(FirebaseFirestore firestoreDb, FirebaseAuth firebaseAuth) {
+    public static UserFirebaseRepository getInstance(FirebaseFirestore firestoreDb, FirebaseAuth firebaseAuth, FirebaseStorage firebaseStorage) {
         if (INSTANCE == null) {
-            INSTANCE = new UserFirebaseRepository(firestoreDb, firebaseAuth);
+            INSTANCE = new UserFirebaseRepository(firestoreDb, firebaseAuth, firebaseStorage);
         }
         return INSTANCE;
     }
 
     @Override
     public Maybe<User> getUser(String userId) {
-        return Maybe.create(emitter -> db.document(String.format("%s/%s", Collections.USERS, userId))
+        return Maybe.create(emitter -> firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
@@ -52,22 +58,51 @@ public class UserFirebaseRepository implements IUserRepository {
 
     @Override
     public Completable saveUpdateUser(User user) {
-        return Completable.create(emitter -> db.document(String.format("%s/%s", Collections.USERS, user.getId()))
+        return Completable.create(emitter -> firebaseFirestore.document(String.format("%s/%s", Collections.USERS, user.getId()))
                 .set(fromUser(user))
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_WRITE_SUCCESS, "user", user.getId()));
                     emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId(), e));
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId()), e);
                     emitter.onError(e);
                 }));
     }
 
     @Override
     public String getCurrentUserId() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         return currentUser == null ? null : currentUser.getUid();
+    }
+
+    @Override
+    public Observable<Double> updateUserProfilePicture(String userId, Uri imageUri) {
+        return Observable.create(emitter -> {
+            StorageReference storageReference = firebaseStorage.getReference();
+            String imagePath = String.format("%s/%s%s", FirebaseUtils.STORAGE_REFERENCE_PATH_PROFILE_PICTURES,
+                    userId,
+                    FirebaseUtils.PROFILE_PICTURES_EXTENSION);
+            StorageReference imageReference = storageReference.child(imagePath);
+            UploadTask uploadTask = imageReference.putFile(imageUri);
+
+            uploadTask.addOnProgressListener(taskSnapshot -> {
+                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                emitter.onNext(progress);
+            }).continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return imageReference.getDownloadUrl();
+            }).continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                Uri url = task.getResult();
+                return firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
+                        .update(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_PROFILE_PICTURE_URI, url.toString());
+            }).addOnSuccessListener(taskSnapshot -> emitter.onComplete()).addOnFailureListener(emitter::onError);
+        });
     }
 
     private UserEntity fromUser(User user) {

@@ -77,9 +77,9 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     public void showProfilePicture(Uri profilePictureUri) {
         Picasso.get()
                 .load(profilePictureUri)
-                .noPlaceholder()
-                .error(R.drawable.user_profle_pic_placeholder)
                 .fit()
+                .centerCrop()
+                .noPlaceholder()
                 .into(ciProfilePicture);
     }
 

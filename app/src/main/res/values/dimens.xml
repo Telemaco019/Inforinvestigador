@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="roundProfilePictureSizeBig">80dp</dimen>
-    <dimen name="roundProfilePictureSizeSmall">64dp</dimen>
+    <dimen name="roundProfilePictureSizeBig">150dp</dimen>
+    <dimen name="roundProfilePictureSizeSmall">74dp</dimen>
 
     <dimen name="cardElevation">2dp</dimen>
     <dimen name="cardCornerRadius">4dp</dimen>

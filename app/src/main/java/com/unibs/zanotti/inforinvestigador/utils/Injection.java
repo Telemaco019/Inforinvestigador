@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.utils;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.PaperFirebaseRepository;
@@ -18,6 +19,8 @@ public class Injection {
     }
 
     public static IUserRepository provideUserRepository() {
-        return UserFirebaseRepository.getInstance(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance());
+        return UserFirebaseRepository.getInstance(FirebaseFirestore.getInstance(),
+                FirebaseAuth.getInstance(),
+                FirebaseStorage.getInstance());
     }
 }
