@@ -31,6 +31,7 @@ import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -233,29 +234,39 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Manage the success of the login operation: update (or create if it does not exist yet) the user entity in the
-     * database of the data layer and update the UI properly
+     * Manage the success of the login operation: if it does not exist yet, create the user entity in the
+     * database of the data layer. Update the UI properly
      *
      * @param user
      */
     private void manageSuccessfulLogin(FirebaseUser user) {
-        userRepository.saveUpdateUser(fromFirebase(user)).subscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        userRepository.getUser(user.getUid())
+                .isEmpty()
+                .flatMapCompletable(isEmpty -> {
+                    if (isEmpty) {
+                        return userRepository.saveUpdateUser(fromFirebase(user));
+                    } else {
+                        updateUI(user);
+                        return Completable.never();
+                    }
+                })
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-                updateUI(user);
-            }
+                    @Override
+                    public void onComplete() {
+                        updateUI(user);
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, e.getMessage());
-                updateUI(null);
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, e.getMessage());
+                        updateUI(null);
+                    }
+                });
     }
 
     /**
@@ -336,7 +347,7 @@ public class LoginActivity extends AppCompatActivity {
     private User fromFirebase(FirebaseUser firebaseUser) {
         return new User(firebaseUser.getUid(),
                 firebaseUser.getEmail(),
-                firebaseUser.getEmail(),
+                firebaseUser.getDisplayName(),
                 firebaseUser.getPhotoUrl(),
                 DateUtils.fromEpochTimestampMillis(firebaseUser.getMetadata().getCreationTimestamp()));
     }
