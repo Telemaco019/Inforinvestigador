@@ -27,7 +27,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     @Override
-    public void saveUpdateUser(User user) {
+    public void saveUser(User user) {
 
     }
 

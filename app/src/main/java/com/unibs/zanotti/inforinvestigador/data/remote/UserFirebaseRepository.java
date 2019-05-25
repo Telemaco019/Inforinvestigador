@@ -57,7 +57,7 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public Completable saveUpdateUser(User user) {
+    public Completable saveUser(User user) {
         return Completable.create(emitter -> firebaseFirestore.document(String.format("%s/%s", Collections.USERS, user.getId()))
                 .set(fromUser(user))
                 .addOnSuccessListener(aVoid -> {
@@ -102,6 +102,17 @@ public class UserFirebaseRepository implements IUserRepository {
                 return firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
                         .update(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_PROFILE_PICTURE_URI, url.toString());
             }).addOnSuccessListener(taskSnapshot -> emitter.onComplete()).addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
+    public Completable updateUserField(String userId, String fieldName, Object newValue) {
+        return Completable.create(emitter -> {
+            String userPath = String.format("%s/%s", Collections.USERS, userId);
+            firebaseFirestore.document(userPath)
+                    .update(fieldName, newValue)
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
         });
     }
 

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import androidx.fragment.app.FragmentActivity;
@@ -23,6 +24,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,6 +40,14 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
     ImageView ivEditProfilePictureButton;
     @BindView(R.id.edit_profile_progress_bar_profile_picture)
     ProgressBar progressBarUploadProfilePicture;
+    @BindView(R.id.edit_profile_progress_bar_profile_fields)
+    ProgressBar progressBarSavingProfileFields;
+    @BindView(R.id.profile_edit_profile_edit_text_name)
+    EditText editTextName;
+    @BindView(R.id.profile_edit_profile_edit_text_location)
+    EditText editTextLocation;
+    @BindView(R.id.profile_edit_profile_edit_text_phone)
+    EditText editTextPhone;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -96,11 +106,39 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
                 break;
             }
             case R.id.top_bar_action_confirm: {
-
+                if (checkInputFields()) {
+                    presenter.updateUserProfileFields(editTextName.getText().toString(),
+                            editTextPhone.getText().toString(),
+                            editTextLocation.getText().toString());
+                }
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Check if the fields edit by the user have correct values
+     *
+     * @return True if the values of all the fields are correct, false otherwise
+     */
+    private boolean checkInputFields() {
+        boolean result = true;
+
+        String name = editTextName.getText().toString();
+        String phone = editTextPhone.getText().toString();
+
+        if (StringUtils.isBlank(name)) {
+            editTextName.setError(getString(R.string.field_required_error_msg));
+            result = false;
+        }
+
+        if (!phone.matches("^[0-9]*$")) {
+            editTextPhone.setError(getString(R.string.phone_number_not_valid_error_msg));
+            result = false;
+        }
+
+        return result;
     }
 
     @Override
@@ -153,10 +191,45 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
         }
     }
 
-    private void finishActivity() {
+    @Override
+    public void showUserPhone(String phone) {
+        editTextPhone.setText(phone);
+    }
+
+    @Override
+    public void showUserLocation(String location) {
+        editTextLocation.setText(location);
+    }
+
+    @Override
+    public void showUserName(String name) {
+        editTextName.setText(name);
+    }
+
+    @Override
+    public void finishActivity() {
         FragmentActivity activity = getActivity();
         if (activity != null) {
             activity.finish();
         }
+    }
+
+    @Override
+    public void showMessageWaitProfilePictureSaving() {
+        if (getActivity() != null) {
+            Snackbar.make(getView().findViewById(R.id.edit_profile_edit_profile_picture_button),
+                    getString(R.string.wait_profile_picture_saving_msg),
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void showProgressSavingUserProfileFields() {
+        progressBarSavingProfileFields.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBarSavingUserProfileFields() {
+        progressBarSavingProfileFields.setVisibility(View.GONE);
     }
 }

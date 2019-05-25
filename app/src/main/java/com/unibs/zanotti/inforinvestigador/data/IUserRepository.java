@@ -11,7 +11,7 @@ public interface IUserRepository {
 
     Maybe<User> getUser(String userId);
 
-    Completable saveUpdateUser(User user);
+    Completable saveUser(User user);
 
     /**
      * Return the id of the user currently logged in Invorinvestigador
@@ -26,4 +26,6 @@ public interface IUserRepository {
      * @return An observable emitting the progress of the profile picture updating (which ranges from 0 to 100)
      */
     Observable<Double> updateUserProfilePicture(String userId, Uri imageUri);
+
+    Completable updateUserField(String userId, String fieldName, Object newValue);
 }

@@ -17,6 +17,10 @@ public class FirebaseUtils {
     public static final String PROFILE_PICTURES_EXTENSION = ".jpg";
 
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_PROFILE_PICTURE_URI = "profilePictureUri";
+    public static final String FIRESTORE_DOCUMENT_USER_FIELD_NAME = "name";
+    public static final String FIRESTORE_DOCUMENT_USER_FIELD_PHONE = "phone";
+    public static final String FIRESTORE_DOCUMENT_USER_FIELD_LOCATION = "location";
+
 
     public static final String STORAGE_REFERENCE_PATH_PROFILE_PICTURES = "profile_pictures";
 

@@ -244,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
                 .isEmpty()
                 .flatMapCompletable(isEmpty -> {
                     if (isEmpty) {
-                        return userRepository.saveUpdateUser(fromFirebase(user));
+                        return userRepository.saveUser(fromFirebase(user));
                     } else {
                         updateUI(user);
                         return Completable.never();
