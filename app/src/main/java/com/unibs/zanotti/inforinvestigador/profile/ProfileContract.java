@@ -30,5 +30,13 @@ public interface ProfileContract {
         void showFollowButton();
 
         void startEditProfileActivity(User user);
+
+        void showUserLocation(String location);
+
+        void showUserPhone(String phone);
+
+        void hideUserLocationField();
+
+        void hideUserPhoneField();
     }
 }

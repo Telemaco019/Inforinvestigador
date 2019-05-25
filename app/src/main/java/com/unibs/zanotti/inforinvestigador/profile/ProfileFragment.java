@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentActivity;
@@ -38,8 +39,8 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     TextView tvEmail;
     @BindView(R.id.profile_followers_number_tv)
     TextView tvFollowersNumber;
-    @BindView(R.id.profile_home_tv)
-    TextView tvHome;
+    @BindView(R.id.profile_location_tv)
+    TextView tvLocation;
     @BindView(R.id.profile_following_number_tv)
     TextView tvFollowingNumber;
     @BindView(R.id.profile_phone_number_tv)
@@ -52,6 +53,10 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     ImageView profileSettingIcon;
     @BindView(R.id.profile_btn_editProfile)
     MaterialButton btnEditProfile;
+    @BindView(R.id.profile_phone_field_layout)
+    LinearLayout phoneFieldLayout;
+    @BindView(R.id.profile_location_field_layout)
+    LinearLayout locationFieldLayout;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -115,6 +120,28 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         Intent intent = new Intent(Actions.EDIT_PROFILE);
         intent.putExtra(EditProfileActivity.PARCELABLE_EXTRA_USER, user);
         startActivityForResult(intent, EditProfileActivity.EDIT_PROFILE_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    public void showUserLocation(String location) {
+        locationFieldLayout.setVisibility(View.VISIBLE);
+        tvLocation.setText(location);
+    }
+
+    @Override
+    public void showUserPhone(String phone) {
+        phoneFieldLayout.setVisibility(View.VISIBLE);
+        tvPhone.setText(phone);
+    }
+
+    @Override
+    public void hideUserLocationField() {
+        locationFieldLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideUserPhoneField() {
+        phoneFieldLayout.setVisibility(View.GONE);
     }
 
     // TODO: to be removed/updated

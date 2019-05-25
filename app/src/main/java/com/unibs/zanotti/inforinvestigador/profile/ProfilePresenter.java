@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.profile;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -24,8 +25,20 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     private void showUserProfile() {
         if (modelUser != null) {
             getView().showProfilePicture(modelUser.getProfilePictureUri());
-            getView().showUserEmail(modelUser.getEmail());
-            getView().showUserName(modelUser.getName());
+            getView().showUserEmail(modelUser.getEmail().trim());
+            getView().showUserName(modelUser.getName().trim());
+
+            if (StringUtils.isNotBlank(modelUser.getLocation())) {
+                getView().showUserLocation(modelUser.getLocation().trim());
+            } else {
+                getView().hideUserLocationField();
+            }
+
+            if (StringUtils.isNotBlank(modelUser.getPhone())) {
+                getView().showUserPhone(modelUser.getPhone().trim());
+            } else {
+                getView().hideUserPhoneField();
+            }
 
             if (userId.equals(userRepository.getCurrentUserId())) {
                 getView().showEditProfileButton();
