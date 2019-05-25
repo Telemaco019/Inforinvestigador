@@ -77,4 +77,13 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void editProfile() {
         getView().startEditProfileActivity(userId);
     }
+
+    /**
+     * When the user profile has been edited, reload the user from the db and update the view
+     */
+    @Override
+    public void onProfileEdited() {
+        loadCurrentUser();
+        showUserProfile();
+    }
 }

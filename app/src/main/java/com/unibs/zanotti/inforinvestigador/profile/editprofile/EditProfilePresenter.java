@@ -27,7 +27,7 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
     }
 
     @Override
-    public void profilePictureEdited(int resultCode, Intent data) {
+    public void onProfilePictureEdited(int resultCode, Intent data) {
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
         if (resultCode == RESULT_OK) {
             Uri imageUri = result.getUri();
@@ -53,6 +53,7 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
 
                         @Override
                         public void onComplete() {
+                            getView().setActivityResult(RESULT_OK);
                             getView().hideProgressBarUploadProfilePicture();
                         }
                     }));

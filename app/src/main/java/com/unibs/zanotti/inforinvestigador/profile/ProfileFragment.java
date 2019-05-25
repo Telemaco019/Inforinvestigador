@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.profile;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -112,7 +113,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     public void startEditProfileActivity(String userId) {
         Intent intent = new Intent(Actions.EDIT_PROFILE);
         intent.putExtra(EditProfileActivity.STRING_EXTRA_USER_ID, userId);
-        startActivity(intent);
+        startActivityForResult(intent, EditProfileActivity.EDIT_PROFILE_ACTIVITY_REQUEST_CODE);
     }
 
     // TODO: to be removed/updated
@@ -127,8 +128,18 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EditProfileActivity.EDIT_PROFILE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                presenter.onProfileEdited();
+            }
+        }
+    }
+
     @OnClick(R.id.profile_btn_editProfile)
-    public void editProfileClicked() {
+    public void onEditProfileClicked() {
         presenter.editProfile();
     }
 

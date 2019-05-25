@@ -16,10 +16,12 @@ public interface EditProfileContract {
         void hideProgressBarUploadProfilePicture();
 
         void showProgressBarUploadProfilePicture();
+
+        void setActivityResult(int result);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void profilePictureEdited(int resultCode, Intent data);
+        void onProfilePictureEdited(int resultCode, Intent data);
     }
 }

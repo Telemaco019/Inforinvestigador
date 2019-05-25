@@ -61,12 +61,12 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            presenter.profilePictureEdited(resultCode, data);
+            presenter.onProfilePictureEdited(resultCode, data);
         }
     }
 
     @OnClick(R.id.edit_profile_edit_profile_picture_button)
-    public void editProfilePictureClicked() {
+    public void onEditProfilePictureClicked() {
         if (getContext() != null) {
             CropImage.activity()
                     .setScaleType(CropImageView.ScaleType.CENTER_CROP)
@@ -120,5 +120,13 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
     @Override
     public void showProgressBarUploadProfilePicture() {
         progressBarUploadProfilePicture.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setActivityResult(int result) {
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.setResult(result);
+        }
     }
 }

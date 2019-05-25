@@ -7,6 +7,11 @@ public interface ProfileContract {
     interface Presenter extends BaseContract.Presenter<View> {
 
         void editProfile();
+
+        /**
+         * Called when the user profile has been edited
+         */
+        void onProfileEdited();
     }
 
     interface View extends BaseContract.View {
