@@ -20,13 +20,14 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class EditProfileFragment extends BaseFragment<EditProfileContract.View, EditProfileContract.Presenter> implements EditProfileContract.View {
 
-    private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "EditProfileFragment.USER_ID";
+    private static final String FRAGMENT_STRING_ARGUMENT_USER = "EditProfileFragment.USER_ID";
     private static final int PROFILE_PICTURE_QUALITY = 70;
 
     @BindView(R.id.edit_profile_iv_profile_picture)
@@ -40,9 +41,9 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
         // Required empty public constructor
     }
 
-    public static EditProfileFragment newInstance(String userId) {
+    public static EditProfileFragment newInstance(User user) {
         Bundle arguments = new Bundle();
-        arguments.putString(FRAGMENT_STRING_ARGUMENT_USER_ID, userId);
+        arguments.putParcelable(FRAGMENT_STRING_ARGUMENT_USER, user);
         EditProfileFragment fragment = new EditProfileFragment();
         fragment.setArguments(arguments);
         return fragment;

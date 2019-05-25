@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.profile;
 
 import android.net.Uri;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 
 public interface ProfileContract {
     interface Presenter extends BaseContract.Presenter<View> {
@@ -28,6 +29,6 @@ public interface ProfileContract {
 
         void showFollowButton();
 
-        void startEditProfileActivity(String userId);
+        void startEditProfileActivity(User user);
     }
 }

@@ -1,11 +1,14 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 
-public class User {
+public class User implements Parcelable {
     private String id;
     private String email;
     private String name;
@@ -24,6 +27,27 @@ public class User {
         this.creationDateTime = creationDateTime;
         this.verified = false;
     }
+
+    private User(Parcel in) {
+        id = in.readString();
+        email = in.readString();
+        name = in.readString();
+        profilePictureUri = in.readParcelable(Uri.class.getClassLoader());
+        verified = in.readByte() != 0;
+        creationDateTime = DateUtils.fromEpochTimestampMillis(in.readLong());
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public boolean isVerified() {
         return verified;
@@ -72,5 +96,20 @@ public class User {
 
     public void setProfilePictureUri(Uri profilePictureUri) {
         this.profilePictureUri = profilePictureUri;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(email);
+        dest.writeString(name);
+        dest.writeParcelable(profilePictureUri, flags);
+        dest.writeByte((byte) (verified ? 1 : 0));
+        dest.writeLong(DateUtils.fromLocalDateTimeToEpochMills(creationDateTime));
     }
 }

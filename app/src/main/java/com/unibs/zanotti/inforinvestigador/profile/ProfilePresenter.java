@@ -75,7 +75,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     @Override
     public void editProfile() {
-        getView().startEditProfileActivity(userId);
+        getView().startEditProfileActivity(modelUser);
     }
 
     /**
