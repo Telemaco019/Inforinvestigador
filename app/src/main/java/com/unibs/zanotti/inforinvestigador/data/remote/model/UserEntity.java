@@ -6,6 +6,7 @@ public class UserEntity {
     private String email;
     private String profilePictureUri;
     private String name;
+    private String location;
     private long creationEpochTimestampMillis;
     private String phone;
 
@@ -17,14 +18,24 @@ public class UserEntity {
                       String email,
                       String name,
                       String phone,
+                      String location,
                       String profilePictureUri,
                       Long creationEpochTimestampMillis) {
         this.id = id;
         this.email = email;
         this.name = name;
+        this.location = location;
         this.phone = phone;
         this.profilePictureUri = profilePictureUri;
         this.creationEpochTimestampMillis = creationEpochTimestampMillis;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getId() {

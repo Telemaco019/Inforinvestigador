@@ -110,6 +110,7 @@ public class UserFirebaseRepository implements IUserRepository {
                 user.getEmail(),
                 user.getName(),
                 user.getPhone(),
+                user.getLocation(),
                 user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
                 DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()));
     }
@@ -119,6 +120,7 @@ public class UserFirebaseRepository implements IUserRepository {
                 userEntity.getEmail(),
                 userEntity.getName(),
                 userEntity.getPhone(),
+                userEntity.getLocation(),
                 Uri.parse(userEntity.getProfilePictureUri()),
                 DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()));
     }

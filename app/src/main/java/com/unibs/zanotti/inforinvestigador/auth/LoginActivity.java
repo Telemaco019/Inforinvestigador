@@ -349,6 +349,7 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseUser.getEmail(),
                 firebaseUser.getDisplayName(),
                 firebaseUser.getPhoneNumber(),
+                null,
                 firebaseUser.getPhotoUrl(),
                 DateUtils.fromEpochTimestampMillis(firebaseUser.getMetadata().getCreationTimestamp()));
     }
