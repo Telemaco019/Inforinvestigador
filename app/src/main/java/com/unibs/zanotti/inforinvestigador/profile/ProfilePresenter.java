@@ -25,17 +25,17 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     private void showUserProfile() {
         if (modelUser != null) {
             getView().showProfilePicture(modelUser.getProfilePictureUri());
-            getView().showUserEmail(modelUser.getEmail().trim());
-            getView().showUserName(modelUser.getName().trim());
+            getView().showUserEmail(modelUser.getEmail());
+            getView().showUserName(modelUser.getName());
 
             if (StringUtils.isNotBlank(modelUser.getLocation())) {
-                getView().showUserLocation(modelUser.getLocation().trim());
+                getView().showUserLocation(modelUser.getLocation());
             } else {
                 getView().hideUserLocationField();
             }
 
             if (StringUtils.isNotBlank(modelUser.getPhone())) {
-                getView().showUserPhone(modelUser.getPhone().trim());
+                getView().showUserPhone(modelUser.getPhone());
             } else {
                 getView().hideUserPhoneField();
             }

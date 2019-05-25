@@ -85,9 +85,9 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
         if(!savingProfilePicture) {
             getView().showProgressSavingUserProfileFields();
             String userId = modelUser.getId();
-            disposables.add(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_NAME, name)
-                    .andThen(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_PHONE, phone))
-                    .andThen(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_LOCATION, location))
+            disposables.add(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_NAME, name.trim())
+                    .andThen(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_PHONE, phone.trim()))
+                    .andThen(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_LOCATION, location.trim()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableCompletableObserver() {
