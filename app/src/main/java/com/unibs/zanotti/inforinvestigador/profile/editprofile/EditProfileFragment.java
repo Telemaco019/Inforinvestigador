@@ -25,14 +25,15 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class EditProfileFragment extends BaseFragment<EditProfileContract.View, EditProfileContract.Presenter> implements EditProfileContract.View {
-
+    private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
     private static final String FRAGMENT_STRING_ARGUMENT_USER = "EditProfileFragment.USER_ID";
-    private static final int PROFILE_PICTURE_QUALITY = 70;
+    private static final int PROFILE_PICTURE_QUALITY = 40;
 
     @BindView(R.id.edit_profile_iv_profile_picture)
     CircleImageView ivEditProfilePicture;
@@ -174,16 +175,6 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
     }
 
     @Override
-    public void hideProgressBarUploadProfilePicture() {
-        progressBarUploadProfilePicture.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showProgressBarUploadProfilePicture() {
-        progressBarUploadProfilePicture.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void setActivityResult(int result) {
         FragmentActivity activity = getActivity();
         if (activity != null) {
@@ -225,11 +216,21 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
 
     @Override
     public void showProgressSavingUserProfileFields() {
-        progressBarSavingProfileFields.setVisibility(View.VISIBLE);
+        ActivityUtils.animateViewWithFade(progressBarSavingProfileFields, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
     }
 
     @Override
     public void hideProgressBarSavingUserProfileFields() {
-        progressBarSavingProfileFields.setVisibility(View.GONE);
+        ActivityUtils.animateViewWithFade(progressBarSavingProfileFields, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+    }
+
+    @Override
+    public void hideProgressBarUploadProfilePicture() {
+        ActivityUtils.animateViewWithFade(progressBarUploadProfilePicture, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+    }
+
+    @Override
+    public void showProgressBarUploadProfilePicture() {
+        ActivityUtils.animateViewWithFade(progressBarUploadProfilePicture, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
     }
 }
