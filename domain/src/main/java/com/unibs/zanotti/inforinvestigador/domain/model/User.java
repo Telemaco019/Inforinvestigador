@@ -14,14 +14,16 @@ public class User implements Parcelable {
     private String name;
     private Uri profilePictureUri;
     private LocalDateTime creationDateTime;
+    private String phone;
     /**
      * If true, then the user has been verified (e.g. through email verification). False by default.
      */
     private boolean verified;
 
-    public User(String id, String email, String name, Uri profilePictureUri, LocalDateTime creationDateTime) {
+    public User(String id, String email, String name, String phone, Uri profilePictureUri, LocalDateTime creationDateTime) {
         this.id = id;
         this.email = email;
+        this.phone = phone;
         this.name = name;
         this.profilePictureUri = profilePictureUri;
         this.creationDateTime = creationDateTime;
@@ -32,6 +34,7 @@ public class User implements Parcelable {
         id = in.readString();
         email = in.readString();
         name = in.readString();
+        phone = in.readString();
         profilePictureUri = in.readParcelable(Uri.class.getClassLoader());
         verified = in.readByte() != 0;
         creationDateTime = DateUtils.fromEpochTimestampMillis(in.readLong());
@@ -108,8 +111,17 @@ public class User implements Parcelable {
         dest.writeString(id);
         dest.writeString(email);
         dest.writeString(name);
+        dest.writeString(phone);
         dest.writeParcelable(profilePictureUri, flags);
         dest.writeByte((byte) (verified ? 1 : 0));
         dest.writeLong(DateUtils.fromLocalDateTimeToEpochMills(creationDateTime));
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -7,6 +7,7 @@ public class UserEntity {
     private String profilePictureUri;
     private String name;
     private long creationEpochTimestampMillis;
+    private String phone;
 
     public UserEntity() {
         // Required by Firestore
@@ -15,11 +16,13 @@ public class UserEntity {
     public UserEntity(String id,
                       String email,
                       String name,
+                      String phone,
                       String profilePictureUri,
                       Long creationEpochTimestampMillis) {
         this.id = id;
         this.email = email;
         this.name = name;
+        this.phone = phone;
         this.profilePictureUri = profilePictureUri;
         this.creationEpochTimestampMillis = creationEpochTimestampMillis;
     }
@@ -62,5 +65,13 @@ public class UserEntity {
 
     public void setCreationEpochTimestampMillis(long creationEpochTimestampMillis) {
         this.creationEpochTimestampMillis = creationEpochTimestampMillis;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
