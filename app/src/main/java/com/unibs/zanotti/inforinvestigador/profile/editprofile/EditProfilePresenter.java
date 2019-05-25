@@ -6,6 +6,7 @@ import android.util.Log;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -16,14 +17,16 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
     private static final String TAG = String.valueOf(EditProfilePresenter.class);
 
     private IUserRepository userRepository;
+    private User modelUser;
 
-    public EditProfilePresenter(IUserRepository userRepository) {
+    public EditProfilePresenter(IUserRepository userRepository, User modelUser) {
         this.userRepository = userRepository;
+        this.modelUser = modelUser;
     }
 
     @Override
     public void onPresenterCreated() {
-
+        // NO OP
     }
 
     @Override
@@ -62,5 +65,19 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
             Log.e(TAG, "Error editing profile picture", error);
             getView().showEditProfilePictureErrorMessage();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshView();
+    }
+
+    /**
+     * Show in the view the information associated to the current {@link EditProfilePresenter#modelUser user} which profile
+     * is being edited
+     */
+    private void refreshView() {
+        getView().showProfilePicture(modelUser.getProfilePictureUri());
     }
 }

@@ -43,4 +43,9 @@
     <string name="profile_following_caption">Following</string>
     <string name="profile_edit_profile_btn_caption">Edit profile</string>
     <string name="edit_profile_picture_error_msg">An error occurred, please retry later</string>
+    <string name="profile_edit_profile_name_caption">Name</string>
+    <string name="profile_edit_profile_location_caption">Location</string>
+    <string name="profile_edit_profile_phone_caption">Phone</string>
+    <string name="edit_profile_topbar_caption">Edit profile</string>
+    <string name="menu_topbar_item_confirm">Confirm</string>
 </resources>

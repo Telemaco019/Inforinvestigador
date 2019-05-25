@@ -10,7 +10,8 @@
     <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/doubleBaseMargin">
         <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/edit_profile_iv_profile_picture"
                 android:layout_width="@dimen/roundProfilePictureSizeBig"
@@ -33,5 +34,39 @@
                 android:visibility="gone"
                 android:layout_gravity="center"/>
     </FrameLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="@dimen/doubleBaseMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/profile_edit_profile_name_caption">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profile_edit_profile_edit_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="@dimen/doubleBaseMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/profile_edit_profile_location_caption">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profile_edit_profile_edit_text_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="@dimen/doubleBaseMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/profile_edit_profile_phone_caption">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profile_edit_profile_edit_text_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

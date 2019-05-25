@@ -1,11 +1,13 @@
 package com.unibs.zanotti.inforinvestigador.profile.editprofile;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -54,6 +56,10 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
+
+        // Enable topbar listener
+        setHasOptionsMenu(true);
+
         return view;
     }
 
@@ -82,8 +88,24 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                this.setActivityResult(Activity.RESULT_CANCELED);
+                finishActivity();
+                break;
+            }
+            case R.id.top_bar_action_confirm: {
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected EditProfileContract.Presenter createPresenter() {
-        return new EditProfilePresenter(Injection.provideUserRepository());
+        return new EditProfilePresenter(Injection.provideUserRepository(), getArguments().getParcelable(FRAGMENT_STRING_ARGUMENT_USER));
     }
 
     @Override
@@ -128,6 +150,13 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
         FragmentActivity activity = getActivity();
         if (activity != null) {
             activity.setResult(result);
+        }
+    }
+
+    private void finishActivity() {
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.finish();
         }
     }
 }

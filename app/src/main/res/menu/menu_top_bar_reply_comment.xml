@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-            android:id="@+id/topbar_reply_comment_send_btn"
-            app:showAsAction="always"
-            android:tint="@drawable/standard_clickable_icon_selector"
-            android:title="@string/send_comment_btn_caption"/>
-</menu>
