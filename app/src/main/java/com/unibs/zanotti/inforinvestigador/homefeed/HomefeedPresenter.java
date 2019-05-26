@@ -13,6 +13,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> implements HomefeedContract.Presenter {
@@ -32,6 +33,12 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     @Override
     public void paperShareClicked(String paperId) {
         getView().showPaperDetails(paperId);
+    }
+
+    @Override
+    public void onRefresh() {
+        loadPaperShares();
+        loadResearchersSuggestions();
     }
 
     private void loadResearchersSuggestions() {
@@ -93,6 +100,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                 )
         );
 
+        Collections.shuffle(result);
         return result;
     }
 
@@ -137,7 +145,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     @Override
     public void onPresenterCreated() {
-        this.loadFeed();
+        loadPaperShares();
+        loadResearchersSuggestions();
     }
 
     @Override
@@ -164,8 +173,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private void saveScrollPositions() {
         Bundle stateBundle = getStateBundle();
         HomefeedContract.View view = getView();
-        stateBundle.putInt(KEY_PAPERS_LIST_SAVED_POSITION,view.getScrollPositionPapersList());
-        stateBundle.putInt(KEY_RESEARCHERS_LIST_SAVED_POSITION,view.getScrollPositionResearchersList());
+        stateBundle.putInt(KEY_PAPERS_LIST_SAVED_POSITION, view.getScrollPositionPapersList());
+        stateBundle.putInt(KEY_RESEARCHERS_LIST_SAVED_POSITION, view.getScrollPositionResearchersList());
     }
 
     private void showPapersFeed() {
@@ -174,10 +183,5 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     private void showResearchersFeed() {
         getView().showResearchersSuggestions(researchersFeed);
-    }
-
-    private void loadFeed() {
-        loadPaperShares();
-        loadResearchersSuggestions();
     }
 }

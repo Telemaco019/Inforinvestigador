@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.unibs.zanotti.inforinvestigador.R;
@@ -20,7 +21,6 @@ import com.unibs.zanotti.inforinvestigador.homefeed.adapters.PaperFeedAdapter;
 import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
-import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.ArrayList;
@@ -29,14 +29,14 @@ import java.util.List;
 public class HomefeedFragment extends BaseFragment<HomefeedContract.View, HomefeedContract.Presenter>
         implements HomefeedContract.View, PaperFeedAdapter.OnPaperShareListener {
 
-    private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
-
     private PaperFeedAdapter paperFeedAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
     private RecyclerView papersRecyclerView;
     private RecyclerView researchersRecyclerView;
     @BindView(R.id.undetermined_progress_bar)
     View loadingProgressBar;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public HomefeedFragment() {
         paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
@@ -66,8 +66,14 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         papersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         papersRecyclerView.setAdapter(paperFeedAdapter);
 
+        // Add swipe refresh listener
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.onRefresh();
+        });
+
         return view;
     }
+
 
     @Override
     public void onPaperShareClick(String paperShareId) {
@@ -83,6 +89,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     @Override
     public void showResearchersSuggestions(List<ResearcherSuggestion> suggestions) {
         this.researcherSuggestionAdapter.setDataset(suggestions);
+        this.researcherSuggestionAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -122,12 +129,12 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
 
     @Override
     public void showLoadingProgressBar() {
-        ActivityUtils.animateViewWithFade(loadingProgressBar, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoadingProgressBar() {
-        ActivityUtils.animateViewWithFade(loadingProgressBar, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
