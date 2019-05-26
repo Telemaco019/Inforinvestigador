@@ -24,6 +24,17 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private List<FeedPaper> papersFeed;
     private List<ResearcherSuggestion> researchersFeed;
 
+    /**
+     * Flag that is true while the researcher suggestions are being loaded from the data layer (e.g. when the method
+     * {@link HomefeedPresenter#loadingResearcherSuggestions} is being executed) and false all the other times
+     */
+    boolean loadingResearcherSuggestions = false;
+    /**
+     * Flag that is true while the paper shares are being loaded from the data layer (e.g when the method
+     * {@link HomefeedPresenter#loadingPapersShares} is being executed) and false all the other times
+     */
+    boolean loadingPapersShares = false;
+
     public HomefeedPresenter(IPaperRepository paperRepository, IUserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
@@ -41,11 +52,13 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     @Override
     public void onRefresh() {
+        getView().showLoadingProgressBar();
         loadPaperShares();
         loadResearchersSuggestions();
     }
 
     private void loadResearchersSuggestions() {
+        loadingResearcherSuggestions = true;
         researchersFeed = new ArrayList<>();
         disposables.add(userRepository.getResearchersSuggestions(userRepository.getCurrentUserId()).subscribeWith(new DisposableObserver<ResearcherSuggestion>() {
             @Override
@@ -62,13 +75,16 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
             public void onComplete() {
                 Collections.shuffle(researchersFeed);
                 showResearchersFeed();
+                loadingResearcherSuggestions = false;
+                if (!loadingPapersShares) {
+                    getView().hideLoadingProgressBar();
+                }
             }
         }));
     }
 
     private void loadPaperShares() {
-        getView().showLoadingProgressBar();
-
+        loadingPapersShares = true;
         papersFeed = new ArrayList<>();
         disposables.add(paperRepository.getPapers()
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
@@ -99,7 +115,10 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                     public void onComplete() {
                         Log.e("***", "On complete");
                         showPapersFeed();
-                        getView().hideLoadingProgressBar();
+                        loadingPapersShares = false;
+                        if (!loadingResearcherSuggestions) {
+                            getView().hideLoadingProgressBar();
+                        }
                     }
                 })
         );
@@ -107,6 +126,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     @Override
     public void onPresenterCreated() {
+        getView().showLoadingProgressBar();
         loadPaperShares();
         loadResearchersSuggestions();
     }
