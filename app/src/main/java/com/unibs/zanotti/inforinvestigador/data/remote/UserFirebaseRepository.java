@@ -101,7 +101,9 @@ public class UserFirebaseRepository implements IUserRepository {
                 Uri url = task.getResult();
                 return firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
                         .update(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_PROFILE_PICTURE_URI, url.toString());
-            }).addOnSuccessListener(taskSnapshot -> emitter.onComplete()).addOnFailureListener(emitter::onError);
+            }).addOnSuccessListener(taskSnapshot -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError)
+                    .addOnCompleteListener(task -> emitter.onComplete());
         });
     }
 
