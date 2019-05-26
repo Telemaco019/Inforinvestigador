@@ -26,13 +26,14 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
         private TextView tv_comment_date;
         private ImageView ib_like;
 
-        CommentViewHolder(@NonNull View itemView) {
+        CommentViewHolder(@NonNull View itemView, CommentLikeListener commentLikeListener) {
             super(itemView);
             tv_comment_author = itemView.findViewById(R.id.tv_comment_author);
             tv_comment_body = itemView.findViewById(R.id.tv_comment_body);
             tv_comment_score = itemView.findViewById(R.id.tv_comment_score);
             tv_comment_date = itemView.findViewById(R.id.tv_comment_date);
             ib_like = itemView.findViewById(R.id.ib_comment_like);
+            ib_like.setOnClickListener(e -> commentLikeListener.onLikeClicked(dataset.get(getAdapterPosition())));
         }
 
         TextView getTv_comment_author() {
@@ -69,7 +70,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_layout, parent, false);
-        return new CommentViewHolder(view);
+        return new CommentViewHolder(view,commentLikeListener);
     }
 
     @Override
@@ -81,7 +82,6 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
         holder.getTv_comment_date().setText(DateUtils.elapsedTime(comment.getDateTime(), LocalDateTime.now(), "now"));
 
         holder.getIb_like().setActivated(comment.isLikedByCurrentUser());
-        holder.getIb_like().setOnClickListener(e -> commentLikeListener.onLikeClicked(comment));
     }
 
     @Override
