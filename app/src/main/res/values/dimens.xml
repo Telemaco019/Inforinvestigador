@@ -2,6 +2,7 @@
 <resources>
     <dimen name="roundProfilePictureSizeBig">150dp</dimen>
     <dimen name="roundProfilePictureSizeSmall">74dp</dimen>
+    <dimen name="roundProfilePictureSizeSmallCaption">88dp</dimen>
 
     <dimen name="cardElevation">2dp</dimen>
     <dimen name="cardCornerRadius">4dp</dimen>
