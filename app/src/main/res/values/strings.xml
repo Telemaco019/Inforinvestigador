@@ -52,4 +52,6 @@
     <string name="phone_number_not_valid_error_msg">Not a valid phone number</string>
     <string name="field_required_error_msg">Cannot be empty</string>
     <string name="wait_profile_picture_saving_msg">Uploading profile picture, please wait...</string>
+    <string name="profile_unfollow_btn_caption">Unfollow</string>
+
 </resources>

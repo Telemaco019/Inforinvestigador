@@ -41,9 +41,13 @@ public interface IUserRepository {
     /**
      * Return a Single emitting a true value if the user associated to the first ID provided as argument is following
      * the user associated to the id provided as second argument
-     * @param firstUserId
-     * @param secondUserId
+     * @param follower
+     * @param followed
      * @return
      */
-    Single<Boolean> isFollowing(String firstUserId, String secondUserId);
+    Single<Boolean> isFollowing(String follower, String followed);
+
+    Completable followUser(String follower, String followed);
+
+    Completable unfollowUser(String follower, String followed);
 }

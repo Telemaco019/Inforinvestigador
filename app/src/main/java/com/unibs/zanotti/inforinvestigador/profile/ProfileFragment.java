@@ -212,6 +212,16 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         presenter.editProfile();
     }
 
+    @OnClick(R.id.profile_btn_follow)
+    public void onFollowButtonClicked() {
+        presenter.onFollowButtonClicked();
+    }
+
+    @OnClick(R.id.profile_btn_unfollow)
+    public void onUnfollowButtonClicked() {
+        presenter.onUnfollowButtonClicked();
+    }
+
     @Override
     protected ProfileContract.Presenter createPresenter() {
         IUserRepository userRepository = Injection.provideUserRepository();

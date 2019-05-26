@@ -21,6 +21,8 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class UserFirebaseRepository implements IUserRepository {
@@ -144,10 +146,38 @@ public class UserFirebaseRepository implements IUserRepository {
     @Override
     public Single<Boolean> isFollowing(String follower, String followed) {
         return Single.create(emitter -> {
-            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS,follower);
+            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
             firebaseFirestore.document(firestoreDocPath)
                     .get()
                     .addOnSuccessListener(documentSnapshot -> emitter.onSuccess(documentSnapshot.exists()))
+                    .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
+    public Completable followUser(String follower, String followed) {
+        return Completable.create(emitter -> {
+            Map<String, Boolean> dummyData = new HashMap<>();
+            dummyData.put("exists", Boolean.TRUE);
+            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+
+            firebaseFirestore.document(firestoreDocPath)
+                    .set(dummyData)
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
+    public Completable unfollowUser(String follower, String followed) {
+        return Completable.create(emitter -> {
+            Map<String, Boolean> dummyData = new HashMap<>();
+            dummyData.put("exists", Boolean.TRUE);
+            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+
+            firebaseFirestore.document(firestoreDocPath)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         });
     }

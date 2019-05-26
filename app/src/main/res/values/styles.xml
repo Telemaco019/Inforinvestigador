@@ -34,5 +34,4 @@
         <item name="android:text">@string/profile_unfollow_btn_caption</item>
     </style>
 
-    <string name="profile_unfollow_btn_caption">Stop following</string>
 </resources>

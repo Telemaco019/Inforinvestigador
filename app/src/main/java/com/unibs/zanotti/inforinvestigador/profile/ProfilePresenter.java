@@ -6,6 +6,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -72,13 +73,13 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                 .subscribeWith(new DisposableSingleObserver<Boolean>() {
                     @Override
                     public void onSuccess(Boolean result) {
-                       if(result) {
-                           getView().hideFollowButton();
-                           getView().showUnfollowButton();
-                       }else {
-                           getView().hideUnfollowButton();
-                           getView().showFollowButton();
-                       }
+                        if (result) {
+                            getView().hideFollowButton();
+                            getView().showUnfollowButton();
+                        } else {
+                            getView().hideUnfollowButton();
+                            getView().showFollowButton();
+                        }
                     }
 
                     @Override
@@ -134,5 +135,51 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void onProfileEdited() {
         loadModelUser();
         showUserProfile();
+    }
+
+    @Override
+    public void onFollowButtonClicked() {
+        // Update view first
+        getView().showUnfollowButton();
+        getView().hideFollowButton();
+
+        // Update data layer
+        disposables.add(userRepository.followUser(userRepository.getCurrentUserId(), userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        // NO OP
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Error following user: ", e);
+                    }
+                }));
+    }
+
+    @Override
+    public void onUnfollowButtonClicked() {
+        // Update view first
+        getView().showFollowButton();
+        getView().hideUnfollowButton();
+
+        // Update data layer
+        disposables.add(userRepository.unfollowUser(userRepository.getCurrentUserId(), userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        // NO OP
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Error unfollowing user: ", e);
+                    }
+                }));
     }
 }

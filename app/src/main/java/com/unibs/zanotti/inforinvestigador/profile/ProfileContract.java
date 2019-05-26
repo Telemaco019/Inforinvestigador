@@ -13,6 +13,10 @@ public interface ProfileContract {
          * Called when the user profile has been edited
          */
         void onProfileEdited();
+
+        void onFollowButtonClicked();
+
+        void onUnfollowButtonClicked();
     }
 
     interface View extends BaseContract.View {
