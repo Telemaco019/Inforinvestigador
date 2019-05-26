@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper
 import de.hdodenhof.circleimageview.CircleImageView
@@ -60,7 +61,12 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
         holder.tvPaperTopics.text = topics ?: ""
         holder.tvPaperComment.text = sharingUserComment ?: ""
         holder.tvSharingUser.text = sharingUserName ?: ""
-        holder.tvSharingUserProfilePicture.setImageResource(0) // TODO
+        Picasso.get()
+            .load(dataset[position].sharingUserProfilePicture)
+            .placeholder(R.drawable.user_profle_pic_placeholder)
+            .fit()
+            .centerCrop()
+            .into(holder.tvSharingUserProfilePicture)
     }
 
     interface OnPaperShareListener {
