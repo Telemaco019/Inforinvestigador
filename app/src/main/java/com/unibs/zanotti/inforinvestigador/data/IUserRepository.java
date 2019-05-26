@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.data;
 
 
 import android.net.Uri;
+import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
@@ -22,10 +23,17 @@ public interface IUserRepository {
      * Update the profile picture of the user provided as argument
      *
      * @param userId
-     * @param imageUri URI of the image to set as profile picture
+     * @param imageUri URI of the imageUri to set as profile picture
      * @return An observable emitting the progress of the profile picture updating (which ranges from 0 to 100)
      */
     Observable<Double> updateUserProfilePicture(String userId, Uri imageUri);
 
     Completable updateUserField(String userId, String fieldName, Object newValue);
+
+    /**
+     * Return an observable emitting the researcher suggestions for the user with the id provided as argument
+     * @param userId
+     * @return
+     */
+    Observable<ResearcherSuggestion> getResearchersSuggestions(String userId);
 }

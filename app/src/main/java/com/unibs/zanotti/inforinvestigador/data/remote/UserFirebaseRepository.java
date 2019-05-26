@@ -11,6 +11,7 @@ import com.google.firebase.storage.UploadTask;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.UserEntity;
+import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
@@ -115,6 +116,27 @@ public class UserFirebaseRepository implements IUserRepository {
                     .update(fieldName, newValue)
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
+    public Observable<ResearcherSuggestion> getResearchersSuggestions(String userId) {
+        // Dummy implementation: as suggestions return all the researchers except the one with the id provided as argument
+        return Observable.create(emitter -> {
+            firebaseFirestore.collection(Collections.USERS)
+                    .get()
+                    .addOnSuccessListener(snapshots -> {
+                        snapshots.getDocuments()
+                                .stream()
+                                .filter(doc -> !doc.get(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_ID).equals(userId))
+                                .map(doc -> doc.toObject(UserEntity.class))
+                                .map(userEntity -> new ResearcherSuggestion(userEntity.getId(),
+                                        Uri.parse(userEntity.getProfilePictureUri()),
+                                        userEntity.getName()))
+                                .forEach(emitter::onNext);
+                    })
+                    .addOnFailureListener(emitter::onError)
+                    .addOnCompleteListener(snapshotTask -> emitter.onComplete());
         });
     }
 

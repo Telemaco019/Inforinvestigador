@@ -2,7 +2,6 @@ package com.unibs.zanotti.inforinvestigador.homefeed;
 
 import android.os.Bundle;
 import android.util.Log;
-import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
@@ -47,73 +46,24 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     }
 
     private void loadResearchersSuggestions() {
-        researchersFeed = computeResearcherSuggestions(1);
-        showResearchersFeed();
-    }
+        researchersFeed = new ArrayList<>();
+        disposables.add(userRepository.getResearchersSuggestions(userRepository.getCurrentUserId()).subscribeWith(new DisposableObserver<ResearcherSuggestion>() {
+            @Override
+            public void onNext(ResearcherSuggestion researcherSuggestion) {
+                researchersFeed.add(researcherSuggestion);
+            }
 
-    /**
-     * Computes the suggestions for the user with the id provided as parameter
-     *
-     * @param userId
-     * @return
-     */
-    private List<ResearcherSuggestion> computeResearcherSuggestions(int userId) {
-        // Dummy implementation
+            @Override
+            public void onError(Throwable e) {
 
-        List<ResearcherSuggestion> result = new ArrayList<>();
+            }
 
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_1,
-                        "Maria Piras"
-                )
-        );
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_2,
-                        "Leonor Freitas"
-                )
-        );
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_3,
-                        "Antonio Lopes"
-                )
-        );
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_4,
-                        "Cristiano Carvalho"
-                )
-        );
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_5,
-                        "Teresa Sardinha"
-                )
-        );
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_6,
-                        "Joana de Carvalho"
-                )
-        );
-        result.add(
-                new ResearcherSuggestion(
-                        "",
-                        R.drawable.test_researcher_7,
-                        "Mario Relha"
-                )
-        );
-
-        Collections.shuffle(result);
-        return result;
+            @Override
+            public void onComplete() {
+                Collections.shuffle(researchersFeed);
+                showResearchersFeed();
+            }
+        }));
     }
 
     private void loadPaperShares() {
@@ -126,7 +76,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                                 paper.getPaperTitle(),
                                 paper.getSharingUserComment(),
                                 user.getName(),
-                                user.getProfilePictureUri(), // FIXME
+                                user.getProfilePictureUri(),
                                 paper.getPaperDate(),
                                 paper.getPaperTopics(),
                                 paper.getPaperAuthors()))

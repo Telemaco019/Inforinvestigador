@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
@@ -41,9 +42,10 @@ class ResearcherSuggestionAdapter(
     override fun getItemCount() = dataset.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // Get element at this position from the dataset and replace the content of the view with that element
-        // val view = holder.textView
-        holder.imageView.setImageResource(dataset[position].image)
+        Picasso.get()
+            .load(dataset[position].imageUri)
+            .placeholder(R.drawable.user_profle_pic_placeholder)
+            .into(holder.imageView)
         holder.textView.text = dataset[position].name
     }
 
