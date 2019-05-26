@@ -32,7 +32,12 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     @Override
     public void paperShareClicked(String paperId) {
-        getView().showPaperDetails(paperId);
+        getView().showPaper(paperId);
+    }
+
+    @Override
+    public void researcherSuggestionClicked(String researcherId) {
+        getView().showResearcherProfile(researcherId);
     }
 
     @Override
@@ -59,42 +64,49 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_1,
                         "Maria Piras"
                 )
         );
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_2,
                         "Leonor Freitas"
                 )
         );
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_3,
                         "Antonio Lopes"
                 )
         );
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_4,
                         "Cristiano Carvalho"
                 )
         );
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_5,
                         "Teresa Sardinha"
                 )
         );
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_6,
                         "Joana de Carvalho"
                 )
         );
         result.add(
                 new ResearcherSuggestion(
+                        "",
                         R.drawable.test_researcher_7,
                         "Mario Relha"
                 )

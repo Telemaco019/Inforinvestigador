@@ -49,6 +49,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
             } else {
                 getView().showFollowButton();
             }
+        } else {
+            getView().showEmptyUserProfile();
         }
     }
 

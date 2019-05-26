@@ -161,6 +161,12 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         tvFollowingNumber.setText(String.valueOf(followingNumber));
     }
 
+    @Override
+    public void showEmptyUserProfile() {
+        btnEditProfile.setVisibility(View.GONE);
+        btnFollow.setVisibility(View.GONE);
+    }
+
     // TODO: to be removed/updated
     @OnClick(R.id.profile_settings_icon)
     public void logout() {
@@ -191,6 +197,6 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     @Override
     protected ProfileContract.Presenter createPresenter() {
         IUserRepository userRepository = Injection.provideUserRepository();
-        return new ProfilePresenter(userRepository, userRepository.getCurrentUserId());
+        return new ProfilePresenter(userRepository, getArguments().getString(FRAGMENT_STRING_ARGUMENT_USER_ID));
     }
 }

@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface HomefeedContract {
     interface Presenter extends BaseContract.Presenter<View> {
-        void paperShareClicked(String paperShareId);
+        void paperShareClicked(String paperId);
+
+        void researcherSuggestionClicked(String researcherId);
 
         void onRefresh();
     }
@@ -18,7 +20,7 @@ public interface HomefeedContract {
 
         void showResearchersSuggestions(List<ResearcherSuggestion> suggestions);
 
-        void showPaperDetails(String paperId);
+        void showPaper(String paperId);
 
         int getScrollPositionResearchersList();
 
@@ -31,5 +33,7 @@ public interface HomefeedContract {
         void showLoadingProgressBar();
 
         void hideLoadingProgressBar();
+
+        void showResearcherProfile(String researcherId);
     }
 }

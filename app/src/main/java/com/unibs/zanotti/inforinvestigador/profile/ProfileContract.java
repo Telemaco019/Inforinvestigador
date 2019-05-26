@@ -44,5 +44,7 @@ public interface ProfileContract {
         void showUserFollowersNumber(int followersNumber);
 
         void showUserFollowingNumber(int followingNumber);
+
+        void showEmptyUserProfile();
     }
 }

@@ -9,11 +9,23 @@ import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ResearcherSuggestionAdapter(var dataset: List<ResearcherSuggestion>) :
-    RecyclerView.Adapter<ResearcherSuggestionAdapter.MyViewHolder>() {
+class ResearcherSuggestionAdapter(
+    var dataset: List<ResearcherSuggestion>,
+    val listener: OnResearcherSuggestionListener
+) : RecyclerView.Adapter<ResearcherSuggestionAdapter.MyViewHolder>() {
 
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder(view: View, val listener: OnResearcherSuggestionListener) :
+        RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            listener.onResearcherSuggestionClick(dataset[adapterPosition].researcherId)
+        }
+
         val textView = view.findViewById(R.id.roundImageCaption) as TextView
         val imageView = view.findViewById<CircleImageView>(R.id.roundImage)
     }
@@ -23,12 +35,7 @@ class ResearcherSuggestionAdapter(var dataset: List<ResearcherSuggestion>) :
         // Create a new view
         val view = LayoutInflater.from(parent.context).inflate(R.layout.round_image_with_caption, parent, false)
 
-        // Set layout parameters of the view
-        // ...
-
-        return MyViewHolder(
-            view
-        )
+        return MyViewHolder(view, listener)
     }
 
     override fun getItemCount() = dataset.size
@@ -40,4 +47,7 @@ class ResearcherSuggestionAdapter(var dataset: List<ResearcherSuggestion>) :
         holder.textView.text = dataset[position].name
     }
 
+    interface OnResearcherSuggestionListener {
+        fun onResearcherSuggestionClick(researcherId: String)
+    }
 }
