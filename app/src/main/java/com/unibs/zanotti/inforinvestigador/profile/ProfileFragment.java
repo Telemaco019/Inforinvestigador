@@ -25,6 +25,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.profile.editprofile.EditProfileActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -166,24 +167,15 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     }
 
     @Override
-    public void showUnfollowButton() {
-        btnProfileUnfollow.setVisibility(View.VISIBLE);
+    public void replaceButtonFollowWithUnfollow() {
+        ActivityUtils.substituteViewWithFade(btnProfileFollow, btnProfileUnfollow, 300);
     }
 
     @Override
-    public void hideFollowButton() {
-        btnProfileFollow.setVisibility(View.GONE);
+    public void replaceButtonUnfollowWithFollow() {
+        ActivityUtils.substituteViewWithFade(btnProfileUnfollow, btnProfileFollow, 300);
     }
 
-    @Override
-    public void hideUnfollowButton() {
-        btnProfileUnfollow.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showFollowButton() {
-        btnProfileFollow.setVisibility(View.VISIBLE);
-    }
 
     // TODO: to be removed/updated
     @OnClick(R.id.profile_settings_icon)

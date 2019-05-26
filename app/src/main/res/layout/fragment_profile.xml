@@ -152,6 +152,7 @@
                     android:paddingLeft="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:id="@+id/profile_location_field_layout">
 
                 <ImageView
@@ -195,6 +196,7 @@
                     android:layout_marginTop="25dp"
                     android:orientation="horizontal"
                     android:paddingLeft="25dp"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_phone_field_layout">

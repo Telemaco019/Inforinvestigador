@@ -2,6 +2,8 @@ package com.unibs.zanotti.inforinvestigador.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
@@ -47,7 +49,38 @@ public class ActivityUtils {
     }
 
     /**
+     * Hide the first view provided as argument and show the second one, applying respectively a fade-out and a fade-in
+     * animations.
+     *
+     * @param firstView
+     * @param secondView
+     * @param duration   The duration of the fade-out and fade-in animations
+     */
+    public static void substituteViewWithFade(final View firstView, final View secondView, int duration) {
+        ObjectAnimator firstViewFadeOutAnimator = ObjectAnimator.ofFloat(firstView, "alpha", 1f, 0f);
+        firstViewFadeOutAnimator.setDuration(duration);
+        firstViewFadeOutAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                firstView.setVisibility(View.GONE);
+                secondView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ObjectAnimator secondViewFadeInAnimation = ObjectAnimator.ofFloat(secondView, "alpha", 0f, 1f);
+        secondViewFadeInAnimation.setDuration(duration);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(firstViewFadeOutAnimator).before(secondViewFadeInAnimation);
+        animatorSet.play(secondViewFadeInAnimation).after(firstViewFadeOutAnimator);
+
+        animatorSet.start();
+    }
+
+    /**
      * Hide the keyboard from the activity provided as argument
+     *
      * @param activity
      */
     public static void dismissKeyboard(Activity activity) {

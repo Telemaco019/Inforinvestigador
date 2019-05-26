@@ -74,11 +74,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                     @Override
                     public void onSuccess(Boolean result) {
                         if (result) {
-                            getView().hideFollowButton();
-                            getView().showUnfollowButton();
+                            getView().replaceButtonUnfollowWithFollow();
                         } else {
-                            getView().hideUnfollowButton();
-                            getView().showFollowButton();
+                            getView().replaceButtonFollowWithUnfollow();
                         }
                     }
 
@@ -140,8 +138,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void onFollowButtonClicked() {
         // Update view first
-        getView().showUnfollowButton();
-        getView().hideFollowButton();
+        getView().replaceButtonFollowWithUnfollow();
 
         // Update data layer
         disposables.add(userRepository.followUser(userRepository.getCurrentUserId(), userId)
@@ -163,8 +160,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void onUnfollowButtonClicked() {
         // Update view first
-        getView().showFollowButton();
-        getView().hideUnfollowButton();
+        getView().replaceButtonUnfollowWithFollow();
 
         // Update data layer
         disposables.add(userRepository.unfollowUser(userRepository.getCurrentUserId(), userId)

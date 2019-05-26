@@ -31,8 +31,6 @@ public interface ProfileContract {
 
         void showEditProfileButton();
 
-        void showFollowButton();
-
         void startEditProfileActivity(User user);
 
         void showUserLocation(String location);
@@ -51,10 +49,8 @@ public interface ProfileContract {
 
         void showEmptyUserProfile();
 
-        void showUnfollowButton();
+        void replaceButtonFollowWithUnfollow();
 
-        void hideFollowButton();
-
-        void hideUnfollowButton();
+        void replaceButtonUnfollowWithFollow();
     }
 }
