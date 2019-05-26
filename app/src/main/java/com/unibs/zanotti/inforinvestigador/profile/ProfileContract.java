@@ -46,5 +46,11 @@ public interface ProfileContract {
         void showUserFollowingNumber(int followingNumber);
 
         void showEmptyUserProfile();
+
+        void showUnfollowButton();
+
+        void hideFollowButton();
+
+        void hideUnfollowButton();
     }
 }

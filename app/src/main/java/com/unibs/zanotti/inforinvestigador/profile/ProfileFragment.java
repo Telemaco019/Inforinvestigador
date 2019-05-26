@@ -34,7 +34,9 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ProfileFragment.argument.USER_ID";
 
     @BindView(R.id.profile_btn_follow)
-    AppCompatButton btnFollow;
+    AppCompatButton btnProfileFollow;
+    @BindView(R.id.profile_btn_unfollow)
+    AppCompatButton btnProfileUnfollow;
     @BindView(R.id.profile_email_tv)
     TextView tvEmail;
     @BindView(R.id.profile_followers_number_tv)
@@ -113,11 +115,6 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     }
 
     @Override
-    public void showFollowButton() {
-        btnFollow.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void startEditProfileActivity(User user) {
         Intent intent = new Intent(Actions.EDIT_PROFILE);
         intent.putExtra(EditProfileActivity.PARCELABLE_EXTRA_USER, user);
@@ -164,7 +161,28 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     @Override
     public void showEmptyUserProfile() {
         btnEditProfile.setVisibility(View.GONE);
-        btnFollow.setVisibility(View.GONE);
+        btnProfileFollow.setVisibility(View.GONE);
+        btnProfileUnfollow.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showUnfollowButton() {
+        btnProfileUnfollow.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideFollowButton() {
+        btnProfileFollow.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideUnfollowButton() {
+        btnProfileUnfollow.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showFollowButton() {
+        btnProfileFollow.setVisibility(View.VISIBLE);
     }
 
     // TODO: to be removed/updated

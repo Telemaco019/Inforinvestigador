@@ -19,6 +19,7 @@ import com.unibs.zanotti.inforinvestigador.utils.FirebaseUtils;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 import java.util.Objects;
 
@@ -137,6 +138,17 @@ public class UserFirebaseRepository implements IUserRepository {
                     })
                     .addOnFailureListener(emitter::onError)
                     .addOnCompleteListener(snapshotTask -> emitter.onComplete());
+        });
+    }
+
+    @Override
+    public Single<Boolean> isFollowing(String follower, String followed) {
+        return Single.create(emitter -> {
+            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS,follower);
+            firebaseFirestore.document(firestoreDocPath)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> emitter.onSuccess(documentSnapshot.exists()))
+                    .addOnFailureListener(emitter::onError);
         });
     }
 

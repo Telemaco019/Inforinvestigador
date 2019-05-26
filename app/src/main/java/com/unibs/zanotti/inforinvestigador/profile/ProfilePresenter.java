@@ -1,16 +1,22 @@
 package com.unibs.zanotti.inforinvestigador.profile;
 
+import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class ProfilePresenter extends BasePresenter<ProfileContract.View> implements ProfileContract.Presenter {
+    private static final String TAG = String.valueOf(ProfilePresenter.class);
 
     private final IUserRepository userRepository;
+    /**
+     * Id of the user of which show the profile
+     */
     private String userId;
     /**
      * User of which show the profile
@@ -47,7 +53,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                 getView().showEditProfileButton();
                 getView().showSettingsIcon();
             } else {
-                getView().showFollowButton();
+                showFollowUnfollowButton();
             }
         } else {
             getView().showEmptyUserProfile();
@@ -55,9 +61,34 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     }
 
     /**
-     * Load into {@link ProfilePresenter#modelUser} the user profile of the user currently signed into inforinfestigador
+     * If the current user is already following the {@link ProfilePresenter#modelUser}, then shows the Follow/Unfollow
+     * button with the Unfollow style, otherwise show it with the Follow style.
+     * <p>It is assumed that the current user is different from {@link ProfilePresenter#modelUser}</p>
      */
-    private void loadCurrentUser() {
+    private void showFollowUnfollowButton() {
+        disposables.add(userRepository.isFollowing(userRepository.getCurrentUserId(), userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean result) {
+                       if(result) {
+                           getView().hideFollowButton();
+                           getView().showUnfollowButton();
+                       }else {
+                           getView().hideUnfollowButton();
+                           getView().showFollowButton();
+                       }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Error: ", e);
+                    }
+                }));
+    }
+
+    private void loadModelUser() {
         disposables.add(userRepository.getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -88,7 +119,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     @Override
     public void onPresenterCreated() {
-        loadCurrentUser();
+        loadModelUser();
     }
 
     @Override
@@ -101,7 +132,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
      */
     @Override
     public void onProfileEdited() {
-        loadCurrentUser();
+        loadModelUser();
         showUserProfile();
     }
 }

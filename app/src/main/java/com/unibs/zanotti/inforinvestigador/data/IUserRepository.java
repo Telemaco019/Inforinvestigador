@@ -7,6 +7,7 @@ import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface IUserRepository {
 
@@ -36,4 +37,13 @@ public interface IUserRepository {
      * @return
      */
     Observable<ResearcherSuggestion> getResearchersSuggestions(String userId);
+
+    /**
+     * Return a Single emitting a true value if the user associated to the first ID provided as argument is following
+     * the user associated to the id provided as second argument
+     * @param firstUserId
+     * @param secondUserId
+     * @return
+     */
+    Single<Boolean> isFollowing(String firstUserId, String secondUserId);
 }

@@ -37,7 +37,8 @@
     <string name="reply_to_comment_caption">Reply to comment</string>
     <string name="send_comment_btn_caption">send</string>
     <string name="reply_comment_hint">Your reply</string>
-    <string name="profile_follow_btn_caption">Follow Me</string>
+    <string name="profile_follow_btn_caption">Follow</string>
+    <string name="profile_following_btn_caption">Following</string>
     <string name="profile_shared_papers_caption">Shares</string>
     <string name="profile_followers_caption">Followers</string>
     <string name="profile_following_caption">Following</string>
