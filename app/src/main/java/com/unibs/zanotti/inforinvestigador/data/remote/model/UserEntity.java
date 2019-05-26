@@ -7,6 +7,9 @@ public class UserEntity {
     private String profilePictureUri;
     private String name;
     private String location;
+    private int sharesNumber;
+    private int followingNumber;
+    private int followersNumber;
     private long creationEpochTimestampMillis;
     private String phone;
 
@@ -19,12 +22,18 @@ public class UserEntity {
                       String name,
                       String phone,
                       String location,
+                      int sharesNumber,
+                      int followingNumber,
+                      int followersNumber,
                       String profilePictureUri,
                       Long creationEpochTimestampMillis) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.location = location;
+        this.sharesNumber = sharesNumber;
+        this.followersNumber = followersNumber;
+        this.followingNumber = followingNumber;
         this.phone = phone;
         this.profilePictureUri = profilePictureUri;
         this.creationEpochTimestampMillis = creationEpochTimestampMillis;
@@ -84,5 +93,29 @@ public class UserEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getSharesNumber() {
+        return sharesNumber;
+    }
+
+    public void setSharesNumber(int sharesNumber) {
+        this.sharesNumber = sharesNumber;
+    }
+
+    public int getFollowingNumber() {
+        return followingNumber;
+    }
+
+    public void setFollowingNumber(int followingNumber) {
+        this.followingNumber = followingNumber;
+    }
+
+    public int getFollowersNumber() {
+        return followersNumber;
+    }
+
+    public void setFollowersNumber(int followersNumber) {
+        this.followersNumber = followersNumber;
     }
 }

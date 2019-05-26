@@ -156,7 +156,7 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
             WriteBatch writeBatch = firestoreDb.batch();
             writeBatch.update(commentDoc, String.format("likes.%s", userId), Boolean.TRUE);
-            // In future use a cloud function for updating the counter (more robust)
+            // TODO: in future use a cloud function for updating the counter (more robust)
             writeBatch.update(commentDoc, "likesCount", FieldValue.increment(1L));
 
             writeBatch.commit()

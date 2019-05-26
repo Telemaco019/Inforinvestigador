@@ -38,5 +38,11 @@ public interface ProfileContract {
         void hideUserLocationField();
 
         void hideUserPhoneField();
+
+        void showUserSharesNumber(int sharesNumber);
+
+        void showUserFollowersNumber(int followersNumber);
+
+        void showUserFollowingNumber(int followingNumber);
     }
 }

@@ -122,6 +122,9 @@ public class UserFirebaseRepository implements IUserRepository {
                 user.getName(),
                 user.getPhone(),
                 user.getLocation(),
+                user.getSharesNumber(),
+                user.getFollowingNumber(),
+                user.getFollowersNumber(),
                 user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
                 DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()));
     }
@@ -132,6 +135,9 @@ public class UserFirebaseRepository implements IUserRepository {
                 userEntity.getName(),
                 userEntity.getPhone(),
                 userEntity.getLocation(),
+                userEntity.getSharesNumber(),
+                userEntity.getFollowingNumber(),
+                userEntity.getFollowersNumber(),
                 Uri.parse(userEntity.getProfilePictureUri()),
                 DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()));
     }

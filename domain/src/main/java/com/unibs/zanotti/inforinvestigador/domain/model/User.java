@@ -16,17 +16,32 @@ public class User implements Parcelable {
     private LocalDateTime creationDateTime;
     private String phone;
     private String location;
+    private int sharesNumber;
+    private int followingNumber;
+    private int followersNumber;
     /**
      * If true, then the user has been verified (e.g. through email verification). False by default.
      */
     private boolean verified;
 
-    public User(String id, String email, String name, String phone, String location, Uri profilePictureUri, LocalDateTime creationDateTime) {
+    public User(String id,
+                String email,
+                String name,
+                String phone,
+                String location,
+                int sharesNumber,
+                int followingNumber,
+                int followersNumber,
+                Uri profilePictureUri,
+                LocalDateTime creationDateTime) {
         this.id = id;
         this.email = email;
         this.phone = phone;
         this.name = name;
         this.location = location;
+        this.sharesNumber = sharesNumber;
+        this.followersNumber = followersNumber;
+        this.followingNumber = followingNumber;
         this.profilePictureUri = profilePictureUri;
         this.creationDateTime = creationDateTime;
         this.verified = false;
@@ -38,6 +53,9 @@ public class User implements Parcelable {
         name = in.readString();
         phone = in.readString();
         location = in.readString();
+        sharesNumber = in.readInt();
+        followersNumber = in.readInt();
+        followingNumber = in.readInt();
         profilePictureUri = in.readParcelable(Uri.class.getClassLoader());
         verified = in.readByte() != 0;
         creationDateTime = DateUtils.fromEpochTimestampMillis(in.readLong());
@@ -124,6 +142,9 @@ public class User implements Parcelable {
         dest.writeString(name);
         dest.writeString(phone);
         dest.writeString(location);
+        dest.writeInt(sharesNumber);
+        dest.writeInt(followersNumber);
+        dest.writeInt(followingNumber);
         dest.writeParcelable(profilePictureUri, flags);
         dest.writeByte((byte) (verified ? 1 : 0));
         dest.writeLong(DateUtils.fromLocalDateTimeToEpochMills(creationDateTime));
@@ -135,5 +156,29 @@ public class User implements Parcelable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getSharesNumber() {
+        return sharesNumber;
+    }
+
+    public void setSharesNumber(int sharesNumber) {
+        this.sharesNumber = sharesNumber;
+    }
+
+    public int getFollowingNumber() {
+        return followingNumber;
+    }
+
+    public void setFollowingNumber(int followingNumber) {
+        this.followingNumber = followingNumber;
+    }
+
+    public int getFollowersNumber() {
+        return followersNumber;
+    }
+
+    public void setFollowersNumber(int followersNumber) {
+        this.followersNumber = followersNumber;
     }
 }

@@ -43,6 +43,8 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     TextView tvLocation;
     @BindView(R.id.profile_following_number_tv)
     TextView tvFollowingNumber;
+    @BindView(R.id.profile_shared_paper_number_tv)
+    TextView tvSharedPapersNumber;
     @BindView(R.id.profile_phone_number_tv)
     TextView tvPhone;
     @BindView(R.id.profile_round_profile_picture)
@@ -142,6 +144,21 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     @Override
     public void hideUserPhoneField() {
         phoneFieldLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showUserSharesNumber(int sharesNumber) {
+        tvSharedPapersNumber.setText(String.valueOf(sharesNumber));
+    }
+
+    @Override
+    public void showUserFollowersNumber(int followersNumber) {
+        tvFollowersNumber.setText(String.valueOf(followersNumber));
+    }
+
+    @Override
+    public void showUserFollowingNumber(int followingNumber) {
+        tvFollowingNumber.setText(String.valueOf(followingNumber));
     }
 
     // TODO: to be removed/updated
