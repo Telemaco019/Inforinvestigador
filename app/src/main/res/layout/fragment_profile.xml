@@ -244,7 +244,7 @@
                 android:layout_marginBottom="52dp"
                 android:textColor="@color/colorSecondary"
                 app:iconTint="@color/colorSecondary"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
