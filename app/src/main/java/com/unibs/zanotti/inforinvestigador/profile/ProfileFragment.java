@@ -177,6 +177,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     }
 
 
+
     // TODO: to be removed/updated
     @OnClick(R.id.profile_settings_icon)
     public void logout() {

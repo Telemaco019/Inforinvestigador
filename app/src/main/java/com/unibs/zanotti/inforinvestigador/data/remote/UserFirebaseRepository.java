@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -159,10 +160,15 @@ public class UserFirebaseRepository implements IUserRepository {
         return Completable.create(emitter -> {
             Map<String, Boolean> dummyData = new HashMap<>();
             dummyData.put("exists", Boolean.TRUE);
-            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+            String firestoreFollowerDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+            String firestoreFollowedUserDocPath = String.format("%s/%s", Collections.USERS, followed);
+            String firestoreFollowerUserDocPath = String.format("%s/%s", Collections.USERS, follower);
 
-            firebaseFirestore.document(firestoreDocPath)
+            // TODO: replace increment with cloud function (more robust)
+            firebaseFirestore.document(firestoreFollowerDocPath)
                     .set(dummyData)
+                    .continueWithTask(task -> firebaseFirestore.document(firestoreFollowedUserDocPath).update("followersNumber", FieldValue.increment(1L)))
+                    .continueWithTask(task -> firebaseFirestore.document(firestoreFollowerUserDocPath).update("followingNumber", FieldValue.increment(1L)))
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         });
@@ -174,9 +180,14 @@ public class UserFirebaseRepository implements IUserRepository {
             Map<String, Boolean> dummyData = new HashMap<>();
             dummyData.put("exists", Boolean.TRUE);
             String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+            String firestoreFollowedUserDocPath = String.format("%s/%s", Collections.USERS, followed);
+            String firestoreFollowerUserDocPath = String.format("%s/%s", Collections.USERS, follower);
 
+            // TODO: replace increment with cloud function (more robust)
             firebaseFirestore.document(firestoreDocPath)
                     .delete()
+                    .continueWithTask(task -> firebaseFirestore.document(firestoreFollowedUserDocPath).update("followersNumber", FieldValue.increment(-1L)))
+                    .continueWithTask(task -> firebaseFirestore.document(firestoreFollowerUserDocPath).update("followingNumber", FieldValue.increment(-1L)))
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         });

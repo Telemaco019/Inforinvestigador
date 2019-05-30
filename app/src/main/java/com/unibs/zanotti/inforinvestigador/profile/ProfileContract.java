@@ -52,5 +52,6 @@ public interface ProfileContract {
         void replaceButtonFollowWithUnfollow();
 
         void replaceButtonUnfollowWithFollow();
+
     }
 }

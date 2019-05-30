@@ -72,11 +72,11 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Boolean>() {
                     @Override
-                    public void onSuccess(Boolean result) {
-                        if (result) {
-                            getView().replaceButtonUnfollowWithFollow();
-                        } else {
+                    public void onSuccess(Boolean isFollowing) {
+                        if (isFollowing) {
                             getView().replaceButtonFollowWithUnfollow();
+                        } else {
+                            getView().replaceButtonUnfollowWithFollow();
                         }
                     }
 
@@ -139,6 +139,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void onFollowButtonClicked() {
         // Update view first
         getView().replaceButtonFollowWithUnfollow();
+        modelUser.setFollowersNumber(modelUser.getFollowersNumber() + 1);
+        getView().showUserFollowersNumber(modelUser.getFollowersNumber());
 
         // Update data layer
         disposables.add(userRepository.followUser(userRepository.getCurrentUserId(), userId)
@@ -161,6 +163,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void onUnfollowButtonClicked() {
         // Update view first
         getView().replaceButtonUnfollowWithFollow();
+        modelUser.setFollowersNumber(modelUser.getFollowersNumber() - 1);
+        getView().showUserFollowersNumber(modelUser.getFollowersNumber());
 
         // Update data layer
         disposables.add(userRepository.unfollowUser(userRepository.getCurrentUserId(), userId)
