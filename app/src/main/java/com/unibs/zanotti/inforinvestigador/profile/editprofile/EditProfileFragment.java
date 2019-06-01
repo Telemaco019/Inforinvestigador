@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileFragment extends BaseFragment<EditProfileContract.View, EditProfileContract.Presenter> implements EditProfileContract.View {
     private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
-    private static final String FRAGMENT_STRING_ARGUMENT_USER = "EditProfileFragment.USER_ID";
+    private static final String FRAGMENT_STRING_ARGUMENT_USER = "EditProfileFragment.USER";
     private static final int PROFILE_PICTURE_QUALITY = 40;
 
     @BindView(R.id.edit_profile_iv_profile_picture)
