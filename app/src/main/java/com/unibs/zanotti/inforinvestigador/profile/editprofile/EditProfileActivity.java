@@ -12,7 +12,7 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    public static final String PARCELABLE_EXTRA_USER = "EditProfileActivity.Extra.String.USER_ID";
+    public static final String PARCELABLE_EXTRA_USER = "EditProfileActivity.Extra.String.USER";
     public static final int EDIT_PROFILE_ACTIVITY_REQUEST_CODE = 800;
 
     @Override
