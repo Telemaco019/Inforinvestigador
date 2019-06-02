@@ -24,6 +24,8 @@ import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.profile.editprofile.EditProfileActivity;
+import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity;
+import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.adapters.FollowingFollowersPageAdapter;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
@@ -77,8 +79,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
 
@@ -176,19 +177,29 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         ActivityUtils.substituteViewWithFade(btnProfileUnfollow, btnProfileFollow, 300);
     }
 
-
-
-    // TODO: to be removed/updated
-    @OnClick(R.id.profile_settings_icon)
-    public void logout() {
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        intent.putExtra(LoginActivity.BOOLEAN_EXTRA_DO_LOGOUT, true);
+    @Override
+    public void showFollowingList(User user) {
+        Intent intent = new Intent(getContext(), ListFollowingAndFollowersActivity.class);
+        intent.putExtra(ListFollowingAndFollowersActivity.PARCELABLE_EXTRA_USER, user);
+        intent.putExtra(ListFollowingAndFollowersActivity.INT_EXTRA_INITIAL_SELECTED_TAB,
+                FollowingFollowersPageAdapter.POSITION_TAB_FOLLOWING_LIST);
         startActivity(intent);
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-            activity.finish();
-        }
     }
+
+    @Override
+    public void showFollowersList(User user) {
+        Intent intent = new Intent(getContext(), ListFollowingAndFollowersActivity.class);
+        intent.putExtra(ListFollowingAndFollowersActivity.PARCELABLE_EXTRA_USER, user);
+        intent.putExtra(ListFollowingAndFollowersActivity.INT_EXTRA_INITIAL_SELECTED_TAB,
+                FollowingFollowersPageAdapter.POSITION_TAB_FOLLOWERS_LIST);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showSharedPapersList(String userId) {
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -205,6 +216,18 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         presenter.editProfile();
     }
 
+    // TODO: to be removed/updated
+    @OnClick(R.id.profile_settings_icon)
+    public void logout() {
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra(LoginActivity.BOOLEAN_EXTRA_DO_LOGOUT, true);
+        startActivity(intent);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.finish();
+        }
+    }
+
     @OnClick(R.id.profile_btn_follow)
     public void onFollowButtonClicked() {
         presenter.onFollowButtonClicked();
@@ -213,6 +236,21 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     @OnClick(R.id.profile_btn_unfollow)
     public void onUnfollowButtonClicked() {
         presenter.onUnfollowButtonClicked();
+    }
+
+    @OnClick(R.id.profile_followers_number_tv)
+    public void onFollowersNumberClicked() {
+        presenter.onFollowersNumberClicked();
+    }
+
+    @OnClick(R.id.profile_following_number_tv)
+    public void onFollowingNumberClicked() {
+        presenter.onFollowingNumberClicked();
+    }
+
+    @OnClick(R.id.profile_shared_paper_number_tv)
+    public void onSharedPapersNumberClicked() {
+        presenter.onSharedPapersNumberClicked();
     }
 
     @Override

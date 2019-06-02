@@ -17,6 +17,12 @@ public interface ProfileContract {
         void onFollowButtonClicked();
 
         void onUnfollowButtonClicked();
+
+        void onFollowersNumberClicked();
+
+        void onFollowingNumberClicked();
+
+        void onSharedPapersNumberClicked();
     }
 
     interface View extends BaseContract.View {
@@ -53,5 +59,10 @@ public interface ProfileContract {
 
         void replaceButtonUnfollowWithFollow();
 
+        void showFollowingList(User user);
+
+        void showFollowersList(User user);
+
+        void showSharedPapersList(String userId);
     }
 }
