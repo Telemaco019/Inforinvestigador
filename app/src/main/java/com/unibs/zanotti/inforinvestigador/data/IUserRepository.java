@@ -50,4 +50,11 @@ public interface IUserRepository {
     Completable followUser(String follower, String followed);
 
     Completable unfollowUser(String follower, String followed);
+
+    /**
+     * Return the list of users followed by the user identified by the ID proivded as argument
+     * @param userId
+     * @return
+     */
+    Observable<User> getFollowingUsers(String userId);
 }

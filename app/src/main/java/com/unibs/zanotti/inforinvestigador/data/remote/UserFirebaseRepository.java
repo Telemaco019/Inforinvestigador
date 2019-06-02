@@ -161,12 +161,14 @@ public class UserFirebaseRepository implements IUserRepository {
             Map<String, Boolean> dummyData = new HashMap<>();
             dummyData.put("exists", Boolean.TRUE);
             String firestoreFollowerDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+            String firestoreFollowingDocPath = String.format("%s/%s/%s/%s", Collections.USERS, follower, Collections.FOLLOWING, followed);
             String firestoreFollowedUserDocPath = String.format("%s/%s", Collections.USERS, followed);
             String firestoreFollowerUserDocPath = String.format("%s/%s", Collections.USERS, follower);
 
             // TODO: replace increment with cloud function (more robust)
             firebaseFirestore.document(firestoreFollowerDocPath)
                     .set(dummyData)
+                    .continueWithTask(task -> firebaseFirestore.document(firestoreFollowingDocPath).set(dummyData))
                     .continueWithTask(task -> firebaseFirestore.document(firestoreFollowedUserDocPath).update("followersNumber", FieldValue.increment(1L)))
                     .continueWithTask(task -> firebaseFirestore.document(firestoreFollowerUserDocPath).update("followingNumber", FieldValue.increment(1L)))
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
@@ -179,17 +181,26 @@ public class UserFirebaseRepository implements IUserRepository {
         return Completable.create(emitter -> {
             Map<String, Boolean> dummyData = new HashMap<>();
             dummyData.put("exists", Boolean.TRUE);
-            String firestoreDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+            String firestoreFollowerDocPath = String.format("%s/%s/%s/%s", Collections.USERS, followed, Collections.FOLLOWERS, follower);
+            String firestoreFollowingDocPath = String.format("%s/%s/%s/%s", Collections.USERS, follower, Collections.FOLLOWING, followed);
             String firestoreFollowedUserDocPath = String.format("%s/%s", Collections.USERS, followed);
             String firestoreFollowerUserDocPath = String.format("%s/%s", Collections.USERS, follower);
 
             // TODO: replace increment with cloud function (more robust)
-            firebaseFirestore.document(firestoreDocPath)
+            firebaseFirestore.document(firestoreFollowerDocPath)
                     .delete()
+                    .continueWithTask(task -> firebaseFirestore.document(firestoreFollowingDocPath).delete())
                     .continueWithTask(task -> firebaseFirestore.document(firestoreFollowedUserDocPath).update("followersNumber", FieldValue.increment(-1L)))
                     .continueWithTask(task -> firebaseFirestore.document(firestoreFollowerUserDocPath).update("followingNumber", FieldValue.increment(-1L)))
                     .addOnSuccessListener(aVoid -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
+    public Observable<User> getFollowingUsers(String userId) {
+        return Observable.create(emitter -> {
+//           String firestoreFollowingCollectionPath = String.format("%s/%s/")
         });
     }
 
