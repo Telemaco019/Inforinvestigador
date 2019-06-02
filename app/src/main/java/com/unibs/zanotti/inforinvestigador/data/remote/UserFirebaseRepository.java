@@ -198,9 +198,26 @@ public class UserFirebaseRepository implements IUserRepository {
     }
 
     @Override
-    public Observable<User> getFollowingUsers(String userId) {
+    public Observable<String> getFollowingUsersIds(String userId) {
         return Observable.create(emitter -> {
-//           String firestoreFollowingCollectionPath = String.format("%s/%s/")
+            String firestoreFollowingCollectionPath = String.format("%s/%s/%s", Collections.USERS, userId, Collections.FOLLOWING);
+            firebaseFirestore.collection(firestoreFollowingCollectionPath)
+                    .get()
+                    .addOnSuccessListener(snapshots -> snapshots.getDocuments().forEach(doc -> emitter.onNext(doc.getId())))
+                    .addOnFailureListener(emitter::onError)
+                    .addOnCompleteListener(snap -> emitter.onComplete());
+        });
+    }
+
+    @Override
+    public Observable<String> getFollowersUsersIds(String userId) {
+        return Observable.create(emitter -> {
+            String firestoreFollowingCollectionPath = String.format("%s/%s/%s", Collections.USERS, userId, Collections.FOLLOWERS);
+            firebaseFirestore.collection(firestoreFollowingCollectionPath)
+                    .get()
+                    .addOnSuccessListener(snapshots -> snapshots.getDocuments().forEach(doc -> emitter.onNext(doc.getId())))
+                    .addOnFailureListener(emitter::onError)
+                    .addOnCompleteListener(snap -> emitter.onComplete());
         });
     }
 

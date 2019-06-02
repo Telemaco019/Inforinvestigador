@@ -33,6 +33,7 @@ public interface IUserRepository {
 
     /**
      * Return an observable emitting the researcher suggestions for the user with the id provided as argument
+     *
      * @param userId
      * @return
      */
@@ -41,6 +42,7 @@ public interface IUserRepository {
     /**
      * Return a Single emitting a true value if the user associated to the first ID provided as argument is following
      * the user associated to the id provided as second argument
+     *
      * @param follower
      * @param followed
      * @return
@@ -52,9 +54,18 @@ public interface IUserRepository {
     Completable unfollowUser(String follower, String followed);
 
     /**
-     * Return the list of users followed by the user identified by the ID proivded as argument
+     * Return the list of the ids of the users followed by the user identified by the ID provided as argument
+     *
      * @param userId
      * @return
      */
-    Observable<User> getFollowingUsers(String userId);
+    Observable<String> getFollowingUsersIds(String userId);
+
+    /**
+     * Return the list of the ids of the users following the user identified by the ID provided as argument
+     *
+     * @param userId
+     * @return
+     */
+    Observable<String> getFollowersUsersIds(String userId);
 }
