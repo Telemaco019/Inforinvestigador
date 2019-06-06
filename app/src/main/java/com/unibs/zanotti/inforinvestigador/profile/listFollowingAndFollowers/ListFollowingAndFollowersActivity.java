@@ -26,7 +26,7 @@ public class ListFollowingAndFollowersActivity extends AppCompatActivity {
 
         ListFollowingAndFollowersFragment fragment = (ListFollowingAndFollowersFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (fragment == null) {
-            fragment = ListFollowingAndFollowersFragment.newInstance(user.getId(), initialTab);
+            fragment = ListFollowingAndFollowersFragment.newInstance(user, initialTab);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.content_frame);
         }
     }

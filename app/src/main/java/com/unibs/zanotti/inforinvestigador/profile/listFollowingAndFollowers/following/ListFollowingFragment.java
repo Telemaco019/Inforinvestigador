@@ -20,7 +20,7 @@ import java.util.List;
 public class ListFollowingFragment extends BaseFragment<ListFollowingContract.View, ListFollowingContract.Presenter>
         implements ListFollowingContract.View {
 
-    private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ListFollowingFragment.Arguments.UserId";
+    private static final String FRAGMENT_PARCELABLE_ARGUMENT_USER_ID = "ListFollowingFragment.Arguments.User";
 
     @BindView(R.id.list_recycler_view)
     RecyclerView recyclerView;
@@ -31,9 +31,9 @@ public class ListFollowingFragment extends BaseFragment<ListFollowingContract.Vi
         mAdapter = new FollowingRecyclerViewAdapter(new ArrayList<>(0));
     }
 
-    public static ListFollowingFragment newInstance(String userId) {
+    public static ListFollowingFragment newInstance(User user) {
         Bundle arguments = new Bundle();
-        arguments.putString(FRAGMENT_STRING_ARGUMENT_USER_ID, userId);
+        arguments.putParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER_ID, user);
         ListFollowingFragment fragment = new ListFollowingFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -55,8 +55,8 @@ public class ListFollowingFragment extends BaseFragment<ListFollowingContract.Vi
 
     @Override
     protected ListFollowingContract.Presenter createPresenter() {
-        String userId = getArguments().getString(FRAGMENT_STRING_ARGUMENT_USER_ID);
-        return new ListFollowingPresenter(Injection.provideUserRepository(), userId);
+        User user = getArguments().getParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER_ID);
+        return new ListFollowingPresenter(Injection.provideUserRepository(), user.getId());
     }
 
     @Override

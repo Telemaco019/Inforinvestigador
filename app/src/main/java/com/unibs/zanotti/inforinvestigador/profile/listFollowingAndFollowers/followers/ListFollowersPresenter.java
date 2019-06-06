@@ -1,29 +1,26 @@
 package com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.followers;
 
-import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.base.FollowListBasePresenter;
 import io.reactivex.observers.DisposableObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListFollowersPresenter extends BasePresenter<ListFollowersContract.View>
+public class ListFollowersPresenter extends FollowListBasePresenter
         implements ListFollowersContract.Presenter {
 
-    private final String userId;
-    private final IUserRepository userRepository;
     private List<User> followersList;
 
-    public ListFollowersPresenter(IUserRepository userRepository, String userId) {
-        this.userRepository = userRepository;
-        this.userId = userId;
+    public ListFollowersPresenter(IUserRepository userRepository, User modelUser) {
+        super(userRepository,modelUser);
     }
 
     @Override
     public void onPresenterCreated() {
         followersList = new ArrayList<>();
-        disposables.add(userRepository.getFollowersUsersIds(userId)
+        disposables.add(userRepository.getFollowersUsersIds(modelUser.getId())
                 .flatMapMaybe(userRepository::getUser)
                 .subscribeWith(new DisposableObserver<User>() {
                     @Override
@@ -44,7 +41,7 @@ public class ListFollowersPresenter extends BasePresenter<ListFollowersContract.
     }
 
     private void showFollowersList() {
-        getView().showFollowersList(followersList);
+        getView().showList(followersList);
     }
 
     @Override

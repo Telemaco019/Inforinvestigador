@@ -12,11 +12,12 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.adapters.FollowingFollowersPageAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class ListFollowingAndFollowersFragment extends Fragment {
-    private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ListFollowingAndFollowersFragment.USER_ID";
+    private static final String FRAGMENT_PARCELABLE_ARGUMENT_USER = "ListFollowingAndFollowersFragment.USER";
     private static final String FRAGMENT_INT_ARGUMENT_INITIAL_SELECTED_TAB = "ListFollowingAndFollowersFragment.INITIAL_SELECTED_TAB";
 
     @BindView(R.id.view_pager)
@@ -26,9 +27,9 @@ public class ListFollowingAndFollowersFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ListFollowingAndFollowersFragment newInstance(String userId, int initialSelectedTab) {
+    public static ListFollowingAndFollowersFragment newInstance(User user, int initialSelectedTab) {
         Bundle arguments = new Bundle();
-        arguments.putString(FRAGMENT_STRING_ARGUMENT_USER_ID, userId);
+        arguments.putParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER, user);
         arguments.putInt(FRAGMENT_INT_ARGUMENT_INITIAL_SELECTED_TAB, initialSelectedTab);
         ListFollowingAndFollowersFragment fragment = new ListFollowingAndFollowersFragment();
         fragment.setArguments(arguments);
@@ -45,8 +46,8 @@ public class ListFollowingAndFollowersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String userId = getArguments().getString(FRAGMENT_STRING_ARGUMENT_USER_ID);
-        FollowingFollowersPageAdapter adapter = new FollowingFollowersPageAdapter(getChildFragmentManager(), userId);
+        User user = getArguments().getParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER);
+        FollowingFollowersPageAdapter adapter = new FollowingFollowersPageAdapter(getChildFragmentManager(), user);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(getArguments().getInt(FRAGMENT_INT_ARGUMENT_INITIAL_SELECTED_TAB));
     }

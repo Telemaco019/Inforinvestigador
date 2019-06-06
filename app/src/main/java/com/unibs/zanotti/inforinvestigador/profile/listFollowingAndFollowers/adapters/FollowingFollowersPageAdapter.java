@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.followers.ListFollowersFragment;
 import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.following.ListFollowingFragment;
 
@@ -14,19 +15,19 @@ public class FollowingFollowersPageAdapter extends FragmentPagerAdapter {
     private static final CharSequence TITLE_TAB_FOLLOWING_LIST = "Following";
     private static final CharSequence TITLE_TAB_FOLLOWERS_LIST = "Followers";
 
-    private final String userId;
+    private final User user;
 
-    public FollowingFollowersPageAdapter(FragmentManager fm, String userId) {
+    public FollowingFollowersPageAdapter(FragmentManager fm, User user) {
         super(fm);
-        this.userId = userId;
+        this.user = user;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == POSITION_TAB_FOLLOWERS_LIST) {
-            return ListFollowersFragment.newInstance(userId);
+            return ListFollowersFragment.newInstance(user);
         } else {
-            return ListFollowingFragment.newInstance(userId);
+            return ListFollowingFragment.newInstance(user);
         }
     }
 

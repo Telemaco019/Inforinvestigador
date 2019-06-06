@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
@@ -24,7 +25,7 @@ public class FollowingRecyclerViewAdapter extends RecyclerView.Adapter<Following
     @NonNull
     @Override
     public FollowingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_user_item_following_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_user_item_followers_list, parent, false);
 
         return new FollowingViewHolder(view);
     }
@@ -56,6 +57,7 @@ public class FollowingRecyclerViewAdapter extends RecyclerView.Adapter<Following
         private CircleImageView profileImage;
         private TextView userName;
         private TextView userEmail;
+        private MaterialCardView cardView;
         private AppCompatButton followingButton;
         private AppCompatButton followButton;
 
@@ -66,6 +68,15 @@ public class FollowingRecyclerViewAdapter extends RecyclerView.Adapter<Following
             userEmail = itemView.findViewById(R.id.item_following_list_user_email);
             followButton = itemView.findViewById(R.id.item_following_list_button_follow);
             followingButton = itemView.findViewById(R.id.item_following_list_button_following);
+            cardView = itemView.findViewById(R.id.single_user_item_followers_list_card);
+        }
+
+        public MaterialCardView getCardView() {
+            return cardView;
+        }
+
+        public void setCardView(MaterialCardView cardView) {
+            this.cardView = cardView;
         }
 
         public CircleImageView getProfileImage() {
