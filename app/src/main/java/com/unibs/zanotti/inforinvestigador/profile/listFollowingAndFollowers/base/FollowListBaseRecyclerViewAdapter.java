@@ -69,14 +69,8 @@ public abstract class FollowListBaseRecyclerViewAdapter
                     public void onSuccess(Boolean isFollowing) {
                         if (isFollowing) {
                             ActivityUtils.animateViewWithFade(holder.getFollowingButton(), View.VISIBLE, 1f, 300);
-                            if (holder.getFollowButton().getVisibility() == View.VISIBLE) {
-                                ActivityUtils.animateViewWithFade(holder.getFollowButton(), View.GONE, 0f, 300);
-                            }
                         } else {
                             ActivityUtils.animateViewWithFade(holder.getFollowButton(), View.VISIBLE, 1f, 300);
-                            if (holder.getFollowingButton().getVisibility() == View.VISIBLE) {
-                                ActivityUtils.animateViewWithFade(holder.getFollowingButton(), View.GONE, 0f, 300);
-                            }
                         }
                     }
 
