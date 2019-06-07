@@ -1,35 +1,27 @@
 package com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.following;
 
-import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.base.FollowListBasePresenter;
 import io.reactivex.observers.DisposableObserver;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ListFollowingPresenter extends BasePresenter<ListFollowingContract.View>
-        implements ListFollowingContract.Presenter {
+public class ListFollowingPresenter extends FollowListBasePresenter implements ListFollowingContract.Presenter {
 
-    private final IUserRepository userRepository;
-    private final String userId;
-    private List<User> followingUsersList;
-
-    public ListFollowingPresenter(IUserRepository userRepository, String userId) {
-        this.userRepository = userRepository;
-        this.userId = userId;
+    public ListFollowingPresenter(IUserRepository userRepository, User user) {
+       super(userRepository, user);
     }
-
 
     @Override
     public void onPresenterCreated() {
-        followingUsersList = new ArrayList<>();
-        disposables.add(userRepository.getFollowingUsersIds(userId)
+        followList = new ArrayList<>();
+        disposables.add(userRepository.getFollowingUsersIds(modelUser.getId())
                 .flatMapMaybe(userRepository::getUser)
                 .subscribeWith(new DisposableObserver<User>() {
                     @Override
                     public void onNext(User user) {
-                        followingUsersList.add(user);
+                        followList.add(user);
                     }
 
                     @Override
@@ -45,7 +37,7 @@ public class ListFollowingPresenter extends BasePresenter<ListFollowingContract.
     }
 
     private void showFollowingList() {
-        getView().showFollowingList(followingUsersList);
+        getView().showList(followList);
     }
 
     @Override

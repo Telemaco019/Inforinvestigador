@@ -8,13 +8,12 @@ import io.reactivex.observers.DisposableObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListFollowersPresenter extends FollowListBasePresenter
-        implements ListFollowersContract.Presenter {
+public class ListFollowersPresenter extends FollowListBasePresenter implements ListFollowersContract.Presenter {
 
     private List<User> followersList;
 
     public ListFollowersPresenter(IUserRepository userRepository, User modelUser) {
-        super(userRepository,modelUser);
+        super(userRepository, modelUser);
     }
 
     @Override

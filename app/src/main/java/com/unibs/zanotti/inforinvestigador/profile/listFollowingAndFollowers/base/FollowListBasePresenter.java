@@ -8,6 +8,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class FollowListBasePresenter extends BasePresenter<FollowListBaseContract.View>
         implements FollowListBaseContract.Presenter {
 
@@ -15,10 +18,12 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
 
     protected final User modelUser;
     protected final IUserRepository userRepository;
+    protected List<User> followList;
 
     public FollowListBasePresenter(IUserRepository userRepository, User modelUser) {
         this.modelUser = modelUser;
         this.userRepository = userRepository;
+        followList = new ArrayList<>();
     }
 
     @Override

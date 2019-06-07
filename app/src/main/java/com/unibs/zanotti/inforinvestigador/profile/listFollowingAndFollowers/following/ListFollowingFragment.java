@@ -9,31 +9,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.adapters.FollowingRecyclerViewAdapter;
+import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.base.FollowListBaseContract;
+import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.base.FollowListBaseView;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ListFollowingFragment extends BaseFragment<ListFollowingContract.View, ListFollowingContract.Presenter>
-        implements ListFollowingContract.View {
+public class ListFollowingFragment extends FollowListBaseView implements ListFollowingContract.View {
 
-    private static final String FRAGMENT_PARCELABLE_ARGUMENT_USER_ID = "ListFollowingFragment.Arguments.User";
+    private static final String FRAGMENT_PARCELABLE_ARGUMENT_USER = "ListFollowingFragment.Arguments.User";
 
     @BindView(R.id.list_recycler_view)
     RecyclerView recyclerView;
 
-    private final FollowingRecyclerViewAdapter mAdapter;
-
     public ListFollowingFragment() {
-        mAdapter = new FollowingRecyclerViewAdapter(new ArrayList<>(0));
+
     }
 
     public static ListFollowingFragment newInstance(User user) {
         Bundle arguments = new Bundle();
-        arguments.putParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER_ID, user);
+        arguments.putParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER, user);
         ListFollowingFragment fragment = new ListFollowingFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -45,6 +42,12 @@ public class ListFollowingFragment extends BaseFragment<ListFollowingContract.Vi
         View view = inflater.inflate(R.layout.fragment_recycler_list, container, false);
         ButterKnife.bind(this, view);
 
+        User user = getArguments().getParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER);
+        mAdapter = new FollowingRecyclerViewAdapter(new ArrayList<>(0),
+                user.getId(),
+                Injection.provideUserRepository(),
+                this);
+
         // Setup recycler view
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -54,13 +57,8 @@ public class ListFollowingFragment extends BaseFragment<ListFollowingContract.Vi
     }
 
     @Override
-    protected ListFollowingContract.Presenter createPresenter() {
-        User user = getArguments().getParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER_ID);
-        return new ListFollowingPresenter(Injection.provideUserRepository(), user.getId());
-    }
-
-    @Override
-    public void showFollowingList(List<User> followingUsersList) {
-        mAdapter.setDataset(followingUsersList);
+    protected FollowListBaseContract.Presenter createPresenter() {
+        User user = getArguments().getParcelable(FRAGMENT_PARCELABLE_ARGUMENT_USER);
+        return new ListFollowingPresenter(Injection.provideUserRepository(), user);
     }
 }
