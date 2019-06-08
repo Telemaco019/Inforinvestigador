@@ -68,5 +68,9 @@ public interface ProfileContract {
         void hideLoadingProgressBar();
 
         void showLoadingProgressBar();
+
+        void showUnfollowButton();
+
+        void showFollowButton();
     }
 }

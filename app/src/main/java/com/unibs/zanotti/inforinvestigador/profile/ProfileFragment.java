@@ -172,12 +172,16 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
 
     @Override
     public void replaceButtonFollowWithUnfollow() {
-        ActivityUtils.substituteViewWithFade(btnProfileFollow, btnProfileUnfollow, 300);
+        if (btnProfileFollow.getVisibility() == View.VISIBLE) {
+            ActivityUtils.substituteViewWithFade(btnProfileFollow, btnProfileUnfollow, 300);
+        }
     }
 
     @Override
     public void replaceButtonUnfollowWithFollow() {
-        ActivityUtils.substituteViewWithFade(btnProfileUnfollow, btnProfileFollow, 300);
+        if (btnProfileUnfollow.getVisibility() == View.VISIBLE) {
+            ActivityUtils.substituteViewWithFade(btnProfileUnfollow, btnProfileFollow, 300);
+        }
     }
 
     @Override
@@ -209,6 +213,20 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     }
 
     @Override
+    public void showUnfollowButton() {
+        if (btnProfileUnfollow.getVisibility() != View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(btnProfileUnfollow, View.VISIBLE, 1f, 300);
+        }
+    }
+
+    @Override
+    public void showFollowButton() {
+        if (btnProfileFollow.getVisibility() != View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(btnProfileFollow, View.VISIBLE, 1f, 300);
+        }
+    }
+
+    @Override
     public void hideLoadingProgressBar() {
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -222,8 +240,8 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
             }
         }
 
-        if(requestCode == ListFollowingAndFollowersActivity.LIST_FOLLOWING_AND_FOLLOWERS_ACTIVITY_REQUEST_CODE) {
-            if(resultCode == ListFollowingAndFollowersActivity.FOLLOWING_OR_FOLLOWERS_UPDATED_RC) {
+        if (requestCode == ListFollowingAndFollowersActivity.LIST_FOLLOWING_AND_FOLLOWERS_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == ListFollowingAndFollowersActivity.FOLLOWING_OR_FOLLOWERS_UPDATED_RC) {
                 presenter.onProfileEdited();
             }
         }

@@ -67,6 +67,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
      * <p>It is assumed that the current user is different from {@link ProfilePresenter#modelUser}</p>
      */
     private void showFollowUnfollowButton() {
+        if (userId.equals(userRepository.getCurrentUserId())) throw new AssertionError();
         disposables.add(userRepository.isFollowing(userRepository.getCurrentUserId(), userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,9 +75,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                     @Override
                     public void onSuccess(Boolean isFollowing) {
                         if (isFollowing) {
-                            getView().replaceButtonFollowWithUnfollow();
+                            getView().showUnfollowButton();
                         } else {
-                            getView().replaceButtonUnfollowWithFollow();
+                            getView().showFollowButton();
                         }
                     }
 
