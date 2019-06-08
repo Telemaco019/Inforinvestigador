@@ -63,14 +63,16 @@ public abstract class FollowListBaseRecyclerViewAdapter
         holder.getUserName().setText(user.getName());
         holder.getUserEmail().setText(user.getEmail());
 
-        adapterDisposables.add(userRepository.isFollowing(modelUserId, user.getId())
+        adapterDisposables.add(userRepository.isFollowing(userRepository.getCurrentUserId(), user.getId())
                 .subscribeWith(new DisposableSingleObserver<Boolean>() {
                     @Override
                     public void onSuccess(Boolean isFollowing) {
-                        if (isFollowing) {
-                            ActivityUtils.animateViewWithFade(holder.getFollowingButton(), View.VISIBLE, 1f, 300);
-                        } else {
-                            ActivityUtils.animateViewWithFade(holder.getFollowButton(), View.VISIBLE, 1f, 300);
+                        if (!user.getId().equals(userRepository.getCurrentUserId())) {
+                            if (isFollowing) {
+                                ActivityUtils.animateViewWithFade(holder.getFollowingButton(), View.VISIBLE, 1f, 300);
+                            } else {
+                                ActivityUtils.animateViewWithFade(holder.getFollowButton(), View.VISIBLE, 1f, 300);
+                            }
                         }
                     }
 
