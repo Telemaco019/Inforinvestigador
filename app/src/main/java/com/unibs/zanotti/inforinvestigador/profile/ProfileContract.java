@@ -64,5 +64,9 @@ public interface ProfileContract {
         void showFollowersList(User user);
 
         void showSharedPapersList(String userId);
+
+        void hideLoadingProgressBar();
+
+        void showLoadingProgressBar();
     }
 }

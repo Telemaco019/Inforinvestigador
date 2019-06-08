@@ -96,6 +96,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                     public void onSuccess(User user) {
                         modelUser = user;
                         showUserProfile();
+                        getView().hideLoadingProgressBar();
                     }
 
                     @Override
@@ -105,7 +106,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
                     @Override
                     public void onComplete() {
-
+                        getView().hideLoadingProgressBar();
                     }
                 }));
     }
@@ -118,6 +119,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     @Override
     public void onPresenterCreated() {
+        getView().showLoadingProgressBar();
         loadModelUser();
     }
 

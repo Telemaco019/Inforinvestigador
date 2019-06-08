@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,6 +65,8 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     LinearLayout phoneFieldLayout;
     @BindView(R.id.profile_location_field_layout)
     LinearLayout locationFieldLayout;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -200,6 +203,15 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
 
     }
 
+    @Override
+    public void showLoadingProgressBar() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoadingProgressBar() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -54,11 +54,13 @@ public class UserFirebaseRepository implements IUserRepository {
                 .addOnSuccessListener(documentSnapshot -> {
                     Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
                     emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                    emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "user", e.toString()));
-                })
-                .addOnCompleteListener(e -> emitter.onComplete()));
+                    emitter.onError(e);
+                    emitter.onComplete();
+                }));
     }
 
     @Override
