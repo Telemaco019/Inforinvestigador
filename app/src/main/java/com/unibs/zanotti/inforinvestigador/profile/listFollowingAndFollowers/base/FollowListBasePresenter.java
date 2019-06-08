@@ -19,15 +19,26 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
     protected final User modelUser;
     protected final IUserRepository userRepository;
     protected List<User> followList;
+    /**
+     * Indicates if followers/following list has been updated, e.g. the user started or stopped following another user
+     * while viewing the list
+     */
+    protected boolean followListUpdated;
 
     public FollowListBasePresenter(IUserRepository userRepository, User modelUser) {
         this.modelUser = modelUser;
         this.userRepository = userRepository;
         followList = new ArrayList<>();
+        followListUpdated = false;
     }
 
     @Override
     public void onFollowButtonClicked(String userId, int adapterPosition) {
+        if (!followListUpdated) {
+            followListUpdated = true;
+            getView().setActivityResultFollowListUpdated();
+        }
+
         disposables.add(userRepository.followUser(modelUser.getId(), userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,6 +57,11 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
 
     @Override
     public void onFollowingButtonClicked(String userId, int adapterPosition) {
+        if (!followListUpdated) {
+            followListUpdated = true;
+            getView().setActivityResultFollowListUpdated();
+        }
+
         disposables.add(userRepository.unfollowUser(modelUser.getId(), userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

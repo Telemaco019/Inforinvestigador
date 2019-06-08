@@ -183,7 +183,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         intent.putExtra(ListFollowingAndFollowersActivity.PARCELABLE_EXTRA_USER, user);
         intent.putExtra(ListFollowingAndFollowersActivity.INT_EXTRA_INITIAL_SELECTED_TAB,
                 FollowingFollowersPageAdapter.POSITION_TAB_FOLLOWING_LIST);
-        startActivity(intent);
+        startActivityForResult(intent, ListFollowingAndFollowersActivity.LIST_FOLLOWING_AND_FOLLOWERS_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         intent.putExtra(ListFollowingAndFollowersActivity.PARCELABLE_EXTRA_USER, user);
         intent.putExtra(ListFollowingAndFollowersActivity.INT_EXTRA_INITIAL_SELECTED_TAB,
                 FollowingFollowersPageAdapter.POSITION_TAB_FOLLOWERS_LIST);
-        startActivity(intent);
+        startActivityForResult(intent, ListFollowingAndFollowersActivity.LIST_FOLLOWING_AND_FOLLOWERS_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -206,6 +206,12 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EditProfileActivity.EDIT_PROFILE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+                presenter.onProfileEdited();
+            }
+        }
+
+        if(requestCode == ListFollowingAndFollowersActivity.LIST_FOLLOWING_AND_FOLLOWERS_ACTIVITY_REQUEST_CODE) {
+            if(resultCode == ListFollowingAndFollowersActivity.FOLLOWING_OR_FOLLOWERS_UPDATED_RC) {
                 presenter.onProfileEdited();
             }
         }

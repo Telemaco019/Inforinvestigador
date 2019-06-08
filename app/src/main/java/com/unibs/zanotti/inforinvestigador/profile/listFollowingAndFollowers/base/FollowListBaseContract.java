@@ -11,6 +11,8 @@ public interface FollowListBaseContract {
         void showList(List<User> list);
 
         void notifyItemUpdated(int adapterPosition);
+
+        void setActivityResultFollowListUpdated();
     }
 
     interface Presenter extends BaseContract.Presenter<FollowListBaseContract.View> {

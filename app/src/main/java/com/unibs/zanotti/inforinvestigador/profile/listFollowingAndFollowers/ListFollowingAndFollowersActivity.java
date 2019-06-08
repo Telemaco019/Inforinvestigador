@@ -1,6 +1,5 @@
 package com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
@@ -13,6 +12,8 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 public class ListFollowingAndFollowersActivity extends AppCompatActivity {
     public static final String PARCELABLE_EXTRA_USER = "ListFollowingAndFollowersActivity.Extra.String.USER";
     public static final String INT_EXTRA_INITIAL_SELECTED_TAB = "ListFollowingAndFollowersActivity.Extra.String.INITIAL_SELECTED_TAB";
+    public static final int LIST_FOLLOWING_AND_FOLLOWERS_ACTIVITY_REQUEST_CODE = 801;
+    public static final int FOLLOWING_OR_FOLLOWERS_UPDATED_RC = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class ListFollowingAndFollowersActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            this.setResult(Activity.RESULT_CANCELED);
             this.finish();
         }
 
