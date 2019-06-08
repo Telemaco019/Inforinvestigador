@@ -200,4 +200,10 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     public void onSharedPapersNumberClicked() {
         getView().showSharedPapersList(userId);
     }
+
+    @Override
+    public void onRefresh() {
+        getView().showLoadingProgressBar();
+        loadModelUser();
+    }
 }

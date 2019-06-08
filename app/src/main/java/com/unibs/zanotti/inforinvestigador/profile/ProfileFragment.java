@@ -86,6 +86,9 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
 
+        // Add swipe refresh listener
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.onRefresh());
+
         return view;
     }
 
@@ -213,6 +216,11 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     }
 
     @Override
+    public void hideLoadingProgressBar() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
     public void showUnfollowButton() {
         if (btnProfileUnfollow.getVisibility() != View.VISIBLE) {
             ActivityUtils.animateViewWithFade(btnProfileUnfollow, View.VISIBLE, 1f, 300);
@@ -224,11 +232,6 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         if (btnProfileFollow.getVisibility() != View.VISIBLE) {
             ActivityUtils.animateViewWithFade(btnProfileFollow, View.VISIBLE, 1f, 300);
         }
-    }
-
-    @Override
-    public void hideLoadingProgressBar() {
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

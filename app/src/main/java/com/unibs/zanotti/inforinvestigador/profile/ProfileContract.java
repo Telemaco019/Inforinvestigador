@@ -23,6 +23,8 @@ public interface ProfileContract {
         void onFollowingNumberClicked();
 
         void onSharedPapersNumberClicked();
+
+        void onRefresh();
     }
 
     interface View extends BaseContract.View {
