@@ -69,6 +69,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/shared_paper_topics"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
                 </LinearLayout>
             </LinearLayout>
