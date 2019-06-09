@@ -38,15 +38,15 @@ public class PaperDetailFragment
     private CommentsAdapter commentsAdapter;
 
     // View elements
-    @BindView(R.id.shared_paper_title)
+    @BindView(R.id.paper_title)
     TextView paperTitle;
     @BindView(R.id.paper_abstract)
     TextView paperAbstract;
-    @BindView(R.id.shared_paper_date)
+    @BindView(R.id.paper_date)
     TextView paperDate;
-    @BindView(R.id.shared_paper_authors)
+    @BindView(R.id.paper_authors)
     TextView paperAuthors;
-    @BindView(R.id.shared_paper_topics)
+    @BindView(R.id.paper_topics)
     TextView paperTopics;
     @BindView(R.id.paper_citations)
     TextView paperCitations;

@@ -27,7 +27,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/shared_paper_title"
+                        android:id="@+id/paper_title"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
 
                 <LinearLayout
@@ -39,14 +39,14 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/shared_paper_date"/>
+                            android:id="@+id/paper_date"/>
 
                     <include layout="@layout/dash_separator_layout"/>
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/shared_paper_topics"/>
+                            android:id="@+id/paper_topics"/>
                 </LinearLayout>
 
                 <TextView
@@ -63,7 +63,7 @@
                         android:layout_marginTop="@dimen/baseMargin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/shared_paper_authors"
+                        android:id="@+id/paper_authors"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
 
                 <ImageView
