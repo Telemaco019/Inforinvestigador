@@ -32,39 +32,45 @@
                     app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
                     android:layout_marginEnd="8dp"/>
 
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/shared_paper_title"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/shared_paper_authors"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
-
             <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/shared_paper_date"/>
-
-                <include layout="@layout/dash_separator_layout"/>
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/shared_paper_paper_topics"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
+                        android:id="@+id/shared_paper_title"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/shared_paper_authors"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/shared_paper_date"/>
+
+                    <include layout="@layout/dash_separator_layout"/>
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/shared_paper_topics"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

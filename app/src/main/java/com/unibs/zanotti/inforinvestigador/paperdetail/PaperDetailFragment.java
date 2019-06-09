@@ -46,7 +46,7 @@ public class PaperDetailFragment
     TextView paperDate;
     @BindView(R.id.shared_paper_authors)
     TextView paperAuthors;
-    @BindView(R.id.shared_paper_paper_topics)
+    @BindView(R.id.shared_paper_topics)
     TextView paperTopics;
     @BindView(R.id.paper_citations)
     TextView paperCitations;

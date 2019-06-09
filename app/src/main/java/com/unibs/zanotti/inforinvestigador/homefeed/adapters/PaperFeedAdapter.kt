@@ -28,7 +28,7 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
         var tvPaperTitle = view.findViewById<TextView>(R.id.shared_paper_title)
         var tvPaperAuthors = view.findViewById<TextView>(R.id.shared_paper_authors)
         var tvPaperDate = view.findViewById<TextView>(R.id.shared_paper_date)
-        var tvPaperTopics = view.findViewById<TextView>(R.id.shared_paper_paper_topics)
+        var tvPaperTopics = view.findViewById<TextView>(R.id.shared_paper_topics)
         var tvPaperComment = view.findViewById<TextView>(R.id.shared_paper_comment)
         var tvSharingUser = view.findViewById<TextView>(R.id.shared_paper_sharing_user_name)
         var tvSharingUserProfilePicture = view.findViewById<CircleImageView>(R.id.shared_paper_sharing_user_picture)
@@ -51,7 +51,7 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
         val paperTitle = dataset[position].paperTitle
         val authors = dataset[position].paperAuthors?.joinToString(separator = ", ")
         val paperDate = dataset[position].paperDate
-        val topics = dataset[position].paperTopics?.joinToString { t -> t }
+        val topics = dataset[position].paperTopics?.joinToString(separator = ", ")
         val sharingUserComment = dataset[position].sharingUserComment
         val sharingUserName = dataset[position].sharingUserName
 
