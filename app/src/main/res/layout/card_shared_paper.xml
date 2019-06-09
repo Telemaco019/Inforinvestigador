@@ -12,50 +12,88 @@
         android:layout_marginLeft="@dimen/baseMargin"
         android:layout_marginBottom="@dimen/verticalComponentsSpacing">
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:orientation="vertical"
-                  android:layout_height="wrap_content"
-                  android:padding="@dimen/basePadding"
-                  android:foreground="?android:attr/selectableItemBackground">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/basePadding"
+            android:foreground="?android:attr/selectableItemBackground">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
             <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/sharing_user_picture"
+                    android:id="@+id/shared_paper_sharing_user_picture"
                     android:layout_width="@dimen/roundProfilePictureSizeSmall"
                     android:layout_height="@dimen/roundProfilePictureSizeSmall"
                     app:civ_border_color="@color/colorPrimaryDark"
-                    android:src="@drawable/test_researcher_1"
                     app:civ_border_width="@dimen/roundProfilePictureBorderWidth"
-                    android:layout_marginRight="8dp"/>
-            <include layout="@layout/paper_summary"/>
+                    android:layout_marginEnd="8dp"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/shared_paper_title"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/shared_paper_authors"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/shared_paper_date"/>
+
+                <include layout="@layout/dash_separator_layout"/>
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/shared_paper_paper_topics"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
                 android:layout_marginTop="@dimen/baseMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_shared_paper"
-                android:text="Comment: this is the comment of the shared paper. The comment is done by the user who has shared the paper and it will have a maximum number of characters"
+                android:id="@+id/shared_paper_comment"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/baseMargin">
 
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                      android:text="Shared by: Mario Relha"
-                      android:id="@+id/tv_shared_by"
-                      android:layout_alignBottom="@+id/img_like_icon"/>
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/ic_favorite_black_24dp"
-                       android:layout_alignParentEnd="true"
-                       android:tint="@color/colorPrimaryDark"
-                       android:id="@+id/img_like_icon"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:id="@+id/shared_paper_sharing_user_name"
+                    android:layout_alignBottom="@+id/img_like_icon"/>
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_favorite_black_24dp"
+                    android:layout_alignParentEnd="true"
+                    android:tint="@color/colorPrimaryDark"
+                    android:id="@+id/img_like_icon"/>
 
         </RelativeLayout>
     </LinearLayout>

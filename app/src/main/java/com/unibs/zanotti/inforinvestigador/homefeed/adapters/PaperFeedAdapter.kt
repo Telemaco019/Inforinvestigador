@@ -25,13 +25,13 @@ class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareL
             listener.onPaperShareClick(dataset[adapterPosition].paperId)
         }
 
-        var tvPaperTitle = view.findViewById<TextView>(R.id.paper_title)
-        var tvPaperAuthors = view.findViewById<TextView>(R.id.paper_authors)
-        var tvPaperDate = view.findViewById<TextView>(R.id.paper_date)
-        var tvPaperTopics = view.findViewById<TextView>(R.id.paper_topics)
-        var tvPaperComment = view.findViewById<TextView>(R.id.tv_shared_paper)
-        var tvSharingUser = view.findViewById<TextView>(R.id.tv_shared_by)
-        var tvSharingUserProfilePicture = view.findViewById<CircleImageView>(R.id.sharing_user_picture)
+        var tvPaperTitle = view.findViewById<TextView>(R.id.shared_paper_title)
+        var tvPaperAuthors = view.findViewById<TextView>(R.id.shared_paper_authors)
+        var tvPaperDate = view.findViewById<TextView>(R.id.shared_paper_date)
+        var tvPaperTopics = view.findViewById<TextView>(R.id.shared_paper_paper_topics)
+        var tvPaperComment = view.findViewById<TextView>(R.id.shared_paper_comment)
+        var tvSharingUser = view.findViewById<TextView>(R.id.shared_paper_sharing_user_name)
+        var tvSharingUserProfilePicture = view.findViewById<CircleImageView>(R.id.shared_paper_sharing_user_picture)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

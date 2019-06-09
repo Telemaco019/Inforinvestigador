@@ -53,5 +53,8 @@
     <string name="field_required_error_msg">Cannot be empty</string>
     <string name="wait_profile_picture_saving_msg">Uploading profile picture, please wait...</string>
     <string name="profile_unfollow_btn_caption">Unfollow</string>
+    <string name="paper_detail_btn_go_to_source">Go to source</string>
+    <string name="paper_detail_comments_caption">Comments</string>
+    <string name="dash_separator">-</string>
 
 </resources>
