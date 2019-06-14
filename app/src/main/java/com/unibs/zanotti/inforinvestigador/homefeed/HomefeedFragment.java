@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,6 +24,7 @@ import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import com.unibs.zanotti.inforinvestigador.utils.itemTouch.SimpleItemTouchHelperCallback;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -67,6 +69,9 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         papersRecyclerView.setHasFixedSize(true);
         papersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         papersRecyclerView.setAdapter(paperFeedAdapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(paperFeedAdapter, false, true);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(papersRecyclerView);
 
         // Add swipe refresh listener
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.onRefresh());

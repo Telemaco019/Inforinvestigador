@@ -8,10 +8,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.unibs.zanotti.inforinvestigador.R
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper
+import com.unibs.zanotti.inforinvestigador.utils.itemTouch.ItemTouchHelperAdapter
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.Collections.swap
 
-class PaperFeedAdapter(var dataset: List<FeedPaper>, val listener: OnPaperShareListener) :
-    RecyclerView.Adapter<PaperFeedAdapter.MyViewHolder>() {
+class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPaperShareListener) :
+    RecyclerView.Adapter<PaperFeedAdapter.MyViewHolder>(),
+    ItemTouchHelperAdapter {
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                swap(dataset, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                swap(dataset, i, i - 1)
+            }
+        }
+
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    override fun onItemDismiss(position: Int) {
+        dataset.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     inner class MyViewHolder(view: View, val listener: OnPaperShareListener) :
         RecyclerView.ViewHolder(view),
