@@ -13,6 +13,7 @@ public class FeedPaper {
     private String paperDate;
     private List<String> paperTopics;
     private List<String> paperAuthors;
+    private String sharingUserId;
 
     public FeedPaper(String paperId,
                      String paperTitle,
@@ -21,7 +22,8 @@ public class FeedPaper {
                      Uri sharingUserProfilePicture,
                      String paperDate,
                      List<String> paperTopics,
-                     List<String> paperAuthors) {
+                     List<String> paperAuthors,
+                     String sharingUserId) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.sharingUserComment = sharingUserComment;
@@ -30,6 +32,15 @@ public class FeedPaper {
         this.paperDate = paperDate;
         this.paperTopics = paperTopics;
         this.paperAuthors = paperAuthors;
+        this.sharingUserId = sharingUserId;
+    }
+
+    public String getSharingUserId() {
+        return sharingUserId;
+    }
+
+    public void setSharingUserId(String sharingUserId) {
+        this.sharingUserId = sharingUserId;
     }
 
     public String getPaperId() {

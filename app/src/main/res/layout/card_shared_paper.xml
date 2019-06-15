@@ -92,6 +92,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:clickable="true"
+                    android:textColor="@drawable/secondary_color_clickable_icon_selector"
                     android:id="@+id/shared_paper_sharing_user_name"
                     android:layout_alignBottom="@+id/img_like_icon"/>
 

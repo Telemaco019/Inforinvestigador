@@ -39,14 +39,6 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
         RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
-        init {
-            view.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            listener.onPaperShareClick(dataset[adapterPosition].paperId)
-        }
-
         var tvPaperTitle = view.findViewById<TextView>(R.id.shared_paper_title)
         var tvPaperAuthors = view.findViewById<TextView>(R.id.shared_paper_authors)
         var tvPaperDate = view.findViewById<TextView>(R.id.shared_paper_date)
@@ -54,6 +46,22 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
         var tvPaperComment = view.findViewById<TextView>(R.id.shared_paper_comment)
         var tvSharingUser = view.findViewById<TextView>(R.id.shared_paper_sharing_user_name)
         var tvSharingUserProfilePicture = view.findViewById<CircleImageView>(R.id.shared_paper_sharing_user_picture)
+
+        init {
+            view.setOnClickListener(this)
+
+            tvSharingUser.setOnClickListener {
+                listener.onPaperSharingUserClick(dataset[adapterPosition].sharingUserId)
+            }
+
+            tvSharingUserProfilePicture.setOnClickListener {
+                listener.onPaperSharingUserClick(dataset[adapterPosition].sharingUserId)
+            }
+        }
+
+        override fun onClick(v: View?) {
+            listener.onPaperShareClick(dataset[adapterPosition].paperId)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -93,5 +101,7 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
 
     interface OnPaperShareListener {
         fun onPaperShareClick(paperId: String)
+
+        fun onPaperSharingUserClick(userId: String)
     }
 }

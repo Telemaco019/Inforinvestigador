@@ -158,4 +158,11 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     public void onPaperShareClick(@NotNull String paperId) {
         presenter.paperShareClicked(paperId);
     }
+
+    @Override
+    public void onPaperSharingUserClick(@NotNull String userId) {
+        Intent intent = new Intent(Actions.SHOW_RESEARCHER_PROFILE);
+        intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID, userId);
+        startActivity(intent);
+    }
 }

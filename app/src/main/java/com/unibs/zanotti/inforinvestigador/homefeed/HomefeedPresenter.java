@@ -95,7 +95,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                                 user.getProfilePictureUri(),
                                 paper.getPaperDate(),
                                 paper.getPaperTopics(),
-                                paper.getPaperAuthors()))
+                                paper.getPaperAuthors(),
+                                paper.getSharingUserId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<FeedPaper>() {
