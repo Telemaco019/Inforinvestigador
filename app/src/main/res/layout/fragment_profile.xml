@@ -196,6 +196,8 @@
                             android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@drawable/clickable_tertiary_text_selector"
+                            android:clickable="true"
                             android:paddingStart="20dp"
                             android:id="@+id/profile_email_tv"/>
                 </LinearLayout>
@@ -218,8 +220,10 @@
                     <TextView
                             android:id="@+id/profile_phone_number_tv"
                             android:textStyle="bold"
+                            android:clickable="true"
                             android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
+                            android:textColor="@drawable/clickable_tertiary_text_selector"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"/>
                 </LinearLayout>

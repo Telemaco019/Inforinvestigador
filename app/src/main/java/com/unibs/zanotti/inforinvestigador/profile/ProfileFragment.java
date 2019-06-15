@@ -292,6 +292,24 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         presenter.onSharedPapersNumberClicked();
     }
 
+    @OnClick(R.id.profile_email_tv)
+    public void onEmailClicked() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:" + tvEmail.getText().toString()));
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    @OnClick(R.id.profile_phone_number_tv)
+    public void onPhoneNumberClicked() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + tvPhone.getText().toString()));
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
     @Override
     protected ProfileContract.Presenter createPresenter() {
         IUserRepository userRepository = Injection.provideUserRepository();
