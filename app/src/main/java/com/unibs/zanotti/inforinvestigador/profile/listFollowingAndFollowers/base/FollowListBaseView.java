@@ -1,9 +1,12 @@
 package com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.base;
 
+import android.content.Intent;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
+import com.unibs.zanotti.inforinvestigador.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity;
 import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.adapters.Listeners;
+import com.unibs.zanotti.inforinvestigador.utils.Actions;
 
 import java.util.List;
 
@@ -24,7 +27,10 @@ public abstract class FollowListBaseView extends BaseFragment<FollowListBaseCont
 
     @Override
     public void onCardClicked(User user) {
-        presenter.onCardClicked(user);
+        Intent intent = new Intent(Actions.SHOW_RESEARCHER_PROFILE);
+        intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID,user.getId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override

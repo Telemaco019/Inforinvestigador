@@ -79,11 +79,6 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
     }
 
     @Override
-    public void onCardClicked(User user) {
-
-    }
-
-    @Override
     public void onPresenterCreated() {
         this.loadList();
     }
