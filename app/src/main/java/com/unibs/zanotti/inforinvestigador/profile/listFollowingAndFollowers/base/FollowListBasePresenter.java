@@ -85,6 +85,28 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
 
     @Override
     public void onPresenterCreated() {
-
+        this.loadList();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.showList();
+    }
+
+    @Override
+    public void refreshData() {
+        this.loadList();
+        followListUpdated = false;
+    }
+
+    protected void showList() {
+        getView().showList(followList);
+    }
+
+    public boolean isFollowListUpdated() {
+        return followListUpdated;
+    }
+
+    protected abstract void loadList();
 }

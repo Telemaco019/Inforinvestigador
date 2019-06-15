@@ -6,11 +6,8 @@ import com.unibs.zanotti.inforinvestigador.profile.listFollowingAndFollowers.bas
 import io.reactivex.observers.DisposableObserver;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListFollowersPresenter extends FollowListBasePresenter implements ListFollowersContract.Presenter {
-
-    private List<User> followersList;
 
     public ListFollowersPresenter(IUserRepository userRepository, User modelUser) {
         super(userRepository, modelUser);
@@ -18,13 +15,18 @@ public class ListFollowersPresenter extends FollowListBasePresenter implements L
 
     @Override
     public void onPresenterCreated() {
-        followersList = new ArrayList<>();
+        loadList();
+    }
+
+    @Override
+    protected void loadList() {
+        followList = new ArrayList<>();
         disposables.add(userRepository.getFollowersUsersIds(modelUser.getId())
                 .flatMapMaybe(userRepository::getUser)
                 .subscribeWith(new DisposableObserver<User>() {
                     @Override
                     public void onNext(User user) {
-                        followersList.add(user);
+                        followList.add(user);
                     }
 
                     @Override
@@ -34,18 +36,8 @@ public class ListFollowersPresenter extends FollowListBasePresenter implements L
 
                     @Override
                     public void onComplete() {
-                        showFollowersList();
+                        showList();
                     }
                 }));
-    }
-
-    private void showFollowersList() {
-        getView().showList(followersList);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        showFollowersList();
     }
 }

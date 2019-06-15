@@ -86,7 +86,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
 
-        // Add swipe refresh listener
+        // Add swipe refreshData listener
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.onRefresh());
 
         return view;

@@ -35,6 +35,11 @@ public class ListFollowersFragment extends FollowListBaseView implements ListFol
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler_list, container, false);
         ButterKnife.bind(this, view);

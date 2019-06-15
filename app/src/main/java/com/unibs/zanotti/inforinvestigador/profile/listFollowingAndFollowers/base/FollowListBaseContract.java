@@ -22,5 +22,9 @@ public interface FollowListBaseContract {
         void onFollowingButtonClicked(String userId, int adapterPosition);
 
         void onCardClicked(User user);
+
+        void refreshData();
+
+        boolean isFollowListUpdated();
     }
 }

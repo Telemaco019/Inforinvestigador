@@ -41,4 +41,12 @@ public abstract class FollowListBaseView extends BaseFragment<FollowListBaseCont
     public void setActivityResultFollowListUpdated() {
         getActivity().setResult(ListFollowingAndFollowersActivity.FOLLOWING_OR_FOLLOWERS_UPDATED_RC);
     }
+
+    public boolean isFollowListUpdated() {
+        return presenter.isFollowListUpdated();
+    }
+
+    public void refreshData() {
+        presenter.refreshData();
+    }
 }

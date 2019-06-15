@@ -73,7 +73,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(papersRecyclerView);
 
-        // Add swipe refresh listener
+        // Add swipe refreshData listener
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.onRefresh());
 
         return view;

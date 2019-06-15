@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class ListFollowingPresenter extends FollowListBasePresenter implements ListFollowingContract.Presenter {
 
     public ListFollowingPresenter(IUserRepository userRepository, User user) {
-       super(userRepository, user);
+        super(userRepository, user);
     }
 
     @Override
-    public void onPresenterCreated() {
+    protected void loadList() {
         followList = new ArrayList<>();
         disposables.add(userRepository.getFollowingUsersIds(modelUser.getId())
                 .flatMapMaybe(userRepository::getUser)
@@ -31,18 +31,8 @@ public class ListFollowingPresenter extends FollowListBasePresenter implements L
 
                     @Override
                     public void onComplete() {
-                        showFollowingList();
+                        showList();
                     }
                 }));
-    }
-
-    private void showFollowingList() {
-        getView().showList(followList);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        showFollowingList();
     }
 }
