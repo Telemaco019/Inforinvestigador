@@ -25,6 +25,9 @@ exports.sendNotification = functions.firestore.document('/papers/{paperId}/comme
                     body: comment.body,
                 }
             }
+            admin.messaging().sendToDevice(userInstanceId,notificationPayload)
+            .then(response => console.log('Message sent successfully. ',response))
+            .catch(error => console.log('Error sending message. ', error));
         }
     });
     /* const message = event.data.current.val();

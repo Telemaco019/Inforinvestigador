@@ -49,5 +49,5 @@ public interface IPaperRepository {
      *                      comments have been liked by him and marked them as "liked"
      * @return
      */
-    Observable<Comment> getCommentsRealTime(String paperId, String currentUserId);
+    Observable<Comment> listenForNewComments(String paperId, String currentUserId);
 }
