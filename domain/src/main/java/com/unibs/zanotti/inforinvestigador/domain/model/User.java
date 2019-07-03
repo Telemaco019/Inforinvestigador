@@ -23,6 +23,7 @@ public class User implements Parcelable {
      * If true, then the user has been verified (e.g. through email verification). False by default.
      */
     private boolean verified;
+    private String instanceId;
 
     public User(String id,
                 String email,
@@ -33,7 +34,8 @@ public class User implements Parcelable {
                 int followingNumber,
                 int followersNumber,
                 Uri profilePictureUri,
-                LocalDateTime creationDateTime) {
+                LocalDateTime creationDateTime,
+                String instanceId) {
         this.id = id;
         this.email = email;
         this.phone = phone;
@@ -44,6 +46,7 @@ public class User implements Parcelable {
         this.followingNumber = followingNumber;
         this.profilePictureUri = profilePictureUri;
         this.creationDateTime = creationDateTime;
+        this.instanceId = instanceId;
         this.verified = false;
     }
 
@@ -59,6 +62,7 @@ public class User implements Parcelable {
         profilePictureUri = in.readParcelable(Uri.class.getClassLoader());
         verified = in.readByte() != 0;
         creationDateTime = DateUtils.fromEpochTimestampMillis(in.readLong());
+        instanceId = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -148,6 +152,15 @@ public class User implements Parcelable {
         dest.writeParcelable(profilePictureUri, flags);
         dest.writeByte((byte) (verified ? 1 : 0));
         dest.writeLong(DateUtils.fromLocalDateTimeToEpochMills(creationDateTime));
+        dest.writeString(instanceId);
+    }
+
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
     }
 
     public String getPhone() {

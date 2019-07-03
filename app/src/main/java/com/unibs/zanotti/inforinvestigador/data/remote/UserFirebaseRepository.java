@@ -52,8 +52,10 @@ public class UserFirebaseRepository implements IUserRepository {
         return Maybe.create(emitter -> firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
-                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                    if (documentSnapshot.exists()) {
+                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
+                        emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                    }
                     emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
@@ -226,10 +228,8 @@ public class UserFirebaseRepository implements IUserRepository {
     @Override
     public Completable saveFirebaseToken(String userId, String token) {
         return Completable.create(emitter -> {
-            Map<String, String> data = new HashMap<>();
-            data.put(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_TOKEN_INSTANCE_ID, token);
             firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
-                    .set(data)
+                    .update(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_TOKEN_INSTANCE_ID, token)
                     .addOnFailureListener(emitter::onError)
                     .addOnCompleteListener(e -> emitter.onComplete());
         });
@@ -245,7 +245,8 @@ public class UserFirebaseRepository implements IUserRepository {
                 user.getFollowingNumber(),
                 user.getFollowersNumber(),
                 user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
-                DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()));
+                DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()),
+                user.getInstanceId());
     }
 
     private User fromEntity(UserEntity userEntity) {
@@ -258,6 +259,7 @@ public class UserFirebaseRepository implements IUserRepository {
                 userEntity.getFollowingNumber(),
                 userEntity.getFollowersNumber(),
                 Uri.parse(userEntity.getProfilePictureUri()),
-                DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()));
+                DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()),
+                userEntity.getInstanceId());
     }
 }
