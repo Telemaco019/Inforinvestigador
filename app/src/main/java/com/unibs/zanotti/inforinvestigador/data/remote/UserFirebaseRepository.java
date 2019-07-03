@@ -223,6 +223,18 @@ public class UserFirebaseRepository implements IUserRepository {
         });
     }
 
+    @Override
+    public Completable saveFirebaseToken(String userId, String token) {
+        return Completable.create(emitter -> {
+            Map<String, String> data = new HashMap<>();
+            data.put(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_TOKEN_INSTANCE_ID, token);
+            firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
+                    .set(data)
+                    .addOnFailureListener(emitter::onError)
+                    .addOnCompleteListener(e -> emitter.onComplete());
+        });
+    }
+
     private UserEntity fromUser(User user) {
         return new UserEntity(user.getId(),
                 user.getEmail(),
