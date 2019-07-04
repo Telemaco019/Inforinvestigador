@@ -53,15 +53,16 @@ public class UserFirebaseRepository implements IUserRepository {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
                         emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
+                    } else {
+                        emitter.onComplete();
+                        Log.d(TAG, String.format("Document with id %s does not exist", userId));
                     }
-                    emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "user", e.toString()));
                     emitter.onError(e);
-                    emitter.onComplete();
                 }));
     }
 

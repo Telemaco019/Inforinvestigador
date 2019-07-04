@@ -42,12 +42,17 @@ public class PaperFirebaseRepository implements IPaperRepository {
         return Maybe.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPERS, paperId))
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
-                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))));
+                    if (documentSnapshot.exists()) {
+                        emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))));
+                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
+                    } else {
+                        emitter.onComplete();
+                        Log.e(TAG, String.format("Document with id %s does not exist", paperId));
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
                     emitter.onError(e);
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
                 })
                 .addOnCompleteListener(task -> emitter.onComplete())
         );
