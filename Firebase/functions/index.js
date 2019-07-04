@@ -6,18 +6,19 @@ admin.initializeApp()
 exports.sendNotification = functions.firestore.document('/papers/{paperId}/comments/{commentId}').onCreate((snap, context) => {
     const promises = [];
     const comment = snap.data();
-    const commentAuthorId = comment.commentAuthorId;
+    const commentAuthorId = comment.authorId;
     const sharedPaperId = context.params.paperId;
 
     const getSharedPaperPromise = admin.firestore().doc(`/papers/${sharedPaperId}`).get();
-    
+
     return getSharedPaperPromise.then(result => {
         return result.data().sharingUserId;
     }).then(sharingUserId => {
         return admin.firestore().doc(`/users/${sharingUserId}`).get();
-    }).then(sharingUser => {
-        if(commentAuthorId != sharingUser.id) {
-            console.log('Notifying to user ' + sharingUser.id + ' new comment on paper ' + sharedPaperId + ' made by user ' + commentAuthorId);
+    }).then(docSnapshot => {
+        if (docSnapshot.exists && commentAuthorId != docSnapshot.id) {
+            console.log('Notifying to user ' + docSnapshot.id + ' new comment on paper ' + sharedPaperId + ' made by user ' + commentAuthorId);
+            const sharingUser = docSnapshot.data();
             const userInstanceId = sharingUser.instanceId;
             const notificationPayload = {
                 notification: {
@@ -25,9 +26,10 @@ exports.sendNotification = functions.firestore.document('/papers/{paperId}/comme
                     body: comment.body,
                 }
             }
-            admin.messaging().sendToDevice(userInstanceId,notificationPayload)
-            .then(response => console.log('Message sent successfully. ',response))
-            .catch(error => console.log('Error sending message. ', error));
+            console.log('Sending notification to user with instance id ' + userInstanceId);
+            admin.messaging().sendToDevice(userInstanceId, notificationPayload)
+                .then(response => console.log('Message sent successfully. ', response))
+                .catch(error => console.log('Error sending message. ', error));
         }
     });
     /* const message = event.data.current.val();

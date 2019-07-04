@@ -80,7 +80,7 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     public void addComment(String comment) {
         String currentUserId = userRepository.getCurrentUserId();
         disposables.add(userRepository.getUser(currentUserId)
-                .flatMapSingle(user -> paperRepository.saveComment(ModelFactory.createComment(paperId, comment, user.getName())))
+                .flatMapSingle(user -> paperRepository.saveComment(ModelFactory.createComment(paperId, comment, user.getName(), currentUserId)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Comment>() {

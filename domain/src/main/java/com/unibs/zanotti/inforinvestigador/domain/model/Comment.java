@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class Comment implements Parcelable {
     private String body;
-    private String author;
+    private String authorName;
     private int likesCount;
     private String id;
     private LocalDateTime dateTime;
@@ -16,30 +16,34 @@ public class Comment implements Parcelable {
      * Flag that indicates if the user currently logged into Inforinvestigador has liked the comment
      */
     private boolean likedByCurrentUser;
+    private String authorId;
 
     public Comment(String body,
-                   String author,
+                   String authorName,
                    int likesCount,
                    String id,
                    LocalDateTime dateTime,
-                   String paperId) {
+                   String paperId,
+                   String authorId) {
         this.body = body;
-        this.author = author;
+        this.authorName = authorName;
         this.likesCount = likesCount;
         this.id = id;
         this.dateTime = dateTime;
         this.paperId = paperId;
+        this.authorId = authorId;
 
         this.likedByCurrentUser = false;
     }
 
     protected Comment(Parcel in) {
         body = in.readString();
-        author = in.readString();
+        authorName = in.readString();
         likesCount = in.readInt();
         id = in.readString();
         dateTime = LocalDateTime.parse(in.readString());
         paperId = in.readString();
+        authorId = in.readString();
     }
 
     public static final Creator<Comment> CREATOR = new Creator<Comment>() {
@@ -62,11 +66,20 @@ public class Comment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(body);
-        dest.writeString(author);
+        dest.writeString(authorName);
         dest.writeInt(likesCount);
         dest.writeString(id);
         dest.writeString(dateTime.toString());
         dest.writeString(paperId);
+        dest.writeString(authorId);
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getPaperId() {
@@ -85,12 +98,12 @@ public class Comment implements Parcelable {
         this.body = body;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public int getLikesCount() {

@@ -17,12 +17,13 @@ public class ModelFactory {
      * @param authorName
      * @return
      */
-    public static Comment createComment(String paperId, String body, String authorName) {
+    public static Comment createComment(String paperId, String body, String authorName,String authorId) {
         return new Comment(body,
                 authorName,
                 0,
                 null,
                 LocalDateTime.now(),
-                paperId);
+                paperId,
+                authorId);
     }
 }

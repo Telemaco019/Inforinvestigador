@@ -76,7 +76,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = dataset.get(position);
-        holder.getTv_comment_author().setText(comment.getAuthor());
+        holder.getTv_comment_author().setText(comment.getAuthorName());
         holder.getTv_comment_body().setText(comment.getBody());
         holder.getTv_comment_score().setText(String.valueOf(comment.getLikesCount()));
         holder.getTv_comment_date().setText(DateUtils.elapsedTime(comment.getDateTime(), LocalDateTime.now(), "now"));

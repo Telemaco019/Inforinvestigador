@@ -124,10 +124,11 @@ public class PaperFirebaseRepository implements IPaperRepository {
         return Single.create(emitter -> {
             CommentEntity commentEntity = new CommentEntity(
                     comment.getBody(),
-                    comment.getAuthor(),
+                    comment.getAuthorName(),
                     comment.getLikesCount(),
                     comment.getId(),
-                    DateUtils.fromLocalDateTimeToEpochMills(comment.getDateTime()));
+                    DateUtils.fromLocalDateTimeToEpochMills(comment.getDateTime()),
+                    comment.getAuthorId());
 
             CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(comment.getPaperId()).collection(Collections.COMMENTS);
 
@@ -248,11 +249,12 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
     private Comment fromEntity(CommentEntity commentEntity, String paperId, String currentUserId) {
         Comment result = new Comment(commentEntity.getBody(),
-                commentEntity.getAuthor(),
+                commentEntity.getAuthorName(),
                 commentEntity.getLikesCount(),
                 commentEntity.getId(),
                 DateUtils.fromEpochTimestampMillis(commentEntity.getEpochTimestampMillis()),
-                paperId);
+                paperId,
+                commentEntity.getAuthorId());
         result.setLikedByCurrentUser(commentEntity.getLikes().getOrDefault(currentUserId, false));
         return result;
     }
