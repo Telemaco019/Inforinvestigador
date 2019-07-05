@@ -16,18 +16,20 @@ exports.sendCommentNotification = functions.firestore.document('/papers/{paperId
         return admin.firestore().doc(`/users/${sharingUserId}`).get();
     }).then(docSnapshot => {
         if (docSnapshot.exists && commentAuthorId != docSnapshot.id) {
-            console.log('Notifying to user ' + docSnapshot.id + ' new comment on paper ' + sharedPaperId + ' made by user ' + commentAuthorId);
             const sharingUser = docSnapshot.data();
-            const userInstanceId = sharingUser.instanceId;
+            const deviceInstanceId = sharingUser.instanceId;
             const notificationPayload = {
                 data: {
                     notificationType: 'comment',
-                    commentAuthor: comment.authorName,
+                    commentAuthorName: comment.authorName,
+                    commentAuthorId: commentAuthorId,
                     body: comment.body,
+                    commentedPaperId: sharedPaperId,
                 }
             }
-            console.log('Sending notification to user with instance id ' + userInstanceId);
-            admin.messaging().sendToDevice(userInstanceId, notificationPayload)
+            console.log('Sending notification to device with instance id ' + deviceInstanceId);
+            console.log('Notified user id: ' + sharingUser.id + ' | Comment author id: ' + commentAuthorId);
+            admin.messaging().sendToDevice(deviceInstanceId, notificationPayload)
                 .then(response => console.log('Message sent successfully. ', response))
                 .catch(error => console.log('Error sending message. ', error));
         }
