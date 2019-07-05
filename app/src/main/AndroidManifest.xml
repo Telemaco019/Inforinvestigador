@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.unibs.zanotti.inforinvestigador">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -12,7 +13,8 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            tools:replace="android:icon" >
         <activity android:name=".profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity">
         </activity>
         <activity android:name=".profile.ProfileActivity">
@@ -80,16 +82,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
-                android:value="@drawable/ic_check_black_24dp"/>
+                android:resource="@mipmap/ic_launcher" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
-                android:value="@color/colorPrimary"/>
-        <!--<meta-data
-                android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="@string/default_notification_channel" /> -->
+                android:resource="@color/colorAccent" />
     </application>
 
 </manifest>

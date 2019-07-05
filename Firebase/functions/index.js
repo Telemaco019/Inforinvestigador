@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 
 admin.initializeApp()
 
-exports.sendNotification = functions.firestore.document('/papers/{paperId}/comments/{commentId}').onCreate((snap, context) => {
+exports.sendCommentNotification = functions.firestore.document('/papers/{paperId}/comments/{commentId}').onCreate((snap, context) => {
     const comment = snap.data();
     const commentAuthorId = comment.authorId;
     const sharedPaperId = context.params.paperId;
@@ -21,7 +21,8 @@ exports.sendNotification = functions.firestore.document('/papers/{paperId}/comme
             const userInstanceId = sharingUser.instanceId;
             const notificationPayload = {
                 data: {
-                    title: sharingUser.name,
+                    notificationType: 'comment',
+                    commentAuthor: comment.authorName,
                     body: comment.body,
                 }
             }
