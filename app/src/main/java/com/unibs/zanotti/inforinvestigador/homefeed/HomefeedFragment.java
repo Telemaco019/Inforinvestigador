@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,10 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     View loadingProgressBar;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.homefeed_suggested_papers_caption)
+    TextView suggestedPapersCaptionTextview;
+    @BindView(R.id.homefeed_suggested_researchers_caption)
+    TextView suggestedResearchersCaptionTextview;
 
     public HomefeedFragment() {
         paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
@@ -135,6 +140,16 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         Intent intent = new Intent(Actions.SHOW_RESEARCHER_PROFILE);
         intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID, researcherId);
         startActivity(intent);
+    }
+
+    @Override
+    public void showSuggestedPapersCaption() {
+        suggestedPapersCaptionTextview.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSuggestedResearchersCaption() {
+        suggestedResearchersCaptionTextview.setVisibility(View.VISIBLE);
     }
 
     @Override

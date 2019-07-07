@@ -35,5 +35,9 @@ public interface HomefeedContract {
         void hideLoadingProgressBar();
 
         void showResearcherProfile(String researcherId);
+
+        void showSuggestedPapersCaption();
+
+        void showSuggestedResearchersCaption();
     }
 }

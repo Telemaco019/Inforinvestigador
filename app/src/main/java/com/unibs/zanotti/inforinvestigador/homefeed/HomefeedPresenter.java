@@ -119,6 +119,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                         loadingPapersShares = false;
                         if (!loadingResearcherSuggestions) {
                             getView().hideLoadingProgressBar();
+                            getView().showSuggestedResearchersCaption();
+                            getView().showSuggestedPapersCaption();
                         }
                     }
                 })

@@ -25,6 +25,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/recommendedResearchersCaption"
+                        android:id="@+id/homefeed_suggested_researchers_caption"
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -37,7 +39,9 @@
                         android:layout_marginTop="@dimen/verticalComponentsSpacing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/homefeed_suggested_papers_caption"
                         android:text="@string/recommendedPapersCaption"
+                        android:visibility="gone"
                         android:gravity="center_horizontal"
                         android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
 
