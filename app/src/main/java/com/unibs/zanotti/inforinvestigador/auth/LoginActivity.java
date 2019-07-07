@@ -180,8 +180,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithEmailPassword(String email, String password) {
-        ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1f, PROGRESS_BAR_FADEIN_DURATION);
-
         emailEditText.setError(
                 StringUtils.isBlank(email) ?
                         getResources().getString(R.string.msg_error_email_empty) :
@@ -194,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         );
 
         if (StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)) {
+            ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1f, PROGRESS_BAR_FADEIN_DURATION);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
