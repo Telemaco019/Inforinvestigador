@@ -34,6 +34,7 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.CompletableSource;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -244,15 +245,9 @@ public class LoginActivity extends AppCompatActivity {
     private void manageSuccessfulLogin(FirebaseUser user) {
         userRepository.getUser(user.getUid())
                 .isEmpty()
-                .flatMapCompletable(isEmpty -> {
-                    if (isEmpty) {
-                        return userRepository.saveUser(fromFirebase(user));
-                    } else {
-                        updateUI(user);
-                        return Completable.never();
-                    }
-                })
-                .andThen(saveUserFirebaseInstanceId(user.getUid()))
+                .flatMapCompletable(isUserPresent -> saveUserIfNotPresent(user, isUserPresent))
+                .andThen(retrieveFirebaseInstanceId())
+                .flatMapCompletable(instanceId -> userRepository.saveFirebaseToken(user.getUid(), instanceId))
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -272,17 +267,24 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private Completable saveUserFirebaseInstanceId(String userId) {
-        return retrieveFirebaseInstanceId().flatMapCompletable(token -> userRepository.saveFirebaseToken(userId, token));
+    private CompletableSource saveUserIfNotPresent(FirebaseUser user, Boolean isEmpty) {
+        if (isEmpty) {
+            return userRepository.saveUser(fromFirebase(user));
+        } else {
+            updateUI(user);
+            return Completable.complete();
+        }
     }
 
     private Single<String> retrieveFirebaseInstanceId() {
+        Log.d(TAG, "Retrieving firebase instanceId...");
         return Single.create(emitter -> FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 emitter.onError(task.getException());
                 return;
             }
             String token = task.getResult().getToken();
+            Log.d(TAG, "Firebase intanceId retrived successfully: " + token);
             emitter.onSuccess(token);
         }));
     }

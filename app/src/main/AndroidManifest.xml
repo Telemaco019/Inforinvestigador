@@ -42,6 +42,11 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".navigation.MainNavigationActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
                 android:name=".paperdetail.PaperDetailActivity"
                 android:parentActivityName=".navigation.MainNavigationActivity"
@@ -49,11 +54,6 @@
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
 
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".navigation.MainNavigationActivity">
-            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
