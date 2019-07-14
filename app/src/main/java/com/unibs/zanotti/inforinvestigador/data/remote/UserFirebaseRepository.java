@@ -75,7 +75,7 @@ public class UserFirebaseRepository implements IUserRepository {
                     emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId()), e);
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId(), e));
                     emitter.onError(e);
                 }));
     }
