@@ -42,12 +42,17 @@ public class PaperFirebaseRepository implements IPaperRepository {
         return Maybe.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPERS, paperId))
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
-                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))));
+                    if (documentSnapshot.exists()) {
+                        emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(PaperEntity.class))));
+                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paperId));
+                    } else {
+                        emitter.onComplete();
+                        Log.e(TAG, String.format("Document with id %s does not exist", paperId));
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
                     emitter.onError(e);
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
                 })
                 .addOnCompleteListener(task -> emitter.onComplete())
         );
@@ -119,10 +124,11 @@ public class PaperFirebaseRepository implements IPaperRepository {
         return Single.create(emitter -> {
             CommentEntity commentEntity = new CommentEntity(
                     comment.getBody(),
-                    comment.getAuthor(),
+                    comment.getAuthorName(),
                     comment.getLikesCount(),
                     comment.getId(),
-                    DateUtils.fromLocalDateTimeToEpochMills(comment.getDateTime()));
+                    DateUtils.fromLocalDateTimeToEpochMills(comment.getDateTime()),
+                    comment.getAuthorId());
 
             CollectionReference collection = firestoreDb.collection(Collections.PAPERS).document(comment.getPaperId()).collection(Collections.COMMENTS);
 
@@ -243,11 +249,12 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
     private Comment fromEntity(CommentEntity commentEntity, String paperId, String currentUserId) {
         Comment result = new Comment(commentEntity.getBody(),
-                commentEntity.getAuthor(),
+                commentEntity.getAuthorName(),
                 commentEntity.getLikesCount(),
                 commentEntity.getId(),
                 DateUtils.fromEpochTimestampMillis(commentEntity.getEpochTimestampMillis()),
-                paperId);
+                paperId,
+                commentEntity.getAuthorId());
         result.setLikedByCurrentUser(commentEntity.getLikes().getOrDefault(currentUserId, false));
         return result;
     }

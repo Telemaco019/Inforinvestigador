@@ -52,14 +52,17 @@ public class UserFirebaseRepository implements IUserRepository {
         return Maybe.create(emitter -> firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
-                    emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
-                    emitter.onComplete();
+                    if (documentSnapshot.exists()) {
+                        emitter.onSuccess(fromEntity(Objects.requireNonNull(documentSnapshot.toObject(UserEntity.class))));
+                        Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "user", userId));
+                    } else {
+                        emitter.onComplete();
+                        Log.d(TAG, String.format("Document with id %s does not exist", userId));
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "user", e.toString()));
                     emitter.onError(e);
-                    emitter.onComplete();
                 }));
     }
 
@@ -72,7 +75,7 @@ public class UserFirebaseRepository implements IUserRepository {
                     emitter.onComplete();
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId()), e);
+                    Log.e(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SAVE_ERROR, "user", user.getId(), e));
                     emitter.onError(e);
                 }));
     }
@@ -223,6 +226,16 @@ public class UserFirebaseRepository implements IUserRepository {
         });
     }
 
+    @Override
+    public Completable saveFirebaseToken(String userId, String token) {
+        return Completable.create(emitter -> {
+            firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
+                    .update(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_TOKEN_INSTANCE_ID, token)
+                    .addOnFailureListener(emitter::onError)
+                    .addOnCompleteListener(e -> emitter.onComplete());
+        });
+    }
+
     private UserEntity fromUser(User user) {
         return new UserEntity(user.getId(),
                 user.getEmail(),
@@ -233,7 +246,8 @@ public class UserFirebaseRepository implements IUserRepository {
                 user.getFollowingNumber(),
                 user.getFollowersNumber(),
                 user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
-                DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()));
+                DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()),
+                user.getInstanceId());
     }
 
     private User fromEntity(UserEntity userEntity) {
@@ -246,6 +260,7 @@ public class UserFirebaseRepository implements IUserRepository {
                 userEntity.getFollowingNumber(),
                 userEntity.getFollowersNumber(),
                 Uri.parse(userEntity.getProfilePictureUri()),
-                DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()));
+                DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()),
+                userEntity.getInstanceId());
     }
 }

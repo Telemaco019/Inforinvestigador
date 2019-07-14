@@ -5,11 +5,12 @@ import java.util.Map;
 
 public class CommentEntity {
     private String body;
-    private String author;
+    private String authorName;
     private int likesCount;
     private String id;
     private long epochTimestampMillis;
     private Map<String,Boolean> likes;
+    private String authorId;
 
     public CommentEntity() {
         // Required by Firestore
@@ -17,16 +18,26 @@ public class CommentEntity {
 
 
     public CommentEntity(String body,
-                         String author,
+                         String authorName,
                          int likesCount,
                          String id,
-                         long epochTimestampMillis) {
+                         long epochTimestampMillis,
+                         String authorId) {
         this.body = body;
-        this.author = author;
+        this.authorName = authorName;
         this.likesCount = likesCount;
         this.id = id;
         this.epochTimestampMillis = epochTimestampMillis;
+        this.authorId = authorId;
         this.likes = new HashMap<>();
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public long getEpochTimestampMillis() {
@@ -45,12 +56,12 @@ public class CommentEntity {
         this.body = body;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public int getLikesCount() {

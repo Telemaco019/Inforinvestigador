@@ -68,4 +68,6 @@ public interface IUserRepository {
      * @return
      */
     Observable<String> getFollowersUsersIds(String userId);
+
+    Completable saveFirebaseToken(String userId, String token);
 }

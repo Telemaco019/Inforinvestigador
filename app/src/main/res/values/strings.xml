@@ -56,5 +56,7 @@
     <string name="paper_detail_btn_go_to_source">Go to source</string>
     <string name="paper_detail_comments_caption">Comments</string>
     <string name="dash_separator">-</string>
+    <string name="comment_notifications_title">commented a paper you shared</string>
+    <string name="comments_channel_name">Comments</string>
 
 </resources>

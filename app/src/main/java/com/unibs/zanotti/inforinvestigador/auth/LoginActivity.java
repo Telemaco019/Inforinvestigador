@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
@@ -33,6 +34,7 @@ import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -241,14 +243,9 @@ public class LoginActivity extends AppCompatActivity {
     private void manageSuccessfulLogin(FirebaseUser user) {
         userRepository.getUser(user.getUid())
                 .isEmpty()
-                .flatMapCompletable(isEmpty -> {
-                    if (isEmpty) {
-                        return userRepository.saveUser(fromFirebase(user));
-                    } else {
-                        updateUI(user);
-                        return Completable.never();
-                    }
-                })
+                .flatMapCompletable(isUserAbsent -> isUserAbsent ? userRepository.saveUser(fromFirebase(user)) : Completable.complete())
+                .andThen(retrieveFirebaseInstanceId())
+                .flatMapCompletable(instanceId -> userRepository.saveFirebaseToken(user.getUid(), instanceId))
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -266,6 +263,19 @@ public class LoginActivity extends AppCompatActivity {
                         updateUI(null);
                     }
                 });
+    }
+
+    private Single<String> retrieveFirebaseInstanceId() {
+        Log.d(TAG, "Retrieving firebase instanceId...");
+        return Single.create(emitter -> FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                emitter.onError(task.getException());
+                return;
+            }
+            String token = task.getResult().getToken();
+            Log.d(TAG, "Firebase intanceId retrived successfully: " + token);
+            emitter.onSuccess(token);
+        }));
     }
 
     /**
@@ -353,6 +363,7 @@ public class LoginActivity extends AppCompatActivity {
                 0,
                 0,
                 firebaseUser.getPhotoUrl(),
-                DateUtils.fromEpochTimestampMillis(firebaseUser.getMetadata().getCreationTimestamp()));
+                DateUtils.fromEpochTimestampMillis(firebaseUser.getMetadata().getCreationTimestamp()),
+                StringUtils.BLANK);
     }
 }
