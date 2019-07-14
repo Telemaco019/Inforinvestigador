@@ -73,7 +73,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(data.get("body")))
                     .setSmallIcon(R.drawable.ic_comment_black_24dp)
                     .setColor(ContextCompat.getColor(this, R.color.colorAccent))
-                    .setContentIntent(contentIntent);
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(notificationIdGenerator.getAndIncrement(), builder.build());
