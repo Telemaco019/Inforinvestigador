@@ -41,5 +41,9 @@ public interface PaperDetailContract {
          * @param comment
          */
         void showComment(Comment comment);
+
+        void hideProgressBar();
+
+        void showContent();
     }
 }

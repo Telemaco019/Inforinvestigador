@@ -64,6 +64,10 @@ public class PaperDetailFragment
     ImageButton btnSendComment;
     @BindView(R.id.paper_detail_nested_scrollview)
     NestedScrollView scrollView;
+    @BindView(R.id.undetermined_progress_bar)
+    View progressBar;
+    @BindView(R.id.content_layout)
+    View contentLayout;
 
     public PaperDetailFragment() {
         commentsAdapter = new CommentsAdapter(new ArrayList<>(), this);
@@ -181,6 +185,16 @@ public class PaperDetailFragment
     @Override
     public void showComment(Comment comment) {
         commentsAdapter.updateDataset(comment);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        ActivityUtils.animateViewWithFade(progressBar, View.GONE, 0f, 300);
+    }
+
+    @Override
+    public void showContent() {
+        ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
     }
 
     @OnClick(R.id.button_send_commment)

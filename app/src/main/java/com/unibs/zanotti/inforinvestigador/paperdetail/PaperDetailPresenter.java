@@ -152,6 +152,8 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
             public void onSuccess(Paper paper) {
                 loadedPaper = paper;
                 showLoadedPaper();
+                getView().hideProgressBar();
+                getView().showContent();
             }
 
             @Override
