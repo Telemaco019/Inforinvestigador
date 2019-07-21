@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
@@ -18,10 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
+import com.unibs.zanotti.inforinvestigador.paperdetail.adapter.CommentsAdapter;
+import com.unibs.zanotti.inforinvestigador.paperdetail.adapter.ImageSliderAdapter;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import org.jetbrains.annotations.NotNull;
@@ -50,8 +55,6 @@ public class PaperDetailFragment
     TextView paperTopics;
     @BindView(R.id.paper_citations)
     TextView paperCitations;
-    @BindView(R.id.paper_image)
-    ImageView paperImage;
     @BindView(R.id.paper_doi)
     TextView paperDOI;
     @BindView(R.id.paper_publisher)
@@ -68,6 +71,9 @@ public class PaperDetailFragment
     View progressBar;
     @BindView(R.id.content_layout)
     View contentLayout;
+    @BindView(R.id.imageSlider)
+    SliderView sliderView;
+    private ImageSliderAdapter imageSliderAdapter;
 
     public PaperDetailFragment() {
         commentsAdapter = new CommentsAdapter(new ArrayList<>(), this);
@@ -112,7 +118,23 @@ public class PaperDetailFragment
             }
         });
 
+        // Setup image slider
+        imageSliderAdapter = new ImageSliderAdapter(getContext());
+        sliderView.setSliderAdapter(imageSliderAdapter);
+        sliderView.setIndicatorAnimation(IndicatorAnimations.THIN_WORM);
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+
         return view;
+    }
+
+    @Override
+    public void showPaperImages(List<Uri> paperImagesUriList) {
+        if (sliderView.getVisibility() != View.VISIBLE) {
+            sliderView.setVisibility(View.VISIBLE);
+        }
+
+        imageSliderAdapter.setDataset(paperImagesUriList);
+        imageSliderAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -157,11 +179,6 @@ public class PaperDetailFragment
         this.paperDate.setText(date);
     }
 
-    @Override
-    public void showPaperImage(int resImageId) {
-        this.paperImage.setImageResource(resImageId);
-    }
-
     /**
      * Dismiss the keyboard and clear the text of the input text field used for typing comments
      */
@@ -193,7 +210,7 @@ public class PaperDetailFragment
     }
 
     @Override
-    public void showContent() {
+    public void showContentLayout() {
         ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
     }
 

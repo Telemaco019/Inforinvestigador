@@ -1,7 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
+import android.net.Uri;
 import android.util.Log;
-import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
@@ -14,6 +14,8 @@ import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.List;
 
 /**
  * Listens to user action from the UI (e.g. {@link PaperDetailFragment}), retrieves the data and updates the UI as
@@ -120,7 +122,13 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
             getView().showPaperDate(loadedPaper.getPaperDate());
             getView().showPaperAuthors(loadedPaper.getPaperAuthors());
             getView().showPaperTopics(loadedPaper.getPaperTopics());
-            getView().showPaperImage(R.drawable.paper_preview_test);
+
+            List<Uri> images = loadedPaper.getPaperImages();
+            if(!images.isEmpty()) {
+                getView().showPaperImages(images);
+            }
+
+            getView().showContentLayout();
         }
     }
 
@@ -153,7 +161,6 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                 loadedPaper = paper;
                 showLoadedPaper();
                 getView().hideProgressBar();
-                getView().showContent();
             }
 
             @Override

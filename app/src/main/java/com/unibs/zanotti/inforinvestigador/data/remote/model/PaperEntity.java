@@ -1,5 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.data.remote.model;
 
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 public class PaperEntity {
@@ -15,6 +17,7 @@ public class PaperEntity {
     private String paperPublisher;
     private String sharingUserId;
     private String sharingUserComment;
+    private List<String> paperImages;
 
     public PaperEntity() {
         // Required by Firestone
@@ -29,7 +32,8 @@ public class PaperEntity {
                        String paperAbstract,
                        String paperPublisher,
                        String sharingUserId,
-                       String sharingUserComment) {
+                       String sharingUserComment,
+                       List<String> paperImages) {
         this.id = id;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -41,6 +45,15 @@ public class PaperEntity {
         this.paperPublisher = paperPublisher;
         this.sharingUserId = sharingUserId;
         this.sharingUserComment = sharingUserComment;
+        this.paperImages = paperImages;
+    }
+
+    public List<String> getPaperImages() {
+        return paperImages == null ? Lists.newArrayList() : paperImages;
+    }
+
+    public void setPaperImages(List<String> paperImages) {
+        this.paperImages = paperImages;
     }
 
     public String getSharingUserId() {
@@ -76,7 +89,7 @@ public class PaperEntity {
     }
 
     public List<String> getPaperAuthors() {
-        return paperAuthors;
+        return paperAuthors == null ? Lists.newArrayList() : paperAuthors;
     }
 
     public void setPaperAuthors(List<String> paperAuthors) {
@@ -117,7 +130,7 @@ public class PaperEntity {
     }
 
     public Integer getPaperCitations() {
-        return paperCitations;
+        return paperCitations == null ? 0 : paperCitations;
     }
 
     public void setPaperCitations(Integer paperCitations) {
@@ -125,7 +138,7 @@ public class PaperEntity {
     }
 
     public List<String> getPaperTopics() {
-        return paperTopics;
+        return paperTopics == null ? Lists.newArrayList() : paperTopics;
     }
 
     public void setPaperTopics(List<String> paperTopics) {

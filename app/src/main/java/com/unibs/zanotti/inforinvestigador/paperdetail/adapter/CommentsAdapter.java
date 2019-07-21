@@ -1,4 +1,4 @@
-package com.unibs.zanotti.inforinvestigador.paperdetail;
+package com.unibs.zanotti.inforinvestigador.paperdetail.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
-class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
+public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
     private CommentLikeListener commentLikeListener;
     private List<Comment> dataset;
 
@@ -111,7 +111,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHo
         this.notifyItemInserted(0);
     }
 
-    interface CommentLikeListener {
+    public interface CommentLikeListener {
         void onLikeClicked(Comment comment);
     }
 }

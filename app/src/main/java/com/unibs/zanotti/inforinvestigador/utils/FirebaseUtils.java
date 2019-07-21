@@ -1,5 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.utils;
 
+import android.net.Uri;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unibs.zanotti.inforinvestigador.data.remote.PaperFirebaseRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
@@ -39,7 +40,8 @@ public class FirebaseUtils {
                 "This is the abstract of the paper",
                 "Publisher of the paper",
                 "AuREy18SlNOt9VBG8beLkwN2WNi2",
-                "Comment of the user who shared the paper");
+                "Comment of the user who shared the paper",
+                Arrays.asList(Uri.parse("sad")));
         paperFirebaseRepository.savePaper(paperToWrite).subscribe();
     }
 }

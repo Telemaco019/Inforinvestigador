@@ -1,5 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
+import android.net.Uri;
+
 import java.util.List;
 
 public class Paper {
@@ -14,6 +16,7 @@ public class Paper {
     private String paperPublisher;
     private String sharingUserId;
     private String sharingUserComment;
+    private List<Uri> paperImages;
 
     public Paper(String paperId,
                  String paperTitle,
@@ -24,7 +27,8 @@ public class Paper {
                  String paperAbstract,
                  String paperPublisher,
                  String sharingUserId,
-                 String sharingUserComment) {
+                 String sharingUserComment,
+                 List<Uri> paperImages) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -36,6 +40,11 @@ public class Paper {
         this.paperPublisher = paperPublisher;
         this.sharingUserId = sharingUserId;
         this.sharingUserComment = sharingUserComment;
+        this.paperImages = paperImages;
+    }
+
+    public void setPaperImages(List<Uri> paperImages) {
+        this.paperImages = paperImages;
     }
 
     public String getSharingUserId() {
@@ -124,5 +133,9 @@ public class Paper {
 
     public void setPaperTopics(List<String> paperTopics) {
         this.paperTopics = paperTopics;
+    }
+
+    public List<Uri> getPaperImages() {
+        return paperImages;
     }
 }

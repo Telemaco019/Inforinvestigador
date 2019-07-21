@@ -1,5 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.paperdetail;
 
+import android.net.Uri;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 
@@ -13,6 +14,8 @@ public interface PaperDetailContract {
     }
 
     interface View extends BaseContract.View {
+        void showPaperImages(List<Uri> paperImagesUriList);
+
         void showPaperTitle(String paperTitle);
 
         void showPaperAbstract(String paperAbstract);
@@ -29,8 +32,6 @@ public interface PaperDetailContract {
 
         void showPaperDate(String date);
 
-        void showPaperImage(int resImageId);
-
         void clearCommentInputField();
 
         void scrollViewToFirstComment();
@@ -44,6 +45,6 @@ public interface PaperDetailContract {
 
         void hideProgressBar();
 
-        void showContent();
+        void showContentLayout();
     }
 }
