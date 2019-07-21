@@ -36,8 +36,6 @@ public interface HomefeedContract {
 
         void showResearcherProfile(String researcherId);
 
-        void showSuggestedPapersCaption();
-
-        void showSuggestedResearchersCaption();
+        void showContentLayout();
     }
 }

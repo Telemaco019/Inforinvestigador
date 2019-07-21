@@ -18,7 +18,9 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/content_layout"
+                    android:visibility="gone">
 
                 <TextView
                         android:layout_width="match_parent"
@@ -26,7 +28,6 @@
                         android:gravity="center_horizontal"
                         android:text="@string/recommendedResearchersCaption"
                         android:id="@+id/homefeed_suggested_researchers_caption"
-                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -41,7 +42,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/homefeed_suggested_papers_caption"
                         android:text="@string/recommendedPapersCaption"
-                        android:visibility="gone"
                         android:gravity="center_horizontal"
                         android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
 

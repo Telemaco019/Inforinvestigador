@@ -78,6 +78,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                 loadingResearcherSuggestions = false;
                 if (!loadingPapersShares) {
                     getView().hideLoadingProgressBar();
+                    getView().showContentLayout();
                 }
             }
         }));
@@ -119,8 +120,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                         loadingPapersShares = false;
                         if (!loadingResearcherSuggestions) {
                             getView().hideLoadingProgressBar();
-                            getView().showSuggestedResearchersCaption();
-                            getView().showSuggestedPapersCaption();
+                            getView().showContentLayout();
                         }
                     }
                 })
@@ -137,9 +137,12 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     @Override
     public void onStart() {
         super.onStart();
-        showResearchersFeed();
-        showPapersFeed();
-        restoreScrollPositions();
+        if (!loadingPapersShares && !loadingResearcherSuggestions) {
+            getView().showContentLayout();
+            showResearchersFeed();
+            showPapersFeed();
+            restoreScrollPositions();
+        }
     }
 
     @Override

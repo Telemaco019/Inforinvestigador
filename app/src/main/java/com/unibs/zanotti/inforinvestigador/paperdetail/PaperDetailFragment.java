@@ -211,7 +211,9 @@ public class PaperDetailFragment
 
     @Override
     public void showContentLayout() {
-        ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
+        if (contentLayout.getVisibility() != View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
+        }
     }
 
     @OnClick(R.id.button_send_commment)

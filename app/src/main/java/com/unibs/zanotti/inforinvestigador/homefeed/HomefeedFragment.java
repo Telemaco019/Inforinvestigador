@@ -24,6 +24,7 @@ import com.unibs.zanotti.inforinvestigador.homefeed.adapters.ResearcherSuggestio
 import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
+import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import com.unibs.zanotti.inforinvestigador.utils.itemTouch.SimpleItemTouchHelperCallback;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +47,8 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     TextView suggestedPapersCaptionTextview;
     @BindView(R.id.homefeed_suggested_researchers_caption)
     TextView suggestedResearchersCaptionTextview;
+    @BindView(R.id.content_layout)
+    View contentLayout;
 
     public HomefeedFragment() {
         paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
@@ -143,13 +146,10 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     }
 
     @Override
-    public void showSuggestedPapersCaption() {
-        suggestedPapersCaptionTextview.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showSuggestedResearchersCaption() {
-        suggestedResearchersCaptionTextview.setVisibility(View.VISIBLE);
+    public void showContentLayout() {
+        if (contentLayout.getVisibility() != View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
+        }
     }
 
     @Override
