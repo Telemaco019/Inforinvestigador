@@ -41,7 +41,7 @@ public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.Sli
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
         Picasso.get()
                 .load(dataset.get(position))
-                .error(R.drawable.ic_photo_size_select_actual_black_24dp)
+                .error(R.drawable.paper_image_error_placeholder)
                 .fit()
                 .centerCrop()
                 .into(viewHolder.imageViewBackground);
