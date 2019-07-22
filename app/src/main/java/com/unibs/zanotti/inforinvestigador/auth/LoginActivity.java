@@ -29,7 +29,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
-import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
+import com.unibs.zanotti.inforinvestigador.feature.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import io.reactivex.Completable;

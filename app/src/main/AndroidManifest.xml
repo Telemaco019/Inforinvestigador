@@ -15,18 +15,18 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:replace="android:icon">
-        <activity android:name=".addPaper.AddPaperActivity">
+        <activity android:name=".feature.addPaper.AddPaperActivity">
         </activity>
-        <activity android:name=".profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity">
+        <activity android:name=".feature.profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity">
         </activity>
-        <activity android:name=".profile.ProfileActivity">
+        <activity android:name=".feature.profile.ProfileActivity">
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_RESEARCHER_PROFILE"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".profile.editprofile.EditProfileActivity">
+        <activity android:name=".feature.profile.editprofile.EditProfileActivity">
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.EDIT_PROFILE"/>
 
@@ -44,14 +44,14 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".navigation.MainNavigationActivity">
+        <activity android:name=".feature.navigation.MainNavigationActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
-                android:name=".paperdetail.PaperDetailActivity"
-                android:parentActivityName=".navigation.MainNavigationActivity"
+                android:name=".feature.paperdetail.PaperDetailActivity"
+                android:parentActivityName=".feature.navigation.MainNavigationActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
