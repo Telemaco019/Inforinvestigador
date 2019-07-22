@@ -14,7 +14,9 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:replace="android:icon" >
+            tools:replace="android:icon">
+        <activity android:name=".addPaper.AddPaperActivity">
+        </activity>
         <activity android:name=".profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity">
         </activity>
         <activity android:name=".profile.ProfileActivity">
@@ -72,25 +74,20 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-        </activity>
-
-
-        <!-- Firebase messaging -->
+        </activity> <!-- Firebase messaging -->
         <service
-                android:name="com.unibs.zanotti.inforinvestigador.services.MyFirebaseMessagingService"
+                android:name=".services.MyFirebaseMessagingService"
                 android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </service>
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
+        </service> <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@mipmap/ic_launcher" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
+                android:resource="@mipmap/ic_launcher"/> <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/colorAccent" />
+                android:resource="@color/colorAccent"/>
     </application>
 
 </manifest>

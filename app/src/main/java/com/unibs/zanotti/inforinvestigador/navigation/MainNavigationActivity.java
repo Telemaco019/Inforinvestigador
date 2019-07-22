@@ -23,6 +23,7 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
     public static final String TAG_FRAGMENT_HOMEFEED = "homefeed";
     public static final String TAG_FRAGMENT_PROFILE = "profile";
     public static final String TAG_FRAGMENT_LIBRARY = "library";
+    public static final String TAG_FRAGMENT_ADD_PAPER = "add";
 
     /**
      * Map the tag fragments to the ids of the respective bottom nav items

@@ -3,6 +3,7 @@ package com.unibs.zanotti.inforinvestigador.navigation;
 import androidx.fragment.app.Fragment;
 import com.unibs.zanotti.inforinvestigador.LibraryFragment;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.addPaper.AddPaperFragment;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.homefeed.HomefeedFragment;
@@ -68,6 +69,16 @@ public class NavigationPresenter extends BasePresenter<NavigationContract.View> 
                     attachFragmentToView(fragment, MainNavigationActivity.TAG_FRAGMENT_LIBRARY);
                 }
                 activeFragmentTag = MainNavigationActivity.TAG_FRAGMENT_LIBRARY;
+                updateActiveFragment();
+                break;
+            }
+            case R.id.bottom_bar_action_add: {
+                if (fragments.get(MainNavigationActivity.TAG_FRAGMENT_ADD_PAPER) == null) {
+                    Fragment fragment = AddPaperFragment.newInstance();
+                    fragments.put(MainNavigationActivity.TAG_FRAGMENT_ADD_PAPER, fragment);
+                    attachFragmentToView(fragment, MainNavigationActivity.TAG_FRAGMENT_ADD_PAPER);
+                }
+                activeFragmentTag = MainNavigationActivity.TAG_FRAGMENT_ADD_PAPER;
                 updateActiveFragment();
                 break;
             }
