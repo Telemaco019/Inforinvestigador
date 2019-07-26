@@ -73,7 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
         btnSignup.setEnabled(false);
 
         // Show progress bar
-        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.VISIBLE, 1, 200);
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.VISIBLE, 1, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
         // Retrieve user's input
         String name = inputTxtName.getText().toString();
@@ -141,7 +141,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onSignupSuccess() {
         btnSignup.setEnabled(true);
-        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.VISIBLE, 1, 200);
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.VISIBLE, 1, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         // after email is sent just logout the user and finish this activity
         FirebaseAuth.getInstance().signOut();
         setResult(RESULT_OK, null);
@@ -149,7 +149,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed(String message) {
-        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.GONE, 0, 200);
+        ActivityUtils.animateViewWithFade(undeterminedOverlayProgressBar, View.GONE, 0, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         btnSignup.setEnabled(true);
         if (StringUtils.isNotBlank(message)) {
             Snackbar.make(btnSignup, message, Snackbar.LENGTH_LONG).show();

@@ -31,7 +31,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class EditProfileFragment extends BaseFragment<EditProfileContract.View, EditProfileContract.Presenter> implements EditProfileContract.View {
-    private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
     private static final String FRAGMENT_STRING_ARGUMENT_USER = "EditProfileFragment.USER";
     private static final int PROFILE_PICTURE_QUALITY = 40;
 
@@ -216,21 +215,21 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
 
     @Override
     public void showProgressSavingUserProfileFields() {
-        ActivityUtils.animateViewWithFade(progressBarSavingProfileFields, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBarSavingProfileFields, View.VISIBLE, 1, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
     }
 
     @Override
     public void hideProgressBarSavingUserProfileFields() {
-        ActivityUtils.animateViewWithFade(progressBarSavingProfileFields, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBarSavingProfileFields, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
     }
 
     @Override
     public void hideProgressBarUploadProfilePicture() {
-        ActivityUtils.animateViewWithFade(progressBarUploadProfilePicture, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBarUploadProfilePicture, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
     }
 
     @Override
     public void showProgressBarUploadProfilePicture() {
-        ActivityUtils.animateViewWithFade(progressBarUploadProfilePicture, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBarUploadProfilePicture, View.VISIBLE, 1, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
     }
 }

@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class ActivityUtils {
+    public static final int FADE_ANIMATION_STANDARD_DURATION_MS = 300;
+
     /**
      * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
      * performed by the {@code fragmentManager}.

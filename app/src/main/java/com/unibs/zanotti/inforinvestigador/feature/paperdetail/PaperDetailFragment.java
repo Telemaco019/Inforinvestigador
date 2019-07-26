@@ -206,13 +206,13 @@ public class PaperDetailFragment
 
     @Override
     public void hideProgressBar() {
-        ActivityUtils.animateViewWithFade(progressBar, View.GONE, 0f, 300);
+        ActivityUtils.animateViewWithFade(progressBar, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
     }
 
     @Override
     public void showContentLayout() {
         if (contentLayout.getVisibility() != View.VISIBLE) {
-            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
+            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         }
     }
 

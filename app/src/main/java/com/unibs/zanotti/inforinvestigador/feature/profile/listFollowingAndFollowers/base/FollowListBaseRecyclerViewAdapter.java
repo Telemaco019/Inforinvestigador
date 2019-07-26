@@ -71,12 +71,12 @@ public abstract class FollowListBaseRecyclerViewAdapter
                             if (isFollowing) {
                                 holder.getFollowButton().setVisibility(View.GONE);
                                 if (holder.getFollowingButton().getVisibility() != View.VISIBLE) {
-                                    ActivityUtils.animateViewWithFade(holder.getFollowingButton(), View.VISIBLE, 1f, 300);
+                                    ActivityUtils.animateViewWithFade(holder.getFollowingButton(), View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
                                 }
                             } else {
                                 holder.getFollowingButton().setVisibility(View.GONE);
                                 if (holder.getFollowButton().getVisibility() != View.VISIBLE) {
-                                    ActivityUtils.animateViewWithFade(holder.getFollowButton(), View.VISIBLE, 1f, 300);
+                                    ActivityUtils.animateViewWithFade(holder.getFollowButton(), View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
                                 }
                             }
                         }

@@ -148,7 +148,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     @Override
     public void showContentLayout() {
         if (contentLayout.getVisibility() != View.VISIBLE) {
-            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, 300);
+            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         }
     }
 

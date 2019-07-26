@@ -223,14 +223,14 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     @Override
     public void showUnfollowButton() {
         if (btnProfileUnfollow.getVisibility() != View.VISIBLE) {
-            ActivityUtils.animateViewWithFade(btnProfileUnfollow, View.VISIBLE, 1f, 300);
+            ActivityUtils.animateViewWithFade(btnProfileUnfollow, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         }
     }
 
     @Override
     public void showFollowButton() {
         if (btnProfileFollow.getVisibility() != View.VISIBLE) {
-            ActivityUtils.animateViewWithFade(btnProfileFollow, View.VISIBLE, 1f, 300);
+            ActivityUtils.animateViewWithFade(btnProfileFollow, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         }
     }
 

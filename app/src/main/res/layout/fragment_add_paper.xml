@@ -36,6 +36,7 @@
                         android:layout_height="wrap_content">
 
                     <EditText
+                            android:id="@+id/add_paper_doi_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -44,7 +45,7 @@
 
                 <ImageButton
                         android:layout_width="wrap_content"
-                        android:id="@+id/button_search_paper"
+                        android:id="@+id/add_paper_button_search_paper"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_search_black_24dp"
                         android:layout_gravity="center"
