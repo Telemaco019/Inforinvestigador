@@ -58,5 +58,9 @@
     <string name="dash_separator">-</string>
     <string name="comment_notifications_title">commented a paper you shared</string>
     <string name="comments_channel_name">Comments</string>
+    <string name="fragment_add_paper_share_paper_title">Share a paper</string>
+    <string name="fragment_add_paper_sharing_comment_caption">What do you think about this paper?</string>
+    <string name="fragment_add_paper_share_button_caption">Share</string>
+    <string name="fragment_add_paper_paper_doi_caption">Paper DOI</string>
 
 </resources>

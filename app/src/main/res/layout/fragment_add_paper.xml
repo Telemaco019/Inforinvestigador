@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".feature.addPaper.AddPaperFragment">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.addPaper.AddPaperFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/doubleBasePadding">
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_add_paper_share_paper_title"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="32dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                    <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:hint="@string/fragment_add_paper_paper_doi_caption"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:id="@+id/button_search_paper"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search_black_24dp"
+                        android:layout_gravity="center"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:tint="@drawable/standard_clickable_icon_selector"/>
+            </LinearLayout>
+
+            <include layout="@layout/undetermined_progress_bar"/>
+
+            <EditText
+                    android:id="@+id/add_paper_sharing_comment_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:hint="@string/fragment_add_paper_sharing_comment_caption"
+                    android:inputType="textLongMessage"
+                    android:visibility="gone"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/add_paper_share_paper_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_add_paper_share_button_caption"
+                    android:visibility="gone"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
