@@ -21,6 +21,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_add_paper_share_paper_title"
+                    android:textColor="@color/colorAccent"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
 
             <LinearLayout
