@@ -101,6 +101,7 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
         ActivityUtils.animateViewWithFade(commentEditText, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         ActivityUtils.animateViewWithFade(submitButtonsLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
+        paperDetailsLayoutContainer.removeAllViews();
         paperDetailsLayoutContainer.addView(createTextLayout("Title", paper.getPaperTitle()));
         paperDetailsLayoutContainer.addView(createTextLayout("Authors", paper.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paper.getPaperAuthors())));
         paperDetailsLayoutContainer.addView(createTextLayout("Date", paper.getPaperDate()));
@@ -112,7 +113,7 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     @Override
     public void hidePaper() {
         ActivityUtils.animateViewWithFade(paperDetailsLayoutContainer, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
-        ActivityUtils.animateViewWithFade(commentEditText, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        ActivityUtils.animateViewWithFade(commentEditText, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         ActivityUtils.animateViewWithFade(submitButtonsLayout, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
     }
 
@@ -130,6 +131,7 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
 
         if (StringUtils.isBlank(content)) {
             editText.setError("Not found");
+            editText.setText("Not found");
         } else {
             editText.setText(content);
         }

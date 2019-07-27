@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> implements AddPaperContract.Presenter {
     private static final String TAG = String.valueOf(AddPaperPresenter.class);
     private ICrossrefService crossrefService;
-    private Paper displayedPaper;
+    private Paper paperToShare;
 
     public AddPaperPresenter(ICrossrefService crossrefService) {
         this.crossrefService = crossrefService;
@@ -34,8 +34,9 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
                 .subscribeWith(new DisposableSingleObserver<Paper>() {
                     @Override
                     public void onSuccess(Paper paper) {
+                        paperToShare = paper;
                         getView().hideProgressBar();
-                        getView().showPaper(paper);
+                        showPaperToShare();
                     }
 
                     @Override
@@ -54,8 +55,20 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
 
     @Override
     public void onCancelButtonClicked() {
-        displayedPaper = null;
+        paperToShare = null;
         getView().hidePaper();
         getView().clearDoiTextfield();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showPaperToShare();
+    }
+
+    private void showPaperToShare() {
+        if (paperToShare != null) {
+            getView().showPaper(paperToShare);
+        }
     }
 }
