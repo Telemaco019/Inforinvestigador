@@ -1,11 +1,11 @@
 package com.unibs.zanotti.inforinvestigador.services.retrofit;
 
 import com.unibs.zanotti.inforinvestigador.domain.model.crossref.Example;
-import retrofit2.Call;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface CrossrefDataService {
+public interface ICrossrefController {
     @GET("/works/{doi}")
-    Call<Example> getPaper(@Path("doi") String doi);
+    Single<Example> getPaper(@Path("doi") String doi);
 }

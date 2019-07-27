@@ -126,7 +126,7 @@ public class Message {
     @Expose
     private String paperAbstract;
 
-    public String getPaperAbstract() {
+    public String getAbstract() {
         return paperAbstract;
     }
 

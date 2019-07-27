@@ -62,5 +62,6 @@
     <string name="fragment_add_paper_sharing_comment_caption">What do you think about this paper?</string>
     <string name="fragment_add_paper_share_button_caption">Share</string>
     <string name="fragment_add_paper_paper_doi_caption">Paper DOI</string>
+    <string name="add_paper_doi_not_found_message">DOI not found</string>
 
 </resources>

@@ -7,6 +7,8 @@ import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.PaperFirebaseRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.UserFirebaseRepository;
+import com.unibs.zanotti.inforinvestigador.services.retrofit.ICrossrefService;
+import com.unibs.zanotti.inforinvestigador.services.retrofit.impl.CrossrefService;
 
 /**
  * Enables injection of mock implementations at compile time. This is useful for testing, since it allows us to use
@@ -22,5 +24,9 @@ public class Injection {
         return UserFirebaseRepository.getInstance(FirebaseFirestore.getInstance(),
                 FirebaseAuth.getInstance(),
                 FirebaseStorage.getInstance());
+    }
+
+    public static ICrossrefService provideCrossrefService() {
+        return new CrossrefService();
     }
 }

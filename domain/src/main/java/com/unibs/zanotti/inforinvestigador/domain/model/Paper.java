@@ -2,6 +2,7 @@ package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Paper {
@@ -10,7 +11,7 @@ public class Paper {
     private List<String> paperAuthors;
     private String paperDate;
     private String paperDoi;
-    private int paperCitations;
+    private Integer paperCitations;
     private List<String> paperTopics;
     private String paperAbstract;
     private String paperPublisher;
@@ -18,11 +19,17 @@ public class Paper {
     private String sharingUserComment;
     private List<Uri> paperImages;
 
+    public Paper() {
+        paperAuthors = new ArrayList<>();
+        paperTopics = new ArrayList<>();
+        paperImages = new ArrayList<>();
+    }
+
     public Paper(String paperId,
                  String paperTitle,
                  List<String> paperAuthors,
                  String paperDate, String paperDoi,
-                 int paperCitations,
+                 Integer paperCitations,
                  List<String> paperTopics,
                  String paperAbstract,
                  String paperPublisher,
@@ -87,6 +94,10 @@ public class Paper {
         this.paperAuthors = paperAuthors;
     }
 
+    public void addPaperAuthor(String author) {
+        this.paperAuthors.add(author);
+    }
+
     public String getPaperDate() {
         return paperDate;
     }
@@ -111,7 +122,7 @@ public class Paper {
         this.paperDoi = paperDoi;
     }
 
-    public int getPaperCitations() {
+    public Integer getPaperCitations() {
         return paperCitations;
     }
 
