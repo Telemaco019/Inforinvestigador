@@ -153,6 +153,14 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
                 .show();
     }
 
+    @Override
+    public void showSearchPaperError() {
+        Snackbar.make(searchPaperButton,
+                getString(R.string.search_paper_error),
+                Snackbar.LENGTH_LONG)
+                .show();
+    }
+
     private TextInputLayout createTextLayout(String hint, String content) {
         TextInputLayout textInputLayout = new TextInputLayout(getContext());
         EditText editText = new EditText(getContext());

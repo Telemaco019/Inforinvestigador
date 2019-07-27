@@ -54,6 +54,8 @@
                         android:tint="@drawable/standard_clickable_icon_selector"/>
             </LinearLayout>
 
+            <include layout="@layout/undetermined_progress_bar"/>
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,8 +73,6 @@
                     android:hint="@string/fragment_add_paper_sharing_comment_caption"
                     android:inputType="textLongMessage"
                     android:visibility="gone"/>
-
-            <include layout="@layout/undetermined_progress_bar"/>
 
             <RelativeLayout
                     android:layout_width="match_parent"

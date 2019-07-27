@@ -56,6 +56,8 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
                             if (exception.code() == HttpURLConnection.HTTP_NOT_FOUND) {
                                 getView().showMessageDoiNotFound();
                             }
+                        } else {
+                            getView().showSearchPaperError();
                         }
                     }
                 }));

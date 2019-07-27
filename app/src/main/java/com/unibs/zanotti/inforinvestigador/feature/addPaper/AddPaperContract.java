@@ -30,5 +30,7 @@ public interface AddPaperContract {
         void showSavePaperSuccessMessage();
 
         void showSavePaperErrorMessage();
+
+        void showSearchPaperError();
     }
 }
