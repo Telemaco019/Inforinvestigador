@@ -19,6 +19,8 @@ import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -97,6 +99,7 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
 
     @Override
     public void showPaper(Paper paper) {
+        ActivityUtils.dismissKeyboard(Objects.requireNonNull(getActivity()));
         ActivityUtils.animateViewWithFade(paperDetailsLayoutContainer, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         ActivityUtils.animateViewWithFade(commentEditText, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         ActivityUtils.animateViewWithFade(submitButtonsLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
