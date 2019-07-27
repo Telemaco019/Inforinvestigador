@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.android.material.card.MaterialCardView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -73,6 +74,9 @@ public class PaperDetailFragment
     View contentLayout;
     @BindView(R.id.imageSlider)
     SliderView sliderView;
+    @BindView(R.id.paper_detail_slider_view_container)
+    MaterialCardView sliderViewContainer;
+
     private ImageSliderAdapter imageSliderAdapter;
 
     public PaperDetailFragment() {
@@ -129,8 +133,8 @@ public class PaperDetailFragment
 
     @Override
     public void showPaperImages(List<Uri> paperImagesUriList) {
-        if (sliderView.getVisibility() != View.VISIBLE) {
-            sliderView.setVisibility(View.VISIBLE);
+        if (sliderViewContainer.getVisibility() != View.VISIBLE) {
+            sliderViewContainer.setVisibility(View.VISIBLE);
         }
 
         imageSliderAdapter.setDataset(paperImagesUriList);
