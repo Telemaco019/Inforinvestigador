@@ -117,12 +117,12 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
         ActivityUtils.animateViewWithFade(submitButtonsLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
         paperDetailsLayoutContainer.removeAllViews();
-        paperDetailsLayoutContainer.addView(createTextLayout("Title", paper.getPaperTitle()));
-        paperDetailsLayoutContainer.addView(createTextLayout("Authors", paper.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paper.getPaperAuthors())));
-        paperDetailsLayoutContainer.addView(createTextLayout("Date", paper.getPaperDate()));
-        paperDetailsLayoutContainer.addView(createTextLayout("Publisher", paper.getPaperPublisher()));
-        paperDetailsLayoutContainer.addView(createTextLayout("Citations", paper.getPaperCitations() == null ? StringUtils.BLANK : String.valueOf(paper.getPaperCitations())));
-        paperDetailsLayoutContainer.addView(createTextLayout("Abstract", paper.getPaperAbstract()));
+        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_title), paper.getPaperTitle()));
+        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_authors), paper.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paper.getPaperAuthors())));
+        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_date), paper.getPaperDate()));
+        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_publisher), paper.getPaperPublisher()));
+        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_citations), paper.getPaperCitations() == null ? StringUtils.BLANK : String.valueOf(paper.getPaperCitations())));
+        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_abstract), paper.getPaperAbstract()));
     }
 
     @Override
@@ -169,8 +169,8 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
         textInputLayout.addView(editText);
 
         if (StringUtils.isBlank(content)) {
-            editText.setError("Not found");
-            editText.setText("Not found");
+            editText.setError(getString(R.string.add_paper_field_not_found_message));
+            editText.setText(getString(R.string.add_paper_field_not_found_message));
         } else {
             editText.setText(content);
         }

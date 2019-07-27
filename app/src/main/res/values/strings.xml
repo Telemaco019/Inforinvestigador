@@ -67,5 +67,12 @@
     <string name="share_paper_error_message">An error occurred while sharing the paper</string>
     <string name="share_paper_success_message">The paper has been shared successfully</string>
     <string name="search_paper_error">An error occurred while searching the paper</string>
+    <string name="fragment_add_paper_authors">Authors</string>
+    <string name="fragment_add_paper_date">Date</string>
+    <string name="fragment_add_paper_publisher">Publisher</string>
+    <string name="fragment_add_paper_citations">Citations</string>
+    <string name="fragment_add_paper_abstract">Abstract</string>
+    <string name="add_paper_field_not_found_message">Not found</string>
+    <string name="fragment_add_paper_title">Title</string>
 
 </resources>
