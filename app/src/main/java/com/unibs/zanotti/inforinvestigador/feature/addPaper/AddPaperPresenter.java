@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> implements AddPaperContract.Presenter {
     private static final String TAG = String.valueOf(AddPaperPresenter.class);
     private ICrossrefService crossrefService;
+    private Paper displayedPaper;
 
     public AddPaperPresenter(ICrossrefService crossrefService) {
         this.crossrefService = crossrefService;
@@ -35,7 +36,6 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
                     public void onSuccess(Paper paper) {
                         getView().hideProgressBar();
                         getView().showPaper(paper);
-                        getView().showSubmitPaperLayout();
                     }
 
                     @Override
@@ -50,5 +50,12 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
                         }
                     }
                 }));
+    }
+
+    @Override
+    public void onCancelButtonClicked() {
+        displayedPaper = null;
+        getView().hidePaper();
+        getView().clearDoiTextfield();
     }
 }

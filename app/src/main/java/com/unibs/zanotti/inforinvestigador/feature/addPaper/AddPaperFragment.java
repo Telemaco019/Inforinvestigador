@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.*;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,8 +35,12 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     EditText commentEditText;
     @BindView(R.id.add_paper_share_paper_button)
     MaterialButton submitButton;
+    @BindView(R.id.add_paper_share_cancel_button)
+    MaterialButton cancelButton;
     @BindView(R.id.add_paper_fields_layout_container)
     LinearLayout paperDetailsLayoutContainer;
+    @BindView(R.id.add_paper_buttons_layout)
+    RelativeLayout submitButtonsLayout;
 
     public AddPaperFragment() {
         // Required empty public constructor
@@ -74,6 +75,11 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
         }
     }
 
+    @OnClick(R.id.add_paper_share_cancel_button)
+    void onCancelButtonClicked() {
+        presenter.onCancelButtonClicked();
+    }
+
     @Override
     public void showProgressBar() {
         ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
@@ -92,6 +98,8 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     @Override
     public void showPaper(Paper paper) {
         ActivityUtils.animateViewWithFade(paperDetailsLayoutContainer, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        ActivityUtils.animateViewWithFade(commentEditText, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        ActivityUtils.animateViewWithFade(submitButtonsLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
         paperDetailsLayoutContainer.addView(createTextLayout("Title", paper.getPaperTitle()));
         paperDetailsLayoutContainer.addView(createTextLayout("Authors", paper.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paper.getPaperAuthors())));
@@ -102,9 +110,15 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     }
 
     @Override
-    public void showSubmitPaperLayout() {
-        commentEditText.setVisibility(View.VISIBLE);
-        submitButton.setVisibility(View.VISIBLE);
+    public void hidePaper() {
+        ActivityUtils.animateViewWithFade(paperDetailsLayoutContainer, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        ActivityUtils.animateViewWithFade(commentEditText, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        ActivityUtils.animateViewWithFade(submitButtonsLayout, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+    }
+
+    @Override
+    public void clearDoiTextfield() {
+        paperDoiEditText.setText(StringUtils.BLANK);
     }
 
     private TextInputLayout createTextLayout(String hint, String content) {

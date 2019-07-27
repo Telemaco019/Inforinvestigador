@@ -74,12 +74,26 @@
                     android:inputType="textLongMessage"
                     android:visibility="gone"/>
 
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/add_paper_share_paper_button"
-                    android:layout_width="wrap_content"
+            <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_add_paper_share_button_caption"
-                    android:visibility="gone"/>
+                    android:id="@+id/add_paper_buttons_layout"
+                    android:visibility="gone">
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_paper_share_paper_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_add_paper_share_button_caption"
+                        android:layout_alignParentStart="true"/>
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_paper_share_cancel_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_paper_cancel_button_caption"
+                        android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -7,6 +7,8 @@ public interface AddPaperContract {
     interface Presenter extends BaseContract.Presenter<View> {
 
         void onSearchPaperButtonClicked(String doi);
+
+        void onCancelButtonClicked();
     }
 
     interface View extends BaseContract.View {
@@ -19,6 +21,8 @@ public interface AddPaperContract {
 
         void showPaper(Paper paper);
 
-        void showSubmitPaperLayout();
+        void hidePaper();
+
+        void clearDoiTextfield();
     }
 }

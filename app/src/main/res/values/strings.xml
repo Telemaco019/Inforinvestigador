@@ -63,5 +63,6 @@
     <string name="fragment_add_paper_share_button_caption">Share</string>
     <string name="fragment_add_paper_paper_doi_caption">Paper DOI</string>
     <string name="add_paper_doi_not_found_message">DOI not found</string>
+    <string name="add_paper_cancel_button_caption">cancel</string>
 
 </resources>
