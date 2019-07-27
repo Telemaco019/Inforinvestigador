@@ -6,9 +6,11 @@ import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 public interface AddPaperContract {
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void onSearchPaperButtonClicked(String doi);
+        void searchPaperButtonClicked(String doi);
 
-        void onCancelButtonClicked();
+        void cancelButtonClicked();
+
+        void submitButtonClicked(String userComment);
     }
 
     interface View extends BaseContract.View {
@@ -24,5 +26,9 @@ public interface AddPaperContract {
         void hidePaper();
 
         void clearDoiTextfield();
+
+        void showSavePaperSuccessMessage();
+
+        void showSavePaperErrorMessage();
     }
 }

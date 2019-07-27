@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
@@ -63,7 +64,9 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
 
     @Override
     protected AddPaperContract.Presenter createPresenter() {
-        return new AddPaperPresenter(Injection.provideCrossrefService());
+        return new AddPaperPresenter(Injection.provideCrossrefService(),
+                Injection.providePaperRepository(),
+                Injection.provideUserRepository());
     }
 
     @OnClick(R.id.add_paper_button_search_paper)
@@ -73,13 +76,22 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
         if (StringUtils.isBlank(doi)) {
             paperDoiEditText.setError(getString(R.string.field_required_error_msg));
         } else {
-            presenter.onSearchPaperButtonClicked(doi);
+            presenter.searchPaperButtonClicked(doi);
         }
     }
 
     @OnClick(R.id.add_paper_share_cancel_button)
     void onCancelButtonClicked() {
-        presenter.onCancelButtonClicked();
+        presenter.cancelButtonClicked();
+    }
+
+    @OnClick(R.id.add_paper_share_paper_button)
+    void onSubmitButtonClicked() {
+        if (StringUtils.isBlank(commentEditText.getText().toString())) {
+            commentEditText.setError(getString(R.string.field_required_error_msg));
+        } else {
+            presenter.submitButtonClicked(commentEditText.getText().toString());
+        }
     }
 
     @Override
@@ -123,6 +135,22 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     @Override
     public void clearDoiTextfield() {
         paperDoiEditText.setText(StringUtils.BLANK);
+    }
+
+    @Override
+    public void showSavePaperSuccessMessage() {
+        Snackbar.make(submitButton,
+                getString(R.string.share_paper_success_message),
+                Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    public void showSavePaperErrorMessage() {
+        Snackbar.make(submitButton,
+                getString(R.string.share_paper_error_message),
+                Snackbar.LENGTH_LONG)
+                .show();
     }
 
     private TextInputLayout createTextLayout(String hint, String content) {
