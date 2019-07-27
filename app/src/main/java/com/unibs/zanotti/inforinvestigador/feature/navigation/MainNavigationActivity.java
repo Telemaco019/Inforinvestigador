@@ -42,6 +42,7 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
         fragmentTagToItemId.put(TAG_FRAGMENT_HOMEFEED, R.id.bottom_bar_action_home);
         fragmentTagToItemId.put(TAG_FRAGMENT_PROFILE, R.id.bottom_bar_action_profile);
         fragmentTagToItemId.put(TAG_FRAGMENT_LIBRARY, R.id.bottom_bar_action_library);
+        fragmentTagToItemId.put(TAG_FRAGMENT_ADD_PAPER, R.id.bottom_bar_action_add);
 
         // Set the toolbar layout as toolbar
         Toolbar toolbar = findViewById(R.id.top_bar);
@@ -75,7 +76,7 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
     @Override
     public void selectBottomNavigationItem(String fragmentTag) {
         Integer itemId = fragmentTagToItemId.get(fragmentTag);
-        if(itemId != null) {
+        if (itemId != null) {
             bottomNavigationBar.setSelectedItemId(itemId);
         }
     }
@@ -84,7 +85,7 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
     public void hideFragment(String fragmentTag) {
         getSupportFragmentManager().executePendingTransactions();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
-        if(fragment != null) {
+        if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .hide(fragment)
@@ -97,7 +98,7 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.executePendingTransactions();
         Fragment fragment = supportFragmentManager.findFragmentByTag(fragmentTag);
-        if(fragment != null) {
+        if (fragment != null) {
             supportFragmentManager
                     .beginTransaction()
                     .show(fragment)
