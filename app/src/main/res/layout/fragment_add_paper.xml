@@ -71,7 +71,7 @@
                     android:layout_height="64dp"
                     android:layout_marginTop="32dp"
                     android:hint="@string/fragment_add_paper_sharing_comment_caption"
-                    android:inputType="textLongMessage"
+                    android:inputType="textMultiLine"
                     android:visibility="gone"/>
 
             <RelativeLayout
