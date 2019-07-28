@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
-import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
+import com.unibs.zanotti.inforinvestigador.feature.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;

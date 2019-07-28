@@ -16,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
-import com.unibs.zanotti.inforinvestigador.paperdetail.PaperDetailActivity;
+import com.unibs.zanotti.inforinvestigador.feature.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 

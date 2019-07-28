@@ -41,7 +41,8 @@ public class FirebaseUtils {
                 "Publisher of the paper",
                 "AuREy18SlNOt9VBG8beLkwN2WNi2",
                 "Comment of the user who shared the paper",
-                Arrays.asList(Uri.parse("sad")));
+                Arrays.asList(Uri.parse("sad")),
+                "http://www.google.com");
         paperFirebaseRepository.savePaper(paperToWrite).subscribe();
     }
 }

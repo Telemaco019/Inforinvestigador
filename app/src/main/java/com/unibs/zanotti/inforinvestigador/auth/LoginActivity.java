@@ -29,7 +29,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
-import com.unibs.zanotti.inforinvestigador.navigation.MainNavigationActivity;
+import com.unibs.zanotti.inforinvestigador.feature.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import io.reactivex.Completable;
@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     public static final String BOOLEAN_EXTRA_DO_LOGOUT = "DO_LOGOUT";
 
     private static final int RC_GOOGLE_SIGN_IN = 9001;
-    private static final int PROGRESS_BAR_FADEIN_DURATION = 300;
     private static final String TAG = String.valueOf(LoginActivity.class);
 
     // View fields
@@ -141,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void updateUI(FirebaseUser user) {
         // Hide progress bar
-        ActivityUtils.animateViewWithFade(progressBar, View.GONE, 0f, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBar, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
         if (user != null) {
             if (user.isEmailVerified()) {
@@ -194,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
         );
 
         if (StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)) {
-            ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1f, PROGRESS_BAR_FADEIN_DURATION);
+            ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -215,7 +214,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         // Show progress bar
-        ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1, PROGRESS_BAR_FADEIN_DURATION);
+        ActivityUtils.animateViewWithFade(progressBar, View.VISIBLE, 1, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
