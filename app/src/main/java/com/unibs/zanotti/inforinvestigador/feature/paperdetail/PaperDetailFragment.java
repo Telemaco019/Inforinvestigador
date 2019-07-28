@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.feature.paperdetail;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -76,6 +79,8 @@ public class PaperDetailFragment
     SliderView sliderView;
     @BindView(R.id.paper_detail_slider_view_container)
     MaterialCardView sliderViewContainer;
+    @BindView(R.id.paper_detail_gotosource_button)
+    MaterialButton gotoSourceButton;
 
     private ImageSliderAdapter imageSliderAdapter;
 
@@ -141,6 +146,11 @@ public class PaperDetailFragment
         imageSliderAdapter.notifyDataSetChanged();
     }
 
+    @OnClick(R.id.paper_detail_gotosource_button)
+    void onGotoSourceButtonClicked() {
+        presenter.gotoSourceButtonClicked();
+    }
+
     @Override
     public void showPaperTitle(String paperTitle) {
         this.paperTitle.setText(paperTitle);
@@ -164,7 +174,7 @@ public class PaperDetailFragment
 
     @Override
     public void showPaperCitations(int citations) {
-        this.paperCitations.setText(String.valueOf(citations));
+        this.paperCitations.setText(String.format("%d %s", citations, getResources().getString(R.string.citations_caption)));
     }
 
     @Override
@@ -218,6 +228,19 @@ public class PaperDetailFragment
         if (contentLayout.getVisibility() != View.VISIBLE) {
             ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         }
+    }
+
+    @Override
+    public void navigateToPaperSource(String url) {
+        Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browse);
+    }
+
+    @Override
+    public void showMessageSourceNotAvailable() {
+        Snackbar.make(gotoSourceButton,
+                getResources().getString(R.string.paper_source_not_available),
+                Snackbar.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.button_send_commment)

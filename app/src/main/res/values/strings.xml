@@ -74,5 +74,7 @@
     <string name="fragment_add_paper_abstract">Abstract</string>
     <string name="add_paper_field_not_found_message">Not found</string>
     <string name="fragment_add_paper_title">Title</string>
+    <string name="citations_caption">citations</string>
+    <string name="paper_source_not_available">Source currently not available</string>
 
 </resources>

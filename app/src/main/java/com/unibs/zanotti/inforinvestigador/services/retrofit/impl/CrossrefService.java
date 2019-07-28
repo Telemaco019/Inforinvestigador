@@ -53,8 +53,12 @@ public class CrossrefService implements ICrossrefService {
             paper.setPaperPublisher(message.getPublisher());
         }
         // Add abstract
-        if(StringUtils.isNotBlank(message.getAbstract())) {
+        if (StringUtils.isNotBlank(message.getAbstract())) {
             paper.setPaperAbstract(message.getAbstract());
+        }
+        // Add source
+        if (message.getLink() != null && !message.getLink().isEmpty()) {
+            paper.setURL(message.getLink().get(0).getURL());
         }
 
         return paper;

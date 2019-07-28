@@ -11,6 +11,8 @@ public interface PaperDetailContract {
         void commentLikeClicked(Comment comment);
 
         void addComment(String comment);
+
+        void gotoSourceButtonClicked();
     }
 
     interface View extends BaseContract.View {
@@ -46,5 +48,9 @@ public interface PaperDetailContract {
         void hideProgressBar();
 
         void showContentLayout();
+
+        void navigateToPaperSource(String url);
+
+        void showMessageSourceNotAvailable();
     }
 }

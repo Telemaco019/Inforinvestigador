@@ -35,34 +35,31 @@
                         android:id="@+id/paper_title"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
 
-                <LinearLayout
+                <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_marginTop="@dimen/baseMargin"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content">
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/paper_date"/>
-
-                    <include layout="@layout/dash_separator_layout"/>
-
+                            android:id="@+id/paper_date"
+                            android:layout_alignParentStart="true"/>
                     <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/paper_doi"
                             android:layout_height="wrap_content"
-                            android:id="@+id/paper_topics"/>
-                </LinearLayout>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:id="@+id/paper_doi"
-                        android:layout_height="wrap_content"/>
-
+                            android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/paper_citations"/>
+                <TextView
+                        android:layout_marginTop="@dimen/doubleBaseMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/paper_topics"/>
 
                 <TextView
                         android:layout_marginTop="@dimen/baseMargin"
@@ -110,6 +107,7 @@
                         android:layout_height="wrap_content"/>
 
                 <com.google.android.material.button.MaterialButton
+                        android:id="@+id/paper_detail_gotosource_button"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/doubleBaseMargin"
                         android:layout_height="wrap_content"

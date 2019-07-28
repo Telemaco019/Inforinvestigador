@@ -18,6 +18,7 @@ public class PaperEntity {
     private String sharingUserId;
     private String sharingUserComment;
     private List<String> paperImages;
+    private String url;
 
     public PaperEntity() {
         // Required by Firestone
@@ -33,7 +34,8 @@ public class PaperEntity {
                        String paperPublisher,
                        String sharingUserId,
                        String sharingUserComment,
-                       List<String> paperImages) {
+                       List<String> paperImages,
+                       String url) {
         this.id = id;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -46,6 +48,15 @@ public class PaperEntity {
         this.sharingUserId = sharingUserId;
         this.sharingUserComment = sharingUserComment;
         this.paperImages = paperImages;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public List<String> getPaperImages() {

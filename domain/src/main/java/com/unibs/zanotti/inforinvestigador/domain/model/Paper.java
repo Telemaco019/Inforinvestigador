@@ -18,6 +18,7 @@ public class Paper {
     private String sharingUserId;
     private String sharingUserComment;
     private List<Uri> paperImages;
+    private String URL;
 
     public Paper() {
         paperAuthors = new ArrayList<>();
@@ -35,7 +36,8 @@ public class Paper {
                  String paperPublisher,
                  String sharingUserId,
                  String sharingUserComment,
-                 List<Uri> paperImages) {
+                 List<Uri> paperImages,
+                 String link) {
         this.paperId = paperId;
         this.paperTitle = paperTitle;
         this.paperAuthors = paperAuthors;
@@ -48,6 +50,15 @@ public class Paper {
         this.sharingUserId = sharingUserId;
         this.sharingUserComment = sharingUserComment;
         this.paperImages = paperImages;
+        this.URL = link;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String url) {
+        this.URL = url;
     }
 
     public void setPaperImages(List<Uri> paperImages) {

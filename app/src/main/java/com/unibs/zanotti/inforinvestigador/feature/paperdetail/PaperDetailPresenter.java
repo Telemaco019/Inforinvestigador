@@ -8,6 +8,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.ModelFactory;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
@@ -99,6 +100,15 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                     }
                 })
         );
+    }
+
+    @Override
+    public void gotoSourceButtonClicked() {
+        if(StringUtils.isBlank(loadedPaper.getURL())) {
+            getView().showMessageSourceNotAvailable();
+        } else {
+            getView().navigateToPaperSource(loadedPaper.getURL());
+        }
     }
 
     @Override
