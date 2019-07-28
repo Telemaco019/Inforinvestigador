@@ -138,6 +138,11 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     }
 
     @Override
+    public void clearCommentTextfield() {
+        commentEditText.setText(StringUtils.BLANK);
+    }
+
+    @Override
     public void showSavePaperSuccessMessage() {
         Snackbar.make(submitButton,
                 getString(R.string.share_paper_success_message),

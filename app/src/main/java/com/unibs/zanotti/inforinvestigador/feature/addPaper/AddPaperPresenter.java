@@ -68,6 +68,7 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
         paperToShare = null;
         getView().hidePaper();
         getView().clearDoiTextfield();
+        getView().clearCommentTextfield();
     }
 
     @Override
@@ -82,6 +83,7 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
                     getView().hideProgressBar();
                     getView().hidePaper();
                     getView().clearDoiTextfield();
+                    getView().clearCommentTextfield();
                     getView().showSavePaperSuccessMessage();
                 }
 

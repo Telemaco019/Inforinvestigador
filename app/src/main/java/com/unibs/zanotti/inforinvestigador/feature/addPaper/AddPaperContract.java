@@ -27,6 +27,8 @@ public interface AddPaperContract {
 
         void clearDoiTextfield();
 
+        void clearCommentTextfield();
+
         void showSavePaperSuccessMessage();
 
         void showSavePaperErrorMessage();
