@@ -61,6 +61,33 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
+    public Observable<Paper> getPaperRecommendations(String userId) {
+        return Observable.create(emitter -> firestoreDb.collection(Collections.PAPERS)
+                .whereLessThan(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID, userId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> queryDocumentSnapshots.getDocuments()
+                        .stream()
+                        .filter(d -> d.get(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID) != null)
+                        .filter(d -> !d.get(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID).equals(userId))
+                        .map(d -> d.toObject(PaperEntity.class))
+                        .filter(Objects::nonNull)
+                        .map(this::fromEntity)
+                        .forEach(paper -> {
+                            Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paper.getPaperId()));
+                            emitter.onNext(paper);
+                        }))
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, String.format(TAG, FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
+                    emitter.onError(e);
+                })
+                .addOnCompleteListener(task -> {
+                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "papers"));
+                    emitter.onComplete();
+                })
+        );
+    }
+
+    @Override
     public Observable<Paper> getPapers() {
         return Observable.create(emitter -> firestoreDb.collection(Collections.PAPERS)
                 .get()

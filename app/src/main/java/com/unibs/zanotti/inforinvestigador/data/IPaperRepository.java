@@ -17,6 +17,8 @@ import io.reactivex.Single;
 public interface IPaperRepository {
     Maybe<Paper> getPaper(String paperId);
 
+    Observable<Paper> getPaperRecommendations(String userId);
+
     Observable<Paper> getPapers();
 
     /**

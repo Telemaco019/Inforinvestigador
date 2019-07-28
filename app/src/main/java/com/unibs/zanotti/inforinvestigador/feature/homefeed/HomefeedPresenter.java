@@ -87,7 +87,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private void loadPaperShares() {
         loadingPapersShares = true;
         papersFeed = new ArrayList<>();
-        disposables.add(paperRepository.getPapers()
+        disposables.add(paperRepository.getPaperRecommendations(userRepository.getCurrentUserId())
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
                         (paper, user) -> new FeedPaper(paper.getPaperId(),
                                 paper.getPaperTitle(),
