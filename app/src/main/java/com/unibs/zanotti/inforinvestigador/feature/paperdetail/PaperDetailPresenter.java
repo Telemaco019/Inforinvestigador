@@ -121,15 +121,26 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     private void showLoadedPaper() {
         if (loadedPaper != null) {
             getView().showPaperTitle(loadedPaper.getPaperTitle());
-            getView().showPaperCitations(loadedPaper.getPaperCitations());
-            getView().showPaperAbstract(loadedPaper.getPaperAbstract());
             getView().showPaperDOI(loadedPaper.getPaperDoi());
-            getView().showPaperPublisher(loadedPaper.getPaperPublisher());
-            getView().showPaperDate(loadedPaper.getPaperDate());
-            getView().showPaperAuthors(loadedPaper.getPaperAuthors());
-            getView().showPaperTopics(loadedPaper.getPaperTopics());
-
-            if(StringUtils.isBlank(loadedPaper.getURL())) {
+            if (loadedPaper.getPaperCitations() != null) {
+                getView().showPaperCitations(loadedPaper.getPaperCitations());
+            }
+            if (StringUtils.isNotBlank(loadedPaper.getPaperAbstract())) {
+                getView().showPaperAbstract(loadedPaper.getPaperAbstract());
+            }
+            if (StringUtils.isNotBlank(loadedPaper.getPaperPublisher())) {
+                getView().showPaperPublisher(loadedPaper.getPaperPublisher());
+            }
+            if (StringUtils.isNotBlank(loadedPaper.getPaperDate())) {
+                getView().showPaperDate(loadedPaper.getPaperDate());
+            }
+            if (loadedPaper.getPaperAuthors() != null && !loadedPaper.getPaperAuthors().isEmpty()) {
+                getView().showPaperAuthors(loadedPaper.getPaperAuthors());
+            }
+            if (loadedPaper.getPaperTopics() != null && !loadedPaper.getPaperTopics().isEmpty()) {
+                getView().showPaperTopics(loadedPaper.getPaperTopics());
+            }
+            if (StringUtils.isBlank(loadedPaper.getURL())) {
                 getView().disableGotoSourceButton();
             }
 

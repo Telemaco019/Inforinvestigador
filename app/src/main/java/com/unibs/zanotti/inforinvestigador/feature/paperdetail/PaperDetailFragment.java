@@ -157,17 +157,26 @@ public class PaperDetailFragment
 
     @Override
     public void showPaperAbstract(String paperAbstract) {
+        if (this.paperAbstract.getVisibility() != View.VISIBLE) {
+            this.paperAbstract.setVisibility(View.VISIBLE);
+        }
         this.paperAbstract.setText(paperAbstract);
     }
 
     @Override
     public void showPaperAuthors(List<String> authors) {
+        if (paperAuthors.getVisibility() != View.VISIBLE) {
+            paperAuthors.setVisibility(View.VISIBLE);
+        }
         String authorsToString = String.join(", ", authors);
         this.paperAuthors.setText(authorsToString);
     }
 
     @Override
     public void showPaperPublisher(String publisher) {
+        if (paperPublisher.getVisibility() != View.VISIBLE) {
+            paperPublisher.setVisibility(View.VISIBLE);
+        }
         this.paperPublisher.setText(publisher);
     }
 
@@ -178,6 +187,9 @@ public class PaperDetailFragment
 
     @Override
     public void showPaperTopics(List<String> topics) {
+        if (paperTopics.getVisibility() != View.VISIBLE) {
+            paperTopics.setVisibility(View.VISIBLE);
+        }
         String topicsToString = String.join(", ", topics);
         this.paperTopics.setText(topicsToString);
     }
@@ -189,6 +201,9 @@ public class PaperDetailFragment
 
     @Override
     public void showPaperDate(String date) {
+        if (paperDate.getVisibility() != View.VISIBLE) {
+            paperDate.setVisibility(View.VISIBLE);
+        }
         this.paperDate.setText(date);
     }
 
