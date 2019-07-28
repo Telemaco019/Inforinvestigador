@@ -31,6 +31,7 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
     }
 
     override fun onItemDismiss(position: Int) {
+        listener.onPaperShareDismissed(dataset[position].paperId)
         dataset.removeAt(position)
         notifyItemRemoved(position)
     }
@@ -103,5 +104,7 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
         fun onPaperShareClick(paperId: String)
 
         fun onPaperSharingUserClick(userId: String)
+
+        fun onPaperShareDismissed(paperId: String)
     }
 }

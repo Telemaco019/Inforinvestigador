@@ -19,6 +19,7 @@ public class PaperEntity {
     private String sharingUserComment;
     private List<String> paperImages;
     private String url;
+    private List<String> unsuggestedToUsersIds;
 
     public PaperEntity() {
         // Required by Firestone
@@ -49,6 +50,14 @@ public class PaperEntity {
         this.sharingUserComment = sharingUserComment;
         this.paperImages = paperImages;
         this.url = url;
+    }
+
+    public List<String> getUnsuggestedToUsersIds() {
+        return unsuggestedToUsersIds;
+    }
+
+    public void setUnsuggestedToUsersIds(List<String> unsuggestedToUsersIds) {
+        this.unsuggestedToUsersIds = unsuggestedToUsersIds;
     }
 
     public String getUrl() {

@@ -8,6 +8,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -55,6 +56,24 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
         getView().showLoadingProgressBar();
         loadPaperShares();
         loadResearchersSuggestions();
+    }
+
+    @Override
+    public void paperShareDismissed(String paperId) {
+        disposables.add(paperRepository.markPaperAsUnsuggestedToUser(paperId, userRepository.getCurrentUserId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onError(Throwable e) {
+                        // No OP
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // NO OP
+                    }
+                }));
     }
 
     private void loadResearchersSuggestions() {

@@ -71,6 +71,8 @@ public class PaperFirebaseRepository implements IPaperRepository {
                         .filter(d -> !d.get(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID).equals(userId))
                         .map(d -> d.toObject(PaperEntity.class))
                         .filter(Objects::nonNull)
+                        .filter(paperEntity -> paperEntity.getUnsuggestedToUsersIds() == null ||
+                                !paperEntity.getUnsuggestedToUsersIds().contains(userId))
                         .map(this::fromEntity)
                         .forEach(paper -> {
                             Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paper.getPaperId()));
@@ -88,27 +90,17 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public Observable<Paper> getPapers() {
-        return Observable.create(emitter -> firestoreDb.collection(Collections.PAPERS)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> queryDocumentSnapshots.getDocuments()
-                        .stream()
-                        .map(d -> d.toObject(PaperEntity.class))
-                        .filter(Objects::nonNull)
-                        .map(this::fromEntity)
-                        .forEach(paper -> {
-                            Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_SINGLE_READ_SUCCESS, "paper", paper.getPaperId()));
-                            emitter.onNext(paper);
-                        }))
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, String.format(TAG, FirebaseUtils.LOG_MSG_STANDARD_READ_ERROR, "paper", e.toString()));
-                    emitter.onError(e);
-                })
-                .addOnCompleteListener(task -> {
-                    Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "papers"));
-                    emitter.onComplete();
-                })
-        );
+    public Completable markPaperAsUnsuggestedToUser(String paperId, String userId) {
+        return Completable.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPERS, paperId))
+                .update(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_UNSUGGESTED_TO_USERS_IDS, FieldValue.arrayUnion(userId))
+                .addOnCompleteListener(aVoid -> {
+                    if (aVoid.isSuccessful()) {
+                        emitter.onComplete();
+                    } else {
+                        Log.e(TAG, aVoid.getException().getMessage(), aVoid.getException());
+                        emitter.onError(aVoid.getException());
+                    }
+                }));
     }
 
     @Override

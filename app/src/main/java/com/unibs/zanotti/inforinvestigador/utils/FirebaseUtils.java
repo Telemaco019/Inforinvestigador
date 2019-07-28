@@ -24,6 +24,7 @@ public class FirebaseUtils {
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_ID = "id";
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_TOKEN_INSTANCE_ID = "instanceId";
     public static final String FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID = "sharingUserId";
+    public static final String FIRESTORE_DOCUMENT_PAPER_UNSUGGESTED_TO_USERS_IDS = "unsuggestedToUsersIds";
 
 
     public static final String STORAGE_REFERENCE_PATH_PROFILE_PICTURES = "profile_pictures";

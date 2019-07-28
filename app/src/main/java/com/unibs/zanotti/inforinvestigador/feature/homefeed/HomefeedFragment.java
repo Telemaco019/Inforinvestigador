@@ -180,4 +180,9 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID, userId);
         startActivity(intent);
     }
+
+    @Override
+    public void onPaperShareDismissed(@NotNull String paperId) {
+        presenter.paperShareDismissed(paperId);
+    }
 }

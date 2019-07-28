@@ -13,6 +13,8 @@ public interface HomefeedContract {
         void researcherSuggestionClicked(String researcherId);
 
         void onRefresh();
+
+        void paperShareDismissed(String paperId);
     }
 
     interface View extends BaseContract.View {
