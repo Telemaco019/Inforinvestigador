@@ -91,16 +91,16 @@ public class PaperFirebaseRepository implements IPaperRepository {
 
             PaperEntity paperEntity = new PaperEntity(
                     paper.getPaperId(),
-                    paper.getPaperTitle(),
+                    paper.getPaperTitle().trim(),
                     paper.getPaperAuthors(),
                     paper.getPaperDate(),
-                    paper.getPaperDoi(),
+                    paper.getPaperDoi().trim(),
                     paper.getPaperCitations(),
                     paper.getPaperTopics(),
-                    paper.getPaperAbstract(),
-                    paper.getPaperPublisher(),
-                    paper.getSharingUserId(),
-                    paper.getSharingUserComment(),
+                    paper.getPaperAbstract().trim(),
+                    paper.getPaperPublisher().trim(),
+                    paper.getSharingUserId().trim(),
+                    paper.getSharingUserComment().trim(),
                     paper.getPaperImages().stream().map(Uri::toString).collect(Collectors.toList()),
                     paper.getURL()
             );

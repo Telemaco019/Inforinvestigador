@@ -76,7 +76,7 @@ public class PaperEntity {
     }
 
     public String getSharingUserComment() {
-        return sharingUserComment;
+        return sharingUserComment == null? null: sharingUserComment.trim();
     }
 
     public void setSharingUserComment(String sharingUserComment) {
