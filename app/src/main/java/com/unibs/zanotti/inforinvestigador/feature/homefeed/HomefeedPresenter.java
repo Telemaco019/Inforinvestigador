@@ -135,6 +135,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                     @Override
                     public void onComplete() {
                         Log.e("***", "On complete");
+                        Collections.shuffle(papersFeed);
                         showPapersFeed();
                         loadingPapersShares = false;
                         if (!loadingResearcherSuggestions) {
