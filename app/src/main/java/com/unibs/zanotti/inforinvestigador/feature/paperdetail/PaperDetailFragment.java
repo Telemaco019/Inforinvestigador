@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.snackbar.Snackbar;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -237,10 +236,8 @@ public class PaperDetailFragment
     }
 
     @Override
-    public void showMessageSourceNotAvailable() {
-        Snackbar.make(gotoSourceButton,
-                getResources().getString(R.string.paper_source_not_available),
-                Snackbar.LENGTH_LONG).show();
+    public void disableGotoSourceButton() {
+        gotoSourceButton.setEnabled(false);
     }
 
     @OnClick(R.id.button_send_commment)

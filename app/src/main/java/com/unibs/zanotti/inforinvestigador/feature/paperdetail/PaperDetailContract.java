@@ -51,6 +51,6 @@ public interface PaperDetailContract {
 
         void navigateToPaperSource(String url);
 
-        void showMessageSourceNotAvailable();
+        void disableGotoSourceButton();
     }
 }

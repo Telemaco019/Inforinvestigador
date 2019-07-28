@@ -104,11 +104,7 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
 
     @Override
     public void gotoSourceButtonClicked() {
-        if(StringUtils.isBlank(loadedPaper.getURL())) {
-            getView().showMessageSourceNotAvailable();
-        } else {
-            getView().navigateToPaperSource(loadedPaper.getURL());
-        }
+        getView().navigateToPaperSource(loadedPaper.getURL());
     }
 
     @Override
@@ -133,8 +129,12 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
             getView().showPaperAuthors(loadedPaper.getPaperAuthors());
             getView().showPaperTopics(loadedPaper.getPaperTopics());
 
+            if(StringUtils.isBlank(loadedPaper.getURL())) {
+                getView().disableGotoSourceButton();
+            }
+
             List<Uri> images = loadedPaper.getPaperImages();
-            if(!images.isEmpty()) {
+            if (!images.isEmpty()) {
                 getView().showPaperImages(images);
             }
 
