@@ -36,7 +36,7 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
         notifyItemRemoved(position)
     }
 
-    inner class MyViewHolder(view: View, val listener: OnPaperShareListener) :
+    inner class MyViewHolder(view: View) :
         RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
@@ -72,7 +72,7 @@ class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPape
         // Set layout parameters of the view
         // ...
 
-        return MyViewHolder(view, listener)
+        return MyViewHolder(view)
     }
 
     override fun getItemCount() = dataset.size
