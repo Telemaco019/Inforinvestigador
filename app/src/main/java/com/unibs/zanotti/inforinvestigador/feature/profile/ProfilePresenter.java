@@ -198,7 +198,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     @Override
     public void onSharedPapersNumberClicked() {
-        getView().showSharedPapersList(userId);
+        if (modelUser.getSharesNumber() > 0) {
+            getView().showSharedPapersList(userId);
+        }
     }
 
     @Override

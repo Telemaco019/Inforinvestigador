@@ -27,6 +27,7 @@ import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.feature.profile.editprofile.EditProfileActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.listFollowingAndFollowers.adapters.FollowingFollowersPageAdapter;
+import com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers.ListUserSharesActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
@@ -207,7 +208,9 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
 
     @Override
     public void showSharedPapersList(String userId) {
-
+        Intent intent = new Intent(getContext(), ListUserSharesActivity.class);
+        intent.putExtra(ListUserSharesActivity.STRING_EXTRA_USER_ID, userId);
+        startActivity(intent);
     }
 
     @Override

@@ -74,10 +74,11 @@ public class AddPaperPresenter extends BasePresenter<AddPaperContract.View> impl
     @Override
     public void submitButtonClicked(String userComment) {
         if (paperToShare != null) {
+            String currentUserId = userRepository.getCurrentUserId();
             getView().showProgressBar();
             paperToShare.setSharingUserComment(userComment);
-            paperToShare.setSharingUserId(userRepository.getCurrentUserId());
-            disposables.add(paperRepository.savePaper(paperToShare).subscribeWith(new DisposableSingleObserver<Paper>() {
+            paperToShare.setSharingUserId(currentUserId);
+            disposables.add(paperRepository.savePaper(paperToShare, currentUserId).subscribeWith(new DisposableSingleObserver<Paper>() {
                 @Override
                 public void onSuccess(Paper paper) {
                     getView().hideProgressBar();

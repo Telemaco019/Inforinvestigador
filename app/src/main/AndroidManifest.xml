@@ -15,6 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:replace="android:icon">
+        <activity android:name=".feature.profile.listSharedPapers.ListUserSharesActivity">
+        </activity>
         <activity android:name=".feature.profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity">
         </activity>
         <activity android:name=".feature.profile.ProfileActivity">
