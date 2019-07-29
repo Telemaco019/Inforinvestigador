@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import android.net.Uri;
+import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class Paper {
     }
 
     public String getURL() {
-        return URL;
+        return StringUtils.isBlank(URL)? StringUtils.BLANK: URL;
     }
 
     public void setURL(String url) {
@@ -66,7 +67,7 @@ public class Paper {
     }
 
     public String getSharingUserId() {
-        return sharingUserId;
+        return StringUtils.isBlank(sharingUserId)? StringUtils.BLANK: sharingUserId;
     }
 
     public void setSharingUserId(String sharingUserId) {
@@ -74,7 +75,7 @@ public class Paper {
     }
 
     public String getSharingUserComment() {
-        return sharingUserComment;
+        return StringUtils.isBlank(sharingUserComment)? StringUtils.BLANK: sharingUserComment;
     }
 
     public void setSharingUserComment(String sharingUserComment) {
@@ -82,7 +83,7 @@ public class Paper {
     }
 
     public String getPaperId() {
-        return paperId;
+        return StringUtils.isBlank(paperId)? StringUtils.BLANK: paperId;
     }
 
     public void setPaperId(String paperId) {
@@ -90,7 +91,7 @@ public class Paper {
     }
 
     public String getPaperTitle() {
-        return paperTitle;
+        return StringUtils.isBlank(paperTitle)? StringUtils.BLANK: paperTitle;
     }
 
     public void setPaperTitle(String paperTitle) {
@@ -110,7 +111,7 @@ public class Paper {
     }
 
     public String getPaperDate() {
-        return paperDate;
+        return StringUtils.isBlank(paperDate)?StringUtils.BLANK:paperDate;
     }
 
     public void setPaperDate(String paperDate) {
@@ -118,7 +119,7 @@ public class Paper {
     }
 
     public String getPaperPublisher() {
-        return paperPublisher;
+        return StringUtils.isBlank(paperPublisher)? StringUtils.BLANK: paperPublisher;
     }
 
     public void setPaperPublisher(String paperPublisher) {
@@ -138,7 +139,7 @@ public class Paper {
     }
 
     public String getPaperAbstract() {
-        return paperAbstract;
+        return StringUtils.isBlank(paperAbstract)? StringUtils.BLANK: paperAbstract;
     }
 
     public void setPaperAbstract(String paperAbstract) {
