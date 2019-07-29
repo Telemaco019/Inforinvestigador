@@ -30,11 +30,13 @@ public class CrossrefService implements ICrossrefService {
         Message message = example.getMessage();
 
         // Add  authors
-        message.getAuthor().forEach(author -> {
-            if(StringUtils.isNotBlank(author.getGiven()) && StringUtils.isNotBlank(author.getFamily())) {
-                paper.addPaperAuthor(String.format("%s %s", author.getGiven(), author.getFamily()));
-            }
-        });
+        if (message.getAuthor() != null) {
+            message.getAuthor().forEach(author -> {
+                if (StringUtils.isNotBlank(author.getGiven()) && StringUtils.isNotBlank(author.getFamily())) {
+                    paper.addPaperAuthor(String.format("%s %s", author.getGiven(), author.getFamily()));
+                }
+            });
+        }
         // Add DOI
         paper.setPaperDoi(message.getDOI());
         // Add citations
