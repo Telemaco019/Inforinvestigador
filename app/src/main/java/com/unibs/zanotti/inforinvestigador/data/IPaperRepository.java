@@ -38,7 +38,7 @@ public interface IPaperRepository {
      * @return A Single on which an Observer can subscribe in order to get the paper that has been added (or an error
      * if something goes wrong during the adding operation)
      */
-    Single<Paper> savePaper(Paper paper);
+    Single<Paper> savePaper(Paper paper, String sharingUserId);
 
     Completable likeComment(String paperId, String commentId, String userId);
 
@@ -52,4 +52,6 @@ public interface IPaperRepository {
      * @return
      */
     Observable<Comment> getCommentsRealTime(String paperId, String currentUserId);
+
+    Observable<Paper> getPapersSharedByUser(String userId);
 }
