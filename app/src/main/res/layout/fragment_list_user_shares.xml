@@ -11,7 +11,8 @@
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/content_layout">
+            android:id="@+id/content_layout"
+            android:paddingTop="@dimen/doubleBasePadding">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
