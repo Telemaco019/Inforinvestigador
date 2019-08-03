@@ -85,6 +85,10 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
             tvPaperComment = view.findViewById(R.id.shared_paper_comment);
             tvSharingUser = view.findViewById(R.id.shared_paper_sharing_user_name);
             ivSharingUserProfilePicture = view.findViewById(R.id.shared_paper_sharing_user_picture);
+
+            ivSharingUserProfilePicture.setOnClickListener(e -> listener.onPaperSharingUserClick(dataset.get(getAdapterPosition()).getSharingUserId()));
+            tvSharingUser.setOnClickListener(e -> listener.onPaperSharingUserClick(dataset.get(getAdapterPosition()).getSharingUserId()));
+            view.setOnClickListener(this);
         }
 
         TextView getTvPaperTitle() {
@@ -113,11 +117,13 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
 
         @Override
         public void onClick(View v) {
-            listener.onPaperSharedClicked(dataset.get(getAdapterPosition()).getPaperId());
+            listener.onPaperShareClicked(dataset.get(getAdapterPosition()).getPaperId());
         }
     }
 
     public interface OnPaperShareListener {
-        void onPaperSharedClicked(String paperId);
+        void onPaperShareClicked(String paperId);
+
+        void onPaperSharingUserClick(String userId);
     }
 }

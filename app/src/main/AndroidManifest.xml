@@ -51,7 +51,6 @@
         </activity>
         <activity
                 android:name=".feature.paperdetail.PaperDetailActivity"
-                android:parentActivityName=".feature.navigation.MainNavigationActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>

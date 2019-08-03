@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,10 @@ import com.google.common.collect.Lists;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.feature.paperdetail.PaperDetailActivity;
+import com.unibs.zanotti.inforinvestigador.feature.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers.adapter.ListUserSharesAdapter;
+import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import org.jetbrains.annotations.NotNull;
@@ -99,7 +103,16 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
     }
 
     @Override
-    public void onPaperSharedClicked(String paperId) {
+    public void onPaperShareClicked(String paperId) {
+        Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
+        intent.putExtra(PaperDetailActivity.STRING_EXTRA_PAPER_ID, paperId);
+        startActivity(intent);
+    }
 
+    @Override
+    public void onPaperSharingUserClick(String userId) {
+        Intent intent = new Intent(Actions.SHOW_RESEARCHER_PROFILE);
+        intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID, userId);
+        startActivity(intent);
     }
 }
