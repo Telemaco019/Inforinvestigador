@@ -121,7 +121,7 @@ public class MainNavigationActivity extends BaseActivity<NavigationContract.View
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         // Put the item of the menu in the toolbar. Material Design is applied automatically
-        inflater.inflate(R.menu.menu_top_bar_main_navigation, menu);
+        inflater.inflate(R.menu.menu_top_bar_with_search, menu);
 
         return true;
     }
