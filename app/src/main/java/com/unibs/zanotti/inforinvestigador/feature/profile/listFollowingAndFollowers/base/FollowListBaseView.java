@@ -29,7 +29,7 @@ public abstract class FollowListBaseView extends BaseFragment<FollowListBaseCont
     public void onCardClicked(User user) {
         Intent intent = new Intent(Actions.SHOW_RESEARCHER_PROFILE);
         intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID,user.getId());
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
