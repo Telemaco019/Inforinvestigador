@@ -31,6 +31,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     private void showUserProfile() {
         if (modelUser != null) {
+            getView().showContentLayout();
+
             getView().showProfilePicture(modelUser.getProfilePictureUri());
             getView().showUserEmail(modelUser.getEmail());
             getView().showUserName(modelUser.getName());
@@ -56,8 +58,6 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
             } else {
                 showFollowUnfollowButton();
             }
-        } else {
-            getView().showEmptyUserProfile();
         }
     }
 
@@ -96,8 +96,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                     @Override
                     public void onSuccess(User user) {
                         modelUser = user;
-                        showUserProfile();
                         getView().hideLoadingProgressBar();
+                        showUserProfile();
                     }
 
                     @Override
@@ -135,7 +135,6 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void onProfileEdited() {
         loadModelUser();
-        showUserProfile();
     }
 
     @Override

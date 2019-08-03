@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
@@ -38,6 +39,8 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
 
     private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ProfileFragment.argument.USER_ID";
 
+    @BindView(R.id.content_layout)
+    NestedScrollView contentLayout;
     @BindView(R.id.profile_btn_follow)
     AppCompatButton btnProfileFollow;
     @BindView(R.id.profile_btn_unfollow)
@@ -168,13 +171,6 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     }
 
     @Override
-    public void showEmptyUserProfile() {
-        btnEditProfile.setVisibility(View.GONE);
-        btnProfileFollow.setVisibility(View.GONE);
-        btnProfileUnfollow.setVisibility(View.GONE);
-    }
-
-    @Override
     public void replaceButtonFollowWithUnfollow() {
         if (btnProfileFollow.getVisibility() == View.VISIBLE) {
             ActivityUtils.substituteViewWithFade(btnProfileFollow, btnProfileUnfollow, 300);
@@ -234,6 +230,13 @@ public class ProfileFragment extends BaseFragment<ProfileContract.View, ProfileC
     public void showFollowButton() {
         if (btnProfileFollow.getVisibility() != View.VISIBLE) {
             ActivityUtils.animateViewWithFade(btnProfileFollow, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        }
+    }
+
+    @Override
+    public void showContentLayout() {
+        if (contentLayout.getVisibility() != View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         }
     }
 
