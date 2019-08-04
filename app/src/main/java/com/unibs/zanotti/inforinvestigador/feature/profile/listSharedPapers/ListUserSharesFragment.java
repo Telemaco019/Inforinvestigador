@@ -44,7 +44,7 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
     private ListUserSharesAdapter mAdapter;
 
     public ListUserSharesFragment() {
-        mAdapter = new ListUserSharesAdapter(Lists.newArrayList(), this);
+        mAdapter = new ListUserSharesAdapter(Lists.newArrayList(), this, Injection.provideUserRepository().getCurrentUserId());
     }
 
     public static ListUserSharesFragment newInstance(String userId) {

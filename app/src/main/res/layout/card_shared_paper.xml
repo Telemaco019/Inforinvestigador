@@ -82,13 +82,30 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/shared_paper_comment"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
-        <TextView
-                android:layout_width="wrap_content"
+
+        <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/baseMargin"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:clickable="true"
-                android:textColor="@drawable/secondary_color_clickable_icon_selector"
-                android:id="@+id/shared_paper_sharing_user_name"/>
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/baseMargin"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:clickable="true"
+                    android:textColor="@drawable/secondary_color_clickable_icon_selector"
+                    android:id="@+id/shared_paper_sharing_user_name"/>
+            <ImageButton
+                    android:id="@+id/edit_paper_share_button"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit_black_24dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:layout_gravity="end"
+                    android:layout_alignParentEnd="true"
+                    android:tint="@drawable/standard_clickable_icon_selector"/>
+        </RelativeLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
