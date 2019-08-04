@@ -7,6 +7,21 @@
         android:layout_height="match_parent"
         tools:context=".feature.editPaper.EditPaperShareActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:expanded="true">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="enterAlways"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

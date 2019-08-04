@@ -32,6 +32,7 @@ public class ListUserSharesPresenter extends BasePresenter<ListUserSharesContrac
 
     @Override
     public void onPresenterCreated() {
+        getView().showProgressBar();
         loadSharedPapers();
     }
 
@@ -44,7 +45,6 @@ public class ListUserSharesPresenter extends BasePresenter<ListUserSharesContrac
     }
 
     private void loadSharedPapers() {
-        getView().showProgressBar();
         sharedPapers = Lists.newArrayList();
         disposables.add(paperRepository.getPapersSharedByUser(userId)
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
@@ -81,5 +81,11 @@ public class ListUserSharesPresenter extends BasePresenter<ListUserSharesContrac
         getView().hideProgressBar();
         getView().showContentLayout();
         getView().showSharedPapers(sharedPapers);
+    }
+
+    @Override
+    public void paperEdited() {
+        sharedPapers = Lists.newArrayList();
+        loadSharedPapers();
     }
 }

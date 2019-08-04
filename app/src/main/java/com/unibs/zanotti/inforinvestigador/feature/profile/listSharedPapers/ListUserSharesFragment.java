@@ -1,6 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.google.common.collect.Lists;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
+import com.unibs.zanotti.inforinvestigador.feature.editPaper.EditPaperShareActivity;
 import com.unibs.zanotti.inforinvestigador.feature.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers.adapter.ListUserSharesAdapter;
@@ -117,7 +119,20 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
     }
 
     @Override
-    public void onEditPaperShareClicked(PaperShare paperShare) {
+    public void onEditPaperShareClicked(String paperId) {
+        Intent intent = new Intent(Actions.EDIT_PAPER_SHARE);
+        intent.putExtra(EditPaperShareActivity.STRING_EXTRA_PAPER_ID, paperId);
+        startActivityForResult(intent, EditPaperShareActivity.EDIT_PAPER_SHARE_ACTIVITY_REQUEST_CODE);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == EditPaperShareActivity.EDIT_PAPER_SHARE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                presenter.paperEdited();
+            }
+        }
     }
 }

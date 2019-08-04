@@ -1,12 +1,14 @@
 package com.unibs.zanotti.inforinvestigador.domain.model;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Paper {
+public class Paper implements Parcelable {
     private String paperId;
     private String paperTitle;
     private List<String> paperAuthors;
@@ -30,7 +32,8 @@ public class Paper {
     public Paper(String paperId,
                  String paperTitle,
                  List<String> paperAuthors,
-                 String paperDate, String paperDoi,
+                 String paperDate,
+                 String paperDoi,
                  Integer paperCitations,
                  List<String> paperTopics,
                  String paperAbstract,
@@ -54,8 +57,58 @@ public class Paper {
         this.URL = link;
     }
 
+    protected Paper(Parcel in) {
+        paperId = in.readString();
+        paperTitle = in.readString();
+        paperAuthors = in.createStringArrayList();
+        paperDate = in.readString();
+        paperDoi = in.readString();
+        if (in.readByte() == 0) {
+            paperCitations = null;
+        } else {
+            paperCitations = in.readInt();
+        }
+        paperTopics = in.createStringArrayList();
+        paperAbstract = in.readString();
+        paperPublisher = in.readString();
+        sharingUserId = in.readString();
+        sharingUserComment = in.readString();
+        paperImages = in.createTypedArrayList(Uri.CREATOR);
+        URL = in.readString();
+    }
+
+    public static final Creator<Paper> CREATOR = new Creator<Paper>() {
+        @Override
+        public Paper createFromParcel(Parcel in) {
+            return new Paper(in);
+        }
+
+        @Override
+        public Paper[] newArray(int size) {
+            return new Paper[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(paperId);
+        dest.writeString(paperTitle);
+        dest.writeList(paperAuthors);
+        dest.writeString(paperDate);
+        dest.writeString(paperDoi);
+        dest.writeInt(paperCitations);
+        dest.writeList(paperTopics);
+        dest.writeString(paperAbstract);
+        dest.writeString(paperPublisher);
+        dest.writeString(sharingUserId);
+        dest.writeString(sharingUserId);
+        dest.writeString(sharingUserComment);
+        dest.writeList(paperImages);
+        dest.writeString(URL);
+    }
+
     public String getURL() {
-        return StringUtils.isBlank(URL)? StringUtils.BLANK: URL;
+        return StringUtils.isBlank(URL) ? StringUtils.BLANK : URL;
     }
 
     public void setURL(String url) {
@@ -67,7 +120,7 @@ public class Paper {
     }
 
     public String getSharingUserId() {
-        return StringUtils.isBlank(sharingUserId)? StringUtils.BLANK: sharingUserId;
+        return StringUtils.isBlank(sharingUserId) ? StringUtils.BLANK : sharingUserId;
     }
 
     public void setSharingUserId(String sharingUserId) {
@@ -75,7 +128,7 @@ public class Paper {
     }
 
     public String getSharingUserComment() {
-        return StringUtils.isBlank(sharingUserComment)? StringUtils.BLANK: sharingUserComment;
+        return StringUtils.isBlank(sharingUserComment) ? StringUtils.BLANK : sharingUserComment;
     }
 
     public void setSharingUserComment(String sharingUserComment) {
@@ -83,7 +136,7 @@ public class Paper {
     }
 
     public String getPaperId() {
-        return StringUtils.isBlank(paperId)? StringUtils.BLANK: paperId;
+        return StringUtils.isBlank(paperId) ? StringUtils.BLANK : paperId;
     }
 
     public void setPaperId(String paperId) {
@@ -91,7 +144,7 @@ public class Paper {
     }
 
     public String getPaperTitle() {
-        return StringUtils.isBlank(paperTitle)? StringUtils.BLANK: paperTitle;
+        return StringUtils.isBlank(paperTitle) ? StringUtils.BLANK : paperTitle;
     }
 
     public void setPaperTitle(String paperTitle) {
@@ -111,7 +164,7 @@ public class Paper {
     }
 
     public String getPaperDate() {
-        return StringUtils.isBlank(paperDate)?StringUtils.BLANK:paperDate;
+        return StringUtils.isBlank(paperDate) ? StringUtils.BLANK : paperDate;
     }
 
     public void setPaperDate(String paperDate) {
@@ -119,7 +172,7 @@ public class Paper {
     }
 
     public String getPaperPublisher() {
-        return StringUtils.isBlank(paperPublisher)? StringUtils.BLANK: paperPublisher;
+        return StringUtils.isBlank(paperPublisher) ? StringUtils.BLANK : paperPublisher;
     }
 
     public void setPaperPublisher(String paperPublisher) {
@@ -139,7 +192,7 @@ public class Paper {
     }
 
     public String getPaperAbstract() {
-        return StringUtils.isBlank(paperAbstract)? StringUtils.BLANK: paperAbstract;
+        return StringUtils.isBlank(paperAbstract) ? StringUtils.BLANK : paperAbstract;
     }
 
     public void setPaperAbstract(String paperAbstract) {
@@ -160,5 +213,10 @@ public class Paper {
 
     public List<Uri> getPaperImages() {
         return paperImages;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

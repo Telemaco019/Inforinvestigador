@@ -96,7 +96,7 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
 
             ivSharingUserProfilePicture.setOnClickListener(e -> listener.onPaperSharingUserClick(dataset.get(getAdapterPosition()).getSharingUserId()));
             tvSharingUser.setOnClickListener(e -> listener.onPaperSharingUserClick(dataset.get(getAdapterPosition()).getSharingUserId()));
-            imEditPaperShare.setOnClickListener(e -> listener.onEditPaperShareClicked(dataset.get(getAdapterPosition())));
+            imEditPaperShare.setOnClickListener(e -> listener.onEditPaperShareClicked(dataset.get(getAdapterPosition()).getPaperId()));
             view.setOnClickListener(this);
         }
 
@@ -139,6 +139,6 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
 
         void onPaperSharingUserClick(String userId);
 
-        void onEditPaperShareClicked(PaperShare paperShare);
+        void onEditPaperShareClicked(String paperId);
     }
 }

@@ -19,5 +19,6 @@ public interface ListUserSharesContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
+        void paperEdited();
     }
 }

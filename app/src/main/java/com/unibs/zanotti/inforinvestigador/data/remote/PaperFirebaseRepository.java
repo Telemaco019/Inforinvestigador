@@ -114,6 +114,17 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
+    public Completable updatePaperField(String paperId, String fieldName, Object newValue) {
+        return Completable.create(emitter -> {
+            String paperPath = String.format("%s/%s", Collections.PAPERS, paperId);
+            firestoreDb.document(paperPath)
+                    .update(fieldName, newValue)
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
     public Completable markPaperAsUnsuggestedToUser(String paperId, String userId) {
         return Completable.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPERS, paperId))
                 .update(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_UNSUGGESTED_TO_USERS_IDS, FieldValue.arrayUnion(userId))
