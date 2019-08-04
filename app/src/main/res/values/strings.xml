@@ -76,5 +76,6 @@
     <string name="fragment_add_paper_title">Title</string>
     <string name="citations_caption">citations</string>
     <string name="paper_source_not_available">Source currently not available</string>
+    <string name="fragment_edit_paper_share_button_caption">Edit</string>
 
 </resources>

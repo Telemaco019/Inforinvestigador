@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/baseMargin">
+
+        <EditText
+                android:id="@+id/add_edit_paper_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_add_paper_title"
+                android:enabled="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/baseMargin">
+
+        <EditText
+                android:id="@+id/add_edit_paper_authors"
+                android:hint="@string/fragment_add_paper_authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/baseMargin">
+
+        <EditText
+                android:id="@+id/add_edit_paper_date"
+                android:layout_width="match_parent"
+                android:hint="@string/fragment_add_paper_date"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/baseMargin">
+
+        <EditText
+                android:id="@+id/add_edit_paper_publisher"
+                android:layout_width="match_parent"
+                android:hint="@string/fragment_add_paper_publisher"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/baseMargin">
+
+        <EditText
+                android:id="@+id/add_edit_paper_citations"
+                android:layout_width="match_parent"
+                android:hint="@string/fragment_add_paper_citations"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/baseMargin">
+
+        <EditText
+                android:id="@+id/add_edit_paper_abstract"
+                android:layout_width="match_parent"
+                android:hint="@string/fragment_add_paper_abstract"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

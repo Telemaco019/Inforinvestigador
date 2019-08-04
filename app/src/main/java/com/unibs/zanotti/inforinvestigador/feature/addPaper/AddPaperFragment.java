@@ -12,7 +12,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
@@ -40,8 +39,22 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
     MaterialButton submitButton;
     @BindView(R.id.add_paper_share_cancel_button)
     MaterialButton cancelButton;
-    @BindView(R.id.add_paper_fields_layout_container)
+    @BindView(R.id.paper_details_layout_container)
     LinearLayout paperDetailsLayoutContainer;
+
+    @BindView(R.id.add_edit_paper_title)
+    EditText paperTitleEditText;
+    @BindView(R.id.add_edit_paper_authors)
+    EditText paperAuthorsEditText;
+    @BindView(R.id.add_edit_paper_date)
+    EditText paperDateEditText;
+    @BindView(R.id.add_edit_paper_publisher)
+    EditText paperPublisherEditText;
+    @BindView(R.id.add_edit_paper_citations)
+    EditText paperCitationsEditText;
+    @BindView(R.id.add_edit_paper_abstract)
+    EditText paperAbstractEditText;
+
     @BindView(R.id.add_paper_buttons_layout)
     RelativeLayout submitButtonsLayout;
 
@@ -116,13 +129,12 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
         ActivityUtils.animateViewWithFade(commentEditText, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
         ActivityUtils.animateViewWithFade(submitButtonsLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
 
-        paperDetailsLayoutContainer.removeAllViews();
-        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_title), paper.getPaperTitle()));
-        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_authors), paper.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paper.getPaperAuthors())));
-        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_date), paper.getPaperDate()));
-        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_publisher), paper.getPaperPublisher()));
-        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_citations), paper.getPaperCitations() == null ? StringUtils.BLANK : String.valueOf(paper.getPaperCitations())));
-        paperDetailsLayoutContainer.addView(createTextLayout(getString(R.string.fragment_add_paper_abstract), paper.getPaperAbstract()));
+        setText(paperTitleEditText, paper.getPaperTitle());
+        setText(paperAuthorsEditText, paper.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paper.getPaperAuthors()));
+        setText(paperDateEditText, paper.getPaperDate());
+        setText(paperPublisherEditText, paper.getPaperPublisher());
+        setText(paperCitationsEditText, paper.getPaperCitations() == null ? StringUtils.BLANK : String.valueOf(paper.getPaperCitations()));
+        setText(paperAbstractEditText, paper.getPaperAbstract());
     }
 
     @Override
@@ -166,20 +178,12 @@ public class AddPaperFragment extends BaseFragment<AddPaperContract.View, AddPap
                 .show();
     }
 
-    private TextInputLayout createTextLayout(String hint, String content) {
-        TextInputLayout textInputLayout = new TextInputLayout(getContext());
-        EditText editText = new EditText(getContext());
-        editText.setHint(hint);
-        editText.setEnabled(Boolean.FALSE);
-        textInputLayout.addView(editText);
-
-        if (StringUtils.isBlank(content)) {
+    private void setText(EditText editText, String contentText) {
+        if (StringUtils.isBlank(contentText)) {
             editText.setError(getString(R.string.add_paper_field_not_found_message));
             editText.setText(getString(R.string.add_paper_field_not_found_message));
         } else {
-            editText.setText(content);
+            editText.setText(contentText);
         }
-
-        return textInputLayout;
     }
 }
