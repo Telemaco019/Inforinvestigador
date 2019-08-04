@@ -41,6 +41,12 @@ public interface EditProfileContract {
 
         void onProfilePictureEdited(int resultCode, Intent data);
 
-        void updateUserProfileFields(String name, String phone, String location);
+        void saveModelUserFields();
+
+        void locationEdited(String newLocation);
+
+        void nameEdited(String newName);
+
+        void phoneEdited(String newPhone);
     }
 }

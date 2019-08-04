@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +69,63 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
 
+        editTextLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (checkInputFields()) {
+                    presenter.locationEdited(s.toString());
+                }
+            }
+        });
+
+        editTextName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (checkInputFields()) {
+                    presenter.nameEdited(s.toString());
+                }
+            }
+        });
+
+        editTextPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (checkInputFields()) {
+                    presenter.phoneEdited(s.toString());
+                }
+            }
+        });
+
         // Enable topbar listener
         setHasOptionsMenu(true);
 
@@ -107,9 +166,7 @@ public class EditProfileFragment extends BaseFragment<EditProfileContract.View, 
             }
             case R.id.top_bar_action_confirm: {
                 if (checkInputFields()) {
-                    presenter.updateUserProfileFields(editTextName.getText().toString(),
-                            editTextPhone.getText().toString(),
-                            editTextLocation.getText().toString());
+                    presenter.saveModelUserFields();
                 }
             }
         }

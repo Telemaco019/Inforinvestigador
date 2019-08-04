@@ -80,11 +80,14 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
     }
 
     @Override
-    public void updateUserProfileFields(String name, String phone, String location) {
+    public void saveModelUserFields() {
         // Update all the other fields only if the profile picture is not being updated
         if(!savingProfilePicture) {
             getView().showProgressSavingUserProfileFields();
             String userId = modelUser.getId();
+            String name = modelUser.getName().trim();
+            String phone = modelUser.getPhone().trim();
+            String location = modelUser.getLocation().trim();
             disposables.add(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_NAME, name.trim())
                     .andThen(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_PHONE, phone.trim()))
                     .andThen(userRepository.updateUserField(userId, FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_LOCATION, location.trim()))
@@ -106,6 +109,21 @@ public class EditProfilePresenter extends BasePresenter<EditProfileContract.View
         } else {
             getView().showMessageWaitProfilePictureSaving();
         }
+    }
+
+    @Override
+    public void locationEdited(String newLocation) {
+        modelUser.setLocation(newLocation.trim());
+    }
+
+    @Override
+    public void nameEdited(String newName) {
+        modelUser.setName(newName.trim());
+    }
+
+    @Override
+    public void phoneEdited(String newPhone) {
+        modelUser.setPhone(newPhone.trim());
     }
 
 

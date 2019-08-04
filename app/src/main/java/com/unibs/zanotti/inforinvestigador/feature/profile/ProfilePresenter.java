@@ -187,12 +187,16 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     @Override
     public void onFollowersNumberClicked() {
-        getView().showFollowersList(modelUser);
+        if(modelUser.getFollowersNumber() > 0) {
+            getView().showFollowersList(modelUser);
+        }
     }
 
     @Override
     public void onFollowingNumberClicked() {
-        getView().showFollowingList(modelUser);
+        if(modelUser.getFollowingNumber() > 0 ) {
+            getView().showFollowingList(modelUser);
+        }
     }
 
     @Override
