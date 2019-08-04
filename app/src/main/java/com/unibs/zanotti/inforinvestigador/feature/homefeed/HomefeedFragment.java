@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import com.unibs.zanotti.inforinvestigador.feature.homefeed.adapters.PaperFeedAdapter;
 import com.unibs.zanotti.inforinvestigador.feature.homefeed.adapters.ResearcherSuggestionAdapter;
@@ -89,8 +89,8 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
 
 
     @Override
-    public void showPapersFeed(List<FeedPaper> feedPapers) {
-        this.paperFeedAdapter.setDataset(feedPapers);
+    public void showPapersFeed(List<PaperShare> paperShares) {
+        this.paperFeedAdapter.setDataset(paperShares);
         this.paperFeedAdapter.notifyDataSetChanged();
     }
 

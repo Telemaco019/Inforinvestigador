@@ -1,7 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers;
 
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface ListUserSharesContract {
 
         void showProgressBar();
 
-        void showSharedPapers(List<FeedPaper> sharedPapers);
+        void showSharedPapers(List<PaperShare> sharedPapers);
 
         void hideProgressBar();
 

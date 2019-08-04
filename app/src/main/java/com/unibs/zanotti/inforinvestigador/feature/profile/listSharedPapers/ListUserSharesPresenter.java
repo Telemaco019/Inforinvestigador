@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -20,7 +20,7 @@ public class ListUserSharesPresenter extends BasePresenter<ListUserSharesContrac
     private IPaperRepository paperRepository;
     private IUserRepository userRepository;
 
-    private List<FeedPaper> sharedPapers;
+    private List<PaperShare> sharedPapers;
     private String userId;
 
     public ListUserSharesPresenter(String userId, IPaperRepository paperRepository, IUserRepository userRepository) {
@@ -48,7 +48,7 @@ public class ListUserSharesPresenter extends BasePresenter<ListUserSharesContrac
         sharedPapers = Lists.newArrayList();
         disposables.add(paperRepository.getPapersSharedByUser(userId)
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
-                        (paper, user) -> new FeedPaper(paper.getPaperId(),
+                        (paper, user) -> new PaperShare(paper.getPaperId(),
                                 paper.getPaperTitle(),
                                 paper.getSharingUserComment(),
                                 user.getName(),
@@ -59,10 +59,10 @@ public class ListUserSharesPresenter extends BasePresenter<ListUserSharesContrac
                                 paper.getSharingUserId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<FeedPaper>() {
+                .subscribeWith(new DisposableObserver<PaperShare>() {
                     @Override
-                    public void onNext(FeedPaper feedPaper) {
-                        sharedPapers.add(feedPaper);
+                    public void onNext(PaperShare paperShare) {
+                        sharedPapers.add(paperShare);
                     }
 
                     @Override

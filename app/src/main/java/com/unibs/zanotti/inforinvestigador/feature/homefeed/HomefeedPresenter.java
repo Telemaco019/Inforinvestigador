@@ -5,7 +5,7 @@ import android.util.Log;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -22,7 +22,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
 
     private final IUserRepository userRepository;
     private IPaperRepository paperRepository;
-    private List<FeedPaper> papersFeed;
+    private List<PaperShare> papersFeed;
     private List<ResearcherSuggestion> researchersFeed;
 
     /**
@@ -108,7 +108,7 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
         papersFeed = new ArrayList<>();
         disposables.add(paperRepository.getPaperRecommendations(userRepository.getCurrentUserId())
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
-                        (paper, user) -> new FeedPaper(paper.getPaperId(),
+                        (paper, user) -> new PaperShare(paper.getPaperId(),
                                 paper.getPaperTitle(),
                                 paper.getSharingUserComment(),
                                 user.getName(),
@@ -119,11 +119,11 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
                                 paper.getSharingUserId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<FeedPaper>() {
+                .subscribeWith(new DisposableObserver<PaperShare>() {
                     @Override
-                    public void onNext(FeedPaper feedPaper) {
+                    public void onNext(PaperShare paperShare) {
                         Log.e("***", "On next");
-                        papersFeed.add(feedPaper);
+                        papersFeed.add(paperShare);
                     }
 
                     @Override

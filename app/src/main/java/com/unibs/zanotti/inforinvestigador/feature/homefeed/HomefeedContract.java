@@ -1,7 +1,7 @@
 package com.unibs.zanotti.inforinvestigador.feature.homefeed;
 
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseContract;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface HomefeedContract {
     }
 
     interface View extends BaseContract.View {
-        void showPapersFeed(List<FeedPaper> feedPapers);
+        void showPapersFeed(List<PaperShare> paperShares);
 
         void showResearchersSuggestions(List<ResearcherSuggestion> suggestions);
 

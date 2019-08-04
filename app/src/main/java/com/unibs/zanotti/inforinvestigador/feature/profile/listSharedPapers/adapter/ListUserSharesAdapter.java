@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.unibs.zanotti.inforinvestigador.R;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -17,11 +17,11 @@ import java.util.List;
 
 public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAdapter.MyViewHolder> {
 
-    private List<FeedPaper> dataset;
+    private List<PaperShare> dataset;
     private OnPaperShareListener listener;
     private String currentUserId;
 
-    public ListUserSharesAdapter(List<FeedPaper> dataset, OnPaperShareListener listener, String currentUserId) {
+    public ListUserSharesAdapter(List<PaperShare> dataset, OnPaperShareListener listener, String currentUserId) {
         this.dataset = dataset;
         this.listener = listener;
         this.currentUserId = currentUserId;
@@ -37,7 +37,7 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        FeedPaper paperShare = dataset.get(position);
+        PaperShare paperShare = dataset.get(position);
         String paperTitle = StringUtils.isBlank(paperShare.getPaperTitle()) ? StringUtils.BLANK : paperShare.getPaperTitle();
         String paperAuthors = paperShare.getPaperAuthors().isEmpty() ? StringUtils.BLANK : String.join(", ", paperShare.getPaperAuthors());
         String paperDate = StringUtils.isBlank(paperShare.getPaperDate()) ? StringUtils.BLANK : paperShare.getPaperDate();
@@ -67,7 +67,7 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
         return dataset.size();
     }
 
-    public void setDataset(List<FeedPaper> sharedPapers) {
+    public void setDataset(List<PaperShare> sharedPapers) {
         this.dataset = sharedPapers;
         notifyDataSetChanged();
     }
@@ -96,6 +96,7 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
 
             ivSharingUserProfilePicture.setOnClickListener(e -> listener.onPaperSharingUserClick(dataset.get(getAdapterPosition()).getSharingUserId()));
             tvSharingUser.setOnClickListener(e -> listener.onPaperSharingUserClick(dataset.get(getAdapterPosition()).getSharingUserId()));
+            imEditPaperShare.setOnClickListener(e -> listener.onEditPaperShareClicked(dataset.get(getAdapterPosition())));
             view.setOnClickListener(this);
         }
 
@@ -137,5 +138,7 @@ public class ListUserSharesAdapter extends RecyclerView.Adapter<ListUserSharesAd
         void onPaperShareClicked(String paperId);
 
         void onPaperSharingUserClick(String userId);
+
+        void onEditPaperShareClicked(PaperShare paperShare);
     }
 }

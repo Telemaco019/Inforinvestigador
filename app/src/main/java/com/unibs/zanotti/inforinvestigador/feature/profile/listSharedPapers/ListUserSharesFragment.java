@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import com.google.common.collect.Lists;
 import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper;
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.feature.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers.adapter.ListUserSharesAdapter;
@@ -84,7 +84,7 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
     }
 
     @Override
-    public void showSharedPapers(List<FeedPaper> sharedPapers) {
+    public void showSharedPapers(List<PaperShare> sharedPapers) {
         mAdapter.setDataset(sharedPapers);
     }
 
@@ -114,5 +114,10 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
         Intent intent = new Intent(Actions.SHOW_RESEARCHER_PROFILE);
         intent.putExtra(ProfileActivity.STRING_EXTRA_RESEARCHER_ID, userId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onEditPaperShareClicked(PaperShare paperShare) {
+
     }
 }

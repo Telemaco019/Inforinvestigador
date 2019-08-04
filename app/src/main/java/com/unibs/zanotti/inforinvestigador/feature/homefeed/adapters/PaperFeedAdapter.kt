@@ -7,12 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.unibs.zanotti.inforinvestigador.R
-import com.unibs.zanotti.inforinvestigador.domain.model.FeedPaper
+import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare
 import com.unibs.zanotti.inforinvestigador.utils.itemTouch.ItemTouchHelperAdapter
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Collections.swap
 
-class PaperFeedAdapter(var dataset: MutableList<FeedPaper>, val listener: OnPaperShareListener) :
+class PaperFeedAdapter(var dataset: MutableList<PaperShare>, val listener: OnPaperShareListener) :
     RecyclerView.Adapter<PaperFeedAdapter.MyViewHolder>(),
     ItemTouchHelperAdapter {
 
