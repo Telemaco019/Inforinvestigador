@@ -1,10 +1,8 @@
 package com.unibs.zanotti.inforinvestigador.feature.paperdetail;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -51,15 +49,5 @@ public class PaperDetailActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_top_bar_view_paper, menu);
 
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.setResult(Activity.RESULT_CANCELED);
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
