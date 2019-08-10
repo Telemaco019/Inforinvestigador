@@ -7,10 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -142,6 +139,12 @@ public class PaperDetailFragment
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_top_bar_view_paper, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

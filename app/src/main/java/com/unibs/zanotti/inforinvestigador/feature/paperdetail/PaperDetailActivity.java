@@ -1,8 +1,6 @@
 package com.unibs.zanotti.inforinvestigador.feature.paperdetail;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -41,13 +39,5 @@ public class PaperDetailActivity extends AppCompatActivity {
             // Set the font of the title
             ((TextView) toolbar.getChildAt(0)).setTypeface(getResources().getFont(R.font.montserrat_light));
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_top_bar_view_paper, menu);
-
-        return true;
     }
 }
