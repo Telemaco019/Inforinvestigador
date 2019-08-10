@@ -151,6 +151,10 @@ public class PaperDetailFragment
             getActivity().finish();
         }
 
+        if(item.getItemId() == R.id.menu_topbar_innermenu_addToLibrary) {
+            presenter.addToLibraryClicked();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

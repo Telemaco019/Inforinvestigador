@@ -13,6 +13,8 @@ public interface PaperDetailContract {
         void addComment(String comment);
 
         void gotoSourceButtonClicked();
+
+        void addToLibraryClicked();
     }
 
     interface View extends BaseContract.View {

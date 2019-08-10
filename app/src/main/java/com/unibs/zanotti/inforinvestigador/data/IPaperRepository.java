@@ -56,4 +56,6 @@ public interface IPaperRepository {
     Observable<Comment> getCommentsRealTime(String paperId, String currentUserId);
 
     Observable<Paper> getPapersSharedByUser(String userId);
+
+    Completable addPaperToLibrary(String paperId, String userId);
 }

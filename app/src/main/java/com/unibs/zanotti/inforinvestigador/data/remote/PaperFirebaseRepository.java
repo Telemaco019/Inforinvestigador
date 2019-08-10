@@ -2,11 +2,14 @@ package com.unibs.zanotti.inforinvestigador.data.remote;
 
 import android.net.Uri;
 import android.util.Log;
+import com.google.common.collect.Lists;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.firestore.*;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.Collections;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.CommentEntity;
 import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperEntity;
+import com.unibs.zanotti.inforinvestigador.data.remote.model.PaperLibraryEntity;
 import com.unibs.zanotti.inforinvestigador.domain.model.Comment;
 import com.unibs.zanotti.inforinvestigador.domain.model.Paper;
 import com.unibs.zanotti.inforinvestigador.domain.utils.DateUtils;
@@ -82,6 +85,33 @@ public class PaperFirebaseRepository implements IPaperRepository {
                     Log.d(TAG, String.format(FirebaseUtils.LOG_MSG_STANDARD_READ_SUCCESS, "papers"));
                     emitter.onComplete();
                 }));
+    }
+
+    @Override
+    public Completable addPaperToLibrary(String paperId, String userId) {
+        DocumentReference libraryDocumentRef = firestoreDb.document(String.format("%s/%s", Collections.PAPER_LIBRARY, userId));
+        return Completable.create(emitter -> libraryDocumentRef
+                .get()
+                .continueWithTask(task -> {
+                    if (task.getResult() == null) return null;
+                    if (task.getResult().exists()) {
+                        if (task.getResult().get(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_LIBRARY_PAPER_IDS) != null) {
+                            List<String> paperIds = (List<String>) task.getResult().get(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_LIBRARY_PAPER_IDS);
+                            if (paperIds.contains(paperId)) {
+                                String errorMessage = String.format("The paper %s is already present in the library of user %s", paperId, userId);
+                                throw new FirebaseException(errorMessage);
+                            }
+                            return libraryDocumentRef.update(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_LIBRARY_PAPER_IDS, FieldValue.arrayUnion(paperId));
+                        } else {
+                            throw new FirebaseException("Error: document malformed");
+                        }
+                    } else {
+                        PaperLibraryEntity newLibrary = new PaperLibraryEntity(Lists.newArrayList(paperId));
+                        return libraryDocumentRef.set(newLibrary);
+                    }
+                })
+                .addOnSuccessListener(aVoid -> emitter.onComplete())
+                .addOnFailureListener(emitter::onError));
     }
 
     @Override

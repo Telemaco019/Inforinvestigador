@@ -108,6 +108,24 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
     }
 
     @Override
+    public void addToLibraryClicked() {
+        disposables.add(paperRepository.addPaperToLibrary(paperId, userRepository.getCurrentUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Log.e("ASD","Complete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("ASD",e.getMessage());
+                    }
+                }));
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         showLoadedPaper();
