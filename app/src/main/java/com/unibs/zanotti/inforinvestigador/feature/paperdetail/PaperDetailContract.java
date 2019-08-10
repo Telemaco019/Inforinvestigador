@@ -54,5 +54,9 @@ public interface PaperDetailContract {
         void navigateToPaperSource(String url);
 
         void disableGotoSourceButton();
+
+        void showMessagePaperAddedToLibrary();
+
+        void showMessageCannotAddPaperToLibrary();
     }
 }

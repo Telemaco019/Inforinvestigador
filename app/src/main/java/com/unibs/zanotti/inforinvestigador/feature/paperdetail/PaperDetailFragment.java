@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -82,6 +84,8 @@ public class PaperDetailFragment
     MaterialCardView sliderViewContainer;
     @BindView(R.id.paper_detail_gotosource_button)
     MaterialButton gotoSourceButton;
+    @BindView(R.id.snabckar_view)
+    CoordinatorLayout snackbarView;
 
     private ImageSliderAdapter imageSliderAdapter;
 
@@ -151,7 +155,7 @@ public class PaperDetailFragment
             getActivity().finish();
         }
 
-        if(item.getItemId() == R.id.menu_topbar_innermenu_addToLibrary) {
+        if (item.getItemId() == R.id.menu_topbar_innermenu_addToLibrary) {
             presenter.addToLibraryClicked();
         }
 
@@ -276,6 +280,20 @@ public class PaperDetailFragment
     @Override
     public void disableGotoSourceButton() {
         gotoSourceButton.setEnabled(false);
+    }
+
+    @Override
+    public void showMessagePaperAddedToLibrary() {
+        if (getView() != null) {
+            Snackbar.make(snackbarView, getString(R.string.paper_added_to_library_message), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void showMessageCannotAddPaperToLibrary() {
+        if (getView() != null) {
+            Snackbar.make(snackbarView, getString(R.string.generic_error_message), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.button_send_commment)

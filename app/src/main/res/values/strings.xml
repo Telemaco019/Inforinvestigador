@@ -78,5 +78,7 @@
     <string name="paper_source_not_available">Source currently not available</string>
     <string name="fragment_edit_paper_share_button_caption">Save</string>
     <string name="error_saving_paper">Error while saving the paper</string>
+    <string name="paper_added_to_library_message">Paper added to your library</string>
+    <string name="generic_error_message">An error occurred</string>
 
 </resources>

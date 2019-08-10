@@ -115,12 +115,12 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                 .subscribeWith(new DisposableCompletableObserver() {
                     @Override
                     public void onComplete() {
-                        Log.e("ASD","Complete");
+                        getView().showMessagePaperAddedToLibrary();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("ASD",e.getMessage());
+                        getView().showMessageCannotAddPaperToLibrary();
                     }
                 }));
     }
