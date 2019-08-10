@@ -11,6 +11,7 @@ import android.view.*;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
@@ -84,7 +85,10 @@ public class PaperDetailFragment
     @BindView(R.id.snabckar_view)
     CoordinatorLayout snackbarView;
 
+    private Toolbar toolbar;
+
     private ImageSliderAdapter imageSliderAdapter;
+    private boolean showAddToLibraryMenu = false;
 
     public PaperDetailFragment() {
         commentsAdapter = new CommentsAdapter(new ArrayList<>(), this);
@@ -138,13 +142,27 @@ public class PaperDetailFragment
         // Enables option menu listener (onOptionsItemSelected gets called)
         setHasOptionsMenu(true);
 
+        if (getActivity() != null) {
+            toolbar = getActivity().findViewById(R.id.top_bar);
+        }
+
         return view;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_top_bar_view_paper, menu);
+        if (showAddToLibraryMenu) {
+            inflater.inflate(R.menu.menu_top_bar_paper_details_not_in_library, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void refreshToolbarMenu(boolean libraryContainsPaper) {
+        this.showAddToLibraryMenu = !libraryContainsPaper;
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     @Override

@@ -88,6 +88,24 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
+    public Single<Boolean> libraryContainsPaper(String userId, String paperId) {
+        final DocumentReference libraryDocument = firestoreDb.document(String.format("%s/%s", Collections.PAPER_LIBRARY, userId));
+        return Single.create(emitter -> {
+            libraryDocument.get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            Object papersField = documentSnapshot.get(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_LIBRARY_PAPER_IDS);
+                            if (papersField != null && ((List<String>) papersField).contains(paperId)) {
+                                emitter.onSuccess(Boolean.TRUE);
+                            }
+                        }
+                        emitter.onSuccess(Boolean.FALSE);
+                    })
+                    .addOnFailureListener(emitter::onError);
+        });
+    }
+
+    @Override
     public Completable addPaperToLibrary(String paperId, String userId) {
         DocumentReference libraryDocumentRef = firestoreDb.document(String.format("%s/%s", Collections.PAPER_LIBRARY, userId));
         return Completable.create(emitter -> libraryDocumentRef

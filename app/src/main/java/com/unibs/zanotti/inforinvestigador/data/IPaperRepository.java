@@ -57,5 +57,7 @@ public interface IPaperRepository {
 
     Observable<Paper> getPapersSharedByUser(String userId);
 
+    Single<Boolean> libraryContainsPaper(String userId, String paperId);
+
     Completable addPaperToLibrary(String paperId, String userId);
 }

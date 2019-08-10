@@ -18,6 +18,8 @@ public interface PaperDetailContract {
     }
 
     interface View extends BaseContract.View {
+        void refreshToolbarMenu(boolean libraryContainsPaper);
+
         void showPaperImages(List<Uri> paperImagesUriList);
 
         void showPaperTitle(String paperTitle);

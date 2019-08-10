@@ -23,6 +23,8 @@ import java.util.List;
  * required.
  */
 public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View> implements PaperDetailContract.Presenter {
+    private static final String TAG = String.valueOf(PaperDetailPresenter.class);
+
     private IPaperRepository paperRepository;
     private IUserRepository userRepository;
     private String paperId;
@@ -116,6 +118,7 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
                     @Override
                     public void onComplete() {
                         getView().showMessagePaperAddedToLibrary();
+                        getView().refreshToolbarMenu(true);
                     }
 
                     @Override
@@ -130,6 +133,24 @@ public class PaperDetailPresenter extends BasePresenter<PaperDetailContract.View
         super.onStart();
         showLoadedPaper();
         loadPaperCommentsInRealTime();
+        refreshViewToolbar();
+    }
+
+    private void refreshViewToolbar() {
+        disposables.add(paperRepository.libraryContainsPaper(userRepository.getCurrentUserId(), paperId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean libraryContainsPaper) {
+                        getView().refreshToolbarMenu(libraryContainsPaper);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, e.getMessage(), e);
+                    }
+                }));
     }
 
     /**
