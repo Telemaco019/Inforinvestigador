@@ -1,12 +1,23 @@
 package com.unibs.zanotti.inforinvestigador.data.remote.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import java.util.List;
 
-@Data
-@AllArgsConstructor
+
 public class PaperLibraryEntity {
     private List<String> paperIds;
+
+    public PaperLibraryEntity() {
+    }
+
+    public PaperLibraryEntity(List<String> paperIds) {
+        this.paperIds = paperIds;
+    }
+
+    public List<String> getPaperIds() {
+        return paperIds;
+    }
+
+    public void setPaperIds(List<String> paperIds) {
+        this.paperIds = paperIds;
+    }
 }

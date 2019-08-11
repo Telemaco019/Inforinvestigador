@@ -61,5 +61,5 @@ public interface IPaperRepository {
 
     Completable addPaperToLibrary(String paperId, String userId);
 
-    Observable<Paper> getLibraryPapers(String userId);
+    Observable<String> getLibraryPaperIds(String userId);
 }

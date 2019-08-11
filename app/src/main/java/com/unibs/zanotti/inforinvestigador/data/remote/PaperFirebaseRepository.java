@@ -133,8 +133,19 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
-    public Observable<Paper> getLibraryPapers(String userId) {
-        return null;
+    public Observable<String> getLibraryPaperIds(String userId) {
+        return Observable.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPER_LIBRARY, userId))
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        PaperLibraryEntity paperLibraryEntity = documentSnapshot.toObject(PaperLibraryEntity.class);
+                        if (paperLibraryEntity != null) {
+                            paperLibraryEntity.getPaperIds().forEach(emitter::onNext);
+                        }
+                    }
+                })
+                .addOnFailureListener(emitter::onError)
+                .addOnCompleteListener(aVoid -> emitter.onComplete()));
     }
 
     @Override

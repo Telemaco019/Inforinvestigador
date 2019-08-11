@@ -6,6 +6,7 @@ import com.unibs.zanotti.inforinvestigador.baseMVP.BasePresenter;
 import com.unibs.zanotti.inforinvestigador.data.IPaperRepository;
 import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
+import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -50,7 +51,9 @@ public class UserLibraryPresenter
 
     private void loadLibraryPapers() {
         libraryPapers = Lists.newArrayList();
-        disposables.add(paperRepository.getPapersSharedByUser(userId)
+        disposables.add(paperRepository.getLibraryPaperIds(userId)
+                .map(id -> paperRepository.getPaper(id))
+                .flatMap(Maybe::toObservable)
                 .flatMap(paper -> userRepository.getUser(paper.getSharingUserId()).toObservable(),
                         (paper, user) -> new PaperShare(paper.getPaperId(),
                                 paper.getPaperTitle(),
