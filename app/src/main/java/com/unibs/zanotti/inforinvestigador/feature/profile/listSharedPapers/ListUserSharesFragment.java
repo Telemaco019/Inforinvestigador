@@ -21,10 +21,10 @@ import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.feature.editPaper.EditPaperShareActivity;
 import com.unibs.zanotti.inforinvestigador.feature.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.ProfileActivity;
-import com.unibs.zanotti.inforinvestigador.feature.profile.listSharedPapers.adapter.ListUserSharesAdapter;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import com.unibs.zanotti.inforinvestigador.utils.PaperShareRVAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.View, ListUserSharesContract.Presenter>
-        implements ListUserSharesContract.View, ListUserSharesAdapter.OnPaperShareListener {
+        implements ListUserSharesContract.View, PaperShareRVAdapter.OnPaperShareListener {
     private static final String FRAGMENT_STRING_ARGUMENT_USER_ID = "ListUserSharesFragment.argument.USER_ID";
 
     @BindView(R.id.undetermined_progress_bar)
@@ -43,10 +43,10 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
     @BindView(R.id.content_layout)
     NestedScrollView contentLayout;
 
-    private ListUserSharesAdapter mAdapter;
+    private PaperShareRVAdapter mAdapter;
 
     public ListUserSharesFragment() {
-        mAdapter = new ListUserSharesAdapter(Lists.newArrayList(), this, Injection.provideUserRepository().getCurrentUserId());
+        mAdapter = new PaperShareRVAdapter(Lists.newArrayList(), this, Injection.provideUserRepository().getCurrentUserId());
     }
 
     public static ListUserSharesFragment newInstance(String userId) {
@@ -88,6 +88,7 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
     @Override
     public void showSharedPapers(List<PaperShare> sharedPapers) {
         mAdapter.setDataset(sharedPapers);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -109,6 +110,11 @@ public class ListUserSharesFragment extends BaseFragment<ListUserSharesContract.
         Intent intent = new Intent(Actions.SHOW_PAPER_DETAILS);
         intent.putExtra(PaperDetailActivity.STRING_EXTRA_PAPER_ID, paperId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPaperShareDismissed(@NotNull String paperId) {
+
     }
 
     @Override

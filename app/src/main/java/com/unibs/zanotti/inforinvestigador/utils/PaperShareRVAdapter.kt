@@ -1,8 +1,9 @@
-package com.unibs.zanotti.inforinvestigador.feature.homefeed.adapters
+package com.unibs.zanotti.inforinvestigador.utils
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -12,8 +13,8 @@ import com.unibs.zanotti.inforinvestigador.utils.itemTouch.ItemTouchHelperAdapte
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Collections.swap
 
-class PaperFeedAdapter(var dataset: MutableList<PaperShare>, val listener: OnPaperShareListener) :
-    RecyclerView.Adapter<PaperFeedAdapter.MyViewHolder>(),
+class PaperShareRVAdapter(var dataset: MutableList<PaperShare>, val listener: OnPaperShareListener, val currentUserId: String) :
+    RecyclerView.Adapter<PaperShareRVAdapter.MyViewHolder>(),
     ItemTouchHelperAdapter {
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
@@ -36,6 +37,8 @@ class PaperFeedAdapter(var dataset: MutableList<PaperShare>, val listener: OnPap
         notifyItemRemoved(position)
     }
 
+
+
     inner class MyViewHolder(view: View) :
         RecyclerView.ViewHolder(view),
         View.OnClickListener {
@@ -47,6 +50,7 @@ class PaperFeedAdapter(var dataset: MutableList<PaperShare>, val listener: OnPap
         var tvPaperComment = view.findViewById<TextView>(R.id.shared_paper_comment)
         var tvSharingUser = view.findViewById<TextView>(R.id.shared_paper_sharing_user_name)
         var tvSharingUserProfilePicture = view.findViewById<CircleImageView>(R.id.shared_paper_sharing_user_picture)
+        var imEditPaperShare = view.findViewById<ImageButton>(R.id.edit_paper_share_button)
 
         init {
             view.setOnClickListener(this)
@@ -58,10 +62,14 @@ class PaperFeedAdapter(var dataset: MutableList<PaperShare>, val listener: OnPap
             tvSharingUserProfilePicture.setOnClickListener {
                 listener.onPaperSharingUserClick(dataset[adapterPosition].sharingUserId)
             }
+
+            imEditPaperShare.setOnClickListener {
+                listener.onEditPaperShareClicked(dataset[adapterPosition].paperId)
+            }
         }
 
         override fun onClick(v: View?) {
-            listener.onPaperShareClick(dataset[adapterPosition].paperId)
+            listener.onPaperShareClicked(dataset[adapterPosition].paperId)
         }
     }
 
@@ -98,13 +106,18 @@ class PaperFeedAdapter(var dataset: MutableList<PaperShare>, val listener: OnPap
             .fit()
             .centerCrop()
             .into(holder.tvSharingUserProfilePicture)
+        if (currentUserId == dataset[position].getSharingUserId()) {
+            holder.imEditPaperShare.visibility = View.VISIBLE
+        }
     }
 
     interface OnPaperShareListener {
-        fun onPaperShareClick(paperId: String)
+        fun onPaperShareClicked(paperId: String)
 
         fun onPaperSharingUserClick(userId: String)
 
         fun onPaperShareDismissed(paperId: String)
+
+        fun onEditPaperShareClicked(paperId: String)
     }
 }

@@ -19,13 +19,13 @@ import com.unibs.zanotti.inforinvestigador.R;
 import com.unibs.zanotti.inforinvestigador.baseMVP.BaseFragment;
 import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import com.unibs.zanotti.inforinvestigador.domain.model.ResearcherSuggestion;
-import com.unibs.zanotti.inforinvestigador.feature.homefeed.adapters.PaperFeedAdapter;
 import com.unibs.zanotti.inforinvestigador.feature.homefeed.adapters.ResearcherSuggestionAdapter;
 import com.unibs.zanotti.inforinvestigador.feature.paperdetail.PaperDetailActivity;
 import com.unibs.zanotti.inforinvestigador.feature.profile.ProfileActivity;
 import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import com.unibs.zanotti.inforinvestigador.utils.PaperShareRVAdapter;
 import com.unibs.zanotti.inforinvestigador.utils.itemTouch.SimpleItemTouchHelperCallback;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,9 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomefeedFragment extends BaseFragment<HomefeedContract.View, HomefeedContract.Presenter>
-        implements HomefeedContract.View, PaperFeedAdapter.OnPaperShareListener, ResearcherSuggestionAdapter.OnResearcherSuggestionListener {
+        implements HomefeedContract.View, PaperShareRVAdapter.OnPaperShareListener, ResearcherSuggestionAdapter.OnResearcherSuggestionListener {
 
-    private PaperFeedAdapter paperFeedAdapter;
+    private PaperShareRVAdapter paperShareRVAdapter;
     private ResearcherSuggestionAdapter researcherSuggestionAdapter;
     private RecyclerView papersRecyclerView;
     private RecyclerView researchersRecyclerView;
@@ -51,7 +51,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     View contentLayout;
 
     public HomefeedFragment() {
-        paperFeedAdapter = new PaperFeedAdapter(new ArrayList<>(0), this);
+        paperShareRVAdapter = new PaperShareRVAdapter(new ArrayList<>(0), this, Injection.provideUserRepository().getCurrentUserId());
         researcherSuggestionAdapter = new ResearcherSuggestionAdapter(new ArrayList<>(0), this);
     }
 
@@ -76,8 +76,8 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
         papersRecyclerView = view.findViewById(R.id.paper_shares_recycler);
         papersRecyclerView.setHasFixedSize(true);
         papersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        papersRecyclerView.setAdapter(paperFeedAdapter);
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(paperFeedAdapter, false, true);
+        papersRecyclerView.setAdapter(paperShareRVAdapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(paperShareRVAdapter, false, true);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(papersRecyclerView);
 
@@ -90,8 +90,8 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
 
     @Override
     public void showPapersFeed(List<PaperShare> paperShares) {
-        this.paperFeedAdapter.setDataset(paperShares);
-        this.paperFeedAdapter.notifyDataSetChanged();
+        this.paperShareRVAdapter.setDataset(paperShares);
+        this.paperShareRVAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -170,7 +170,7 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     }
 
     @Override
-    public void onPaperShareClick(@NotNull String paperId) {
+    public void onPaperShareClicked(@NotNull String paperId) {
         presenter.paperShareClicked(paperId);
     }
 
@@ -184,5 +184,10 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     @Override
     public void onPaperShareDismissed(@NotNull String paperId) {
         presenter.paperShareDismissed(paperId);
+    }
+
+    @Override
+    public void onEditPaperShareClicked(@NotNull String paperId) {
+        // NO OP
     }
 }
