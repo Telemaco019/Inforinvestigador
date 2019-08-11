@@ -133,6 +133,11 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
+    public Observable<Paper> getLibraryPapers(String userId) {
+        return null;
+    }
+
+    @Override
     public Observable<Paper> getPaperRecommendations(String userId) {
         return Observable.create(emitter -> firestoreDb.collection(Collections.PAPERS)
                 .whereLessThan(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID, userId)
