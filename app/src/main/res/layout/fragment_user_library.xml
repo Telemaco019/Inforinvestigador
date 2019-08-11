@@ -11,15 +11,28 @@
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/content_layout"
-            android:paddingTop="@dimen/doubleBasePadding">
+            android:id="@+id/content_layout">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
+                android:paddingTop="@dimen/doubleBasePadding"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/list_user_papers_recycler_view">
+                android:layout_height="wrap_content">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/userPapersLibraryCaption"
+                    android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/list_user_papers_recycler_view">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
