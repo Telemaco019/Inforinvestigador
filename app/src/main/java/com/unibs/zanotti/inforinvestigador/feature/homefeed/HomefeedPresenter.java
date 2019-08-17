@@ -169,6 +169,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     public void onStop() {
         super.onStop();
         saveScrollPositions();
+        loadingPapersShares = Boolean.FALSE;
+        loadingResearcherSuggestions = Boolean.FALSE;
     }
 
     private void restoreScrollPositions() {
