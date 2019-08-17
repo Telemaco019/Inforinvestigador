@@ -84,6 +84,14 @@ public class UserLibraryFragment
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            presenter.loadLibraryPapers();
+        }
+    }
+
+    @Override
     public void showEmptyLibraryMessage() {
         if (emptyLibraryCaptionTv.getVisibility() != View.VISIBLE) {
             ActivityUtils.animateViewWithFade(emptyLibraryCaptionTv, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
@@ -115,6 +123,13 @@ public class UserLibraryFragment
     public void showLibraryPapers(List<PaperShare> libraryPapers) {
         mAdapter.setDataset(libraryPapers);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void hideEmptyLibraryMessage() {
+        if (emptyLibraryCaptionTv.getVisibility() == View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(emptyLibraryCaptionTv, View.GONE, 0f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        }
     }
 
     @Override

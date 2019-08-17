@@ -16,9 +16,13 @@ public interface UserLibraryContract {
         void showContentLayout();
 
         void showLibraryPapers(List<PaperShare> libraryPapers);
+
+        void hideEmptyLibraryMessage();
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
+
+        void loadLibraryPapers();
 
         void paperShareDismissed(String paperId);
     }

@@ -34,19 +34,9 @@ public class UserLibraryPresenter
 
     @Override
     public void onPresenterCreated() {
-        getView().showProgressBar();
-        loadLibraryPapers();
+       // NO OP
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (libraryPapers != null && !libraryPapers.isEmpty()) {
-            showSharedPapers();
-        } else if (!isLoadingPapers) {
-            showEmptyLibraryMessage();
-        }
-    }
 
     private void showEmptyLibraryMessage() {
         getView().hideProgressBar();
@@ -56,11 +46,22 @@ public class UserLibraryPresenter
 
     private void showSharedPapers() {
         getView().hideProgressBar();
+        getView().hideEmptyLibraryMessage();
         getView().showContentLayout();
         getView().showLibraryPapers(libraryPapers);
     }
 
-    private void loadLibraryPapers() {
+    @Override
+    public void onStop() {
+        super.onStop();
+        isLoadingPapers = Boolean.FALSE;
+    }
+
+    @Override
+    public void loadLibraryPapers() {
+        if(isLoadingPapers) return;
+
+        getView().showProgressBar();
         isLoadingPapers = Boolean.TRUE;
         libraryPapers = Lists.newArrayList();
         disposables.add(paperRepository.getLibraryPaperIds(userId)
