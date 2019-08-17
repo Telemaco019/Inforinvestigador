@@ -81,5 +81,6 @@
     <string name="paper_added_to_library_message">Paper added to your library</string>
     <string name="generic_error_message">An error occurred</string>
     <string name="userPapersLibraryCaption">Papers in your library</string>
+    <string name="empty_library_caption">Your library is empty</string>
 
 </resources>

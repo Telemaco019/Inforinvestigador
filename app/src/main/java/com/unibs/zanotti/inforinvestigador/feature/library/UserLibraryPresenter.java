@@ -23,11 +23,13 @@ public class UserLibraryPresenter
     private IUserRepository userRepository;
     private String userId;
     private List<PaperShare> libraryPapers;
+    private Boolean isLoadingPapers;
 
     public UserLibraryPresenter(IPaperRepository paperRepository, IUserRepository userRepository, String userId) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
         this.userId = userId;
+        this.isLoadingPapers = Boolean.FALSE;
     }
 
     @Override
@@ -41,7 +43,15 @@ public class UserLibraryPresenter
         super.onStart();
         if (libraryPapers != null && !libraryPapers.isEmpty()) {
             showSharedPapers();
+        } else if (!isLoadingPapers) {
+            showEmptyLibraryMessage();
         }
+    }
+
+    private void showEmptyLibraryMessage() {
+        getView().hideProgressBar();
+        getView().showContentLayout();
+        getView().showEmptyLibraryMessage();
     }
 
     private void showSharedPapers() {
@@ -51,6 +61,7 @@ public class UserLibraryPresenter
     }
 
     private void loadLibraryPapers() {
+        isLoadingPapers = Boolean.TRUE;
         libraryPapers = Lists.newArrayList();
         disposables.add(paperRepository.getLibraryPaperIds(userId)
                 .map(id -> paperRepository.getPaper(id))
@@ -76,11 +87,13 @@ public class UserLibraryPresenter
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, e.getMessage(), e);
+                        isLoadingPapers = Boolean.FALSE;
                     }
 
                     @Override
                     public void onComplete() {
                         showSharedPapers();
+                        isLoadingPapers = Boolean.FALSE;
                     }
                 }));
     }
@@ -98,8 +111,21 @@ public class UserLibraryPresenter
 
                     @Override
                     public void onComplete() {
-                        // NO OP
+                        removePaper(libraryPapers, paperId);
+                        if (libraryPapers.isEmpty()) {
+                            getView().showEmptyLibraryMessage();
+                        }
                     }
                 }));
+    }
+
+    private void removePaper(List<PaperShare> list, String paperId) {
+        List<PaperShare> toRemove = Lists.newArrayList();
+        for (PaperShare paper : list) {
+            if (paper.getPaperId().equals(paperId)) {
+                toRemove.add(paper);
+            }
+        }
+        toRemove.forEach(list::remove);
     }
 }

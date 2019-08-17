@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserLibraryContract {
     interface View extends BaseContract.View {
+        void showEmptyLibraryMessage();
+
         void showProgressBar();
 
         void hideProgressBar();

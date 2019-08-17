@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,6 +43,8 @@ public class UserLibraryFragment
     FrameLayout progressBar;
     @BindView(R.id.content_layout)
     NestedScrollView contentLayout;
+    @BindView(R.id.user_library_empty_library_caption)
+    TextView emptyLibraryCaptionTv;
 
     private PaperShareRVAdapter mAdapter;
 
@@ -78,6 +81,13 @@ public class UserLibraryFragment
         return new UserLibraryPresenter(Injection.providePaperRepository(),
                 Injection.provideUserRepository(),
                 (String) getArguments().get(FRAGMENT_STRING_ARGUMENT_USER_ID));
+    }
+
+    @Override
+    public void showEmptyLibraryMessage() {
+        if (emptyLibraryCaptionTv.getVisibility() != View.VISIBLE) {
+            ActivityUtils.animateViewWithFade(emptyLibraryCaptionTv, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        }
     }
 
     @Override

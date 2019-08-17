@@ -26,6 +26,16 @@
                     android:text="@string/userPapersLibraryCaption"
                     android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
 
+            <TextView
+                    android:id="@+id/user_library_empty_library_caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/colorSecondary"
+                    android:visibility="gone"
+                    android:text="@string/empty_library_caption"/>
+
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
