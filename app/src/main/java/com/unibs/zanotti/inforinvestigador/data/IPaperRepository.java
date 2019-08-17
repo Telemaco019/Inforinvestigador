@@ -61,5 +61,7 @@ public interface IPaperRepository {
 
     Completable addPaperToLibrary(String paperId, String userId);
 
+    Completable removePaperFromLibrary(String paperId, String userId);
+
     Observable<String> getLibraryPaperIds(String userId);
 }

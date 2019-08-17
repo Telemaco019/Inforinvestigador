@@ -133,6 +133,15 @@ public class PaperFirebaseRepository implements IPaperRepository {
     }
 
     @Override
+    public Completable removePaperFromLibrary(String paperId, String userId) {
+        Log.d(TAG, String.format("Removing paper %s from library of user %s", paperId, userId));
+        DocumentReference libraryDocumentRef = firestoreDb.document(String.format("%s/%s", Collections.PAPER_LIBRARY, userId));
+        return Completable.create(emitter -> libraryDocumentRef.update(FirebaseUtils.FIRESTORE_DOCUMENT_PAPER_LIBRARY_PAPER_IDS, FieldValue.arrayRemove(paperId))
+                .addOnSuccessListener(aVoid -> emitter.onComplete())
+                .addOnFailureListener(emitter::onError));
+    }
+
+    @Override
     public Observable<String> getLibraryPaperIds(String userId) {
         return Observable.create(emitter -> firestoreDb.document(String.format("%s/%s", Collections.PAPER_LIBRARY, userId))
                 .get()

@@ -8,6 +8,7 @@ import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
 import com.unibs.zanotti.inforinvestigador.domain.model.PaperShare;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -84,4 +85,21 @@ public class UserLibraryPresenter
                 }));
     }
 
+    @Override
+    public void paperShareDismissed(String paperId) {
+        disposables.add(paperRepository.removePaperFromLibrary(paperId, userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, e.getMessage(), e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // NO OP
+                    }
+                }));
+    }
 }

@@ -18,5 +18,6 @@ public interface UserLibraryContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
+        void paperShareDismissed(String paperId);
     }
 }

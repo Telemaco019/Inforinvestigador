@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -23,6 +24,7 @@ import com.unibs.zanotti.inforinvestigador.utils.Actions;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
 import com.unibs.zanotti.inforinvestigador.utils.PaperShareRVAdapter;
+import com.unibs.zanotti.inforinvestigador.utils.itemTouch.SimpleItemTouchHelperCallback;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -63,6 +65,10 @@ public class UserLibraryFragment
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter, false, true);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
 
         return view;
     }
@@ -117,7 +123,7 @@ public class UserLibraryFragment
 
     @Override
     public void onPaperShareDismissed(@NotNull String paperId) {
-
+        presenter.paperShareDismissed(paperId);
     }
 
     @Override
