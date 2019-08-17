@@ -92,8 +92,12 @@ public class UserLibraryPresenter
 
                     @Override
                     public void onComplete() {
-                        showSharedPapers();
                         isLoadingPapers = Boolean.FALSE;
+                        if (libraryPapers.isEmpty()) {
+                            showEmptyLibraryMessage();
+                        } else {
+                            showSharedPapers();
+                        }
                     }
                 }));
     }
