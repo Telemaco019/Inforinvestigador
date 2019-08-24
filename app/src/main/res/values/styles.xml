@@ -2,10 +2,36 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTitleStyle" parent="AppTheme">
+        <item name="android:fontFamily">@font/montserrat_light</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="SplashActivityTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <!-- Follow/Unfollow buttons -->
+    <style name="ProfileFollowUnfollowButton">
+        <item name="android:layout_marginTop">35dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/doubleBaseMargin</item>
+    </style>
+    <style name="ProfileFollowButton" parent="ProfileFollowUnfollowButton">
+        <item name="android:background">@drawable/follow_button_style</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:text">@string/profile_follow_btn_caption</item>
+    </style>
+    <style name="ProfileUnfollowButton" parent="ProfileFollowUnfollowButton">
+        <item name="android:background">@drawable/unfollow_button_style</item>
+        <item name="android:textColor">@color/material_black</item>
+        <item name="android:text">@string/profile_unfollow_btn_caption</item>
     </style>
 
 </resources>

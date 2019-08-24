@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+    <!-- Content -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/doubleBaseMargin">
+
+        <!-- Username and date/time -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/doubleBaseMargin">
+
+            <TextView
+                    android:id="@+id/tv_comment_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="/u/Username"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textColor="@color/colorAccent"
+                    android:clickable="true"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="* 5h"
+                    android:layout_marginStart="4dp"
+                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:id="@+id/tv_comment_date"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+        <!-- Body of the comment -->
+        <TextView
+                android:id="@+id/tv_comment_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Body of comment"
+                style="@style/TextAppearance.AppCompat.Body1"/>
+        <!-- Reply and votes -->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="end">
+
+            <TextView
+                    android:id="@+id/tv_comment_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:text="1.4k"
+                    android:layout_gravity="center"/>
+
+            <ImageButton
+                    android:id="@+id/ib_comment_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:layout_marginRight="@dimen/baseMargin"
+                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:tint="@drawable/standard_clickable_icon_selector"/>
+
+            <!--
+            <View
+                    android:id="@+id/separator1"
+                    android:layout_width="1dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="@dimen/baseMargin"
+                    android:layout_marginRight="@dimen/baseMargin"
+                    android:background="@color/dark_gray"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:id="@+id/reply_to_comment_clickable_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/baseMargin"
+                    android:drawableStart="@drawable/ic_chat_bubble_outline_black_24dp"
+                    android:drawablePadding="@dimen/basePadding"
+                    android:clickable="true"
+                    android:background="?selectableItemBackground"
+                    android:text="@string/button_reply_caption"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:id="@+id/comment_replies_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/baseMargin"/>
+                    -->
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

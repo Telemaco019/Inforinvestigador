@@ -8,6 +8,10 @@
     <color name="colorSecondaryLight">#63a4ff</color>
     <color name="colorAccent">#B00020</color>
 
+    <color name="light_gray">#80dadada</color>
+    <color name="dark_gray">#80a39f9f</color>
+    <color name="material_black">#212121</color>
+
     <!-- Material colors for icon. Active icon = black 56% opacity, inactive icon=black 26% opacity-->
     <color name="colorActiveNavigationIcon">#757575</color>
     <color name="colorInactiveNavigationIcon">#BDBDBD</color>

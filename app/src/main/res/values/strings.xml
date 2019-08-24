@@ -3,7 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="topbar_menu_item_search">search</string>
+    <string name="topbar_recommendations_menu_item_search">search</string>
     <string name="bottom_menu_item_title_home">home</string>
     <string name="bottom_menu_item_title_library">library</string>
     <string name="bottom_menu_item_title_profile">profile</string>
@@ -11,4 +11,76 @@
     <string name="recommendedResearchersCaption">Recommended researchers</string>
     <string name="recommendedPapersCaption">Recommended papers</string>
     <string name="search_hint">Search for papers</string>
+    <string name="topbar_viewpaper_menu_item_add">Add</string>
+    <string name="topbar_viewpaper_innermenu_item_addToLibrary">Add to library</string>
+    <string name="topbar_viewpaper_innermenu_item_addToPaperlist">Add to paperlist</string>
+    <string name="msg_success_paper_added_to_library">The paper has been added to your library</string>
+    <string name="msg_error_email_empty">Insert the email address</string>
+    <string name="msg_error_password_empty">Insert the password</string>
+    <string name="inforinvestigador_web_client_token_auth">
+        1060727007768-7tau1qcqpnq9hdl35uce6vc4a17pc4h0.apps.googleusercontent.com
+    </string>
+
+    <string name="authentication_failed_generic_message">Authentication Failed.</string>
+    <string name="authentication_failed_wrong_credentials_message">Wrong email or password</string>
+    <string name="google_login_error_message">Cannot proceed with Google authentication. Please check your
+        connection
+    </string>
+    <string name="registration_generic_error">Error: could not proceed with registration</string>
+    <string name="registration_duplicated_email_error">The address %s is alredy in use</string>
+    <string name="registration_verification_email_sent_message">Verification email sent to %s</string>
+    <string name="send_verification_email_generic_error">Error sending verification email. Please retry later</string>
+    <string name="login_message_reset_pass_email_sent">Email sent to %s</string>
+    <string name="google_signin_button_text">Continue with Google</string>
+    <string name="write_comment_hint">Write a comment</string>
+    <string name="button_reply_caption">Reply</string>
+    <string name="reply_to_comment_caption">Reply to comment</string>
+    <string name="send_comment_btn_caption">send</string>
+    <string name="reply_comment_hint">Your reply</string>
+    <string name="profile_follow_btn_caption">Follow</string>
+    <string name="profile_following_btn_caption">Following</string>
+    <string name="profile_shared_papers_caption">Shares</string>
+    <string name="profile_followers_caption">Followers</string>
+    <string name="profile_following_caption">Following</string>
+    <string name="profile_edit_profile_btn_caption">Edit profile</string>
+    <string name="edit_profile_picture_error_msg">An error occurred, please retry later</string>
+    <string name="profile_edit_profile_name_caption">Name</string>
+    <string name="profile_edit_profile_location_caption">Location</string>
+    <string name="profile_edit_profile_phone_caption">Phone</string>
+    <string name="edit_profile_topbar_caption">Edit profile</string>
+    <string name="menu_topbar_item_confirm">Confirm</string>
+    <string name="phone_number_not_valid_error_msg">Not a valid phone number</string>
+    <string name="field_required_error_msg">Cannot be empty</string>
+    <string name="wait_profile_picture_saving_msg">Uploading profile picture, please wait...</string>
+    <string name="profile_unfollow_btn_caption">Unfollow</string>
+    <string name="paper_detail_btn_go_to_source">Go to source</string>
+    <string name="paper_detail_comments_caption">Comments</string>
+    <string name="dash_separator">-</string>
+    <string name="comment_notifications_title">commented a paper you shared</string>
+    <string name="comments_channel_name">Comments</string>
+    <string name="fragment_add_paper_share_paper_title">Share a paper</string>
+    <string name="fragment_add_paper_sharing_comment_caption">What do you think about this paper?</string>
+    <string name="fragment_add_paper_share_button_caption">Share</string>
+    <string name="fragment_add_paper_paper_doi_caption">Paper DOI</string>
+    <string name="add_paper_doi_not_found_message">DOI not found</string>
+    <string name="add_paper_cancel_button_caption">cancel</string>
+    <string name="share_paper_error_message">An error occurred while sharing the paper</string>
+    <string name="share_paper_success_message">The paper has been shared successfully</string>
+    <string name="search_paper_error">An error occurred while searching the paper</string>
+    <string name="fragment_add_paper_authors">Authors</string>
+    <string name="fragment_add_paper_date">Date</string>
+    <string name="fragment_add_paper_publisher">Publisher</string>
+    <string name="fragment_add_paper_citations">Citations</string>
+    <string name="fragment_add_paper_abstract">Abstract</string>
+    <string name="add_paper_field_not_found_message">Not found</string>
+    <string name="fragment_add_paper_title">Title</string>
+    <string name="citations_caption">citations</string>
+    <string name="paper_source_not_available">Source currently not available</string>
+    <string name="fragment_edit_paper_share_button_caption">Save</string>
+    <string name="error_saving_paper">Error while saving the paper</string>
+    <string name="paper_added_to_library_message">Paper added to your library</string>
+    <string name="generic_error_message">An error occurred</string>
+    <string name="userPapersLibraryCaption">Papers in your library</string>
+    <string name="empty_library_caption">Your library is empty</string>
+
 </resources>

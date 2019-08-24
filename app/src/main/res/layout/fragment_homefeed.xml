@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".feature.homefeed.HomefeedFragment"
+             android:id="@+id/fragment_homefeed">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/content_layout"
+                    android:visibility="gone">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/recommendedResearchersCaption"
+                        android:id="@+id/homefeed_suggested_researchers_caption"
+                        android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recommended_researchers_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"/>
+
+                <TextView
+                        android:layout_marginTop="@dimen/verticalComponentsSpacing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/homefeed_suggested_papers_caption"
+                        android:text="@string/recommendedPapersCaption"
+                        android:gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/verticalComponentsSpacing"/>
+
+                <include layout="@layout/undetermined_progress_bar"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/paper_shares_recycler"
+                        android:nestedScrollingEnabled="false"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</FrameLayout>

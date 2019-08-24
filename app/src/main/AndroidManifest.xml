@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.unibs.zanotti.inforinvestigador">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -8,20 +13,86 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".common.ViewPaperActivity">
+            android:theme="@style/AppTheme"
+            tools:replace="android:icon">
+        <activity android:name=".feature.editPaper.EditPaperShareActivity">
             <intent-filter>
-                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.EDIT_PAPER_SHARE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".navigation.MainActivity">
+        <activity android:name=".feature.profile.listSharedPapers.ListUserSharesActivity">
+        </activity>
+        <activity android:name=".feature.profile.listFollowingAndFollowers.ListFollowingAndFollowersActivity">
+        </activity>
+        <activity android:name=".feature.profile.ProfileActivity">
+            <intent-filter>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_RESEARCHER_PROFILE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".feature.profile.editprofile.EditProfileActivity">
+            <intent-filter>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.EDIT_PROFILE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".auth.RegistrationActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+                android:name=".auth.LoginActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".feature.navigation.MainNavigationActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".feature.paperdetail.PaperDetailActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="com.unibs.zanotti.inforinvestigador.action.SHOW_PAPER_DETAILS"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".auth.SplashActivity"
+                android:theme="@style/SplashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
+        </activity> <!-- Image cropping activity -->
+        <activity
+                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                android:theme="@style/Base.Theme.AppCompat">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity> <!-- Firebase messaging -->
+        <service
+                android:name=".services.MyFirebaseMessagingService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service> <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@mipmap/ic_launcher"/> <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorAccent"/>
     </application>
 
 </manifest>

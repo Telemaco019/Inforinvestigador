@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.AppBarLayout
+<com.google.android.material.appbar.AppBarLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:expanded="false"
-        tools:context=".navigation.MainActivity">
-    <android.support.v7.widget.Toolbar
+        app:expanded="true">
+    <androidx.appcompat.widget.Toolbar
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:layout_collapseMode="pin"/>
-</android.support.design.widget.AppBarLayout>
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+</com.google.android.material.appbar.AppBarLayout>
