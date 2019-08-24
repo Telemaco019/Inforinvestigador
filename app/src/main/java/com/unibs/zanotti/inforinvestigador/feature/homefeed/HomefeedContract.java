@@ -39,5 +39,7 @@ public interface HomefeedContract {
         void showResearcherProfile(String researcherId);
 
         void showContentLayout();
+
+        void hideResearcherSuggestionsCaption();
     }
 }

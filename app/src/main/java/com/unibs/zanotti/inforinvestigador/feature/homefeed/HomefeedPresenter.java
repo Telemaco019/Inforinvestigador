@@ -81,27 +81,31 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
         researchersFeed = new ArrayList<>();
         disposables.add(userRepository.getResearchersSuggestions(userRepository.getCurrentUserId())
                 .subscribeWith(new DisposableObserver<ResearcherSuggestion>() {
-            @Override
-            public void onNext(ResearcherSuggestion researcherSuggestion) {
-                researchersFeed.add(researcherSuggestion);
-            }
+                    @Override
+                    public void onNext(ResearcherSuggestion researcherSuggestion) {
+                        researchersFeed.add(researcherSuggestion);
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-                Collections.shuffle(researchersFeed);
-                showResearchersFeed();
-                loadingResearcherSuggestions = false;
-                if (!loadingPapersShares) {
-                    getView().hideLoadingProgressBar();
-                    getView().showContentLayout();
-                }
-            }
-        }));
+                    @Override
+                    public void onComplete() {
+                        Collections.shuffle(researchersFeed);
+                        loadingResearcherSuggestions = false;
+                        if (!loadingPapersShares) {
+                            getView().hideLoadingProgressBar();
+                            getView().showContentLayout();
+                        }
+                        if (researchersFeed.isEmpty()) {
+                            getView().hideResearcherSuggestionsCaption();
+                        } else {
+                            showResearchersFeed();
+                        }
+                    }
+                }));
     }
 
     private void loadPaperShares() {
@@ -160,9 +164,13 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
         super.onStart();
         if (!loadingPapersShares && !loadingResearcherSuggestions) {
             getView().showContentLayout();
-            showResearchersFeed();
             showPapersFeed();
             restoreScrollPositions();
+            if (researchersFeed.isEmpty()) {
+                getView().hideResearcherSuggestionsCaption();
+            } else {
+                showResearchersFeed();
+            }
         }
     }
 

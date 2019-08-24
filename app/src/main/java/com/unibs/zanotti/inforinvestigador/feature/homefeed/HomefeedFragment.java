@@ -45,10 +45,10 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.homefeed_suggested_papers_caption)
     TextView suggestedPapersCaptionTextview;
-    @BindView(R.id.homefeed_suggested_researchers_caption)
-    TextView suggestedResearchersCaptionTextview;
     @BindView(R.id.content_layout)
     View contentLayout;
+    @BindView(R.id.homefeed_suggested_researchers_caption)
+    TextView researcherSuggestionsCaption;
 
     public HomefeedFragment() {
         paperShareRVAdapter = new PaperShareRVAdapter(new ArrayList<>(0), this, Injection.provideUserRepository().getCurrentUserId());
@@ -96,6 +96,12 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
 
     @Override
     public void showResearchersSuggestions(List<ResearcherSuggestion> suggestions) {
+        if (researcherSuggestionsCaption.getVisibility() != View.VISIBLE) {
+            researcherSuggestionsCaption.setVisibility(View.VISIBLE);
+        }
+        if (researchersRecyclerView.getVisibility() != View.VISIBLE) {
+            researchersRecyclerView.setVisibility(View.VISIBLE);
+        }
         this.researcherSuggestionAdapter.setDataset(suggestions);
         this.researcherSuggestionAdapter.notifyDataSetChanged();
     }
@@ -149,6 +155,16 @@ public class HomefeedFragment extends BaseFragment<HomefeedContract.View, Homefe
     public void showContentLayout() {
         if (contentLayout.getVisibility() != View.VISIBLE) {
             ActivityUtils.animateViewWithFade(contentLayout, View.VISIBLE, 1f, ActivityUtils.FADE_ANIMATION_STANDARD_DURATION_MS);
+        }
+    }
+
+    @Override
+    public void hideResearcherSuggestionsCaption() {
+        if (researcherSuggestionsCaption.getVisibility() == View.VISIBLE) {
+            researcherSuggestionsCaption.setVisibility(View.GONE);
+        }
+        if (researchersRecyclerView.getVisibility() == View.VISIBLE) {
+            researchersRecyclerView.setVisibility(View.GONE);
         }
     }
 
