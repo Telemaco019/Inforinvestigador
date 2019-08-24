@@ -79,7 +79,8 @@ public class HomefeedPresenter extends BasePresenter<HomefeedContract.View> impl
     private void loadResearchersSuggestions() {
         loadingResearcherSuggestions = true;
         researchersFeed = new ArrayList<>();
-        disposables.add(userRepository.getResearchersSuggestions(userRepository.getCurrentUserId()).subscribeWith(new DisposableObserver<ResearcherSuggestion>() {
+        disposables.add(userRepository.getResearchersSuggestions(userRepository.getCurrentUserId())
+                .subscribeWith(new DisposableObserver<ResearcherSuggestion>() {
             @Override
             public void onNext(ResearcherSuggestion researcherSuggestion) {
                 researchersFeed.add(researcherSuggestion);

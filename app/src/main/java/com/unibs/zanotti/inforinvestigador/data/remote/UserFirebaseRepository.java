@@ -23,8 +23,10 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class UserFirebaseRepository implements IUserRepository {
     private static final String TAG = String.valueOf(UserFirebaseRepository.class);
@@ -132,17 +134,26 @@ public class UserFirebaseRepository implements IUserRepository {
     public Observable<ResearcherSuggestion> getResearchersSuggestions(String userId) {
         // Dummy implementation: as suggestions return all the researchers except the one with the id provided as argument
         return Observable.create(emitter -> {
-            firebaseFirestore.collection(Collections.USERS)
+            String firestoreFollowingCollectionPath = String.format("%s/%s/%s", Collections.USERS, userId, Collections.FOLLOWING);
+            firebaseFirestore.collection(firestoreFollowingCollectionPath)
                     .get()
-                    .addOnSuccessListener(snapshots -> {
-                        snapshots.getDocuments()
+                    .continueWithTask(task -> {
+                        List<String> followingUsersIds = task.getResult()
+                                .getDocuments()
                                 .stream()
-                                .filter(doc -> !doc.get(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_ID).equals(userId))
-                                .map(doc -> doc.toObject(UserEntity.class))
-                                .map(userEntity -> new ResearcherSuggestion(userEntity.getId(),
-                                        Uri.parse(userEntity.getProfilePictureUri()),
-                                        userEntity.getName()))
-                                .forEach(emitter::onNext);
+                                .map(doc -> doc.getId())
+                                .collect(Collectors.toList());
+                        return firebaseFirestore.collection(Collections.USERS)
+                                .get()
+                                .addOnSuccessListener(snapshots -> snapshots.getDocuments()
+                                        .stream()
+                                        .filter(doc -> !doc.get(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_ID).equals(userId))
+                                        .filter(doc -> !followingUsersIds.contains(doc.get(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_ID)))
+                                        .map(doc -> doc.toObject(UserEntity.class))
+                                        .map(userEntity -> new ResearcherSuggestion(userEntity.getId(),
+                                                Uri.parse(userEntity.getProfilePictureUri()),
+                                                userEntity.getName()))
+                                        .forEach(emitter::onNext));
                     })
                     .addOnFailureListener(emitter::onError)
                     .addOnCompleteListener(snapshotTask -> emitter.onComplete());
