@@ -13,6 +13,7 @@ public class UserEntity {
     private long creationEpochTimestampMillis;
     private String phone;
     private String instanceId;
+    private boolean emailVerified;
 
     public UserEntity() {
         // Required by Firestore
@@ -28,7 +29,8 @@ public class UserEntity {
                       int followersNumber,
                       String profilePictureUri,
                       Long creationEpochTimestampMillis,
-                      String instanceId) {
+                      String instanceId,
+                      boolean emailVerified) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -40,6 +42,7 @@ public class UserEntity {
         this.profilePictureUri = profilePictureUri;
         this.creationEpochTimestampMillis = creationEpochTimestampMillis;
         this.instanceId = instanceId;
+        this.emailVerified = emailVerified;
     }
 
     public String getInstanceId() {
@@ -128,5 +131,13 @@ public class UserEntity {
 
     public void setFollowersNumber(int followersNumber) {
         this.followersNumber = followersNumber;
+    }
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }

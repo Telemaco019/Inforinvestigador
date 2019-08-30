@@ -162,6 +162,7 @@ public class UserFirebaseRepository implements IUserRepository {
                                         .filter(doc -> !doc.get(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_ID).equals(userId))
                                         .filter(doc -> !followingUsersIds.contains(doc.get(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_ID)))
                                         .map(doc -> doc.toObject(UserEntity.class))
+                                        .filter(userEntity -> userEntity.isEmailVerified())
                                         .map(userEntity -> new ResearcherSuggestion(userEntity.getId(),
                                                 Uri.parse(userEntity.getProfilePictureUri()),
                                                 userEntity.getName()))
@@ -259,6 +260,14 @@ public class UserFirebaseRepository implements IUserRepository {
         });
     }
 
+    @Override
+    public Completable setEmailVerified(String userId) {
+        return Completable.create(emitter -> firebaseFirestore.document(String.format("%s/%s", Collections.USERS, userId))
+                .update(FirebaseUtils.FIRESTORE_DOCUMENT_USER_FIELD_EMAIL_VERIFIED, Boolean.TRUE)
+                .addOnFailureListener(emitter::onError)
+                .addOnSuccessListener(aVoid -> emitter.onComplete()));
+    }
+
     private UserEntity fromUser(User user) {
         return new UserEntity(user.getId(),
                 user.getEmail(),
@@ -270,7 +279,8 @@ public class UserFirebaseRepository implements IUserRepository {
                 user.getFollowersNumber(),
                 user.getProfilePictureUri() == null ? StringUtils.BLANK : user.getProfilePictureUri().toString(),
                 DateUtils.fromLocalDateTimeToEpochMills(user.getCreationDateTime()),
-                user.getInstanceId());
+                user.getInstanceId(),
+                user.isEmailVerified());
     }
 
     private User fromEntity(UserEntity userEntity) {
@@ -284,6 +294,7 @@ public class UserFirebaseRepository implements IUserRepository {
                 userEntity.getFollowersNumber(),
                 Uri.parse(userEntity.getProfilePictureUri()),
                 DateUtils.fromEpochTimestampMillis(userEntity.getCreationEpochTimestampMillis()),
-                userEntity.getInstanceId());
+                userEntity.getInstanceId(),
+                userEntity.isEmailVerified());
     }
 }

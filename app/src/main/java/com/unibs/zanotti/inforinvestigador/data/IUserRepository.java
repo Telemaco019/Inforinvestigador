@@ -70,4 +70,6 @@ public interface IUserRepository {
     Observable<String> getFollowersUsersIds(String userId);
 
     Completable saveFirebaseToken(String userId, String token);
+
+    Completable setEmailVerified(String userId);
 }

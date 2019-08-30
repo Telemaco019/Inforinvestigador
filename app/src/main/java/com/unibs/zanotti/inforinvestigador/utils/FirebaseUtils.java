@@ -15,6 +15,7 @@ public class FirebaseUtils {
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_PHONE = "phone";
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_LOCATION = "location";
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_ID = "id";
+    public static final String FIRESTORE_DOCUMENT_USER_FIELD_EMAIL_VERIFIED = "emailVerified";
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_TOKEN_INSTANCE_ID = "instanceId";
     public static final String FIRESTORE_DOCUMENT_USER_FIELD_SHARES_NUMBER = "sharesNumber";
     public static final String FIRESTORE_DOCUMENT_PAPER_SHARING_USER_ID = "sharingUserId";
