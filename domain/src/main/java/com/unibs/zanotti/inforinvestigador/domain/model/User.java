@@ -77,6 +77,10 @@ public class User implements Parcelable {
         }
     };
 
+    public User() {
+
+    }
+
     public boolean isVerified() {
         return verified;
     }

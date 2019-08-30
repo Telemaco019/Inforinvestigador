@@ -14,9 +14,17 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unibs.zanotti.inforinvestigador.R;
+import com.unibs.zanotti.inforinvestigador.data.IUserRepository;
+import com.unibs.zanotti.inforinvestigador.domain.model.User;
 import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
+import com.unibs.zanotti.inforinvestigador.utils.Injection;
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -24,6 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private static final String TAG = String.valueOf(RegistrationActivity.class);
 
     private FirebaseAuth mAuth;
+    private IUserRepository userRepository;
 
     @BindView(R.id.registration_input_name)
     EditText inputTxtName;
@@ -46,6 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
+        userRepository = Injection.provideUserRepository();
         ButterKnife.bind(this);
 
         // This activity is supposed to be viewd only by non-authenticated users
@@ -92,7 +102,33 @@ public class RegistrationActivity extends AppCompatActivity {
                         checkEmailAlreadyRegistered(email);
                     } else {
                         Log.d(TAG, String.format("created firebase user [name: %s | surname: %s | email: %s]", name, surname, email));
+
                         sendVerificationEmail(Objects.requireNonNull(mAuth.getCurrentUser()));
+
+                        User newUser = new User();
+                        newUser.setName(String.format("%s %s", name, surname));
+                        newUser.setEmail(email);
+                        newUser.setCreationDateTime(LocalDateTime.now());
+                        userRepository.saveUser(newUser)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new CompletableObserver() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        Log.d("asd,", "asd");
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.e("asd", e.getMessage(), e);
+                                    }
+                                });
+
                     }
                 });
     }
