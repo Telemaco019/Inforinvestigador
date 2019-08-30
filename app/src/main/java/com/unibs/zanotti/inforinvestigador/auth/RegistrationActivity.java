@@ -109,6 +109,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         newUser.setName(String.format("%s %s", name, surname));
                         newUser.setEmail(email);
                         newUser.setCreationDateTime(LocalDateTime.now());
+                        newUser.setId(mAuth.getCurrentUser().getUid());
                         userRepository.saveUser(newUser)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
