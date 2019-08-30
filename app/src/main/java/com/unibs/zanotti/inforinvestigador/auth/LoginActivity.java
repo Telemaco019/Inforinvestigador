@@ -32,7 +32,6 @@ import com.unibs.zanotti.inforinvestigador.domain.utils.StringUtils;
 import com.unibs.zanotti.inforinvestigador.feature.navigation.MainNavigationActivity;
 import com.unibs.zanotti.inforinvestigador.utils.ActivityUtils;
 import com.unibs.zanotti.inforinvestigador.utils.Injection;
-import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
@@ -242,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
     private void manageSuccessfulLogin(FirebaseUser user) {
         userRepository.getUser(user.getUid())
                 .isEmpty()
-                .flatMapCompletable(isUserAbsent -> isUserAbsent ? userRepository.saveUser(fromFirebase(user)) : Completable.complete())
+                .flatMapCompletable(isUserAbsent -> isUserAbsent ? userRepository.saveUser(fromFirebase(user)) : userRepository.setEmailVerified(user.getUid()))
                 .andThen(retrieveFirebaseInstanceId())
                 .flatMapCompletable(instanceId -> userRepository.saveFirebaseToken(user.getUid(), instanceId))
                 .subscribe(new CompletableObserver() {
@@ -363,6 +362,7 @@ public class LoginActivity extends AppCompatActivity {
                 0,
                 firebaseUser.getPhotoUrl(),
                 DateUtils.fromEpochTimestampMillis(firebaseUser.getMetadata().getCreationTimestamp()),
-                StringUtils.BLANK);
+                StringUtils.BLANK,
+                firebaseUser.isEmailVerified());
     }
 }

@@ -20,9 +20,9 @@ public class User implements Parcelable {
     private int followingNumber;
     private int followersNumber;
     /**
-     * If true, then the user has been verified (e.g. through email verification). False by default.
+     * If true, then the user has been emailVerified (e.g. through email verification). False by default.
      */
-    private boolean verified;
+    private boolean emailVerified;
     private String instanceId;
 
     public User(String id,
@@ -35,7 +35,8 @@ public class User implements Parcelable {
                 int followersNumber,
                 Uri profilePictureUri,
                 LocalDateTime creationDateTime,
-                String instanceId) {
+                String instanceId,
+                boolean emailVerified) {
         this.id = id;
         this.email = email;
         this.phone = phone;
@@ -47,7 +48,7 @@ public class User implements Parcelable {
         this.profilePictureUri = profilePictureUri;
         this.creationDateTime = creationDateTime;
         this.instanceId = instanceId;
-        this.verified = false;
+        this.emailVerified = emailVerified;
     }
 
     private User(Parcel in) {
@@ -60,7 +61,7 @@ public class User implements Parcelable {
         followersNumber = in.readInt();
         followingNumber = in.readInt();
         profilePictureUri = in.readParcelable(Uri.class.getClassLoader());
-        verified = in.readByte() != 0;
+        emailVerified = in.readByte() != 0;
         creationDateTime = DateUtils.fromEpochTimestampMillis(in.readLong());
         instanceId = in.readString();
     }
@@ -77,12 +78,16 @@ public class User implements Parcelable {
         }
     };
 
-    public boolean isVerified() {
-        return verified;
+    public User() {
+
     }
 
-    public void setVerified(boolean verified) {
-        this.verified = verified;
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 
     public String getId() {
@@ -150,7 +155,7 @@ public class User implements Parcelable {
         dest.writeInt(followersNumber);
         dest.writeInt(followingNumber);
         dest.writeParcelable(profilePictureUri, flags);
-        dest.writeByte((byte) (verified ? 1 : 0));
+        dest.writeByte((byte) (emailVerified ? 1 : 0));
         dest.writeLong(DateUtils.fromLocalDateTimeToEpochMills(creationDateTime));
         dest.writeString(instanceId);
     }
