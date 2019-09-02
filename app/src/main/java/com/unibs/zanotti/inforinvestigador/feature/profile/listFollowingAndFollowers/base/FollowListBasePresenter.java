@@ -39,7 +39,7 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
             getView().setActivityResultFollowListUpdated();
         }
 
-        disposables.add(userRepository.followUser(modelUser.getId(), userId)
+        disposables.add(userRepository.followUser(userRepository.getCurrentUserId(), userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableCompletableObserver() {
@@ -62,7 +62,7 @@ public abstract class FollowListBasePresenter extends BasePresenter<FollowListBa
             getView().setActivityResultFollowListUpdated();
         }
 
-        disposables.add(userRepository.unfollowUser(modelUser.getId(), userId)
+        disposables.add(userRepository.unfollowUser(userRepository.getCurrentUserId(), userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableCompletableObserver() {
