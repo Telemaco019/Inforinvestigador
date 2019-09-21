@@ -15,8 +15,7 @@ Inforinvestigador has been designed and developed as a final project for the *Mo
 <img src="github-images/login.png" width="250"/> <img src="github-images/registration.png" width="250"/>  
 
 ### Papers and researchers recommendations
-<img src="github-images/homefeed.png" width="250"/>
-<img src="github-images/dismiss-paper.gif" width="250"/>
+<img src="github-images/homefeed.png" width="250"/> <img src="github-images/paper-detail.png" width="250"/> 
 
 ### Share papers
 <img src="github-images/share-1.png" width="250"/>
@@ -24,7 +23,7 @@ Inforinvestigador has been designed and developed as a final project for the *Mo
 
 ### Social networking
 #### Follow / Unfollow other researchers
-<img src="github-images/profile.gif" width="250"/>
+<img src="github-images/profile.png" width="250"/>
 
 #### Comment papers and interact with other researchers
-<img src="github-images/comments.gif" width="250"/>
+<img src="github-images/paper-detail-comments.png" width="250"/>
