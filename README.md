@@ -32,5 +32,9 @@ Share on Inforinvestigador a paper you enjoyed by inserting its DOI: the app wil
 #### Follow / Unfollow other researchers
 <img src="github-images/profile.png" width="250"/>
 
+Follow other researchers to see the papers they share on the platform and interact with them. 
+
 #### Comment papers and interact with other researchers
 <img src="github-images/paper-detail-comments.png" width="250"/>
+
+Interact with other researchers through the real-time comments section below each shared paper. 
